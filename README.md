@@ -13,10 +13,19 @@ npm run storybook
 - storybook
   - http://localhost:6006
 
-### .env.local 파일에 다음 환경 변수를 설정하세요
+### .env.local
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY
 NEXT_PUBLIC_API_URL
+```
+
+### supabase 타입 업데이트
+
+- 토큰 만료시 재 로그인 필요
+
+```bash
+npx supabase login
+npm run gen
 ```
