@@ -11,17 +11,17 @@ const mockData = [
   {
     id: 1,
     image:
-      "https://i.namu.wiki/i/Ey2pLW6NB_RoUwBzIj42eKLxixpUK-KCePuGVvmvhd2Tb3Eq7rHpWqM2lp7lIIDbB0J7H8ZMpw8MhtuVp7yaWQ.webp",
+      "https://helpx.adobe.com/content/dam/help/en/photoshop/using/quick-actions/remove-background-before-qa1.png",
   },
   {
     id: 2,
     image:
-      "https://i.pinimg.com/236x/d9/82/f4/d982f4ec7d06f6910539472634e1f9b1.jpg",
+      "https://helpx.adobe.com/content/dam/help/en/photoshop/using/quick-actions/remove-background-before-qa1.png",
   },
   {
     id: 3,
     image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsRvgWUFXBmrPxQVvWcK95oyh8_jQWO7ZQ0A_TmFbv9Y-66UhyOQHffksZxQdw7HV8Nio&usqp=CAU",
+      "https://helpx.adobe.com/content/dam/help/en/photoshop/using/quick-actions/remove-background-before-qa1.png",
   },
 ];
 
@@ -29,7 +29,7 @@ const LandingPage = () => {
   return (
     <main className="flex justify-center items-center">
       <div className="w-[375px] h-dvh flex flex-col">
-        <div className="flex-grow px-4">
+        <div className="flex-grow px-4 flex items-center">
           {/* 스와이퍼 */}
           <Swiper
             modules={[Navigation, Pagination]}
