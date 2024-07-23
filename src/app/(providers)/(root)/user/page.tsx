@@ -6,7 +6,6 @@ const UserPage = async () => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  console.log("session : ", session?.user);
 
   return (
     <main className="flex flex-col items-center justify-center h-screen gap-2">
@@ -14,6 +13,7 @@ const UserPage = async () => {
         <>
           <p className="text-2xl font-bold">
             {session?.user?.email}님! 안녕하세요!
+            {session?.user?.user_metadata?.user_name}
           </p>
           <SignOutButton />
         </>

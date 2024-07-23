@@ -13,6 +13,7 @@ const SignUp = ({ setView }: SignUpProps) => {
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmRequired, setConfirmRequired] = useState(false);
   const route = useRouter();
@@ -27,23 +28,23 @@ const SignUp = ({ setView }: SignUpProps) => {
       if (password !== confirmPassword)
         return alert("비밀번호가 일치하지 않습니다.");
 
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           emailRedirectTo: `${process.env.NEXT_PUBLIC_API_URL}/api/signup/email`,
+          data: {
+            display_name: userName,
+          },
         },
       });
 
-      if (session) {
+      if (data) {
         setConfirmRequired(true);
       }
 
       if (error) {
-        alert("이미 가입한 이메일입니다.");
+        alert(error.message);
       }
     },
   });
@@ -62,38 +63,11 @@ const SignUp = ({ setView }: SignUpProps) => {
         token: otp,
       });
 
-      if (session) {
-        console.log("session", session);
-        route.push("/user");
-      }
+      if (session) route.push("/user");
 
-      if (error) {
-        console.log(error.message);
-        alert("인증번호가 일치하지 않습니다.");
-        return;
-      }
+      if (error) alert("인증번호가 일치하지 않습니다.");
     },
   });
-
-  // const otpTest = async () => {
-  //   if (!otp) return alert("OTP를 입력해주세요!");
-
-  //   const { data, error } = await supabase.auth.verifyOtp({
-  //     type: "signup",
-  //     email,
-  //     token: otp,
-  //   });
-
-  //   if (data) {
-  //     console.log(data);
-  //     route.push("/");
-  //   }
-
-  //   if (error) {
-  //     alert(error.message);
-  //   }
-
-  // };
 
   return (
     <div className="flex flex-col gap-4">
@@ -109,6 +83,12 @@ const SignUp = ({ setView }: SignUpProps) => {
             />
           ) : (
             <>
+              <Input
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                placeholder="이름"
+                type="text"
+              />
               <Input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
