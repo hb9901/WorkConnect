@@ -6,7 +6,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 const MakeVideoCallRoom = () => {
   const router = useRouter();
   const [roomName, setRoomName] = useState<string>("");
-  // 추후 유저정보 받아올 수 있으면 수정
+  // TODO: 추후 유저정보 받아올 수 있으면 수정
   const [userName, setUserName] = useState<string>("");
 
   const handleInputRoomName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,11 +19,11 @@ const MakeVideoCallRoom = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    // TODO: DB에 방 추가 하는 로직 작성 해야함.
     if (roomName && userName) {
-      // 필수 값 확인
-      router.push(`/room/${roomName}?username=${userName}`);
+      router.push(`/video-call/${roomName}?username=${userName}`);
     } else {
-      // 필수 값이 없으면 경고 표시 (필수 필드 체크)
       alert("방이름과 사용자 이름을 입력해 주세요.");
     }
   };
