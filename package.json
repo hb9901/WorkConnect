@@ -12,6 +12,8 @@
     "gen": "supabase gen types typescript --project-id ripbxzxpvscuqgdjpkix --schema public > src/types/supabase.ts"
   },
   "dependencies": {
+    "@livekit/components-react": "^2.3.6",
+    "@livekit/components-styles": "^1.0.12",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/auth-helpers-react": "^0.5.0",
     "@supabase/ssr": "^0.4.0",
@@ -22,6 +24,7 @@
     "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "dayjs": "^1.11.11",
+    "livekit-server-sdk": "^2.5.1",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
