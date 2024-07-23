@@ -3,34 +3,29 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
-import { signInWithKakao } from "../auth/utils/kakaoLogin";
+import { signInWithKakao } from "../auth/_utils/kakaoLogin";
 import Image from "next/image";
+import Link from "next/link";
 
 const mockData = [
   {
     id: 1,
     image:
-      "https://blog.kakaocdn.net/dn/0mySg/btqCUccOGVk/nQ68nZiNKoIEGNJkooELF1/img.jpg",
+      "https://i.namu.wiki/i/Ey2pLW6NB_RoUwBzIj42eKLxixpUK-KCePuGVvmvhd2Tb3Eq7rHpWqM2lp7lIIDbB0J7H8ZMpw8MhtuVp7yaWQ.webp",
   },
   {
     id: 2,
     image:
-      "https://blog.kakaocdn.net/dn/0mySg/btqCUccOGVk/nQ68nZiNKoIEGNJkooELF1/img.jpg",
+      "https://i.pinimg.com/236x/d9/82/f4/d982f4ec7d06f6910539472634e1f9b1.jpg",
   },
   {
     id: 3,
     image:
-      "https://blog.kakaocdn.net/dn/0mySg/btqCUccOGVk/nQ68nZiNKoIEGNJkooELF1/img.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsRvgWUFXBmrPxQVvWcK95oyh8_jQWO7ZQ0A_TmFbv9Y-66UhyOQHffksZxQdw7HV8Nio&usqp=CAU",
   },
 ];
 
 const LandingPage = () => {
-  const pagination = {
-    clickable: true,
-    renderBullet: function (index: number, className: string) {
-      return `<span class="${className}"></span>`;
-    },
-  };
   return (
     <main className="flex justify-center items-center">
       <div className="w-[375px] h-dvh flex flex-col">
@@ -40,10 +35,8 @@ const LandingPage = () => {
             modules={[Navigation, Pagination]}
             slidesPerView={1}
             navigation
-            // pagination={pagination}
             pagination={{
               clickable: true,
-              bulletActiveClass: "bg-[#050505]",
             }}
           >
             {mockData.map((item) => (
@@ -57,6 +50,7 @@ const LandingPage = () => {
                       width={375}
                       height={454}
                       unoptimized
+                      loading="eager"
                     />
                   </div>
                   <div className="flex flex-col items-center justify-center h-[132px] text-[24px] font-bold">
@@ -78,7 +72,8 @@ const LandingPage = () => {
             </button>
           </div>
           <div className="pb-7 text-[14px] text-[#333] flex justify-center items-center ">
-            <button>이메일로 로그인</button> ㅣ <button>회원가입</button>
+            <Link href="/auth/login">이메일로 로그인</Link> ㅣ{" "}
+            <Link href="/auth/signup">회원가입</Link>
           </div>
         </div>
       </div>

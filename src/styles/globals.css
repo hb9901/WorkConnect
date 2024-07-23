@@ -4,3 +4,7 @@
 
 @layer utilities {
 }
+
+.focus\:outline-none:focus {
+  @apply outline-none;
+}
