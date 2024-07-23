@@ -24,14 +24,14 @@ type LabelProps = {
   VariantProps<typeof LabelClass> & HTMLAttributes<HTMLLabelElement>
 >;
 
-function Label({
+const Label = ({
   htmlFor,
   variant,
   weight,
   className,
   children,
   ...props
-}: LabelProps) {
+}: LabelProps) => {
   return (
     <label
       htmlFor={htmlFor}
@@ -41,6 +41,6 @@ function Label({
       {children}
     </label>
   );
-}
+};
 
 export default Label;
