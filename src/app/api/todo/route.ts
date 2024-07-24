@@ -8,9 +8,11 @@ export const GET = async (request: NextRequest) => {
   const userId = searchParams.get("userId");
 
   try {
-    const { data, error } = await supabase.from("todo").select();
-    // .eq("user_id", userId)
-    // .order("date", { ascending: true });
+    const { data, error } = await supabase
+      .from("todo")
+      .select()
+      .eq("user_id", userId!)
+      .order("start_date", { ascending: true });
     if (error)
       return NextResponse.json({
         message: "Failed to fetch supabase data",
