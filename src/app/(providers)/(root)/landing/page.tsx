@@ -30,7 +30,6 @@ const LandingPage = () => {
     <main className="flex justify-center items-center">
       <div className="w-[375px] h-dvh flex flex-col">
         <div className="flex-grow px-4 flex items-center">
-          {/* 스와이퍼 */}
           <Swiper
             modules={[Navigation, Pagination]}
             slidesPerView={1}
@@ -50,7 +49,6 @@ const LandingPage = () => {
                       width={375}
                       height={454}
                       unoptimized
-                      loading="eager"
                     />
                   </div>
                   <div className="flex flex-col items-center justify-center h-[132px] text-[24px] font-bold">

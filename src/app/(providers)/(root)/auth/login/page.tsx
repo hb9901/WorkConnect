@@ -32,8 +32,6 @@ const LoginPage = () => {
 
   const { mutate: emailLoginMutate } = loginMutation;
 
-  if (loginMutation.isPending) return <div>로딩중</div>;
-
   return (
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
@@ -83,8 +81,9 @@ const LoginPage = () => {
           <button
             onClick={() => emailLoginMutate()}
             className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
+            disabled={loginMutation.isPending ? true : false}
           >
-            로그인
+            {loginMutation.isPending ? "로그인 중입니다..." : "로그인"}
           </button>
         </div>
         <button className="text-[#333] text-center text-[12px] font-normal underline">

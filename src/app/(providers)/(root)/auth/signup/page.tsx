@@ -34,7 +34,7 @@ const SignupPage = () => {
 
   const { mutate: emailLoginMutate } = loginMutation;
 
-  if (loginMutation.isPending) return <div>로딩중</div>;
+  if (loginMutation.isPending) return <div>로그인 중입니다.</div>;
 
   return (
     <main className="flex justify-center items-center">
