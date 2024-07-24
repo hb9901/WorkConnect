@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 const PreJoinExample: NextPage = () => {
   setLogLevel("debug", { liveKitClientLogLevel: "warn" });
   const router = useRouter();
-
   return (
     <div className="flex items-center h-[100vh] bg-[#121212]">
       <PreJoin
@@ -15,7 +14,6 @@ const PreJoinExample: NextPage = () => {
         defaults={{ videoDeviceId: "" }}
         onSubmit={(values) => {
           values.audioDeviceId;
-          router.push("/");
         }}
         onValidate={(values) => {
           return true;
