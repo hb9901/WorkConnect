@@ -1,17 +1,20 @@
-"use client";
+'use client';
 
+import useStreamSetStore from '@/store/streamSetStore';
 import {
+  CarouselLayout,
   ControlBar,
-  GridLayout,
+  FocusLayout,
   LiveKitRoom,
   ParticipantTile,
   RoomAudioRenderer,
-  useTracks,
-} from "@livekit/components-react";
-import "@livekit/components-styles";
-import { Track } from "livekit-client";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+  TrackReferenceOrPlaceholder,
+  useTracks
+} from '@livekit/components-react';
+import '@livekit/components-styles';
+import { Track } from 'livekit-client';
+import { redirect, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 type Params = {
   params: {
@@ -21,39 +24,42 @@ type Params = {
 
 const VideoCallRoom = ({ params }: Params) => {
   // TODO: get user input for room and name
+  const [token, setToken] = useState('');
+  const [focusedTrack, setFocusedTrack] = useState<TrackReferenceOrPlaceholder | null>(null);
+
+  const { audioEnable, videoEnable, isStreamOk } = useStreamSetStore();
   const searchParams = useSearchParams();
-  const [token, setToken] = useState("");
+  const userName = searchParams.get('username');
+
   useEffect(() => {
-    const userName = searchParams.get("username");
-    if (!userName) {
+    if (!userName || !isStreamOk) {
+      redirect(`/video-call/prejoin?room=${params.name}&username=${userName}`);
       return;
     }
     (async () => {
       try {
-        const resp = await fetch(
-          `/api/get-participant-token?room=${params.name}&username=${userName}`
-        );
+        const resp = await fetch(`/api/get-participant-token?room=${params.name}&username=${userName}`);
         const data = await resp.json();
         setToken(data.token);
       } catch (e) {
         console.error(e);
       }
     })();
-  }, []);
+  }, [isStreamOk, userName]);
 
-  if (token === "") {
+  if (token === '') {
     return <div>Getting token...</div>;
   }
 
   return (
     <LiveKitRoom
-      video={true}
-      audio={true}
+      video={videoEnable}
+      audio={audioEnable}
       token={token}
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       // Use the default LiveKit theme for nice styles.
       data-lk-theme="default"
-      style={{ height: "100dvh" }}
+      style={{ height: '100dvh' }}
     >
       {/* Your custom component with basic video conferencing functionality. */}
       <MyVideoConference />
@@ -68,20 +74,23 @@ const VideoCallRoom = ({ params }: Params) => {
 export default VideoCallRoom;
 
 const MyVideoConference = () => {
-  //const isSpeaking = useIsSpeaking(participant);
   const tracks = useTracks(
     [
       { source: Track.Source.Camera, withPlaceholder: true },
-      { source: Track.Source.ScreenShare, withPlaceholder: false },
+      { source: Track.Source.ScreenShare, withPlaceholder: false }
     ],
     { onlySubscribed: false }
   );
   return (
-    <GridLayout
-      tracks={tracks}
-      style={{ height: "calc(100vh - var(--lk-control-bar-height))" }}
-    >
-      <ParticipantTile />
-    </GridLayout>
+    <>
+      <FocusLayout trackRef={tracks.find((track) => track.participant.isSpeaking)}></FocusLayout>
+      <CarouselLayout
+        orientation="vertical"
+        tracks={tracks}
+        style={{ height: 'calc(50vh 50vw - var(--lk-control-bar-height))' }}
+      >
+        <ParticipantTile onParticipantClick={() => {}} />
+      </CarouselLayout>
+    </>
   );
 };
