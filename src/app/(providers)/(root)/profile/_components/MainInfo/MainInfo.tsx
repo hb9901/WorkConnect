@@ -1,24 +1,35 @@
 'use client';
 
+import { userStatusList } from '@/assets/userStatusList';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { ChangeEvent } from 'react';
 
 interface MainInfoProps {
   isMyPage: boolean;
 }
 
 const MainInfo = ({ isMyPage }: MainInfoProps) => {
-  const { workspaceUser } = useWorkspaceUser();
+  const { workspaceUser, updateWorkspaceUser } = useWorkspaceUser();
   const profileImg = workspaceUser && workspaceUser.profile_image;
+  const id = workspaceUser && workspaceUser.id;
   const name = workspaceUser && workspaceUser.name;
-  const state = workspaceUser && workspaceUser.user.state;
+  const state = workspaceUser && workspaceUser.state;
   const router = useRouter();
 
   const handleClick = () => {
     if (isMyPage) {
       router.push('/profile/edit');
     }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const workspaceUser = {
+      id,
+      state: e.target.value
+    };
+    updateWorkspaceUser(workspaceUser);
   };
 
   return (
@@ -31,8 +42,17 @@ const MainInfo = ({ isMyPage }: MainInfoProps) => {
       <div className="flex flex-col items-center gap-2">
         <strong>{name}</strong>
         <div className="flex flex-row gap-2">
-          <div className="text-sm">{state}</div>
-          {isMyPage && <button className="text-sm ">(변경)</button>}
+          {isMyPage ? (
+            <select className="text-sm" defaultValue={state} onChange={handleChange}>
+              {userStatusList.map((userstatus, index) => (
+                <option key={index} value={userstatus}>
+                  {userstatus}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <div className="text-sm">{state}</div>
+          )}
         </div>
       </div>
       <button className="w-full h-10 rounded-md bg-slate-800 text-white" onClick={handleClick}>

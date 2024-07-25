@@ -15,7 +15,8 @@ const useWorkspaceUser = () => {
   });
 
   const { mutateAsync: updateWorkspaceUser } = useMutation({
-    mutationFn: (workspaceUser: Tables<'workspace_user'>) => api.workspaceUser.updateWorkspaceUser(workspaceUser)
+    mutationFn: (workspaceUser: Partial<Tables<'workspace_user'>>) =>
+      api.workspaceUser.updateWorkspaceUser(workspaceUser)
   });
   return { workspaceUser, isPending, isError, updateWorkspaceUser };
 };

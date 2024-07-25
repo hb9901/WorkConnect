@@ -18,7 +18,7 @@ class workspaceUserAPI {
     return data;
   }
 
-  async updateWorkspaceUser(workspaceUser: Tables<'workspace_user'>) {
+  async updateWorkspaceUser(workspaceUser: Partial<Tables<'workspace_user'>>) {
     const path = 'api/workspace-user';
     const response = await this.axios.put(path, workspaceUser);
     const data = response.data;
