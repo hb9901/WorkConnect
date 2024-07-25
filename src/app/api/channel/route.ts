@@ -3,15 +3,19 @@
 import { createClient } from '@/utils/supabase/supabaseServer';
 import { NextRequest, NextResponse } from 'next/server';
 
-const supabase = createClient();
-const channel = supabase.from('channel');
-
 export const GET = async (request: NextRequest) => {
+  const supabase = createClient();
   const { searchParams } = new URL(request.url);
   const type = searchParams.get('type');
+  const workspace_id = searchParams.get('workspace_id');
 
   try {
-    const { data, error } = await channel.select().eq('type', type!).order('created_at', { ascending: true });
+    const { data, error } = await supabase
+      .from('channel')
+      .select()
+      .eq('type', type!)
+      .eq('workspace_id', workspace_id!)
+      .order('created_at', { ascending: true });
     if (error)
       return NextResponse.json({
         message: 'Failed to fetch channel data',
@@ -31,9 +35,10 @@ export const GET = async (request: NextRequest) => {
 };
 
 export const POST = async (request: NextRequest) => {
-  const { name, type } = await request.json();
+  const supabase = createClient();
+  const { name, type, workspace_id } = await request.json();
   try {
-    const { error } = await channel.insert({ name, type });
+    const { error } = await supabase.from('channel').insert({ name, type, workspace_id });
     if (error)
       return NextResponse.json({
         message: 'Failed to insert channel data',
@@ -52,9 +57,11 @@ export const POST = async (request: NextRequest) => {
 };
 
 export const DELETE = async (request: NextRequest) => {
-  const { name, type } = await request.json();
+  const supabase = createClient();
+  const { id } = await request.json();
+  const { workspace_id } = await request.json();
   try {
-    const { error } = await channel.delete().eq('name', name).eq('type', type);
+    const { error } = await supabase.from('channel').delete().eq('id', id).eq('workspace_id', workspace_id);
     if (error)
       return NextResponse.json({
         message: 'Failed to delete channel data',

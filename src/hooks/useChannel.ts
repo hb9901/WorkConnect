@@ -2,7 +2,7 @@ import api from '@/api/api';
 import { Tables } from '@/types/supabase';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-const useChannel = (type: 'chat' | 'video') => {
+const useChannel = (type: 'chat' | 'video', workspace_id: number) => {
   const queryClient = useQueryClient();
 
   const {
@@ -11,7 +11,7 @@ const useChannel = (type: 'chat' | 'video') => {
     isError
   } = useQuery({
     queryKey: ['channel'],
-    queryFn: () => api.channel.getChannelList(type)
+    queryFn: () => api.channel.getChannelList(type, workspace_id)
   });
 
   const { mutateAsync: addChannel } = useMutation({
@@ -25,7 +25,7 @@ const useChannel = (type: 'chat' | 'video') => {
 
   const { mutateAsync: delChannel } = useMutation({
     mutationFn: (channel: Tables<'channel'>) => {
-      return api.channel.deleteChannel(channel.name as string, channel.type as string);
+      return api.channel.deleteChannel(channel.id as number);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['channel'] });

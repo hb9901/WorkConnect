@@ -1,6 +1,8 @@
 import { Tables } from '@/types/supabase';
 import { AxiosInstance } from 'axios';
 
+type Channel = Tables<'channel'>;
+
 class ChannelAPI {
   private axios: AxiosInstance;
   path = '/api/channel';
@@ -9,10 +11,11 @@ class ChannelAPI {
     this.axios = axios;
   }
 
-  async getChannelList(type: string) {
+  async getChannelList(type: string, workspace_id: number): Promise<Channel[]> {
     const response = await this.axios.get(this.path, {
       params: {
-        type
+        type,
+        workspace_id
       }
     });
     return response.data;
@@ -23,15 +26,14 @@ class ChannelAPI {
     return response.data;
   }
 
-  async deleteChannel(name: string, type: string) {
-    if (name === '' || type === '') {
-      console.error(`"name" or "type" is empty`);
+  async deleteChannel(id: number) {
+    if (!id) {
+      console.error(`"id" is empty`);
       return;
     }
     const response = await this.axios.delete(this.path, {
       params: {
-        name,
-        type
+        id
       }
     });
     return response.data;

@@ -1,9 +1,10 @@
 'use client';
 
 import useStreamSetStore from '@/store/streamSetStore';
-import { ControlBar, LiveKitRoom, RoomAudioRenderer, VideoConference } from '@livekit/components-react';
+import { ControlBar, LiveKitRoom, RoomAudioRenderer } from '@livekit/components-react';
 import { redirect, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import VideoConference from '../VideoConference';
 
 type videoRoomProps = {
   name: string;

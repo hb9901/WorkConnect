@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import ChannelAPI from './channelAPI';
+import ChannelAPI from './channelAPi';
 import TodoAPI from './todoAPi';
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
