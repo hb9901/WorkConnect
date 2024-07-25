@@ -1,10 +1,9 @@
 import api from '@/api/api';
-import { Tables } from '@/types/supabase';
+import { ChannelInsertType } from '@/types/channel';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const useChannel = (type: 'chat' | 'video', workspace_id: number) => {
   const queryClient = useQueryClient();
-
   const {
     data: channelList,
     isPending,
@@ -15,17 +14,15 @@ const useChannel = (type: 'chat' | 'video', workspace_id: number) => {
   });
 
   const { mutateAsync: addChannel } = useMutation({
-    mutationFn: (channel: Tables<'channel'>) => {
-      return api.channel.postChannel(channel);
-    },
+    mutationFn: (channel: ChannelInsertType) => api.channel.postChannel(channel),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['channel'] });
     }
   });
 
   const { mutateAsync: delChannel } = useMutation({
-    mutationFn: (channel: Tables<'channel'>) => {
-      return api.channel.deleteChannel(channel.id as number);
+    mutationFn: (id: number) => {
+      return api.channel.deleteChannel(id);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['channel'] });

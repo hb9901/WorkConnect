@@ -36,9 +36,11 @@ export const GET = async (request: NextRequest) => {
 
 export const POST = async (request: NextRequest) => {
   const supabase = createClient();
+
   const { name, type, workspace_id } = await request.json();
   try {
     const { error } = await supabase.from('channel').insert({ name, type, workspace_id });
+
     if (error)
       return NextResponse.json({
         message: 'Failed to insert channel data',
@@ -46,6 +48,7 @@ export const POST = async (request: NextRequest) => {
         status: false,
         statusCode: 500
       });
+    return NextResponse.json({ message: 'Create Channel' });
   } catch (error) {
     return NextResponse.json({
       message: 'Failed to insert data',
@@ -69,6 +72,7 @@ export const DELETE = async (request: NextRequest) => {
         status: false,
         statusCode: 500
       });
+    return NextResponse.json({ message: 'Delete Channel' });
   } catch (error) {
     return NextResponse.json({
       message: 'Failed to delete data',
