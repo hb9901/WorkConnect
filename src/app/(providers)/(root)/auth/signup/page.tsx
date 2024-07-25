@@ -1,61 +1,77 @@
-"use client";
-import { supabase } from "@/utils/supabase/supabaseClient";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+'use client';
+import { supabase } from '@/utils/supabase/supabaseClient';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { checkEmail, emailRegex } from './_utils/emailCheck';
+import BackButton from '../_components/BackButton';
 
-const SignupPage = () => {
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [passwordCheck, setPasswordCheck] = useState<string>("");
+const SignUpPage = () => {
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [emailCheck, setEmailCheck] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>('');
+  const [passwordCheck, setPasswordCheck] = useState<string>('');
   const route = useRouter();
 
-  const loginMutation = useMutation({
+  const signUpMutation = useMutation({
     mutationFn: async () => {
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.signInWithPassword({
+      if (!name || !email || !password || !passwordCheck) return alert('빈칸을 입력해주세요.');
+      if (!emailCheck) return alert('이메일 중복확인을 진행해주세요.');
+      if (password !== passwordCheck) return alert('비밀번호가 일치하지 않습니다.');
+
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_API_URL}/api/signup/email`,
+          data: {
+            name: name
+          }
+        }
       });
 
-      if (session) {
-        console.log("session", session);
-        route.push("/user");
-      }
+      if (error) return alert(`회원가입 중 에러 : ${error.message}`);
 
-      if (error) {
-        return alert("사용자 정보가 일치하지 않습니다.");
+      if (data) {
+        setEmailCheck(false);
+        route.push(`/auth/signup/verify?email=${encodeURIComponent(email)}`);
       }
-    },
+    }
   });
 
-  const { mutate: emailLoginMutate } = loginMutation;
+  const handleEmailCheck = async (email: string) => {
+    if (!emailRegex(email)) {
+      setEmailCheck(false);
+      alert('이메일 형식이 올바르지 않습니다.');
+      return;
+    }
 
-  if (loginMutation.isPending) return <div>로그인 중입니다.</div>;
+    const isDuplicateEmail = await checkEmail(email);
+    if (!isDuplicateEmail) return setEmailCheck(true);
+    if (isDuplicateEmail) {
+      setEmailCheck(false);
+      return alert('이미 존재하는 이메일입니다.');
+    }
+  };
+
+  const { mutate: signUpMutate } = signUpMutation;
 
   return (
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
         <div className="flex w-[375px] h-[52px] pt-[14px] pb-[12px] items-center">
-          <button className="text-[20px] font-bold text-[#333333]">←</button>
+          <BackButton />
         </div>
         <div className="flex-grow">
-          <h1 className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] pb-[28px] flex items-center">
-            정보 입력
-          </h1>
+          <h1 className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] pb-[28px] flex items-center">정보 입력</h1>
           <div className="flex flex-col gap-[24px]">
             <div className="flex flex-col">
-              <label
-                className="text-[14px] text-[#333] opacity-60 pl-[6px] pb-2"
-                htmlFor="name"
-              >
+              <label className="text-[14px] text-[#333] opacity-60 pl-[6px] pb-2" htmlFor="name">
                 이름
               </label>
               <input
-                className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] focus:outline-none"
+                className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
                 type="text"
                 id="name"
                 placeholder="이름을 입력해주세요."
@@ -65,15 +81,12 @@ const SignupPage = () => {
               />
             </div>
             <div className="flex flex-col">
-              <label
-                className="text-[14px] text-[#333] opacity-60 pl-[6px] pb-2"
-                htmlFor="email"
-              >
+              <label className="text-[14px] text-[#333] opacity-60 pl-[6px] pb-2" htmlFor="email">
                 이메일 입력
               </label>
               <div className="flex gap-[12px]">
                 <input
-                  className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] focus:outline-none"
+                  className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
                   type="email"
                   id="email"
                   placeholder="이메일을 입력해주세요."
@@ -81,20 +94,23 @@ const SignupPage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required={true}
                 />
-                <button className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md">
+                <button
+                  onClick={() => handleEmailCheck(email)}
+                  className="w-full text-sm py-[12px] bg-[#333] text-white rounded-lg shadow-md"
+                >
                   중복확인
                 </button>
               </div>
+              {emailCheck ? (
+                <p className="text-[14px] text-[#6C6C6C] opacity-60 pt-2">사용 가능한 이메일 입니다!</p>
+              ) : null}
             </div>
             <div className="flex flex-col">
-              <label
-                className="text-[14px] text-[#333] opacity-60 pl-[6px] pb-2"
-                htmlFor="password"
-              >
+              <label className="text-[14px] text-[#333] opacity-60 pl-[6px] pb-2" htmlFor="password">
                 비밀번호
               </label>
               <input
-                className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] focus:outline-none"
+                className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
                 type="password"
                 id="password"
                 placeholder="비밀번호를 입력해주세요."
@@ -104,14 +120,11 @@ const SignupPage = () => {
               />
             </div>
             <div className="flex flex-col pb-[32px]">
-              <label
-                className="text-[14px] text-[#333] opacity-60 pl-[6px] pb-2"
-                htmlFor="passwordCheck"
-              >
-                비밀번호 확인
+              <label className="text-[14px] text-[#333] opacity-60 pl-[6px] pb-2" htmlFor="passwordCheck">
+                비밀번호 재입력
               </label>
               <input
-                className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] focus:outline-none"
+                className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
                 type="password"
                 id="passwordCheck"
                 placeholder="비밀번호를 입력해주세요."
@@ -124,10 +137,11 @@ const SignupPage = () => {
         </div>
         <div className="flex justify-center pb-4 sticky bottom-0 z-10 bg-white">
           <button
-            onClick={() => emailLoginMutate()}
+            onClick={() => signUpMutate()}
             className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
+            disabled={signUpMutation.isPending ? true : false}
           >
-            인증 메일 발송
+            {signUpMutation.isPending ? '메일 발송중...' : '인증 메일 발송'}
           </button>
         </div>
       </div>
@@ -135,4 +149,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default SignUpPage;
