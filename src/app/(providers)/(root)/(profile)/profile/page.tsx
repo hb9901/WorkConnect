@@ -1,4 +1,9 @@
+'use client';
+import useWorkspaceUser from '@/hooks/useWorkspaceUser';
+
 const Profile = () => {
+  const { workspaceUser } = useWorkspaceUser();
+  console.log(workspaceUser);
   return (
     <>
       <header>
