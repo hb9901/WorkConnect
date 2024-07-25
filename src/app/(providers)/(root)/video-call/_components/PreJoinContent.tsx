@@ -1,7 +1,6 @@
 import useStreamSetStore from '@/store/streamSetStore';
 import { LocalUserChoices, PreJoin } from '@livekit/components-react';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const PreJoinContent = () => {
   const searchParams = useSearchParams();
