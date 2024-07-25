@@ -9,7 +9,293 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      channel: {
+        Row: {
+          created_at: string
+          id: number
+          name: string | null
+          type: string | null
+          workspace_id: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name?: string | null
+          type?: string | null
+          workspace_id?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string | null
+          type?: string | null
+          workspace_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "channel_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspace"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      channel_user: {
+        Row: {
+          channel_id: number
+          created_at: string
+          id: number
+          last_read_chat_id: number | null
+          user_id: string
+        }
+        Insert: {
+          channel_id: number
+          created_at?: string
+          id?: number
+          last_read_chat_id?: number | null
+          user_id: string
+        }
+        Update: {
+          channel_id?: number
+          created_at?: string
+          id?: number
+          last_read_chat_id?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "room_user_room_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "channel"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "room_user_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat: {
+        Row: {
+          channel_id: number
+          content: string
+          created_at: string
+          id: number
+          is_notice: boolean
+          type: string
+          user_id: string
+        }
+        Insert: {
+          channel_id: number
+          content: string
+          created_at?: string
+          id?: number
+          is_notice: boolean
+          type: string
+          user_id: string
+        }
+        Update: {
+          channel_id?: number
+          content?: string
+          created_at?: string
+          id?: number
+          is_notice?: boolean
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_room_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "channel"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chat_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      file: {
+        Row: {
+          chat_id: number
+          created_at: string
+          id: number
+          type: string
+          url: string
+        }
+        Insert: {
+          chat_id: number
+          created_at?: string
+          id?: number
+          type: string
+          url: string
+        }
+        Update: {
+          chat_id?: number
+          created_at?: string
+          id?: number
+          type?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "file_chat_id_fkey"
+            columns: ["chat_id"]
+            isOneToOne: false
+            referencedRelation: "chat"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      todo: {
+        Row: {
+          end_date: string
+          id: number
+          is_done: boolean
+          place: string | null
+          start_date: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          end_date: string
+          id?: number
+          is_done: boolean
+          place?: string | null
+          start_date: string
+          title: string
+          user_id?: string
+        }
+        Update: {
+          end_date?: string
+          id?: number
+          is_done?: boolean
+          place?: string | null
+          start_date?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "to_do_list_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          sns_type: string | null
+          state: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id: string
+          sns_type?: string | null
+          state?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          sns_type?: string | null
+          state?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspace: {
+        Row: {
+          admin_user_id: string | null
+          created_at: string
+          id: number
+          invite_code: number | null
+          name: string
+        }
+        Insert: {
+          admin_user_id?: string | null
+          created_at?: string
+          id?: number
+          invite_code?: number | null
+          name: string
+        }
+        Update: {
+          admin_user_id?: string | null
+          created_at?: string
+          id?: number
+          invite_code?: number | null
+          name?: string
+        }
+        Relationships: []
+      }
+      workspace_user: {
+        Row: {
+          email: string | null
+          id: string
+          name: string | null
+          phone: string | null
+          profile_image: string | null
+          user_id: string
+          workspace_id: number | null
+        }
+        Insert: {
+          email?: string | null
+          id?: string
+          name?: string | null
+          phone?: string | null
+          profile_image?: string | null
+          user_id: string
+          workspace_id?: number | null
+        }
+        Update: {
+          email?: string | null
+          id?: string
+          name?: string | null
+          phone?: string | null
+          profile_image?: string | null
+          user_id?: string
+          workspace_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_user_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workspace_user_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspace"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
