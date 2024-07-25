@@ -1,13 +1,19 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useRouter } from 'next/navigation';
+import { ChangeEvent, FormEvent, useState } from 'react';
+
+type VideoRoom = {
+  name: string;
+  href: string;
+};
 
 const MakeVideoCallRoom = () => {
   const router = useRouter();
-  const [roomName, setRoomName] = useState<string>("");
+  const [roomName, setRoomName] = useState<string>('');
   // TODO: 추후 유저정보 받아올 수 있으면 수정
-  const [userName, setUserName] = useState<string>("");
+  const [userName, setUserName] = useState<string>('');
+  const [videoChatList, setVideoChatList] = useState();
 
   const handleInputRoomName = (e: ChangeEvent<HTMLInputElement>) => {
     setRoomName(e.target.value);
@@ -22,17 +28,14 @@ const MakeVideoCallRoom = () => {
 
     // TODO: DB에 방 추가 하는 로직 작성 해야함.
     if (roomName && userName) {
-      router.push(`/video-call/${roomName}?username=${userName}`);
+      router.push(`/video-chennel/${roomName}?username=${userName}`);
     } else {
-      alert("방이름과 사용자 이름을 입력해 주세요.");
+      alert('방이름과 사용자 이름을 입력해 주세요.');
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col h-[100vh] justify-center items-center"
-    >
+    <form onSubmit={handleSubmit} className="flex flex-col h-[100vh] justify-center items-center">
       <h1>방 생성</h1>
       <input
         className="border border-1"

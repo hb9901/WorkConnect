@@ -22,7 +22,7 @@ const VideoCallRoom = ({ params }: Params) => {
 
   useEffect(() => {
     if (!userName || !isStreamOk) {
-      redirect(`/video-call/prejoin?room=${params.name}&username=${userName}`);
+      redirect(`/video-chennel/prejoin?room=${params.name}&username=${userName}`);
       return;
     }
     (async () => {
