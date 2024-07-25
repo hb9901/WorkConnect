@@ -1,3 +1,4 @@
+import { Tables } from '@/types/supabase';
 import { AxiosInstance } from 'axios';
 
 class workspaceUserAPI {
@@ -12,6 +13,14 @@ class workspaceUserAPI {
     const response = await this.axios.get(path, {
       params: { workspaceUserId }
     });
+    const data = response.data;
+
+    return data;
+  }
+
+  async updateWorkspaceUser(workspaceUser: Tables<'workspace_user'>) {
+    const path = 'api/workspace-user';
+    const response = await this.axios.put(path, workspaceUser);
     const data = response.data;
 
     return data;
