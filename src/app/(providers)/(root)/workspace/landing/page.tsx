@@ -1,5 +1,4 @@
 'use client';
-
 import { useRouter } from 'next/navigation';
 
 const InviteCodePage = () => {
@@ -26,17 +25,17 @@ const InviteCodePage = () => {
           </div>
         </div>
         <div className="flex justify-center mt-4 mb-[167px]">
-          <button
-            onClick={() => route.push('/auth/invitecode/newworkspace')}
-            className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
-          >
-            확인
-          </button>
+          <button className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md">확인</button>
         </div>
         <div className="flex justify-center items-center py-2 px-4 gap-[10px]">
           <button className="text-[#333] text-center text-[14px] font-normal">도움말</button>
           <span className="text-[12px]">|</span>
-          <button className="text-[#333] text-center text-[14px] font-normal">워크스페이스 만들기</button>
+          <button
+            onClick={() => route.push('/workspace/new')}
+            className="text-[#333] text-center text-[14px] font-normal"
+          >
+            워크스페이스 만들기
+          </button>
         </div>
       </div>
     </main>

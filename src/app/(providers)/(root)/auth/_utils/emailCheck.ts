@@ -7,7 +7,6 @@ export const checkEmail = async (email: string) => {
     console.error(error.message);
     return false;
   }
-
   return data.length > 0;
 };
 

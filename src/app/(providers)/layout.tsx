@@ -12,8 +12,6 @@ const ProvidersLayout = async ({ children }: StrictPropsWithChildren) => {
   } = await supabase.auth.getSession();
   const accessToken = session?.access_token;
 
-  console.log('accessToken : ', accessToken);
-
   return (
     <QueryProvider>
       <SupabaseProvider>

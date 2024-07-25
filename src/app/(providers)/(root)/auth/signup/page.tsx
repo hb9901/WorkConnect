@@ -3,7 +3,7 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { checkEmail, emailRegex } from './_utils/emailCheck';
+import { checkEmail, emailRegex } from '../_utils/emailCheck';
 import BackButton from '../_components/BackButton';
 
 const SignUpPage = () => {

@@ -1,9 +1,6 @@
-'use client';
-import { useRouter } from 'next/navigation';
-import BackButton from '../../_components/BackButton';
+import BackButton from '../../auth/_components/BackButton';
 
 const NewWorkSpacePage = () => {
-  const route = useRouter();
   return (
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
@@ -33,7 +30,6 @@ const NewWorkSpacePage = () => {
           <button
             className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
             type="button"
-            onClick={() => route.push('/user')}
           >
             가입하기
           </button>

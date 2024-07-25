@@ -14,13 +14,7 @@ const AuthVerifyPage = () => {
   const [otp5, setOtp5] = useState<string>('');
   const [otp6, setOtp6] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [name, setName] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
   const route = useRouter();
-
-  console.log(name);
-  console.log(email);
-  console.log(password);
 
   const getFullOtp = (): string => {
     return otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
@@ -29,8 +23,6 @@ const AuthVerifyPage = () => {
   const otpMutation = useMutation({
     mutationFn: async () => {
       const fullOtp = getFullOtp();
-      // if (fullOtp === '123456') return route.push('/auth/invitecode');
-      // return alert('인증번호가 일치하지 않습니다.');
 
       const { data, error } = await supabase.auth.verifyOtp({
         type: 'signup',
