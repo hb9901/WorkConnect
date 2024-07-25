@@ -3,7 +3,7 @@
 import { setLogLevel } from '@livekit/components-react';
 import '@livekit/components-styles';
 import { Suspense } from 'react';
-import PreJoinContent from '../_components/PreJoinContent';
+import PreJoinContent from '../_components/PrejoinContent/PreJoinContent';
 
 const PreJoinPage = () => {
   setLogLevel('debug', { liveKitClientLogLevel: 'warn' });

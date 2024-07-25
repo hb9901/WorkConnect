@@ -25,8 +25,6 @@ const MakeVideoCallRoom = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    // TODO: DB에 방 추가 하는 로직 작성 해야함.
-
     if (roomName && userName) {
       router.push(`/video-channel/${roomName}?username=${userName}`);
     } else {
@@ -52,6 +50,12 @@ const MakeVideoCallRoom = () => {
           className="border rounded-full w-5 h-5 flex justify-center items-center hover:bg-slate-200"
         >
           +
+        </button>
+        <button
+          onClick={handleCreateRoom}
+          className="border rounded-full w-5 h-5 flex justify-center items-center hover:bg-slate-200"
+        >
+          -
         </button>
       </header>
       <form onSubmit={handleSubmit}>
