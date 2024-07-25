@@ -25,7 +25,6 @@ type Params = {
 const VideoCallRoom = ({ params }: Params) => {
   // TODO: get user input for room and name
   const [token, setToken] = useState('');
-  const [focusedTrack, setFocusedTrack] = useState<TrackReferenceOrPlaceholder | null>(null);
 
   const { audioEnable, videoEnable, isStreamOk } = useStreamSetStore();
   const searchParams = useSearchParams();
@@ -74,6 +73,8 @@ const VideoCallRoom = ({ params }: Params) => {
 export default VideoCallRoom;
 
 const MyVideoConference = () => {
+  const [focusedTrack, setFocusedTrack] = useState<TrackReferenceOrPlaceholder>();
+
   const tracks = useTracks(
     [
       { source: Track.Source.Camera, withPlaceholder: true },
@@ -81,16 +82,24 @@ const MyVideoConference = () => {
     ],
     { onlySubscribed: false }
   );
+  const focustrack = tracks.find((track) => track.participant.isSpeaking);
+
+  useEffect(() => {
+    if (focustrack) setFocusedTrack(focustrack);
+  }, [focustrack]);
+
   return (
-    <>
-      <FocusLayout trackRef={tracks.find((track) => track.participant.isSpeaking)}></FocusLayout>
-      <CarouselLayout
-        orientation="vertical"
-        tracks={tracks}
-        style={{ height: 'calc(50vh 50vw - var(--lk-control-bar-height))' }}
-      >
-        <ParticipantTile onParticipantClick={() => {}} />
-      </CarouselLayout>
-    </>
+    <div className="flex  h-[80vh]">
+      {focusedTrack && <FocusLayout trackRef={focusedTrack}></FocusLayout>}
+      <div className="w-[25vw]">
+        <CarouselLayout
+          orientation="vertical"
+          tracks={tracks}
+          style={{ height: 'calc(50vh 50vw - var(--lk-control-bar-height))' }}
+        >
+          <ParticipantTile onParticipantClick={() => {}} />
+        </CarouselLayout>
+      </div>
+    </div>
   );
 };
