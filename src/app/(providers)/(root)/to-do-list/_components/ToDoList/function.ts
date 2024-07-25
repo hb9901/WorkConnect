@@ -1,6 +1,6 @@
 import { Dayjs } from "dayjs";
 
-const changeDateStr = (start: Date, end: Date): string => {
+const changeDateStr = (start: string, end: string): string => {
   const startDate = new Date(start);
   const endDate = new Date(end);
 
@@ -8,8 +8,8 @@ const changeDateStr = (start: Date, end: Date): string => {
 };
 
 const isDateSelected = (
-  start: Date,
-  end: Date,
+  start: string,
+  end: string,
   selectedDate: Dayjs
 ): boolean => {
   const startDate = new Date(start);

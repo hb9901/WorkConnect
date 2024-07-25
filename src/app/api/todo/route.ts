@@ -30,3 +30,69 @@ export const GET = async (request: NextRequest) => {
     });
   }
 };
+
+export const DELETE = async (request: NextRequest) => {
+  const { searchParams } = new URL(request.url);
+  const todoId = searchParams.get("todoId");
+  const supabase = createClient();
+
+  try {
+    const { error } = await supabase
+      .from("todo")
+      .delete()
+      .eq("id", Number(todoId!));
+
+    if (error)
+      return NextResponse.json({
+        message: "Failed to delete supabase data",
+        error,
+        status: false,
+        statusCode: 500,
+      });
+    return NextResponse.json({
+      message: "Success to delete data",
+      error,
+      status: false,
+      statusCode: 200,
+    });
+  } catch (error) {
+    return NextResponse.json({
+      message: "Failed to delete data",
+      error,
+      status: false,
+      statusCode: 500,
+    });
+  }
+};
+
+export const POST = async (request: NextRequest) => {
+  const todo = await request.json();
+  const supabase = createClient();
+
+  console.log(todo);
+
+  try {
+    const { error } = await supabase.from("todo").insert(todo);
+
+    if (error)
+      return NextResponse.json({
+        message: "Failed to insert supabase data",
+        error,
+        status: false,
+        statusCode: 500,
+      });
+    return NextResponse.json({
+      message: "Success to insert data",
+      error,
+      status: false,
+      statusCode: 200,
+    });
+  } catch (error) {
+    return NextResponse.json({
+      message: "Failed to post data",
+      error,
+      status: false,
+      statusCode: 500,
+    });
+  }
+};
