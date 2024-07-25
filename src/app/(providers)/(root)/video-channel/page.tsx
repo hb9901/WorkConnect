@@ -28,7 +28,7 @@ const MakeVideoCallRoom = () => {
 
     // TODO: DB에 방 추가 하는 로직 작성 해야함.
     if (roomName && userName) {
-      router.push(`/video-chennel/${roomName}?username=${userName}`);
+      router.push(`/video-channel/${roomName}?username=${userName}`);
     } else {
       alert('방이름과 사용자 이름을 입력해 주세요.');
     }

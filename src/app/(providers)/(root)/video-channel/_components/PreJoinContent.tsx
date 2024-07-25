@@ -16,7 +16,7 @@ const PreJoinContent = () => {
     setVideoEnable(values.videoEnabled);
     if (audio.length > 0 && video.length > 0) {
       StreamCheck(true);
-      router.push(`/video-chennel/${room}?username=${userName}`);
+      router.push(`/video-channel/${room}?username=${userName}`);
     }
   };
 

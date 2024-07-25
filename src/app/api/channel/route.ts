@@ -50,3 +50,24 @@ export const POST = async (request: NextRequest) => {
     });
   }
 };
+
+export const DELETE = async (request: NextRequest) => {
+  const { name, type } = await request.json();
+  try {
+    const { error } = await channel.delete().eq('name', name).eq('type', type);
+    if (error)
+      return NextResponse.json({
+        message: 'Failed to delete channel data',
+        error,
+        status: false,
+        statusCode: 500
+      });
+  } catch (error) {
+    return NextResponse.json({
+      message: 'Failed to delete data',
+      error,
+      status: false,
+      statusCode: 500
+    });
+  }
+};
