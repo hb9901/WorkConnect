@@ -1,5 +1,6 @@
 import useChannel from '@/hooks/useChannel';
 import { useRouter } from 'next/navigation';
+import VideoListItem from '../VideoListItem';
 
 // 해당 파일은 임시 파일 입니다.
 const VideoList = () => {
@@ -26,10 +27,7 @@ const VideoList = () => {
   return (
     <div className="m-5">
       {channelList.map((channel) => (
-        <div key={channel.id} className="border border-1 flex flex-col gap-3 hover:bg-slate-500">
-          <span>{channel.name}</span>
-          <span>{channel.type}</span>
-        </div>
+        <VideoListItem id={channel.id} name={channel.name as string} type={channel.type as string} />
       ))}
     </div>
   );
