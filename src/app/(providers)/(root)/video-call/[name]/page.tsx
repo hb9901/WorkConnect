@@ -1,20 +1,11 @@
 'use client';
 
 import useStreamSetStore from '@/store/streamSetStore';
-import {
-  CarouselLayout,
-  ControlBar,
-  FocusLayout,
-  LiveKitRoom,
-  ParticipantTile,
-  RoomAudioRenderer,
-  TrackReferenceOrPlaceholder,
-  useTracks
-} from '@livekit/components-react';
+import { ControlBar, LiveKitRoom, RoomAudioRenderer } from '@livekit/components-react';
 import '@livekit/components-styles';
-import { Track } from 'livekit-client';
 import { redirect, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import VideoConference from '../_components/VideoConference';
 
 type Params = {
   params: {
@@ -23,7 +14,6 @@ type Params = {
 };
 
 const VideoCallRoom = ({ params }: Params) => {
-  // TODO: get user input for room and name
   const [token, setToken] = useState('');
 
   const { audioEnable, videoEnable, isStreamOk } = useStreamSetStore();
@@ -51,55 +41,20 @@ const VideoCallRoom = ({ params }: Params) => {
   }
 
   return (
-    <LiveKitRoom
-      video={videoEnable}
-      audio={audioEnable}
-      token={token}
-      serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
-      // Use the default LiveKit theme for nice styles.
-      data-lk-theme="default"
-      style={{ height: '100dvh' }}
-    >
-      {/* Your custom component with basic video conferencing functionality. */}
-      <MyVideoConference />
-      {/* The RoomAudioRenderer takes care of room-wide audio for you. */}
-      <RoomAudioRenderer />
-      {/* Controls for the user to start/stop audio, video, and screen
-      share tracks and to leave the room. */}
-      <ControlBar />
-    </LiveKitRoom>
+    <Suspense fallback={<div>Loading...</div>}>
+      <LiveKitRoom
+        video={videoEnable}
+        audio={audioEnable}
+        token={token}
+        serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
+        data-lk-theme="default"
+        style={{ height: '100dvh' }}
+      >
+        <VideoConference />
+        <RoomAudioRenderer />
+        <ControlBar />
+      </LiveKitRoom>
+    </Suspense>
   );
 };
 export default VideoCallRoom;
-
-const MyVideoConference = () => {
-  const [focusedTrack, setFocusedTrack] = useState<TrackReferenceOrPlaceholder>();
-
-  const tracks = useTracks(
-    [
-      { source: Track.Source.Camera, withPlaceholder: true },
-      { source: Track.Source.ScreenShare, withPlaceholder: false }
-    ],
-    { onlySubscribed: false }
-  );
-  const focustrack = tracks.find((track) => track.participant.isSpeaking);
-
-  useEffect(() => {
-    if (focustrack) setFocusedTrack(focustrack);
-  }, [focustrack]);
-
-  return (
-    <div className="flex  h-[80vh]">
-      {focusedTrack && <FocusLayout trackRef={focusedTrack}></FocusLayout>}
-      <div className="w-[25vw]">
-        <CarouselLayout
-          orientation="vertical"
-          tracks={tracks}
-          style={{ height: 'calc(50vh 50vw - var(--lk-control-bar-height))' }}
-        >
-          <ParticipantTile onParticipantClick={() => {}} />
-        </CarouselLayout>
-      </div>
-    </div>
-  );
-};
