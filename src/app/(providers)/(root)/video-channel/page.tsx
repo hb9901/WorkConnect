@@ -12,7 +12,6 @@ const MakeVideoCallRoom = () => {
   const [roomName, setRoomName] = useState<string>('');
   // TODO: 추후 유저정보 받아올 수 있으면 수정
   const [userName, setUserName] = useState<string>('');
-  const [videoChatList, setVideoChatList] = useState();
 
   const handleInputRoomName = (e: ChangeEvent<HTMLInputElement>) => {
     setRoomName(e.target.value);
@@ -45,12 +44,7 @@ const MakeVideoCallRoom = () => {
     <div className="flex flex-col h-[100vh] justify-center items-center">
       <header className="flex gap-1">
         <h1>방 목록</h1>
-        <button
-          onClick={handleCreateRoom}
-          className="border rounded-full w-5 h-5 flex justify-center items-center hover:bg-slate-200"
-        >
-          +
-        </button>
+
         <button
           onClick={handleCreateRoom}
           className="border rounded-full w-5 h-5 flex justify-center items-center hover:bg-slate-200"
@@ -58,27 +52,15 @@ const MakeVideoCallRoom = () => {
           -
         </button>
       </header>
-      <form onSubmit={handleSubmit}>
+      <div className="w-[50vw]">
         <VideoList />
-
-        <input
-          className="border border-1"
-          type="text"
-          value={roomName}
-          placeholder="방이름"
-          onChange={handleInputRoomName}
-        />
-        <input
-          className="border border-1"
-          type="text"
-          value={userName}
-          placeholder="유저 이름"
-          onChange={handleInputUserName}
-        />
-        <button className="border-4" type="submit">
-          방 생성
+        <button
+          onClick={() => router.push('/video-channel/create')}
+          className="border rounded-full h-5 flex justify-center items-center hover:bg-slate-200"
+        >
+          채팅방 생성
         </button>
-      </form>
+      </div>
     </div>
   );
 };
