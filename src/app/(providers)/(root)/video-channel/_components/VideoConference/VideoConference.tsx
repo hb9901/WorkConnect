@@ -11,7 +11,6 @@ import { Track } from 'livekit-client';
 import { useEffect, useState } from 'react';
 const VideoConference = () => {
   const [focusedTrack, setFocusedTrack] = useState<TrackReferenceOrPlaceholder>();
-
   const tracks = useTracks(
     [
       { source: Track.Source.Camera, withPlaceholder: true },
@@ -26,7 +25,7 @@ const VideoConference = () => {
   }, [focustrack]);
 
   return (
-    <div className="flex  h-[80vh]">
+    <div className="flex gap-2 h-[80vh] p-3">
       {focusedTrack && <FocusLayout trackRef={focusedTrack}></FocusLayout>}
       <div className="w-[25vw]">
         <CarouselLayout
@@ -34,7 +33,7 @@ const VideoConference = () => {
           tracks={tracks}
           style={{ height: 'calc(50vh 50vw - var(--lk-control-bar-height))' }}
         >
-          <ParticipantTile onClick={() => {}} />
+          <ParticipantTile onClick={(e) => console.log(e.detail)} />
         </CarouselLayout>
       </div>
     </div>

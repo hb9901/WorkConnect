@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import useTodo from "@/hooks/useTodo";
-import { Tables } from "@/types/supabase";
-import useDateStore from "@/zustand/dateStore";
-import { changeDateStr, isDateSelected } from "./function";
+import useTodo from '@/hooks/useTodo';
+import useDateStore from '@/store/dateStore';
+import { Tables } from '@/types/supabase';
+import { changeDateStr, isDateSelected } from './function';
 
 const ToDoList = () => {
-  const { todoList }: { todoList: Tables<"todo">[] } = useTodo();
+  const { todoList }: { todoList: Tables<'todo'>[] } = useTodo();
   const { selectedDate } = useDateStore();
 
   return (
