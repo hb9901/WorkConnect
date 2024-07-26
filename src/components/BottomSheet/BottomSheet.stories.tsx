@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Button from '../Button';
 import BottomSheet, { BottomSheetProps } from './BottomSheet';
 
 export default {
@@ -36,9 +37,9 @@ export const Default = (args: BottomSheetProps) => {
 
   return (
     <>
-      <button className="px-4 py-2 bg-primary200Main text-white rounded" onClick={handleOpen}>
+      <Button onClick={handleOpen} theme="primary200" isDisabled={false}>
         Open
-      </button>
+      </Button>
       <BottomSheet {...args} isOpen={isOpen} onClose={handleClose}>
         <p>BottomSheet 열림</p>
       </BottomSheet>
