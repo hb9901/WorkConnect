@@ -37,7 +37,7 @@ export const Default = (args: BottomSheetProps) => {
 
   return (
     <>
-      <Button onClick={handleOpen} theme="primary200" isDisabled={false}>
+      <Button className="p-10" onClick={handleOpen} theme="primary200" isDisabled={false}>
         Open
       </Button>
       <BottomSheet {...args} isOpen={isOpen} onClose={handleClose}>

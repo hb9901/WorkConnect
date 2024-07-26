@@ -1,4 +1,4 @@
-import Input from '../Input/Input'; // Input 컴포넌트를 적절히 import 해야 해
+import Input from '../Input/Input';
 import Typography from '../Typography';
 
 interface TextFieldProps {
@@ -14,6 +14,7 @@ interface TextFieldProps {
 const TextField = ({ id, children, errorMessage, onChange, placeholder, value, isError }: TextFieldProps) => {
   return (
     <div className="relative text-field">
+      {/* 형빈님 Label 컴포넌트 받아서 넣을 예정 */}
       <Typography className="p-1" color="grey200">
         {children}
       </Typography>

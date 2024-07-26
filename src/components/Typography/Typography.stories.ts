@@ -70,7 +70,7 @@ export default {
 export const Title20px = {
   args: {
     children: 'Title20px 텍스트',
-    variant: 'Title/20px',
+    variant: 'Title20px',
     color: 'black'
   }
 };

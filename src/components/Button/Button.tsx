@@ -1,6 +1,10 @@
-type ButtonTheme = 'primary200' | 'primary300' | 'grey50' | 'grey200' | 'text' | 'underlineText'; // key
+import clsx from 'clsx';
+import React from 'react';
+
+type ButtonTheme = 'primary200' | 'primary300' | 'grey50' | 'grey200' | 'text' | 'underlineText';
 
 interface ButtonProps {
+  className?: string;
   theme: ButtonTheme;
   children: string;
   isDisabled: boolean;
@@ -24,10 +28,10 @@ const color: Record<ButtonTheme, string> = {
   underlineText
 };
 
-const Button = ({ theme, children, isDisabled, onClick }: ButtonProps) => {
+const Button = ({ className, theme, children, isDisabled, onClick }: ButtonProps) => {
   return (
     <button
-      className={`rounded-md w-full h-[59px] ${color[theme]} ${isDisabled ? disabledStyle : ''}`}
+      className={clsx('rounded-md w-full', color[theme], className, { [disabledStyle]: isDisabled })}
       onClick={onClick}
       disabled={isDisabled}
     >

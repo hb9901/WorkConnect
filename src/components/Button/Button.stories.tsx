@@ -45,7 +45,8 @@ export const Default = {
   args: {
     children: 'Button',
     theme: 'primary200',
-    isDisabled: false
+    isDisabled: false,
+    className: 'h-[59px]'
   }
 };
 
@@ -53,7 +54,8 @@ export const Primary200 = {
   args: {
     children: 'Button',
     theme: 'primary200',
-    isDisabled: false
+    isDisabled: false,
+    className: 'h-[59px]'
   }
 };
 
@@ -61,7 +63,8 @@ export const Primary300 = {
   args: {
     children: 'Button',
     theme: 'primary300',
-    isDisabled: false
+    isDisabled: false,
+    className: 'h-[59px]'
   }
 };
 
@@ -69,7 +72,8 @@ export const Grey50 = {
   args: {
     children: 'Button',
     theme: 'grey50',
-    isDisabled: false
+    isDisabled: false,
+    className: 'h-[59px]'
   }
 };
 
@@ -77,7 +81,8 @@ export const Grey200 = {
   args: {
     children: 'Button',
     theme: 'grey200',
-    isDisabled: false
+    isDisabled: false,
+    className: 'h-[59px]'
   }
 };
 
@@ -85,7 +90,8 @@ export const Text = {
   args: {
     children: 'Button',
     theme: 'text',
-    isDisabled: false
+    isDisabled: false,
+    className: 'h-[59px]'
   }
 };
 
@@ -93,6 +99,7 @@ export const UnderlineText = {
   args: {
     children: 'Button',
     theme: 'underlineText',
-    isDisabled: false
+    isDisabled: false,
+    className: 'h-[59px]'
   }
 };
