@@ -9,15 +9,14 @@ export interface InputProps {
   id: string;
 }
 
-const Input = ({ id, type = 'text', placeholder, value, onChange, className }: InputProps) => {
+const Input = ({ id, type = 'text', value, className, ...props }: InputProps) => {
   return (
     <input
       id={id}
       type={type}
-      placeholder={placeholder}
       value={value}
-      onChange={onChange}
-      className={`p-2 px-3 border text-grey200 rounded-lg shadow-md focus:outline-none focus:border-2 focus:border-primary200Main ${className}`}
+      className={`px-[16px] py-[12px] border text-grey200 rounded-lg shadow-md focus:outline-none focus:border-2 focus:border-primary200Main ${className}`}
+      {...props}
     />
   );
 };

@@ -1,16 +1,23 @@
+import clsx from 'clsx';
 export interface ToggleProps {
   isChecked: boolean;
   onChange: () => void;
   className?: string;
 }
 
-const Toggle = ({ isChecked, onChange, className }: ToggleProps) => {
+const Toggle = ({ isChecked, onChange, className, ...props }: ToggleProps) => {
   return (
     <div
-      className={`relative inline-block w-12 h-6 transition duration-200 ease-linear rounded-full ${
-        isChecked ? 'bg-primary200Main' : 'bg-gray-200'
-      } ${className}`}
+      className={clsx(
+        'relative inline-block w-12 h-6 transition duration-200 ease-linear rounded-full',
+        {
+          'bg-primary200Main': isChecked,
+          'bg-gray-200': !isChecked
+        },
+        className
+      )}
       onClick={onChange}
+      {...props}
     >
       <label
         htmlFor="toggle"

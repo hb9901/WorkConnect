@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import Input from '../Input/Input';
 import Typography from '../Typography';
 
@@ -9,26 +10,24 @@ interface TextFieldProps {
   isError: boolean;
   children: string;
   id: string;
+  message: string;
 }
 
-const TextField = ({ id, children, errorMessage, onChange, placeholder, value, isError }: TextFieldProps) => {
+const TextField = ({ id, children, message, value, isError, ...props }: TextFieldProps) => {
+  const inputId = useId();
+  const customId = id || inputId;
+
   return (
     <div className="relative text-field">
-      {/* 형빈님 Label 컴포넌트 받아서 넣을 예정 */}
+      {/* 형빈님 Label 컴포넌트 받아서 넣을 예정 - 라벨로 바꿔주세요 */}
+      {/* <Typography className="p-1" color="grey200" htmlFor={customId}> */}
       <Typography className="p-1" color="grey200">
         {children}
       </Typography>
-      <Input
-        id={id}
-        placeholder={placeholder}
-        value={value}
-        type="text"
-        onChange={onChange}
-        className={`border ${isError ? 'border-error' : ''}`}
-      />
-      {isError && (
+      <Input id={customId} value={value} type="text" className={`border ${isError ? 'border-error' : ''}`} {...props} />
+      {message && (
         <Typography variant="Body14px" color="error" className="p-1">
-          {errorMessage}
+          {message}
         </Typography>
       )}
     </div>

@@ -20,14 +20,10 @@ export default {
 export const Default = (args: TabProps) => (
   <Tabs {...args}>
     <Tab {...args} active>
-      <div>사진・동영상</div>
+      사진・동영상
     </Tab>
-    <Tab {...args}>
-      <div>파일</div>
-    </Tab>
-    <Tab {...args}>
-      <div>공지</div>
-    </Tab>
+    <Tab {...args}>파일</Tab>
+    <Tab {...args}>공지</Tab>
   </Tabs>
 );
 
