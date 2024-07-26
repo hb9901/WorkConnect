@@ -12,7 +12,7 @@ export default {
     theme: {
       control: {
         type: 'select',
-        options: ['primary200', 'primary300', 'grey50', 'grey200', 'text', 'underlineText']
+        options: ['primary', 'grey', 'text', 'underlineText']
       },
       description: '버튼 테마',
       defaultValue: 'primary200'
@@ -30,6 +30,12 @@ export default {
       control: 'boolean',
       description: '버튼 비활성화 여부',
       defaultValue: true
+    },
+    type: {
+      type: 'select',
+      options: ['button', 'submit', 'reset'],
+      description: '버튼의 type을 지정합니다.',
+      defaultValue: 'button'
     }
   },
   decorators: [
@@ -44,45 +50,32 @@ export default {
 export const Default = {
   args: {
     children: 'Button',
-    theme: 'primary200',
-    isDisabled: false,
-    className: 'h-[59px]'
+    theme: 'primary',
+    isDisabled: false
   }
 };
 
-export const Primary200 = {
+export const Primary = {
   args: {
     children: 'Button',
-    theme: 'primary200',
-    isDisabled: false,
-    className: 'h-[59px]'
+    theme: 'primary',
+    isDisabled: false
   }
 };
 
-export const Primary300 = {
+export const Grey = {
   args: {
     children: 'Button',
-    theme: 'primary300',
-    isDisabled: false,
-    className: 'h-[59px]'
+    theme: 'grey',
+    isDisabled: false
   }
 };
 
-export const Grey50 = {
+export const OutlineText = {
   args: {
     children: 'Button',
-    theme: 'grey50',
-    isDisabled: false,
-    className: 'h-[59px]'
-  }
-};
-
-export const Grey200 = {
-  args: {
-    children: 'Button',
-    theme: 'grey200',
-    isDisabled: false,
-    className: 'h-[59px]'
+    theme: 'outline',
+    isDisabled: false
   }
 };
 
@@ -90,8 +83,7 @@ export const Text = {
   args: {
     children: 'Button',
     theme: 'text',
-    isDisabled: false,
-    className: 'h-[59px]'
+    isDisabled: false
   }
 };
 
@@ -99,7 +91,6 @@ export const UnderlineText = {
   args: {
     children: 'Button',
     theme: 'underlineText',
-    isDisabled: false,
-    className: 'h-[59px]'
+    isDisabled: false
   }
 };
