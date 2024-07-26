@@ -8,15 +8,17 @@ interface TextFieldProps {
   value: string;
   isError: boolean;
   children: string;
+  id: string;
 }
 
-const TextField = ({ children, errorMessage, onChange, placeholder, value, isError }: TextFieldProps) => {
+const TextField = ({ id, children, errorMessage, onChange, placeholder, value, isError }: TextFieldProps) => {
   return (
     <div className="relative text-field">
       <Typography className="p-1" color="grey200">
         {children}
       </Typography>
       <Input
+        id={id}
         placeholder={placeholder}
         value={value}
         type="text"
