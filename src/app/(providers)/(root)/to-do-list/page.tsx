@@ -1,6 +1,7 @@
 'use client';
 import useTodo from '@/hooks/useTodo';
 import { Tables } from '@/types/supabase';
+import Header from './_components/Header';
 import ToDoList from './_components/ToDoList';
 import WeekButtons from './_components/WeekButtons';
 import WeekDate from './_components/WeekDate';
@@ -14,7 +15,9 @@ const ToDoListPage = () => {
 
   return (
     <>
-      <header></header>
+      <header>
+        <Header />
+      </header>
       <main>
         <WeekButtons />
         <WeekName />
