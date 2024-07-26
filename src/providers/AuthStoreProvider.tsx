@@ -2,7 +2,7 @@
 
 import { createContext, useRef, useContext, useEffect } from 'react';
 import { useStore } from 'zustand';
-import { type AuthStoreTypes, createAuthStore } from '@/stores/authStore';
+import { type AuthStoreTypes, createAuthStore } from '@/store/authStore';
 import { createClient } from '@/utils/supabase/supabaseClient';
 import type { StrictPropsWithChildren } from '@/types/common';
 

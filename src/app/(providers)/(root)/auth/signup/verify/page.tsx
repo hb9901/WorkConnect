@@ -3,7 +3,6 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { deleteUserById, deleteWorkUserById } from '../../_utils/supabase';
 import BackButton from '../../_components/BackButton';
 
 const AuthVerifyPage = () => {
@@ -55,8 +54,6 @@ const AuthVerifyPage = () => {
 
     if (reset) {
       const { error } = await supabase.auth.signOut();
-      await deleteWorkUserById(email);
-      await deleteUserById(email);
       if (error) return alert(`세션 제거중 에러가 발생하였습니다. : ${error.message}`);
 
       return route.push('/auth/signup');
