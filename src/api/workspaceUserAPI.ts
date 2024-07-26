@@ -1,7 +1,7 @@
 import { Tables } from '@/types/supabase';
 import { AxiosInstance } from 'axios';
 
-class workspaceUserAPI {
+class WorkspaceUserAPI {
   private axios: AxiosInstance;
 
   constructor(axios: AxiosInstance) {
@@ -27,4 +27,4 @@ class workspaceUserAPI {
   }
 }
 
-export default workspaceUserAPI;
+export default WorkspaceUserAPI;

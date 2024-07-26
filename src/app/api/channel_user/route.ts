@@ -6,16 +6,12 @@ import { NextRequest, NextResponse } from 'next/server';
 export const GET = async (request: NextRequest) => {
   const supabase = createClient();
   const { searchParams } = new URL(request.url);
-  const type = searchParams.get('type');
-  const workspace_id = searchParams.get('workspace_id');
-
+  const channelId = searchParams.get('channel_id');
   try {
     const { data, error } = await supabase
-      .from('channel')
-      .select()
-      .eq('type', type!)
-      .eq('workspace_id', workspace_id!)
-      .order('created_at', { ascending: true });
+      .from('channel_user')
+      .select('workspace_user_id')
+      .eq('channel_id', channelId!);
     if (error)
       return NextResponse.json({
         message: 'Failed to fetch channel data',
@@ -37,18 +33,18 @@ export const GET = async (request: NextRequest) => {
 export const POST = async (request: NextRequest) => {
   const supabase = createClient();
 
-  const { name, type, workspace_id } = await request.json();
+  const { name, user_id, channel_id, workspace_user_id } = await request.json();
   try {
-    const { error } = await supabase.from('channel').insert({ name, type, workspace_id });
+    const { error } = await supabase.from('channel_user').insert({ name, user_id, channel_id, workspace_user_id });
 
     if (error)
       return NextResponse.json({
-        message: 'Failed to insert channel data',
+        message: 'Failed to insert channel_user data',
         error,
         status: false,
         statusCode: 500
       });
-    return NextResponse.json({ message: 'Create Channel' });
+    return NextResponse.json({ message: 'User Enter the room Successfully' });
   } catch (error) {
     return NextResponse.json({
       message: 'Failed to insert data',
@@ -61,17 +57,21 @@ export const POST = async (request: NextRequest) => {
 
 export const DELETE = async (request: NextRequest) => {
   const supabase = createClient();
-  const { id, workspace_id } = await request.json();
+  const { channel_id, workspace_user_id } = await request.json();
   try {
-    const { error } = await supabase.from('channel').delete().eq('id', id).eq('workspace_id', workspace_id);
+    const { error } = await supabase
+      .from('channel_user')
+      .delete()
+      .eq('channel_id', channel_id)
+      .eq('workspace_user_id', workspace_user_id);
     if (error)
       return NextResponse.json({
-        message: 'Failed to delete channel data',
+        message: 'Failed to delete channel_user data',
         error,
         status: false,
         statusCode: 500
       });
-    return NextResponse.json({ message: 'Delete Channel' });
+    return NextResponse.json({ message: 'User leave Successfully' });
   } catch (error) {
     return NextResponse.json({
       message: 'Failed to delete data',

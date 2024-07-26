@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 
 type WorkSpaceType = Tables<'workspace_user'>;
 
-class workspaceUserListAPI {
+class WorkspaceUserListAPI {
   private axios: AxiosInstance;
 
   constructor(axios: AxiosInstance) {
@@ -19,4 +19,4 @@ class workspaceUserListAPI {
   }
 }
 
-export default workspaceUserListAPI;
+export default WorkspaceUserListAPI;
