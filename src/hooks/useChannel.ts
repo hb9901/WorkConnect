@@ -9,7 +9,7 @@ const useChannel = (type: 'chat' | 'video', workspace_id: number) => {
     isPending,
     isError
   } = useQuery({
-    queryKey: ['channel'],
+    queryKey: ['channel', type, workspace_id],
     queryFn: () => api.channel.getChannelList(type, workspace_id)
   });
 

@@ -4,6 +4,7 @@ import ChannelAPI from './channelAPi';
 import storageProfileAPI from './storageProfileAPI';
 import TodoAPI from './todoAPi';
 import workspaceUserAPI from './workspaceUserAPI';
+import workspaceUserListAPI from './workspaceUserListAPI';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -12,6 +13,7 @@ class API {
   todo;
   channel;
   workspaceUser;
+  workspaceUserList;
   storageProfile;
 
   constructor() {
@@ -20,8 +22,8 @@ class API {
     this.todo = new TodoAPI(this.axios);
     this.channel = new ChannelAPI(this.axios);
     this.workspaceUser = new workspaceUserAPI(this.axios);
+    this.workspaceUserList = new workspaceUserListAPI(this.axios);
     this.storageProfile = new storageProfileAPI(this.axios);
-
   }
 }
 

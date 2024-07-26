@@ -27,7 +27,7 @@ const VideoList = () => {
   return (
     <div className="m-5">
       {channelList.map((channel) => (
-        <VideoListItem id={channel.id} name={channel.name as string} type={channel.type as string} />
+        <VideoListItem key={channel.id} id={channel.id} name={channel.name as string} type={channel.type as string} />
       ))}
     </div>
   );
