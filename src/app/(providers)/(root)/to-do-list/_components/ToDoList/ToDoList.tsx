@@ -8,7 +8,7 @@ import { changeDateStr, isDateSelected } from './function';
 const ToDoList = () => {
   const { todoList }: { todoList: Tables<'todo'>[] } = useTodo();
   const { selectedDate } = useDateStore();
-
+  console.log(todoList);
   return (
     <div className="flex flex-col gap-y-4 mt-5">
       {todoList &&
