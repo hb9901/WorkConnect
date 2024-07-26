@@ -9,7 +9,7 @@ const VideoList = () => {
   const userName = 'minkon';
 
   const router = useRouter();
-  const { channelList } = useChannel('video', workspace_id);
+  const { channelList } = useChannel({ type: 'video', workspace_id });
 
   if (!channelList) {
     return <div>목록이 없습니다..</div>;
