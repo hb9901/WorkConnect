@@ -1,9 +1,9 @@
-"use client";
-import useTodo from "@/hooks/useTodo";
-import useDateStore from "@/zustand/dateStore";
-import { useRef } from "react";
+'use client';
+import useTodo from '@/hooks/useTodo';
+import useDateStore from '@/store/dateStore';
+import { useRef } from 'react';
 
-const FAKE_USER_ID = "8062212a-f117-4492-a8ac-c642afab4a41";
+const FAKE_USER_ID = '8062212a-f117-4492-a8ac-c642afab4a41';
 
 const ToDoAddPage = () => {
   const { addTodo } = useTodo();
@@ -14,24 +14,21 @@ const ToDoAddPage = () => {
   const endHourRef = useRef(null);
   const endMinuteRef = useRef(null);
   const placeRef = useRef(null);
-  const startDate = selectedDate.set("hour", 4).set("minute", 10).toISOString();
-  const endDate = selectedDate.set("hour", 6).set("minute", 10).toISOString();
+  const startDate = selectedDate.set('hour', 4).set('minute', 10).toISOString();
+  const endDate = selectedDate.set('hour', 6).set('minute', 10).toISOString();
 
   const handleAdd = async () => {
     if (!titleRef.current || !placeRef.current) return;
-    const startDate = selectedDate
-      .set("hour", 4)
-      .set("minute", 10)
-      .toISOString();
-    const endDate = selectedDate.set("hour", 6).set("minute", 10).toISOString();
+    const startDate = selectedDate.set('hour', 4).set('minute', 10).toISOString();
+    const endDate = selectedDate.set('hour', 6).set('minute', 10).toISOString();
     const todo = {
       id: 21,
-      title: "테스트 제목",
-      place: "테스트 장소",
+      title: '테스트 제목',
+      place: '테스트 장소',
       user_id: FAKE_USER_ID,
       is_done: false,
       start_date: startDate,
-      end_date: endDate,
+      end_date: endDate
     };
     await addTodo(todo);
   };

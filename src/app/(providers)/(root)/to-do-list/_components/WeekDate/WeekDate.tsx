@@ -1,6 +1,6 @@
-"use client";
-import useDateStore from "@/zustand/dateStore";
-import { getWeekDates } from "./function";
+'use client';
+import useDateStore from '@/store/dateStore';
+import { getWeekDates } from './function';
 
 const WeekDate = () => {
   const { selectedDate, handleClickDate } = useDateStore();
