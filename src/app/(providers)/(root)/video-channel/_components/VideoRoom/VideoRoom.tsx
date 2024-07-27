@@ -12,6 +12,8 @@ type videoRoomProps = {
 
 const VideoRoom = ({ name }: videoRoomProps) => {
   const [token, setToken] = useState('');
+  const [connect, setConnect] = useState(true);
+  const [isConnected, setIsConnected] = useState(false);
 
   const { audioEnable, videoEnable, isStreamOk } = useStreamSetStore();
   const searchParams = useSearchParams();
@@ -32,6 +34,11 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       }
     })();
   }, [isStreamOk, userName]);
+
+  const handleDisconnect = () => {
+    setConnect(false);
+    setIsConnected(false);
+  };
 
   if (token === '') {
     return <div>Getting token...</div>;
