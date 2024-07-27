@@ -48,7 +48,7 @@ export type Database = {
           id: number
           last_read_chat_id: number | null
           user_id: string | null
-          workspace_user_id: string | null
+          workspace_user_id: string
         }
         Insert: {
           channel_id: number
@@ -56,7 +56,7 @@ export type Database = {
           id?: number
           last_read_chat_id?: number | null
           user_id?: string | null
-          workspace_user_id?: string | null
+          workspace_user_id: string
         }
         Update: {
           channel_id?: number
@@ -64,7 +64,7 @@ export type Database = {
           id?: number
           last_read_chat_id?: number | null
           user_id?: string | null
-          workspace_user_id?: string | null
+          workspace_user_id?: string
         }
         Relationships: [
           {
@@ -91,7 +91,7 @@ export type Database = {
           id: number
           is_notice: boolean
           type: string
-          workspace_user_id: string | null
+          workspace_user_id: string
         }
         Insert: {
           channel_id: number
@@ -100,7 +100,7 @@ export type Database = {
           id?: number
           is_notice: boolean
           type: string
-          workspace_user_id?: string | null
+          workspace_user_id: string
         }
         Update: {
           channel_id?: number
@@ -109,7 +109,7 @@ export type Database = {
           id?: number
           is_notice?: boolean
           type?: string
-          workspace_user_id?: string | null
+          workspace_user_id?: string
         }
         Relationships: [
           {
@@ -307,7 +307,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      get_channel_messages: {
+      get_chat_channels: {
         Args: {
           wid: number
           wuid: string
