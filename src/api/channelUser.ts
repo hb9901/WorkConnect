@@ -1,7 +1,9 @@
 import { ChannelUserType } from '@/types/channelUser';
 import { AxiosInstance } from 'axios';
 
-type CreateChannelUserParams = Pick<ChannelUserType, 'channel_id'> & { workspaceUserIds: ChannelUserType['workspace_user_id'][] };
+type CreateChannelUserParams = Pick<ChannelUserType, 'channel_id'> & {
+  workspaceUserIds: ChannelUserType['workspace_user_id'][];
+};
 
 class channelUserAPI {
   private axios: AxiosInstance;

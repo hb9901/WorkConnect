@@ -1,8 +1,8 @@
-import type { ChannelUserType } from "@/types/channelUser";
-import { createClient } from "@/utils/supabase/supabaseServer";
+import { ChannelUserType } from '@/types/channelUser';
+import { createClient } from '@/utils/supabase/supabaseServer';
 
 type CreateChannelUsersProps = {
-  workspaceUserIds: ChannelUserType['workspace_user_id'][]
+  workspaceUserIds: ChannelUserType['workspace_user_id'][];
 } & Pick<ChannelUserType, 'channel_id'>;
 
 export const createChannelUsers = async ({ workspaceUserIds, channel_id }: CreateChannelUsersProps) => {

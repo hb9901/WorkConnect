@@ -1,4 +1,4 @@
-import { InsertChannelUserType } from '@/types/channeluser';
+import { ChannelUserType } from '@/types/channelUser';
 import { AxiosInstance } from 'axios';
 
 class ChannelUserAPI {
@@ -8,7 +8,7 @@ class ChannelUserAPI {
     this.axios = axios;
   }
 
-  async getChannelUserList(channel_id: number): Promise<InsertChannelUserType> {
+  async getChannelUserList(channel_id: number): Promise<ChannelUserType> {
     const response = await this.axios.get(this.path, {
       params: { channel_id }
     });
@@ -16,7 +16,7 @@ class ChannelUserAPI {
     return response.data;
   }
 
-  async postChannelUser(row: InsertChannelUserType) {
+  async postChannelUser(row: ChannelUserType) {
     const response = await this.axios.post(this.path, row);
     return response.data;
   }

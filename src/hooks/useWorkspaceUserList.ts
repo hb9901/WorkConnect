@@ -1,4 +1,5 @@
 import api from '@/api/api';
+import { Tables } from '@/types/supabase';
 import { useQuery } from '@tanstack/react-query';
 
 const useWorkspaceUserList = (workspaceId: number) => {
@@ -6,7 +7,7 @@ const useWorkspaceUserList = (workspaceId: number) => {
     data: workspaceUserList,
     isPending,
     isError
-  } = useQuery({
+  } = useQuery<Tables<'workspace_user'>[]>({
     queryKey: ['workspaceUserList', workspaceId],
     queryFn: () => api.workspaceUserList.getWorkspaceUserList(workspaceId)
   });

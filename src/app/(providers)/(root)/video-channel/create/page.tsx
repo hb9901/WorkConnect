@@ -1,3 +1,5 @@
+// 임시 파일
+
 'use client';
 import useChannel from '@/hooks/useChannel';
 import useChannelUser from '@/hooks/useChannelUser';
@@ -9,7 +11,6 @@ import { useState } from 'react';
 
 const FAKE_WORKSPACE_ID = 2;
 
-// 임시 파일
 type WorkspaceUserType = Tables<'workspace_user'>;
 
 const CreateChannelPage = () => {
@@ -17,7 +18,7 @@ const CreateChannelPage = () => {
   const router = useRouter();
 
   const { workspaceUserList } = useWorkspaceUserList(FAKE_WORKSPACE_ID);
-  const { createChannel } = useChannel('video', FAKE_WORKSPACE_ID);
+  const { createChannel } = useChannel({ type: 'video', workspace_id: FAKE_WORKSPACE_ID });
   const [selectedUserList, setSelectedUserList] = useState<WorkspaceUserType[]>([]);
 
   const handleSelectUser = (user: WorkspaceUserType) => {
