@@ -1,6 +1,7 @@
 'use client';
 import useTodoList from '@/hooks/useTodo';
 import useDateStore from '@/store/dateStore';
+import useTimeModalStore from '@/store/timeModalStore';
 import dayjs from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
 import Header from './_components/Header';
@@ -15,6 +16,7 @@ type ToDoAddPageProps = {
 };
 
 const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
+  const { setTimeModalOpen } = useTimeModalStore();
   const { todoList, addTodo } = useTodoList();
   const selectedTodo = todoList && todoList.filter((todo) => todo.id == params.id)[0];
   const { selectedDate } = useDateStore();
@@ -50,6 +52,10 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     setIsStatusOpen((prev) => !prev);
   };
 
+  const handleTimeClick = () => {
+    setTimeModalOpen();
+  };
+
   const handleAdd = async () => {
     if (!titleRef.current || !placeRef.current) return;
     const startDate = selectedDate.set('hour', 4).set('minute', 10).toISOString();
@@ -81,9 +87,9 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
           className="text-3xl font-bold"
         />
         <div className="flex flex-row justify-around">
-          <button>{startTime}</button>
+          <button onClick={handleTimeClick}>{startTime}</button>
           <div>{`>`}</div>
-          <button>{endTime}</button>
+          <button onClick={handleTimeClick}>{endTime}</button>
         </div>
         <div className="flex flex-row justify-between">
           <div>장소</div>
