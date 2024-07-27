@@ -1,8 +1,5 @@
-import { ChannelInsertType } from '@/types/channel';
-import { Tables } from '@/types/supabase';
+import { ChannelInsertType, ChannelType } from '@/types/channel';
 import { AxiosInstance } from 'axios';
-
-type Channel = Tables<'channel'>;
 
 class ChannelAPI {
   private axios: AxiosInstance;
@@ -13,7 +10,7 @@ class ChannelAPI {
     this.path = '/api/channel';
   }
 
-  async getChannelList(type: string, workspace_id: number): Promise<Channel[]> {
+  async getChannelList({type, workspace_id}: Pick<ChannelType, 'type' | 'workspace_id'>): Promise<ChannelType[]> {
     const response = await this.axios.get(this.path, {
       params: {
         type,
