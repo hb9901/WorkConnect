@@ -6,7 +6,6 @@ import VideoListItem from '../VideoListItem';
 const VideoList = () => {
   // 전역으로 관리 되어야 할듯
   const workspace_id = 2;
-
   const userName = 'minkon';
 
   const router = useRouter();
@@ -19,7 +18,7 @@ const VideoList = () => {
   return (
     <div className="m-5">
       {channelList.map((channel) => (
-        <VideoListItem key={channel.id} id={channel.id} name={channel.name as string} type={channel.type as string} />
+        <VideoListItem id={channel.id} name={channel.name as string} type={channel.type as string} />
       ))}
     </div>
   );

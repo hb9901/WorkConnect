@@ -258,32 +258,32 @@ export type Database = {
         Row: {
           email: string | null
           id: string
-          name: string | null
+          name: string
           phone: string | null
           profile_image: string | null
           state: string | null
           user_id: string
-          workspace_id: number | null
+          workspace_id: number
         }
         Insert: {
           email?: string | null
           id?: string
-          name?: string | null
+          name: string
           phone?: string | null
           profile_image?: string | null
           state?: string | null
           user_id: string
-          workspace_id?: number | null
+          workspace_id: number
         }
         Update: {
           email?: string | null
           id?: string
-          name?: string | null
+          name?: string
           phone?: string | null
           profile_image?: string | null
           state?: string | null
           user_id?: string
-          workspace_id?: number | null
+          workspace_id?: number
         }
         Relationships: [
           {
