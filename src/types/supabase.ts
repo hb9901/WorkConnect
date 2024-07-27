@@ -15,21 +15,21 @@ export type Database = {
           id: number
           name: string | null
           type: string | null
-          workspace_id: number | null
+          workspace_id: number
         }
         Insert: {
           created_at?: string
           id?: number
           name?: string | null
           type?: string | null
-          workspace_id?: number | null
+          workspace_id: number
         }
         Update: {
           created_at?: string
           id?: number
           name?: string | null
           type?: string | null
-          workspace_id?: number | null
+          workspace_id?: number
         }
         Relationships: [
           {
@@ -47,24 +47,24 @@ export type Database = {
           created_at: string
           id: number
           last_read_chat_id: number | null
-          user_id: string
-          workspace_user_id: string | null
+          user_id: string | null
+          workspace_user_id: string
         }
         Insert: {
           channel_id: number
           created_at?: string
           id?: number
           last_read_chat_id?: number | null
-          user_id: string
-          workspace_user_id?: string | null
+          user_id?: string | null
+          workspace_user_id: string
         }
         Update: {
           channel_id?: number
           created_at?: string
           id?: number
           last_read_chat_id?: number | null
-          user_id?: string
-          workspace_user_id?: string | null
+          user_id?: string | null
+          workspace_user_id?: string
         }
         Relationships: [
           {
@@ -81,13 +81,6 @@ export type Database = {
             referencedRelation: "channel"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "room_user_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "user"
-            referencedColumns: ["id"]
-          },
         ]
       }
       chat: {
@@ -98,7 +91,7 @@ export type Database = {
           id: number
           is_notice: boolean
           type: string
-          workspace_user_id: string | null
+          workspace_user_id: string
         }
         Insert: {
           channel_id: number
@@ -107,7 +100,7 @@ export type Database = {
           id?: number
           is_notice: boolean
           type: string
-          workspace_user_id?: string | null
+          workspace_user_id: string
         }
         Update: {
           channel_id?: number
@@ -116,7 +109,7 @@ export type Database = {
           id?: number
           is_notice?: boolean
           type?: string
-          workspace_user_id?: string | null
+          workspace_user_id?: string
         }
         Relationships: [
           {
@@ -170,7 +163,7 @@ export type Database = {
       todo: {
         Row: {
           end_date: string
-          id: number
+          id: string
           place: string | null
           priority: string
           start_date: string
@@ -180,17 +173,17 @@ export type Database = {
         }
         Insert: {
           end_date: string
-          id?: number
+          id?: string
           place?: string | null
           priority: string
           start_date: string
           status: string
           title: string
-          user_id?: string
+          user_id: string
         }
         Update: {
           end_date?: string
-          id?: number
+          id?: string
           place?: string | null
           priority?: string
           start_date?: string
@@ -200,10 +193,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "to_do_list_user_id_fkey"
+            foreignKeyName: "todo2_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "user"
+            referencedRelation: "workspace_user"
             referencedColumns: ["id"]
           },
         ]
@@ -314,7 +307,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      get_channel_messages: {
+      get_chat_channels: {
         Args: {
           wid: number
           wuid: string
