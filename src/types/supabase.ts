@@ -170,7 +170,7 @@ export type Database = {
       todo: {
         Row: {
           end_date: string
-          id: number
+          id: string
           place: string | null
           priority: string
           start_date: string
@@ -180,17 +180,17 @@ export type Database = {
         }
         Insert: {
           end_date: string
-          id?: number
+          id?: string
           place?: string | null
           priority: string
           start_date: string
           status: string
           title: string
-          user_id?: string
+          user_id: string
         }
         Update: {
           end_date?: string
-          id?: number
+          id?: string
           place?: string | null
           priority?: string
           start_date?: string
@@ -200,10 +200,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "to_do_list_user_id_fkey"
+            foreignKeyName: "todo2_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "user"
+            referencedRelation: "workspace_user"
             referencedColumns: ["id"]
           },
         ]
