@@ -1,4 +1,4 @@
-import { Tables } from '@/types/supabase';
+import { InsertChannelUserType } from '@/types/channeluser';
 import { AxiosInstance } from 'axios';
 
 class ChannelUserAPI {
@@ -8,7 +8,7 @@ class ChannelUserAPI {
     this.axios = axios;
   }
 
-  async getChannelUserList(channel_id: number): Promise<Tables<'channel_user'>> {
+  async getChannelUserList(channel_id: number): Promise<InsertChannelUserType> {
     const response = await this.axios.get(this.path, {
       params: { channel_id }
     });
@@ -16,7 +16,7 @@ class ChannelUserAPI {
     return response.data;
   }
 
-  async postChannelUser(row: Tables<'channel_user'>) {
+  async postChannelUser(row: InsertChannelUserType) {
     const response = await this.axios.post(this.path, row);
     return response.data;
   }

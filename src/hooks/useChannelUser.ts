@@ -1,8 +1,7 @@
 import api from '@/api/api';
-import { Tables } from '@/types/supabase';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-const useChannel = (channel_id: number, workspace_user_id?: string) => {
+const useChannelUser = (channel_id: number, workspace_user_id: string) => {
   const queryClient = useQueryClient();
   const {
     data: channelUser,
@@ -14,14 +13,14 @@ const useChannel = (channel_id: number, workspace_user_id?: string) => {
   });
 
   const { mutateAsync: enterChannel } = useMutation({
-    mutationFn: (row: Tables<'channel_user'>) => api.channelUser.postChannelUser(row),
+    mutationFn: (user_id: string) => api.channelUser.postChannelUser({ user_id, channel_id, workspace_user_id }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['channelUser', channel_id] });
     }
   });
 
   const { mutateAsync: leaveChannel } = useMutation({
-    mutationFn: (row: Tables<'channel_user'>) => api.channelUser.deleteChannelUser(channel_id, workspace_user_id!),
+    mutationFn: () => api.channelUser.deleteChannelUser(channel_id, workspace_user_id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['channelUser', channel_id] });
     }
@@ -29,3 +28,5 @@ const useChannel = (channel_id: number, workspace_user_id?: string) => {
 
   return { channelUser, isPending, isError, enterChannel, leaveChannel };
 };
+
+export default useChannelUser;

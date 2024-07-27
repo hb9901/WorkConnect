@@ -13,7 +13,7 @@ const useChannel = (type: 'chat' | 'video', workspace_id: number) => {
     queryFn: () => api.channel.getChannelList(type, workspace_id)
   });
 
-  const { mutateAsync: addChannel } = useMutation({
+  const { mutateAsync: createChannel } = useMutation({
     mutationFn: (channel: ChannelInsertType) => api.channel.postChannel(channel),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['channel'] });
@@ -29,7 +29,7 @@ const useChannel = (type: 'chat' | 'video', workspace_id: number) => {
     }
   });
 
-  return { channelList, isPending, isError, addChannel, delChannel };
+  return { channelList, isPending, isError, createChannel, delChannel };
 };
 
 export default useChannel;

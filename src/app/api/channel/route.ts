@@ -12,7 +12,7 @@ export const GET = async (request: NextRequest) => {
   try {
     const { data, error } = await supabase
       .from('channel')
-      .select()
+      .select('*')
       .eq('type', type!)
       .eq('workspace_id', workspace_id!)
       .order('created_at', { ascending: true });
@@ -39,7 +39,7 @@ export const POST = async (request: NextRequest) => {
 
   const { name, type, workspace_id } = await request.json();
   try {
-    const { error } = await supabase.from('channel').insert({ name, type, workspace_id });
+    const { data, error } = await supabase.from('channel').insert({ name, type, workspace_id }).select('*');
 
     if (error)
       return NextResponse.json({
@@ -48,7 +48,7 @@ export const POST = async (request: NextRequest) => {
         status: false,
         statusCode: 500
       });
-    return NextResponse.json({ message: 'Create Channel' });
+    return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({
       message: 'Failed to insert data',
