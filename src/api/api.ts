@@ -1,11 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 
 import ChannelAPI from './channelAPI';
-import ChannelUserAPI from './channelUserAPI';
 import storageProfileAPI from './storageProfileAPI';
 import TodoAPI from './todoAPi';
-import WorkspaceUserAPI from './workspaceUserAPI';
-import WorkspaceUserListAPI from './workspaceUserListAPI';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -26,7 +23,6 @@ class API {
     this.workspaceUser = new WorkspaceUserAPI(this.axios);
     this.workspaceUserList = new WorkspaceUserListAPI(this.axios);
     this.storageProfile = new storageProfileAPI(this.axios);
-    this.channelUser = new ChannelUserAPI(this.axios);
   }
 }
 

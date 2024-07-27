@@ -1,5 +1,6 @@
 // pages/api/channel.js
 
+import { createChannel } from '@/services/channel';
 import { createClient } from '@/utils/supabase/supabaseServer';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -35,11 +36,9 @@ export const GET = async (request: NextRequest) => {
 };
 
 export const POST = async (request: NextRequest) => {
-  const supabase = createClient();
-
   const { name, type, workspace_id } = await request.json();
   try {
-    const { data, error } = await supabase.from('channel').insert({ name, type, workspace_id }).select('*');
+    const { data, error } = await createChannel({ name, type, workspace_id });
 
     if (error)
       return NextResponse.json({

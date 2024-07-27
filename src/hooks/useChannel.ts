@@ -1,16 +1,16 @@
 import api from '@/api/api';
-import { ChannelInsertType } from '@/types/channel';
+import { ChannelInsertType, ChannelType } from '@/types/channel';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-const useChannel = (type: 'chat' | 'video', workspace_id: number) => {
+const useChannel = ({ type, workspace_id }: Pick<ChannelType, 'type' | 'workspace_id'>) => {
   const queryClient = useQueryClient();
   const {
     data: channelList,
     isPending,
     isError
   } = useQuery({
-    queryKey: ['channel', type, workspace_id],
-    queryFn: () => api.channel.getChannelList(type, workspace_id)
+    queryKey: ['channel'],
+    queryFn: () => api.channel.getChannelList({ type, workspace_id })
   });
 
   const { mutateAsync: createChannel } = useMutation({

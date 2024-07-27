@@ -8,7 +8,7 @@ import VideoList from './_components/VideoList';
 
 const MakeVideoCallRoom = () => {
   const router = useRouter();
-  const { createChannel } = useChannel('video', 2);
+  const { createChannel } = useChannel({ type: 'video', workspace_id: 2 });
   const [roomName, setRoomName] = useState<string>('');
   // TODO: 추후 유저정보 받아올 수 있으면 수정
   const [userName, setUserName] = useState<string>('');
