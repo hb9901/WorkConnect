@@ -11,7 +11,7 @@ function ModalBackDrop({ children }: React.PropsWithChildren) {
 
   return (
     <div
-      className="fixed top-0 bottom-0 left-0 right-0 bg-black opacity-50 flex items-center justify-center"
+      className="fixed top-0 bottom-0 left-0 right-0 bg-[rgba(0,0,0,0.5)] flex items-center justify-center"
       onClick={handleBackDropClick}
     >
       {children}
