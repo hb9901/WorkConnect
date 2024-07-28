@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const FAKE_WORKSPACE_ID = 2;
+const FAKE_WORKSPACE_USER_ID = '7ca87acc-b8a8-4518-9628-4c8a18196e5d';
 
 type WorkspaceUserType = Tables<'workspace_user'>;
 
@@ -49,7 +50,8 @@ const CreateChannelPage = () => {
     const newChannel: ChannelInsertType = {
       name: roomName as string,
       type: 'video',
-      workspace_id: FAKE_WORKSPACE_ID
+      workspace_id: FAKE_WORKSPACE_ID,
+      host_id: FAKE_WORKSPACE_USER_ID
     };
 
     const channelId = await createChannel(newChannel); // 채널 아이디 반환

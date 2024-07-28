@@ -7,7 +7,6 @@ import { useCallback, useEffect, useState } from 'react';
 const PreJoinContent = () => {
   const searchParams = useSearchParams();
   const room = searchParams.get('room');
-  const name = searchParams.get('username');
 
   const router = useRouter();
   const [userName, setUserName] = useState<string>();
@@ -16,18 +15,6 @@ const PreJoinContent = () => {
   useEffect(() => {
     setUserName(preJoinChoices.username);
   }, []);
-
-  // const setStream = (values: LocalUserChoices) => {
-  //   setAudio(values.audioDeviceId);
-  //   setVideo(values.videoDeviceId);
-  //   setAudioEnable(values.audioEnabled);
-  //   setVideoEnable(values.videoEnabled);
-  //   setUserName(name || 'test-user');
-  //   if (audio.length > 0 && video.length > 0) {
-  //     StreamCheck(true);
-  //     router.push(`/video-channel/${room}?username=${userName}`);
-  //   }
-  // };
 
   const handlePreJoinSubmit = useCallback((values: LocalUserChoices) => {
     setPreJoinChoices(values);
