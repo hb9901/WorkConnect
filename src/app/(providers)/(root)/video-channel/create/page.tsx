@@ -7,7 +7,7 @@ import useWorkspaceUserList from '@/hooks/useWorkspaceUserList';
 import { ChannelInsertType } from '@/types/channel';
 import { Tables } from '@/types/supabase';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const FAKE_WORKSPACE_ID = 2;
 
@@ -20,20 +20,33 @@ const CreateChannelPage = () => {
   const { workspaceUserList } = useWorkspaceUserList(FAKE_WORKSPACE_ID);
   const { createChannel } = useChannel({ type: 'video', workspace_id: FAKE_WORKSPACE_ID });
   const [selectedUserList, setSelectedUserList] = useState<WorkspaceUserType[]>([]);
+  const [roomName, setRoomName] = useState<string>();
 
-  const handleSelectUser = (user: WorkspaceUserType) => {
-    setSelectedUserList((prev) => [...selectedUserList!, user]);
+  useEffect(() => {
+    const temp = selectedUserList.map((user) => user.name).join(',');
+    setRoomName(temp);
+  }, [selectedUserList]);
+
+  const handleSelectUser = (selectedUser: WorkspaceUserType) => {
+    setSelectedUserList((prev) => {
+      if (prev.some((user) => user.user_id === selectedUser.user_id)) {
+        return prev.filter((user) => user.user_id !== selectedUser.user_id); // 선택 해제
+      }
+      return [...prev, selectedUser];
+    });
   };
-  const handleSubmit = async (roomName: string) => {
+
+  const handleSubmit = async () => {
     const newChannel: ChannelInsertType = {
-      name: roomName,
+      name: roomName as string,
       type: 'video',
       workspace_id: FAKE_WORKSPACE_ID
     };
 
     const channel = await createChannel(newChannel); // 생성된 채널 정보 가져오기
 
-    console.log('생성된 채널 정보 : ', channel);
+    console.log(channel);
+
     selectedUserList.forEach((user) => {
       const { enterChannel } = useChannelUser(channel[0].channel_id, user.id);
       enterChannel(user.user_id);
@@ -46,28 +59,22 @@ const CreateChannelPage = () => {
     }
   };
   // [utils] : 방 이름 작성
-  const makeRoomName = () => {
-    let roomName = '';
-    for (let i = 0; i < selectedUserList.length; i++) {
-      if (i !== 0) {
-        roomName += `,${selectedUserList[i]}`;
-      } else {
-        roomName + selectedUserList[i];
-      }
-    }
-    return roomName;
-  };
+
   return (
     <div>
       <div className="flex gap-5 p-5">
-        <button onClick={() => handleSubmit(makeRoomName())} className="border hover:brightness-90">
+        <button onClick={handleSubmit} className="border hover:brightness-90">
           확인
         </button>
       </div>
+      {roomName && roomName.length > 0 && <p>{roomName}</p>}
       {workspaceUserList &&
-        workspaceUserList.map((wokespaceUser) => (
-          <div key={wokespaceUser.id} onClick={() => handleSelectUser(wokespaceUser)}>
-            <UserItem {...wokespaceUser} />
+        workspaceUserList.map((workspaceUser) => (
+          <div key={workspaceUser.id} onClick={() => handleSelectUser(workspaceUser)}>
+            <UserItem
+              {...workspaceUser}
+              isSelected={selectedUserList.some((user) => user.user_id === workspaceUser.user_id)}
+            />
           </div>
         ))}
     </div>
@@ -76,12 +83,19 @@ const CreateChannelPage = () => {
 
 export default CreateChannelPage;
 
-type UserItemProps = Tables<'workspace_user'>;
+type UserItemProps = Tables<'workspace_user'> & { isSelected: boolean };
 
-const UserItem = ({ ...wokespaceUser }: UserItemProps) => {
+const UserItem = ({ isSelected, ...workespaceUser }: UserItemProps) => {
   return (
-    <div className="bg-red-100 hover:brightness-90 p-5">
-      <p>{wokespaceUser.user_id}</p>
+    <div
+      className={`bg-slate-50 flex hover:brightness-90 p-5 active:brightness-75 ${isSelected ? 'border-2 border-green-500' : ''}`}
+    >
+      <div
+        className={`rounded-full w-[49px] h-[49px] ${isSelected ? 'bg-green-500' : 'bg-[#B1B1B1]'} flex justify-center items-center`}
+      >
+        profile
+      </div>
+      <p className="flex items-center ml-3">{workespaceUser.name}</p>
     </div>
   );
 };
