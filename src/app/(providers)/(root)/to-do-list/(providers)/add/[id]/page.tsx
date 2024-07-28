@@ -17,7 +17,7 @@ type ToDoAddPageProps = {
 
 const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const { startTime, endTime, setTimeModalOpen, setStartTime, setEndTime, setStart, setEnd } = useTimeModalStore();
-  const { todoList, addTodo } = useTodoList();
+  const { todoList, addTodo, updateTodo } = useTodoList();
   const selectedTodo = todoList && todoList.filter((todo) => todo.id == params.id)[0];
   const { selectedDate } = useDateStore();
   const [selectedPriority, setSelectedPriority] = useState<string>('');
@@ -28,8 +28,9 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const placeRef = useRef<HTMLInputElement>(null);
   const existStatus = selectedTodo && selectedTodo.status;
   const existPriority = selectedTodo && selectedTodo.priority;
-  const existStartTime = selectedTodo ? dayjs(selectedTodo.start_date) : 'am 09:00';
-  const existEndTime = selectedTodo ? dayjs(selectedTodo.end_date) : 'pm 09:00';
+  const existStartTime = selectedTodo && dayjs(selectedTodo.start_date);
+  const existEndTime = selectedTodo && dayjs(selectedTodo.end_date);
+  const place = selectedTodo && selectedTodo.place;
   const date = dayjs(selectedDate).format('YYYY.MM.DD');
   const startTimeFormat = dayjs(startTime).format('a hh:mm');
   const endTimeFormat = dayjs(endTime).format('a hh:mm');
@@ -74,17 +75,31 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
       .set('hour', dayjs(endTime).hour())
       .set('minute', dayjs(endTime).minute())
       .toISOString();
-    const todo = {
-      id: crypto.randomUUID(),
-      title: titleRef.current.value,
-      place: placeRef.current.value,
-      user_id: FAKE_USER_ID,
-      start_date: startDate,
-      end_date: endDate,
-      priority: selectedPriority,
-      status: selectedStatus
-    };
-    await addTodo(todo);
+    if (params.id === 'new') {
+      const todo = {
+        id: crypto.randomUUID(),
+        title: titleRef.current.value,
+        place: placeRef.current.value,
+        user_id: FAKE_USER_ID,
+        start_date: startDate,
+        end_date: endDate,
+        priority: selectedPriority,
+        status: selectedStatus
+      };
+      await addTodo(todo);
+    } else {
+      const id = params.id;
+      const todo = {
+        title: titleRef.current.value,
+        place: placeRef.current.value,
+        user_id: FAKE_USER_ID,
+        start_date: startDate,
+        end_date: endDate,
+        priority: selectedPriority,
+        status: selectedStatus
+      };
+      await updateTodo({ todo, id });
+    }
   };
 
   return (
@@ -107,7 +122,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
         </div>
         <div className="flex flex-row justify-between">
           <div>장소</div>
-          <input placeholder="place" ref={placeRef} defaultValue={selectedTodo && selectedTodo.place} />
+          <input placeholder="place" ref={placeRef} defaultValue={place ? place : ''} />
         </div>
         <div className="flex flex-row justify-between">
           <div>순위</div>
@@ -144,7 +159,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
             </label>
           ))}
 
-        <button onClick={handleAdd}>추가</button>
+        <button onClick={handleAdd}>{params.id === 'new' ? '추가' : '수정'}</button>
       </div>
     </>
   );

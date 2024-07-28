@@ -14,6 +14,7 @@ const useTodoList = () => {
     queryKey: ['todo'],
     queryFn: () => api.todo.getTodoList(FAKE_USER_ID)
   });
+
   const { mutateAsync: delTodo } = useMutation({
     mutationFn: (todoId: number) => api.todo.delTodo(todoId),
     onSuccess: () => {
@@ -29,7 +30,16 @@ const useTodoList = () => {
       queryClient.invalidateQueries({ queryKey: ['todo'] });
     }
   });
-  return { todoList, isPending, isError, delTodo, addTodo };
+
+  const { mutateAsync: updateTodo } = useMutation({
+    mutationFn: ({ todo, id }: { todo: Partial<Tables<'todo'>>; id: string }) => {
+      return api.todo.putTodo(todo, id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['todo'] });
+    }
+  });
+  return { todoList, isPending, isError, delTodo, addTodo, updateTodo };
 };
 
 export default useTodoList;
