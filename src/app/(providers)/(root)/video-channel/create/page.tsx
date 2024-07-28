@@ -43,12 +43,10 @@ const CreateChannelPage = () => {
       workspace_id: FAKE_WORKSPACE_ID
     };
 
-    const channel = await createChannel(newChannel); // 생성된 채널 정보 가져오기
-
-    console.log(channel);
+    const channelId = await createChannel(newChannel); // 채널 아이디
 
     selectedUserList.forEach((user) => {
-      const { enterChannel } = useChannelUser(channel[0].channel_id, user.id);
+      const { enterChannel } = useChannelUser(channelId, user.id);
       enterChannel(user.user_id);
     });
 

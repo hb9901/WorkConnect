@@ -1,28 +1,34 @@
 import api from '@/api/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-const useChannelUser = (channel_id: number, workspace_user_id: string) => {
+type ChannelUserProps = {
+  channelId: number;
+  workspaceUserIds: string[];
+};
+
+const useChannelUser = ({ workspaceUserIds, channelId }: ChannelUserProps) => {
   const queryClient = useQueryClient();
   const {
     data: channelUser,
     isPending,
     isError
   } = useQuery({
-    queryKey: ['channelUser', channel_id],
-    queryFn: () => api.channelUser.getChannelUserList(channel_id)
+    queryKey: ['channelUser'],
+    queryFn: () => api.channelUser.getChannelUserList(channelId)
   });
 
   const { mutateAsync: enterChannel } = useMutation({
-    mutationFn: (user_id: string) => api.channelUser.postChannelUser({ user_id, channel_id, workspace_user_id }),
+    mutationFn: (user_id: string) =>
+      api.channelUser.createChannelUsers({ channel_id: channelId, workspaceUserIds: workspaceUserIds }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['channelUser', channel_id] });
+      queryClient.invalidateQueries({ queryKey: ['channelUser'] });
     }
   });
 
   const { mutateAsync: leaveChannel } = useMutation({
-    mutationFn: () => api.channelUser.deleteChannelUser(channel_id, workspace_user_id),
+    mutationFn: () => api.channelUser.deleteChannelUser({ channel_id: channelId, workspaceUserIds: workspaceUserIds }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['channelUser', channel_id] });
+      queryClient.invalidateQueries({ queryKey: ['channelUser'] });
     }
   });
 

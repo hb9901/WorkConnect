@@ -206,18 +206,21 @@ export type Database = {
           created_at: string
           email: string | null
           id: string
+          name: string | null
           sns_type: string | null
         }
         Insert: {
           created_at?: string
           email?: string | null
           id: string
+          name?: string | null
           sns_type?: string | null
         }
         Update: {
           created_at?: string
           email?: string | null
           id?: string
+          name?: string | null
           sns_type?: string | null
         }
         Relationships: [
@@ -235,24 +238,32 @@ export type Database = {
           admin_user_id: string | null
           created_at: string
           id: number
-          invite_code: number | null
+          invite_code: number
           name: string
         }
         Insert: {
           admin_user_id?: string | null
           created_at?: string
           id?: number
-          invite_code?: number | null
+          invite_code: number
           name: string
         }
         Update: {
           admin_user_id?: string | null
           created_at?: string
           id?: number
-          invite_code?: number | null
+          invite_code?: number
           name?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "workspace_admin_user_id_fkey"
+            columns: ["admin_user_id"]
+            isOneToOne: false
+            referencedRelation: "workspace_user"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       workspace_user: {
         Row: {
@@ -263,7 +274,7 @@ export type Database = {
           profile_image: string | null
           state: string | null
           user_id: string
-          workspace_id: number
+          workspace_id: number | null
         }
         Insert: {
           email?: string | null
@@ -273,7 +284,7 @@ export type Database = {
           profile_image?: string | null
           state?: string | null
           user_id: string
-          workspace_id: number
+          workspace_id?: number | null
         }
         Update: {
           email?: string | null
@@ -283,7 +294,7 @@ export type Database = {
           profile_image?: string | null
           state?: string | null
           user_id?: string
-          workspace_id?: number
+          workspace_id?: number | null
         }
         Relationships: [
           {
@@ -338,6 +349,17 @@ export type Database = {
           workspace_user_id: string
           name: string
           profile_image: string
+        }[]
+      }
+      get_users_in_channel: {
+        Args: {
+          cid: number
+          wuid: string
+        }
+        Returns: {
+          name: string
+          profile_image: string
+          workspace_user_id: string
         }[]
       }
     }
