@@ -4,7 +4,6 @@ import {
   CarouselLayout,
   FocusLayout,
   ParticipantTile,
-  TrackRefContext,
   TrackReferenceOrPlaceholder,
   useTracks
 } from '@livekit/components-react';
@@ -28,7 +27,6 @@ const VideoConference = () => {
   );
   const speakerTrackRef = tracks.find((track) => track.participant.isSpeaking);
   const screenShareTrackRef = useTracks([Track.Source.ScreenShare])[0];
-  const handleFocusTrack = TrackRefContext;
   useEffect(() => {
     if (screenShareTrackRef) {
       setFocusedTrack(screenShareTrackRef);

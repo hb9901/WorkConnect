@@ -2,7 +2,7 @@
 import useStreamSetStore from '@/store/streamSetStore';
 import { LocalUserChoices, PreJoin } from '@livekit/components-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const PreJoinContent = () => {
   const searchParams = useSearchParams();
@@ -10,24 +10,30 @@ const PreJoinContent = () => {
   const name = searchParams.get('username');
 
   const router = useRouter();
-  const { audio, video, userName, setUserName, setAudio, setAudioEnable, setVideo, setVideoEnable, StreamCheck } =
-    useStreamSetStore();
+  const [userName, setUserName] = useState<string>();
+  const { preJoinChoices, setPreJoinChoices, setIsSettingOk } = useStreamSetStore();
 
   useEffect(() => {
-    setUserName(name || 'test-user');
-  }, [name]);
-  const setStream = (values: LocalUserChoices) => {
-    setAudio(values.audioDeviceId);
-    setVideo(values.videoDeviceId);
-    setAudioEnable(values.audioEnabled);
-    setVideoEnable(values.videoEnabled);
-    setUserName(name || 'test-user');
-    if (audio.length > 0 && video.length > 0) {
-      StreamCheck(true);
-      console.log('유저 네임 : ', userName);
-      router.push(`/video-channel/${room}?username=${userName}`);
-    }
-  };
+    setUserName(preJoinChoices.username);
+  }, []);
+
+  // const setStream = (values: LocalUserChoices) => {
+  //   setAudio(values.audioDeviceId);
+  //   setVideo(values.videoDeviceId);
+  //   setAudioEnable(values.audioEnabled);
+  //   setVideoEnable(values.videoEnabled);
+  //   setUserName(name || 'test-user');
+  //   if (audio.length > 0 && video.length > 0) {
+  //     StreamCheck(true);
+  //     router.push(`/video-channel/${room}?username=${userName}`);
+  //   }
+  // };
+
+  const handlePreJoinSubmit = useCallback((values: LocalUserChoices) => {
+    setPreJoinChoices(values);
+    setIsSettingOk(true);
+    router.push(`/video-channel/${room}?username=${preJoinChoices.username}`);
+  }, []);
 
   return (
     <div className="h-[100vh] bg-[#121212]">
@@ -35,8 +41,8 @@ const PreJoinContent = () => {
         joinLabel={'입장하기'}
         userLabel={userName}
         data-lk-theme="default"
-        defaults={{ videoDeviceId: video, audioDeviceId: audio }}
-        onSubmit={setStream}
+        defaults={preJoinChoices}
+        onSubmit={(values) => handlePreJoinSubmit(values)}
         onValidate={(values) => {
           return true;
         }}

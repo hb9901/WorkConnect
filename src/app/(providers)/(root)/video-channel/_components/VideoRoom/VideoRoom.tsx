@@ -13,17 +13,15 @@ type videoRoomProps = {
 const VideoRoom = ({ name }: videoRoomProps) => {
   const router = useRouter();
   const [token, setToken] = useState('');
-  const [connect, setConnect] = useState(true);
-  const [isConnected, setIsConnected] = useState(false);
 
-  const { audioEnable, videoEnable, isStreamOk } = useStreamSetStore();
+  const { preJoinChoices, isSettingOk } = useStreamSetStore();
   const searchParams = useSearchParams();
   const userName = searchParams.get('username');
   const onLeave = useCallback(() => router.push('/video-channel'), []);
 
   useEffect(() => {
-    if (!userName || !isStreamOk) {
-      redirect(`/video-channel/prejoin?room=${name}&username=${userName}`);
+    if (!userName || !isSettingOk) {
+      redirect(`/video-channel/prejoin?room=${name}`);
       return;
     }
     (async () => {
@@ -35,12 +33,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
         console.error(e);
       }
     })();
-  }, [isStreamOk, userName]);
-
-  const handleDisconnect = () => {
-    setConnect(false);
-    setIsConnected(false);
-  };
+  }, [userName]);
 
   if (token === '') {
     return <div>Getting token...</div>;
@@ -48,8 +41,8 @@ const VideoRoom = ({ name }: videoRoomProps) => {
 
   return (
     <LiveKitRoom
-      video={videoEnable}
-      audio={audioEnable}
+      video={preJoinChoices.videoEnabled}
+      audio={preJoinChoices.audioEnabled}
       token={token}
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       data-lk-theme="default"
