@@ -38,8 +38,23 @@ export type Database = {
           }
         ];
       };
+            foreignKeyName: 'channel_workspace_id_fkey';
+            columns: ['workspace_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspace';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
       channel_user: {
         Row: {
+          channel_id: number;
+          created_at: string;
+          id: number;
+          last_read_chat_id: number | null;
+          user_id: string | null;
+          workspace_user_id: string;
+        };
           channel_id: number;
           created_at: string;
           id: number;
@@ -55,7 +70,21 @@ export type Database = {
           user_id?: string | null;
           workspace_user_id: string;
         };
+          channel_id: number;
+          created_at?: string;
+          id?: number;
+          last_read_chat_id?: number | null;
+          user_id?: string | null;
+          workspace_user_id: string;
+        };
         Update: {
+          channel_id?: number;
+          created_at?: string;
+          id?: number;
+          last_read_chat_id?: number | null;
+          user_id?: string | null;
+          workspace_user_id?: string;
+        };
           channel_id?: number;
           created_at?: string;
           id?: number;
@@ -65,6 +94,11 @@ export type Database = {
         };
         Relationships: [
           {
+            foreignKeyName: 'channel_user_workspace_user_id_fkey';
+            columns: ['workspace_user_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspace_user';
+            referencedColumns: ['id'];
             foreignKeyName: 'channel_user_workspace_user_id_fkey';
             columns: ['workspace_user_id'];
             isOneToOne: false;
@@ -80,8 +114,24 @@ export type Database = {
           }
         ];
       };
+            foreignKeyName: 'room_user_room_id_fkey';
+            columns: ['channel_id'];
+            isOneToOne: false;
+            referencedRelation: 'channel';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
       chat: {
         Row: {
+          channel_id: number;
+          content: string;
+          created_at: string;
+          id: number;
+          is_notice: boolean;
+          type: string;
+          workspace_user_id: string;
+        };
           channel_id: number;
           content: string;
           created_at: string;
@@ -200,26 +250,23 @@ export type Database = {
       };
       user: {
         Row: {
-          created_at: string;
-          email: string | null;
-          id: string;
-          name: string | null;
-          sns_type: string | null;
-        };
+          created_at: string
+          email: string | null
+          id: string
+          sns_type: string | null
+        }
         Insert: {
-          created_at?: string;
-          email?: string | null;
-          id: string;
-          name?: string | null;
-          sns_type?: string | null;
-        };
+          created_at?: string
+          email?: string | null
+          id: string
+          sns_type?: string | null
+        }
         Update: {
-          created_at?: string;
-          email?: string | null;
-          id?: string;
-          name?: string | null;
-          sns_type?: string | null;
-        };
+          created_at?: string
+          email?: string | null
+          id?: string
+          sns_type?: string | null
+        }
         Relationships: [
           {
             foreignKeyName: 'users_id_fkey';
@@ -232,67 +279,59 @@ export type Database = {
       };
       workspace: {
         Row: {
-          admin_user_id: string | null;
-          created_at: string;
-          id: number;
-          invite_code: number;
-          name: string;
-        };
+          admin_user_id: string | null
+          created_at: string
+          id: number
+          invite_code: number | null
+          name: string
+        }
         Insert: {
-          admin_user_id?: string | null;
-          created_at?: string;
-          id?: number;
-          invite_code: number;
-          name: string;
-        };
+          admin_user_id?: string | null
+          created_at?: string
+          id?: number
+          invite_code?: number | null
+          name: string
+        }
         Update: {
-          admin_user_id?: string | null;
-          created_at?: string;
-          id?: number;
-          invite_code?: number;
-          name?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'workspace_admin_user_id_fkey';
-            columns: ['admin_user_id'];
-            isOneToOne: false;
-            referencedRelation: 'workspace_user';
-            referencedColumns: ['id'];
-          }
-        ];
-      };
+          admin_user_id?: string | null
+          created_at?: string
+          id?: number
+          invite_code?: number | null
+          name?: string
+        }
+        Relationships: []
+      }
       workspace_user: {
         Row: {
-          email: string | null;
-          id: string;
-          name: string;
-          phone: string | null;
-          profile_image: string | null;
-          state: string | null;
-          user_id: string;
-          workspace_id: number | null;
-        };
+          email: string | null
+          id: string
+          name: string | null
+          phone: string | null
+          profile_image: string | null
+          state: string | null
+          user_id: string
+          workspace_id: number | null
+        }
         Insert: {
-          email?: string | null;
-          id?: string;
-          name: string;
-          phone?: string | null;
-          profile_image?: string | null;
-          state?: string | null;
-          user_id: string;
-          workspace_id?: number | null;
-        };
+          email?: string | null
+          id?: string
+          name?: string | null
+          phone?: string | null
+          profile_image?: string | null
+          state?: string | null
+          user_id: string
+          workspace_id?: number | null
+        }
         Update: {
-          email?: string | null;
-          id?: string;
-          name?: string;
-          phone?: string | null;
-          profile_image?: string | null;
-          state?: string | null;
-          user_id?: string;
-          workspace_id?: number | null;
-        };
+          email?: string | null
+          id?: string
+          name?: string | null
+          phone?: string | null
+          profile_image?: string | null
+          state?: string | null
+          user_id?: string
+          workspace_id?: number | null
+        }
         Relationships: [
           {
             foreignKeyName: 'workspace_user_user_id_fkey';
@@ -335,29 +374,20 @@ export type Database = {
       };
       get_chat_messages: {
         Args: {
-          cid: number;
-        };
+          cid: number
+        }
         Returns: {
-          id: number;
-          created_at: string;
-          content: string;
-          type: string;
-          is_notice: boolean;
-          workspace_user_id: string;
-        }[];
-      };
-      get_users_in_channel: {
-        Args: {
-          cid: number;
-          wuid: string;
-        };
-        Returns: {
-          name: string;
-          profile_image: string;
-          workspace_user_id: string;
-        }[];
-      };
-    };
+          id: number
+          created_at: string
+          content: string
+          type: string
+          is_notice: boolean
+          workspace_user_id: string
+          name: string
+          profile_image: string
+        }[]
+      }
+    }
     Enums: {
       [_ in never]: never;
     };
