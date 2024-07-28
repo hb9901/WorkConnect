@@ -7,6 +7,7 @@ import ModalBackDrop from '../ModalBackDrop';
 
 const DateInputModal = () => {
   const { isStartTime, startTime, endTime, setTimeModalClose, setStartTime, setEndTime } = useTimeModalStore();
+  console.log(isStartTime);
   const time = isStartTime ? dayjs(startTime) : dayjs(endTime);
   const [isAm, setIsAm] = useState(time.format('a') === 'am');
   const [hour, setHour] = useState(time.format('a') === 'am' ? time.hour() : time.hour() - 12);
@@ -65,7 +66,6 @@ const DateInputModal = () => {
   };
 
   const handleCheck = () => {
-    console.log(isAm, hour, minute);
     const newTime = dayjs()
       .set('hour', isAm ? hour : hour + 12)
       .set('minute', minute);

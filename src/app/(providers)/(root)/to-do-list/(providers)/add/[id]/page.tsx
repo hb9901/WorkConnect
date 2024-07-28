@@ -36,11 +36,13 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const endTimeFormat = dayjs(endTime).format('a hh:mm');
 
   useEffect(() => {
-    if (!(existPriority && existStatus && existStartTime && existEndTime)) return;
+    const initTime = selectedDate.set('hour', 9).set('minute', 0);
+    existStartTime ? setStartTime(existStartTime) : setStartTime(initTime);
+    existEndTime ? setEndTime(existEndTime) : setEndTime(initTime);
+    if (!(existPriority && existStatus)) return;
+
     setSelectedStatus(existStatus);
     setSelectedPriority(existPriority);
-    setStartTime(existStartTime);
-    setEndTime(existEndTime);
   }, [existStatus, existPriority]);
 
   const handleChangePriority = (priority: string) => {
@@ -59,10 +61,9 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   };
 
   const handleTimeClick = (isStart: boolean) => {
-    setTimeModalOpen();
-    if (!selectedTodo) return;
-    isStart ? setStartTime(dayjs(startTime)) : setEndTime(dayjs(endTime));
     isStart ? setStart() : setEnd();
+    isStart ? setStartTime(dayjs(startTime)) : setEndTime(dayjs(endTime));
+    setTimeModalOpen();
   };
 
   const handleAdd = async () => {
