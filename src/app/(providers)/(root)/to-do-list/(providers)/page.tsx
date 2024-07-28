@@ -8,7 +8,7 @@ import WeekButtons from './_components/WeekButtons';
 import WeekDate from './_components/WeekDate';
 
 const ToDoListPage = () => {
-  const { todoList }: { todoList: Tables<'todo'>[] } = useTodoList();
+  const { todoList }: { todoList: Tables<'todo'>[] | undefined } = useTodoList();
   const beforeTodoList = todoList && todoList.filter((todo) => todo.status === '진행 전');
   const progressTodoList = todoList && todoList.filter((todo) => todo.status === '진행 중');
   const completedTodoList = todoList && todoList.filter((todo) => todo.status === '진행 완료');

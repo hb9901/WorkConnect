@@ -7,7 +7,7 @@ import ToDoAddButton from '../ToDoAddButton';
 import { isDateSelected } from './function';
 
 interface ToDoListProps {
-  todoList: Tables<'todo'>[];
+  todoList: Tables<'todo'>[] | undefined;
   title: string;
 }
 
