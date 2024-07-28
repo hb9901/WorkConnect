@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import Input from '../Input/Input';
+import Label from '../Label';
 import Typography from '../Typography';
 
 interface TextFieldProps {
@@ -10,17 +11,31 @@ interface TextFieldProps {
   isError: boolean;
   children: string;
   id: string;
+  label: string;
+  labelClassName?: string;
+  variant: 'primary' | 'grey' | 'error' | null | undefined;
   message: string;
 }
 
-const TextField = ({ id, children, message, value, isError, ...props }: TextFieldProps) => {
+const TextField = ({
+  id,
+  label,
+  labelClassName,
+  variant,
+  children,
+  message,
+  value,
+  isError,
+  ...props
+}: TextFieldProps) => {
   const inputId = useId();
   const customId = id || inputId;
 
   return (
     <div className="relative text-field">
-      {/* 형빈님 Label 컴포넌트 받아서 넣을 예정 - 라벨로 바꿔주세요 */}
-      {/* <Typography className="p-1" color="grey200" htmlFor={customId}> */}
+      <Label htmlFor={customId} variant={variant} className={labelClassName}>
+        {label}
+      </Label>
       <Typography className="p-1" color="grey200">
         {children}
       </Typography>
