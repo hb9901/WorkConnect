@@ -18,7 +18,7 @@ enum FocusPriority {
 }
 
 const VideoConference = () => {
-  const [focusedTrack, setFocusedTrack] = useState<TrackReferenceOrPlaceholder>();
+  const [focusedTrack, setFocusedTrack] = useState<TrackReferenceOrPlaceholder | null>();
   const tracks = useTracks(
     [
       { source: Track.Source.Camera, withPlaceholder: true },
@@ -36,10 +36,6 @@ const VideoConference = () => {
       setFocusedTrack(speakerTrackRef);
     }
   }, [speakerTrackRef, screenShareTrackRef]);
-
-  const handleClickFocus = () => {
-    h;
-  };
 
   return (
     <div className="flex gap-2 h-[80vh] p-3">

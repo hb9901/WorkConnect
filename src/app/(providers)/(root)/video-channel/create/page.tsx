@@ -18,13 +18,18 @@ const CreateChannelPage = () => {
   const router = useRouter();
 
   const { workspaceUserList } = useWorkspaceUserList(FAKE_WORKSPACE_ID);
-  const { createChannel } = useChannel({ type: 'video', workspace_id: FAKE_WORKSPACE_ID });
+  const { createChannel } = useChannel({ type: 'video', workspace_id: FAKE_WORKSPACE_ID }); // workspace_id 안에 video 채널
+
   const [selectedUserList, setSelectedUserList] = useState<WorkspaceUserType[]>([]);
   const [roomName, setRoomName] = useState<string>();
+  const [workspaceUserIds, setWorkspaceUserIds] = useState<string[]>([]);
+
+  const { enterChannel } = useChannelUser({ workspaceUserIds });
 
   useEffect(() => {
     const temp = selectedUserList.map((user) => user.name).join(',');
     setRoomName(temp);
+    setWorkspaceUserIds(selectedUserList.map((user) => user.id));
   }, [selectedUserList]);
 
   const handleSelectUser = (selectedUser: WorkspaceUserType) => {
@@ -37,26 +42,22 @@ const CreateChannelPage = () => {
   };
 
   const handleSubmit = async () => {
+    if (!roomName) {
+      return alert('사용자를 선택해주세요.');
+    }
+
     const newChannel: ChannelInsertType = {
       name: roomName as string,
       type: 'video',
       workspace_id: FAKE_WORKSPACE_ID
     };
 
-    const channelId = await createChannel(newChannel); // 채널 아이디
+    const channelId = await createChannel(newChannel); // 채널 아이디 반환
+    console.log('생성된 채널 아이디', channelId.id);
+    enterChannel(channelId.id);
 
-    selectedUserList.forEach((user) => {
-      const { enterChannel } = useChannelUser(channelId, user.id);
-      enterChannel(user.user_id);
-    });
-
-    if (roomName) {
-      router.push(`/video-channel/${roomName}?username=${userName}`);
-    } else {
-      alert('방이름과 사용자 이름을 입력해 주세요.');
-    }
+    router.push(`/video-channel/${roomName}?username=${userName}`);
   };
-  // [utils] : 방 이름 작성
 
   return (
     <div>

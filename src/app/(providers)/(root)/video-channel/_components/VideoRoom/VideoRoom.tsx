@@ -2,8 +2,8 @@
 
 import useStreamSetStore from '@/store/streamSetStore';
 import { ControlBar, LiveKitRoom, RoomAudioRenderer } from '@livekit/components-react';
-import { redirect, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 import VideoConference from '../VideoConference';
 
 type videoRoomProps = {
@@ -11,6 +11,7 @@ type videoRoomProps = {
 };
 
 const VideoRoom = ({ name }: videoRoomProps) => {
+  const router = useRouter();
   const [token, setToken] = useState('');
   const [connect, setConnect] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
@@ -18,6 +19,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
   const { audioEnable, videoEnable, isStreamOk } = useStreamSetStore();
   const searchParams = useSearchParams();
   const userName = searchParams.get('username');
+  const onLeave = useCallback(() => router.push('/video-channel'), []);
 
   useEffect(() => {
     if (!userName || !isStreamOk) {
@@ -52,6 +54,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       data-lk-theme="default"
       style={{ height: '100dvh' }}
+      onDisconnected={onLeave}
     >
       <VideoConference />
       <RoomAudioRenderer />
