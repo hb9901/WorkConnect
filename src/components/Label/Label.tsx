@@ -1,46 +1,32 @@
-import { StrictPropsWithChildren } from "@/types/common";
-import { cva, VariantProps } from "class-variance-authority";
-import clsx from "clsx";
-import { HTMLAttributes } from "react";
-
-const LabelClass = cva("", {
-  variants: {
-    variant: {
-      label2: "text-[12px]",
-      label1: "text-[10px]",
-    },
-    weight: {
-      bold: "font-bold",
-      semibold: "font-semibold",
-    },
-  },
-  defaultVariants: {},
-});
+import { StrictPropsWithChildren } from '@/types/common';
+import { cva, VariantProps } from 'class-variance-authority';
+import clsx from 'clsx';
+import { HTMLAttributes } from 'react';
 
 type LabelProps = {
   htmlFor: string;
   className?: string;
-} & StrictPropsWithChildren<
-  VariantProps<typeof LabelClass> & HTMLAttributes<HTMLLabelElement>
->;
+} & StrictPropsWithChildren<VariantProps<typeof LabelClass> & HTMLAttributes<HTMLLabelElement>>;
 
-const Label = ({
-  htmlFor,
-  variant,
-  weight,
-  className,
-  children,
-  ...props
-}: LabelProps) => {
+const Label = ({ htmlFor, variant, className, children, ...props }: LabelProps) => {
   return (
-    <label
-      htmlFor={htmlFor}
-      className={clsx(LabelClass({ variant, weight }), className)}
-      {...props}
-    >
+    <label htmlFor={htmlFor} className={clsx(LabelClass({ variant }), className)} {...props}>
       {children}
     </label>
   );
 };
+
+const LabelClass = cva('text-[14px] font-normal leading-[130%] tracking-[-0.28px]', {
+  variants: {
+    variant: {
+      primary: 'text-primary200Main',
+      grey: 'text-grey700Black',
+      error: 'text-error'
+    }
+  },
+  defaultVariants: {
+    variant: 'primary'
+  }
+});
 
 export default Label;
