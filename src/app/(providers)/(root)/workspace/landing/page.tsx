@@ -1,75 +1,64 @@
 'use client';
-import workspaceUserAPI from '@/api/workspaceUserAPI';
 import useShallowSelector from '@/app/hooks/useShallowSelector';
 import { useAuthStore } from '@/providers/AuthStoreProvider';
 import { AuthStoreTypes } from '@/store/authStore';
-import useUserStore from '@/store/userStore';
 import { supabase } from '@/utils/supabase/supabaseClient';
-import { User, UserMetadata } from '@supabase/supabase-js';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type UserType = {
-  fullName: UserMetadata['full_name'];
-  thumbnail: UserMetadata['avatar_url'];
-  email: User['email'];
-  logout: AuthStoreTypes['logout'];
   user: AuthStoreTypes['user'];
 };
 
 const InviteCodePage = () => {
-  const [inviteCode, setInviteCode] = useState<number>();
+  const [inviteCode, setInviteCode] = useState<string | ''>('');
   const route = useRouter();
 
-  const { thumbnail, fullName, email, logout, user } = useShallowSelector<AuthStoreTypes, UserType>(
-    useAuthStore,
-    ({ user, logout }) => ({
-      thumbnail: user?.user_metadata?.avatar_url || null,
-      fullName: user?.user_metadata?.full_name || null,
-      email: user?.email,
-      logout,
-      user
-    })
-  );
+  const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
   console.log(user);
 
-  const handleSubmit = async () => {
-    if (!user) return alert('로그인이 필요합니다.');
+  const handleSubmit = useMutation({
+    mutationFn: async () => {
+      if (!user) return alert('로그인이 필요합니다.');
+      if (!inviteCode) return alert('초대 코드를 입력해주세요.');
 
-    const { data: workspaceData, error: workspaceError } = await supabase
-      .from('workspace')
-      .select('id')
-      .eq('invite_code', Number(inviteCode))
-      .single();
+      const { data: workspaceData, error: workspaceError } = await supabase
+        .from('workspace')
+        .select('id')
+        .eq('invite_code', Number(inviteCode))
+        .single();
 
-    if (workspaceData) {
-      console.log(workspaceData.id); // workspace > id
-    }
-    if (workspaceError) {
-      console.log(`워크스페이스 조회 에러: ${workspaceError.message}`);
-      alert('존재하지 않는 초대코드 입니다.');
-      return;
-    }
+      if (workspaceData) {
+        console.log(workspaceData.id);
+      }
 
-    const { data: workspaceUserData, error: workspaceUserError } = await supabase
-      .from('workspace_user')
-      .update({ workspace_id: workspaceData.id })
-      .eq('user_id', user.id);
+      if (workspaceError) {
+        console.log(`워크스페이스 조회 에러: ${workspaceError.message}`);
+        alert('존재하지 않는 초대코드 입니다.');
+        return;
+      }
 
-    console.log('workspaceUserData', workspaceUserData);
+      const { data: workspaceUserData, error: workspaceUserError } = await supabase
+        .from('workspace_user')
+        .update({ workspace_id: workspaceData.id })
+        .eq('user_id', user.id);
 
-    if (workspaceUserData) {
       console.log('workspaceUserData', workspaceUserData);
-      alert('초대코드 입력이 완료되었습니다.');
-      return;
-    }
 
-    if (workspaceUserError) {
-      console.log(workspaceUserError);
-      alert('존재하지 않는 초대코드 입니다.');
-      return;
+      if (workspaceUserError) {
+        console.log(workspaceUserError);
+        alert('존재하지 않는 초대코드 입니다.');
+        return;
+      }
+
+      // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
+      setInviteCode('');
+      alert('초대코드 입력이 완료되었습니다.');
     }
-  };
+  });
+
+  const { mutate: handleSubmitMutate } = handleSubmit;
 
   return (
     <main className="flex justify-center items-center">
@@ -85,21 +74,20 @@ const InviteCodePage = () => {
           <div className="flex flex-col">
             <input
               className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
-              type="email"
-              id="email"
+              type="text"
               placeholder="초대 코드를 입력해주세요"
-              onChange={(e) => setInviteCode(Number(e.target.value))}
+              value={inviteCode}
+              onChange={(e) => setInviteCode(e.target.value)}
               maxLength={6}
-              required={true}
             />
           </div>
         </div>
         <div className="flex justify-center mt-4 mb-[167px]">
           <button
-            onClick={handleSubmit}
+            onClick={() => handleSubmitMutate()}
             className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
           >
-            확인
+            {handleSubmit.isPending ? '초대코드 확인 중...' : '확인'}
           </button>
         </div>
         <div className="flex justify-center items-center py-2 px-4 gap-[10px]">

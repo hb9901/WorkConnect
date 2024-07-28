@@ -22,7 +22,7 @@ const LoginPage = () => {
 
       if (session) {
         console.log('session', session);
-        route.push('/user');
+        route.push('/workspace/landing');
       }
 
       if (error) {

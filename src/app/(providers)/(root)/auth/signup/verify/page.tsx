@@ -31,11 +31,11 @@ const AuthVerifyPage = () => {
 
       if (error) return alert('인증번호가 일치하지 않습니다.');
 
-      if (data) return route.push('/user');
+      // TODO : 가입이 안됐으면 /workspace/landing페이지, 했으면 메인 페이지로 보내기
+      if (data) return route.push('/workspace/landing');
     }
   });
 
-  // OTP 재전송
   const resendOtp = async () => {
     const { data, error } = await supabase.auth.resend({
       type: 'signup',

@@ -5,61 +5,103 @@ import { useAuthStore } from '@/providers/AuthStoreProvider';
 import { AuthStoreTypes } from '@/store/authStore';
 import useUserStore from '@/store/userStore';
 import { supabase } from '@/utils/supabase/supabaseClient';
-import { User, UserMetadata } from '@supabase/supabase-js';
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 type UserType = {
-  fullName: UserMetadata['full_name'];
-  thumbnail: UserMetadata['avatar_url'];
-  email: User['email'];
-  logout: AuthStoreTypes['logout'];
   user: AuthStoreTypes['user'];
 };
 
 const NewWorkSpacePage = () => {
-  const [orgName, setOrgName] = useState('');
+  const route = useRouter();
+  const [orgName, setOrgName] = useState<string | ''>('');
+  const [workUserData, setWorkUserData] = useState<{ id: string } | null>(null);
+  const setUserData = useUserStore((state) => state.setUserData);
 
-  const { thumbnail, fullName, email, logout, user } = useShallowSelector<AuthStoreTypes, UserType>(
-    useAuthStore,
-    ({ user, logout }) => ({
-      thumbnail: user?.user_metadata?.avatar_url || null,
-      fullName: user?.user_metadata?.full_name || null,
-      email: user?.email,
-      logout,
-      user
-    })
-  );
-  console.log('user.id : ', user?.id);
+  console.log('workUserData : ', workUserData?.id);
 
-  const handleJoin = async () => {
-    if (!user) return alert('로그인이 필요합니다.');
+  const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
+  const { userId, workspaceUserId } = useUserStore((state) => state);
 
-    try {
-      const { data, error } = await supabase.from('workspace').insert({
-        name: orgName,
-        invite_code: 123456,
-        admin_user_id: user.id
-      });
+  console.log('userId : ', userId);
+  console.log('workspaceUserId : ', workspaceUserId);
 
-      if (!error) {
-        alert('가입완료!');
+  const handleJoin = useMutation({
+    mutationFn: async () => {
+      if (!user) return alert('로그인이 필요합니다.');
+      if (!orgName) return alert('조직 이름을 입력해주세요!');
+
+      if (!workUserData) {
+        alert('워크스페이스에 유저 데이터가 없습니다.');
         return;
       }
 
+      const { error } = await supabase.from('workspace').insert({
+        name: orgName,
+        invite_code: 123456,
+        admin_user_id: workUserData.id
+      });
+
       if (error) {
         alert(`워크스페이스를 생성하는 중 오류가 발생했습니다. ${error.message}`);
+        return;
       }
-    } catch (error) {
-      alert(`워크스페이스를 생성하는 중 오류가 발생했습니다. ${error}`);
-    }
-  };
 
-  // console.log('thumbnail: ', thumbnail);
-  // console.log('fullName: ', fullName);
-  // console.log('email: ', email);
-  // console.log('logout: ', logout);
-  // console.log('user: ', user?.id);
-  // console.log('user: ', user);
+      const { data: workspaceData, error: workspaceError } = await supabase
+        .from('workspace')
+        .select('id')
+        .eq('admin_user_id', workUserData.id)
+        .single();
+
+      if (workspaceError) {
+        alert(`워크스페이스 ID를 가져오는 중 오류가 발생했습니다. ${workspaceError.message}`);
+        return;
+      }
+
+      if (workspaceData) {
+        await supabase.from('workspace_user').update({ workspace_id: workspaceData.id }).eq('user_id', user.id);
+        setUserData(user.id, workspaceData.id);
+      }
+
+      // TODO : 완료 후 페이지 이동처리하기
+      alert('워크스페이스 생성 완료!');
+      setOrgName('');
+      route.push('/');
+    }
+  });
+
+  const { mutate: handleJoinMutate } = handleJoin;
+
+  useEffect(() => {
+    const getWorkspaceUser = async () => {
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+
+      const { data: workspaceUserData, error: workspaceUserError } = await supabase
+        .from('workspace_user')
+        .select('id')
+        .eq('user_id', user?.id || '')
+        .single();
+
+      if (!workspaceUserData) {
+        alert('해당 유저는 워크스페이스에 속해있지 않습니다.');
+        return;
+      }
+
+      if (workspaceUserError) {
+        alert(`워크스페이스 유저를 가져오는 중 오류가 발생했습니다. : ${workspaceUserError}`);
+        return;
+      }
+
+      console.log('workspaceUserData: ', workspaceUserData.id);
+
+      setWorkUserData({ id: workspaceUserData.id });
+    };
+
+    getWorkspaceUser();
+  }, []);
 
   return (
     <main className="flex justify-center items-center">
@@ -82,6 +124,7 @@ const NewWorkSpacePage = () => {
               className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
               type="text"
               placeholder="회사, 단체, 조직 이름 입력."
+              value={orgName}
               onChange={(e) => setOrgName(e.target.value)}
               required={true}
             />
@@ -89,11 +132,11 @@ const NewWorkSpacePage = () => {
         </div>
         <div className="flex justify-center mt-8">
           <button
-            onClick={handleJoin}
+            onClick={() => handleJoinMutate()}
             className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
             type="button"
           >
-            가입하기
+            {handleJoin.isPending ? '가입중입니다...' : '가입하기'}
           </button>
         </div>
       </div>

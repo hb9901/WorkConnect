@@ -1,15 +1,23 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 type UserDataType = {
   userId: string | null;
-  workspaceUserId: string | null;
-  setUserData: (userId: string, workspaceUserId: string) => void;
+  workspaceUserId: number | null;
+  setUserData: (userId: string, workspaceUserId: number) => void;
 };
 
-const useUserStore = create<UserDataType>((set) => ({
-  userId: null,
-  workspaceUserId: null,
-  setUserData: (userId: string, workspaceUserId: string) => set({ userId, workspaceUserId })
-}));
+const useUserStore = create<UserDataType>()(
+  persist(
+    (set) => ({
+      userId: null,
+      workspaceUserId: null,
+      setUserData: (userId: string, workspaceUserId: number) => set({ userId, workspaceUserId })
+    }),
+    {
+      name: 'user-storage'
+    }
+  )
+);
 
 export default useUserStore;
