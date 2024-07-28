@@ -10,7 +10,7 @@ const useTodoList = () => {
     data: todoList,
     isPending,
     isError
-  } = useQuery({
+  } = useQuery<Tables<'todo'>[]>({
     queryKey: ['todo'],
     queryFn: () => api.todo.getTodoList(FAKE_USER_ID)
   });

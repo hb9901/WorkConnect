@@ -16,7 +16,7 @@ type ToDoAddPageProps = {
 };
 
 const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
-  const { setTimeModalOpen } = useTimeModalStore();
+  const { startTime, endTime, setTimeModalOpen, setStartTime, setEndTime, setStart, setEnd } = useTimeModalStore();
   const { todoList, addTodo } = useTodoList();
   const selectedTodo = todoList && todoList.filter((todo) => todo.id == params.id)[0];
   const { selectedDate } = useDateStore();
@@ -28,13 +28,18 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const placeRef = useRef<HTMLInputElement>(null);
   const existStatus = selectedTodo && selectedTodo.status;
   const existPriority = selectedTodo && selectedTodo.priority;
-  const startTime = selectedTodo ? dayjs(selectedTodo.start_date).format('a hh:MM') : 'am 09:00';
-  const endTime = selectedTodo ? dayjs(selectedTodo.end_date).format('a hh:MM') : 'pm 09:00';
+  const existStartTime = selectedTodo ? dayjs(selectedTodo.start_date) : 'am 09:00';
+  const existEndTime = selectedTodo ? dayjs(selectedTodo.end_date) : 'pm 09:00';
   const date = dayjs(selectedDate).format('YYYY.MM.DD');
+  const startTimeFormat = dayjs(startTime).format('a hh:mm');
+  const endTimeFormat = dayjs(endTime).format('a hh:mm');
 
   useEffect(() => {
+    if (!(existPriority && existStatus && existStartTime && existEndTime)) return;
     setSelectedStatus(existStatus);
     setSelectedPriority(existPriority);
+    setStartTime(existStartTime);
+    setEndTime(existEndTime);
   }, [existStatus, existPriority]);
 
   const handleChangePriority = (priority: string) => {
@@ -52,14 +57,23 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     setIsStatusOpen((prev) => !prev);
   };
 
-  const handleTimeClick = () => {
+  const handleTimeClick = (isStart: boolean) => {
     setTimeModalOpen();
+    if (!selectedTodo) return;
+    isStart ? setStartTime(dayjs(startTime)) : setEndTime(dayjs(endTime));
+    isStart ? setStart() : setEnd();
   };
 
   const handleAdd = async () => {
     if (!titleRef.current || !placeRef.current) return;
-    const startDate = selectedDate.set('hour', 4).set('minute', 10).toISOString();
-    const endDate = selectedDate.set('hour', 6).set('minute', 10).toISOString();
+    const startDate = selectedDate
+      .set('hour', dayjs(startTime).hour())
+      .set('minute', dayjs(startTime).minute())
+      .toISOString();
+    const endDate = selectedDate
+      .set('hour', dayjs(endTime).hour())
+      .set('minute', dayjs(endTime).minute())
+      .toISOString();
     const todo = {
       id: crypto.randomUUID(),
       title: titleRef.current.value,
@@ -87,9 +101,9 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
           className="text-3xl font-bold"
         />
         <div className="flex flex-row justify-around">
-          <button onClick={handleTimeClick}>{startTime}</button>
+          <button onClick={() => handleTimeClick(true)}>{startTimeFormat}</button>
           <div>{`>`}</div>
-          <button onClick={handleTimeClick}>{endTime}</button>
+          <button onClick={() => handleTimeClick(false)}>{endTimeFormat}</button>
         </div>
         <div className="flex flex-row justify-between">
           <div>장소</div>
