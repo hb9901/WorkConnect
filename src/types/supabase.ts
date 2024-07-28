@@ -12,6 +12,7 @@ export type Database = {
       channel: {
         Row: {
           created_at: string
+          "host _id": string | null
           id: number
           name: string | null
           type: string | null
@@ -19,6 +20,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          "host _id"?: string | null
           id?: number
           name?: string | null
           type?: string | null
@@ -26,6 +28,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          "host _id"?: string | null
           id?: number
           name?: string | null
           type?: string | null
@@ -347,8 +350,6 @@ export type Database = {
           type: string
           is_notice: boolean
           workspace_user_id: string
-          name: string
-          profile_image: string
         }[]
       }
       get_users_in_channel: {
