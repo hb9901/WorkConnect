@@ -2,6 +2,7 @@
 import useShallowSelector from '@/app/hooks/useShallowSelector';
 import { useAuthStore } from '@/providers/AuthStoreProvider';
 import { AuthStoreTypes } from '@/store/authStore';
+import useUserStore from '@/store/userStore';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -13,10 +14,14 @@ type UserType = {
 
 const InviteCodePage = () => {
   const [inviteCode, setInviteCode] = useState<string | ''>('');
+  const setUserData = useUserStore((state) => state.setUserData);
   const route = useRouter();
-
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
+  const { userId, workspaceUserId } = useUserStore((state) => state);
+
   console.log(user);
+  console.log('userId : ', userId);
+  console.log('workspaceUserId : ', workspaceUserId);
 
   const handleSubmit = useMutation({
     mutationFn: async () => {
@@ -29,22 +34,16 @@ const InviteCodePage = () => {
         .eq('invite_code', Number(inviteCode))
         .single();
 
-      if (workspaceData) {
-        console.log(workspaceData.id);
-      }
-
       if (workspaceError) {
         console.log(`워크스페이스 조회 에러: ${workspaceError.message}`);
         alert('존재하지 않는 초대코드 입니다.');
         return;
       }
 
-      const { data: workspaceUserData, error: workspaceUserError } = await supabase
+      const { error: workspaceUserError } = await supabase
         .from('workspace_user')
         .update({ workspace_id: workspaceData.id })
         .eq('user_id', user.id);
-
-      console.log('workspaceUserData', workspaceUserData);
 
       if (workspaceUserError) {
         console.log(workspaceUserError);
@@ -52,9 +51,12 @@ const InviteCodePage = () => {
         return;
       }
 
+      setUserData(user.id, workspaceData.id);
+
       // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
       setInviteCode('');
       alert('초대코드 입력이 완료되었습니다.');
+      route.push('/user');
     }
   });
 
@@ -86,6 +88,7 @@ const InviteCodePage = () => {
           <button
             onClick={() => handleSubmitMutate()}
             className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
+            disabled={handleSubmit.isPending}
           >
             {handleSubmit.isPending ? '초대코드 확인 중...' : '확인'}
           </button>

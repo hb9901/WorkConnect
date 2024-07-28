@@ -5,14 +5,18 @@ type UserDataType = {
   userId: string | null;
   workspaceUserId: number | null;
   setUserData: (userId: string, workspaceUserId: number) => void;
+  clearStore: () => void;
 };
 
 const useUserStore = create<UserDataType>()(
-  persist(
-    (set) => ({
+  persist<UserDataType>(
+    (set, _, api) => ({
       userId: null,
       workspaceUserId: null,
-      setUserData: (userId: string, workspaceUserId: number) => set({ userId, workspaceUserId })
+      setUserData: (userId: string, workspaceUserId: number) => set({ userId, workspaceUserId }),
+      clearStore: () => {
+        api.persist.clearStorage();
+      }
     }),
     {
       name: 'user-storage'

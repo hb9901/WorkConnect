@@ -18,12 +18,10 @@ const NewWorkSpacePage = () => {
   const [orgName, setOrgName] = useState<string | ''>('');
   const [workUserData, setWorkUserData] = useState<{ id: string } | null>(null);
   const setUserData = useUserStore((state) => state.setUserData);
-
-  console.log('workUserData : ', workUserData?.id);
-
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
   const { userId, workspaceUserId } = useUserStore((state) => state);
 
+  console.log('workUserData : ', workUserData?.id);
   console.log('userId : ', userId);
   console.log('workspaceUserId : ', workspaceUserId);
 
@@ -55,19 +53,31 @@ const NewWorkSpacePage = () => {
         .single();
 
       if (workspaceError) {
-        alert(`워크스페이스 ID를 가져오는 중 오류가 발생했습니다. ${workspaceError.message}`);
+        alert(`워크스페이스 생성 중 오류가 발생했습니다. ${workspaceError.message}`);
         return;
       }
 
-      if (workspaceData) {
-        await supabase.from('workspace_user').update({ workspace_id: workspaceData.id }).eq('user_id', user.id);
-        setUserData(user.id, workspaceData.id);
+      if (!workspaceData) {
+        alert('워크스페이스 생성 중 오류가 발생했습니다.');
+        return;
       }
+
+      const { error: workspaceUserError } = await supabase
+        .from('workspace_user')
+        .update({ workspace_id: workspaceData.id })
+        .eq('user_id', user.id);
+
+      if (workspaceUserError) {
+        alert(`워크스페이스 유저 업데이트 중 오류가 발생했습니다. ${workspaceUserError.message}`);
+        return;
+      }
+
+      setUserData(user.id, workspaceData.id);
 
       // TODO : 완료 후 페이지 이동처리하기
       alert('워크스페이스 생성 완료!');
       setOrgName('');
-      route.push('/');
+      route.push('/user');
     }
   });
 
