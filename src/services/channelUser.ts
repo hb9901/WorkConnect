@@ -20,7 +20,7 @@ export const createChannelUsers = async ({ workspaceUserIds, channel_id }: Creat
   return response;
 };
 
-export const getUserListByChannel = async (channel_id: number) => {
+export const getUserListByChannel = async ({ channel_id }: CreateChannelUsersProps) => {
   const supabase = createClient();
 
   const response = await supabase.from('channel_user').select('*').eq('channel_id', channel_id);

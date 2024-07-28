@@ -47,7 +47,7 @@ export const GET = async (request: NextRequest) => {
         status: false,
         statusCode: 500
       });
-    return data;
+    return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({
       message: CHANNEL_USER_RESPONSE.FAILED_TO_CREATE,
