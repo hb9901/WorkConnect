@@ -1,5 +1,5 @@
-import { Tables } from "@/types/supabase";
-import { AxiosInstance } from "axios";
+import { Tables } from '@/types/supabase';
+import { AxiosInstance } from 'axios';
 
 class TodoAPI {
   private axios: AxiosInstance;
@@ -9,32 +9,41 @@ class TodoAPI {
   }
 
   async getTodoList(userId: string) {
-    const path = "/api/todo";
+    const path = '/api/todo';
     const response = await this.axios.get(path, {
       params: {
-        userId,
-      },
+        userId
+      }
     });
     const data = response.data;
 
     return data;
   }
   async delTodo(todoId: number) {
-    const path = "/api/todo";
+    const path = '/api/todo';
     const response = await this.axios.delete(path, {
       params: {
-        todoId,
-      },
+        todoId
+      }
     });
     const data = response.data;
 
     return data;
   }
 
-  async postTodo(todo: Tables<"todo">) {
-    const path = "/api/todo";
+  async postTodo(todo: Tables<'todo'>) {
+    const path = '/api/todo';
 
     const response = await this.axios.post(path, todo);
+    const data = response.data;
+
+    return data;
+  }
+
+  async putTodo(todo: Partial<Tables<'todo'>>, id: string) {
+    const path = '/api/todo';
+
+    const response = await this.axios.put(path, { todo, id });
     const data = response.data;
 
     return data;
