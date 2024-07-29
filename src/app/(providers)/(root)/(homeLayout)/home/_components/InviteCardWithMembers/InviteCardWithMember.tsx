@@ -1,14 +1,16 @@
-import Button from '@/components/Button';
 import Typography from '@/components/Typography';
 import HandsIcon from '@/icons/Hands.svg';
 import XIcon from '@/icons/X.svg';
+import InviteCodeButton from '../InviteCodeButton';
 
-interface InviteCardWithMembersProps {
+interface InviteCardWithOutMemberProps {
   handleCardClose: () => void;
 }
 
-const inviteCardWithMembers = ({ handleCardClose }: InviteCardWithMembersProps) => {
+const inviteCardWithMember = ({ handleCardClose }: InviteCardWithOutMemberProps) => {
   const workspaceName = '예시용 워크스페이스';
+  const testWorkspaceId = 324355;
+
   return (
     <div className="relative flex flex-col p-[28px] gap-[20px] bg-[#EBECFE]">
       <div className="flex flex-row justify-between items-start">
@@ -28,11 +30,11 @@ const inviteCardWithMembers = ({ handleCardClose }: InviteCardWithMembersProps) 
         </div>
       </div>
       <div>
-        <Button theme="primary">초대 코드 복사</Button>
+        <InviteCodeButton workspaceId={testWorkspaceId} isFullWidth={false} />
       </div>
       <HandsIcon className="absolute right-[23px] bottom-[0px] w-[90px] h-[93px]" />
     </div>
   );
 };
 
-export default inviteCardWithMembers;
+export default inviteCardWithMember;

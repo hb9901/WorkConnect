@@ -13,7 +13,7 @@ const Homepage = () => {
     position: 'Position',
     status: 'Status'
   };
-  const workspaceUserList = [];
+  const workspaceUserList = ['user'];
   const { workspaceUserId, workspaceList } = useUserStore(
     useShallow((state) => ({
       workspaceUserId: state.workspaceUserId,
@@ -29,7 +29,7 @@ const Homepage = () => {
       <main className="px-[16px] mt-[26px]">
         <HomeMemberCard name={workspaceUser.name} position={workspaceUser.position} status={workspaceUser.state} />
 
-        {workspaceUserList.length === 0 ? <MemberExistComponent /> : <MemberNotExistComponent />}
+        {workspaceUserList.length === 0 ? <MemberNotExistComponent /> : <MemberExistComponent />}
       </main>
     </div>
   );

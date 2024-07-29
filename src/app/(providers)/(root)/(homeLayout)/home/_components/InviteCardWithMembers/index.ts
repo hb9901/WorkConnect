@@ -1,1 +1,1 @@
-export { default } from './InviteCardWithMembers';
+export { default } from './InviteCardWithMember';

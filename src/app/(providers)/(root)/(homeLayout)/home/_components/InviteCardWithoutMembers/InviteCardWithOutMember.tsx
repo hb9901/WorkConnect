@@ -1,9 +1,11 @@
-import Button from '@/components/Button';
 import Typography from '@/components/Typography';
 import HandsIcon from '@/icons/Hands.svg';
+import InviteCodeButton from '../InviteCodeButton';
 
-const InviteCardWithOutMembers = () => {
+const InviteCardWithOutMember = () => {
   const workspaceName = '예시용 워크스페이스';
+  const testWorkspaceId = 324355;
+
   return (
     <div className="flex flex-col items-center w-full gap-[20px] px-[40px]">
       <HandsIcon className="w-[90px] h-[93px]" />
@@ -14,11 +16,9 @@ const InviteCardWithOutMembers = () => {
         </Typography>
         <Typography>함께 일하는 동료들을 초대해보세요</Typography>
       </div>
-      <Button theme="primary" isFullWidth={true}>
-        초대 코드 복사
-      </Button>
+      <InviteCodeButton workspaceId={testWorkspaceId} isFullWidth={true} />
     </div>
   );
 };
 
-export default InviteCardWithOutMembers;
+export default InviteCardWithOutMember;
