@@ -2,8 +2,8 @@
 
 import useStreamSetStore from '@/store/streamSetStore';
 import { ControlBar, LiveKitRoom, RoomAudioRenderer } from '@livekit/components-react';
-import { redirect, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 import VideoConference from '../VideoConference';
 
 type videoRoomProps = {
@@ -11,15 +11,17 @@ type videoRoomProps = {
 };
 
 const VideoRoom = ({ name }: videoRoomProps) => {
+  const router = useRouter();
   const [token, setToken] = useState('');
 
-  const { audioEnable, videoEnable, isStreamOk } = useStreamSetStore();
+  const { preJoinChoices, isSettingOk } = useStreamSetStore();
   const searchParams = useSearchParams();
   const userName = searchParams.get('username');
+  const onLeave = useCallback(() => router.push('/video-channel'), []);
 
   useEffect(() => {
-    if (!userName || !isStreamOk) {
-      redirect(`/video-channel/prejoin?room=${name}&username=${userName}`);
+    if (!userName || !isSettingOk) {
+      redirect(`/video-channel/prejoin?room=${name}`);
       return;
     }
     (async () => {
@@ -31,7 +33,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
         console.error(e);
       }
     })();
-  }, [isStreamOk, userName]);
+  }, [userName]);
 
   if (token === '') {
     return <div>Getting token...</div>;
@@ -39,12 +41,13 @@ const VideoRoom = ({ name }: videoRoomProps) => {
 
   return (
     <LiveKitRoom
-      video={videoEnable}
-      audio={audioEnable}
+      video={preJoinChoices.videoEnabled}
+      audio={preJoinChoices.audioEnabled}
       token={token}
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       data-lk-theme="default"
       style={{ height: '100dvh' }}
+      onDisconnected={onLeave}
     >
       <VideoConference />
       <RoomAudioRenderer />

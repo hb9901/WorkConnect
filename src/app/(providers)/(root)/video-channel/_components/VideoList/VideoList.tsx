@@ -14,16 +14,7 @@ const VideoList = () => {
   if (!channelList) {
     return <div>목록이 없습니다..</div>;
   }
-  const handleSubmit = (e: MouseEvent, roomName: string) => {
-    e.preventDefault();
 
-    // TODO: DB에 방 추가 하는 로직 작성 해야함.
-    if (roomName && userName) {
-      router.push(`/video-channel/${roomName}?username=${userName}`);
-    } else {
-      alert('방이름과 사용자 이름을 입력해 주세요.');
-    }
-  };
   return (
     <div className="m-5">
       {channelList.map((channel) => (

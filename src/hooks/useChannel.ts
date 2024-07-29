@@ -10,10 +10,10 @@ const useChannel = ({ type, workspace_id }: Pick<ChannelType, 'type' | 'workspac
     isError
   } = useQuery({
     queryKey: ['channel'],
-    queryFn: () => api.channel.getChannelList({type, workspace_id})
+    queryFn: () => api.channel.getChannelList({ type, workspace_id })
   });
 
-  const { mutateAsync: addChannel } = useMutation({
+  const { mutateAsync: createChannel } = useMutation({
     mutationFn: (channel: ChannelInsertType) => api.channel.postChannel(channel),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['channel'] });
@@ -29,7 +29,7 @@ const useChannel = ({ type, workspace_id }: Pick<ChannelType, 'type' | 'workspac
     }
   });
 
-  return { channelList, isPending, isError, addChannel, delChannel };
+  return { channelList, isPending, isError, createChannel, delChannel };
 };
 
 export default useChannel;
