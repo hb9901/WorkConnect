@@ -7,6 +7,7 @@ import { ControlBar, LiveKitRoom, RoomAudioRenderer } from '@livekit/components-
 import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { CONST } from '../../../_constants/contants';
+import { deleteChannel } from '../../_utils/videoChannelDelete';
 import VideoConference from '../VideoConference';
 
 type videoRoomProps = {
@@ -22,10 +23,12 @@ const VideoRoom = ({ name }: videoRoomProps) => {
 
   const { preJoinChoices, isSettingOk } = useStreamSetStore();
   const { enteredChannelId } = useEnterdChannelStore();
-  const { channelUsers } = useChannelUser({ channelId: enteredChannelId! });
+  const { leaveChannel } = useChannelUser({ channelId: enteredChannelId! });
 
   const onLeave = useCallback(() => {
-    channelUsers?.filter((user) => user.workspace_user_id !== CONST.FAKE_WORKSPACE_USER_ID);
+    // TODO : 삭제 되는 거 확인했으니, 현재 유저 아이디 값 받아오면 됨.
+    leaveChannel(CONST.FAKE_WORKSPACE_USER_ID);
+    deleteChannel(enteredChannelId);
     router.push('/video-channel');
   }, []);
 
@@ -56,7 +59,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       token={token}
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       data-lk-theme="default"
-      style={{ height: '100dvh' }}
+      style={{ height: '100vh' }}
       onDisconnected={onLeave}
     >
       <VideoConference />

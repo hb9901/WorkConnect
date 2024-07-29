@@ -36,10 +36,12 @@ export const POST = async (request: NextRequest) => {
 };
 
 export const GET = async (request: NextRequest) => {
-  const { channel_id } = await request.json();
-  try {
-    const { data, error } = await getUserListByChannel(channel_id);
+  const { searchParams } = new URL(request.url);
+  const channel_id = searchParams.get('channel_id');
 
+  try {
+    if (!channel_id) return;
+    const { data, error } = await getUserListByChannel(Number(channel_id));
     if (error)
       return NextResponse.json({
         message: CHANNEL_USER_RESPONSE.FAILED_TO_CREATE,
@@ -59,9 +61,14 @@ export const GET = async (request: NextRequest) => {
 };
 
 export const DELETE = async (request: NextRequest) => {
-  const { workspace_user_id, channel_id } = await request.json();
+  const { searchParams } = new URL(request.url);
+  const channelId = searchParams.get('channel_id');
+  const workspaceUserId = searchParams.get('workspace_user_id');
   try {
-    const { error } = await deleteUserInChannel({ workspace_user_id, channel_id });
+    const { error } = await deleteUserInChannel({
+      workspace_user_id: workspaceUserId!,
+      channel_id: Number(channelId!)
+    });
     if (error)
       return NextResponse.json({
         message: CHANNEL_USER_RESPONSE.FAILED_TO_DELETE,
