@@ -1,4 +1,5 @@
 'use client';
+
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import ContactInfo from './_components/ContactInfo';
 import Header from './_components/Header';
@@ -9,13 +10,13 @@ const FAKE_USER_ID_2 = '82400d9c-fc50-426c-b8d8-0761eeb81198';
 
 const Profile = () => {
   const { workspaceUser } = useWorkspaceUser();
-  const workspaceUserId = workspaceUser && workspaceUser.user.id;
+  const workspaceUserId = workspaceUser && workspaceUser.user_id;
   const name = workspaceUser && workspaceUser.name;
-  const isMyPage = FAKE_USER_ID_2 === workspaceUserId;
+  const isMyPage = FAKE_USER_ID_1 === workspaceUserId;
 
   return (
     <>
-      <Header title={isMyPage ? '마이페이지' : name} type={isMyPage ? 'myPage' : 'profile'} />
+      <Header title={isMyPage ? '내 프로필' : name} type={isMyPage ? 'myPage' : 'profile'} />
       <main>
         <div className="m-auto mx-5">
           <MainInfo isMyPage={isMyPage} />
