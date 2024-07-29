@@ -5,6 +5,7 @@ type CreateChannelUserParams = Pick<ChannelUserType, 'channel_id'> & {
   workspaceUserIds: ChannelUserType['workspace_user_id'][];
 };
 
+type DeleteChannelUserParams = Pick<ChannelUserType, 'channel_id' | 'workspace_user_id'>;
 class ChannelUserAPI {
   private axios: AxiosInstance;
   path = 'api/channel-user';
@@ -13,7 +14,7 @@ class ChannelUserAPI {
   }
 
   // 특정 채널에 소속된 유저 목록 가져오기.
-  async getChannelUserList(channel_id: number): Promise<ChannelUserType> {
+  async getChannelUserList(channel_id: number): Promise<ChannelUserType[]> {
     const response = await this.axios.get(this.path, {
       params: { channel_id }
     });
@@ -29,11 +30,11 @@ class ChannelUserAPI {
     return response.data;
   }
 
-  async deleteChannelUser({ workspaceUserIds, channel_id }: CreateChannelUserParams) {
+  async deleteChannelUser({ workspace_user_id, channel_id }: DeleteChannelUserParams) {
     const response = await this.axios.delete(this.path, {
       params: {
         channel_id,
-        workspaceUserIds
+        workspace_user_id
       }
     });
     return response.data;

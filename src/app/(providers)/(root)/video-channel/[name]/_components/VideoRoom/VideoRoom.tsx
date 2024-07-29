@@ -1,9 +1,12 @@
 'use client';
 
+import useChannelUser from '@/hooks/useChannelUser';
+import useEnterdChannelStore from '@/store/enteredChannelStore';
 import useStreamSetStore from '@/store/streamSetStore';
 import { ControlBar, LiveKitRoom, RoomAudioRenderer } from '@livekit/components-react';
 import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import { CONST } from '../../../_constants/contants';
 import VideoConference from '../VideoConference';
 
 type videoRoomProps = {
@@ -14,10 +17,17 @@ const VideoRoom = ({ name }: videoRoomProps) => {
   const router = useRouter();
   const [token, setToken] = useState('');
 
-  const { preJoinChoices, isSettingOk } = useStreamSetStore();
   const searchParams = useSearchParams();
   const userName = searchParams.get('username');
-  const onLeave = useCallback(() => router.push('/video-channel'), []);
+
+  const { preJoinChoices, isSettingOk } = useStreamSetStore();
+  const { enteredChannelId } = useEnterdChannelStore();
+  const { channelUsers } = useChannelUser({ channelId: enteredChannelId! });
+
+  const onLeave = useCallback(() => {
+    channelUsers?.filter((user) => user.workspace_user_id !== CONST.FAKE_WORKSPACE_USER_ID);
+    router.push('/video-channel');
+  }, []);
 
   useEffect(() => {
     if (!userName || !isSettingOk) {
