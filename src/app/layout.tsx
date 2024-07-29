@@ -1,22 +1,22 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "@/styles/globals.css";
+import '@/styles/globals.css';
+import { Noto_Sans_KR } from '@next/font/google';
+import type { Metadata } from 'next';
 
-const inter = Inter({ subsets: ["latin"] });
+const notoSansKR = Noto_Sans_KR({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "B3 Project",
-  description: "B3 Project",
+  title: 'B3 Project',
+  description: 'B3 Project'
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={notoSansKR.className}>{children}</body>
     </html>
   );
 }
