@@ -1,22 +1,33 @@
 'use client';
+import useWorkspaceUser from '@/hooks/useWorkspaceUser';
+import useUserStore from '@/store/userStore';
+import { useShallow } from 'zustand/react/shallow';
 import Header from './_components/Header';
 import HomeMemberCard from './_components/HomeMemberCard';
 import MemberExistComponent from './_components/MemberExistComponent';
 import MemberNotExistComponent from './_components/MemberNotExistComponent';
 
-const page = () => {
+const Homepage = () => {
   const userInfo = {
     name: '이름',
     position: 'Position',
     status: 'Status'
   };
   const workspaceUserList = [];
+  const { workspaceUserId, workspaceList } = useUserStore(
+    useShallow((state) => ({
+      workspaceUserId: state.workspaceUserId,
+      workspaceList: state.workspaceList
+    }))
+  );
+  const { workspaceUser } = useWorkspaceUser();
 
+  if (!workspaceUser) return;
   return (
     <div>
       <Header />
       <main className="px-[16px] mt-[26px]">
-        <HomeMemberCard name={userInfo.name} position={userInfo.position} status={userInfo.status} />
+        <HomeMemberCard name={workspaceUser.name} position={workspaceUser.position} status={workspaceUser.state} />
 
         {workspaceUserList.length === 0 ? <MemberExistComponent /> : <MemberNotExistComponent />}
       </main>
@@ -24,4 +35,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Homepage;
