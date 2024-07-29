@@ -25,7 +25,15 @@ export const NavigationBar = ({ children, className, ...props }: NavbarProps) =>
   );
 };
 
-export const Tab = ({ children, className, active = false, as: Component = 'div', icon, ...props }: TabProps) => {
+export const Tab = ({
+  children,
+  className,
+  onClick,
+  active = false,
+  as: Component = 'div',
+  icon,
+  ...props
+}: TabProps) => {
   return (
     <Component
       className={`bg-white flex-1 flex text-center items-center justify-center border-t-4 text-[12px] pt-[14px] pb-[42px] cursor-pointer transition-colors duration-300 whitespace-nowrap min-w-[100px] ${

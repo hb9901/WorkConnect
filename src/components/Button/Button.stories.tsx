@@ -1,4 +1,3 @@
-import { StoryFn } from '@storybook/react';
 import Button from './Button';
 
 export default {
@@ -37,14 +36,7 @@ export default {
       description: '버튼의 type을 지정합니다.',
       defaultValue: 'button'
     }
-  },
-  decorators: [
-    (Story: StoryFn) => (
-      <div style={{ width: '360px' }}>
-        <Story />
-      </div>
-    )
-  ]
+  }
 };
 
 export const Default = {
