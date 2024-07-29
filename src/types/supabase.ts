@@ -6,24 +6,30 @@ export type Database = {
       channel: {
         Row: {
           created_at: string;
+          host_id: string | null;
           id: number;
           name: string | null;
+          thumbnail: string | null;
           type: string | null;
-          workspace_id: number | null;
+          workspace_id: number;
         };
         Insert: {
           created_at?: string;
+          host_id?: string | null;
           id?: number;
           name?: string | null;
+          thumbnail?: string | null;
           type?: string | null;
-          workspace_id?: number | null;
+          workspace_id: number;
         };
         Update: {
           created_at?: string;
+          host_id?: string | null;
           id?: number;
           name?: string | null;
+          thumbnail?: string | null;
           type?: string | null;
-          workspace_id?: number | null;
+          workspace_id?: number;
         };
         Relationships: [
           {
@@ -200,18 +206,21 @@ export type Database = {
           created_at: string;
           email: string | null;
           id: string;
+          name: string | null;
           sns_type: string | null;
         };
         Insert: {
           created_at?: string;
           email?: string | null;
           id: string;
+          name?: string | null;
           sns_type?: string | null;
         };
         Update: {
           created_at?: string;
           email?: string | null;
           id?: string;
+          name?: string | null;
           sns_type?: string | null;
         };
         Relationships: [
@@ -229,30 +238,38 @@ export type Database = {
           admin_user_id: string | null;
           created_at: string;
           id: number;
-          invite_code: number | null;
+          invite_code: number;
           name: string;
         };
         Insert: {
           admin_user_id?: string | null;
           created_at?: string;
           id?: number;
-          invite_code?: number | null;
+          invite_code: number;
           name: string;
         };
         Update: {
           admin_user_id?: string | null;
           created_at?: string;
           id?: number;
-          invite_code?: number | null;
+          invite_code?: number;
           name?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: 'workspace_admin_user_id_fkey';
+            columns: ['admin_user_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspace_user';
+            referencedColumns: ['id'];
+          }
+        ];
       };
       workspace_user: {
         Row: {
           email: string | null;
           id: string;
-          name: string | null;
+          name: string;
           phone: string | null;
           profile_image: string | null;
           state: string | null;
@@ -262,7 +279,7 @@ export type Database = {
         Insert: {
           email?: string | null;
           id?: string;
-          name?: string | null;
+          name: string;
           phone?: string | null;
           profile_image?: string | null;
           state?: string | null;
@@ -272,7 +289,7 @@ export type Database = {
         Update: {
           email?: string | null;
           id?: string;
-          name?: string | null;
+          name?: string;
           phone?: string | null;
           profile_image?: string | null;
           state?: string | null;
@@ -330,8 +347,17 @@ export type Database = {
           type: string;
           is_notice: boolean;
           workspace_user_id: string;
+        }[];
+      };
+      get_users_in_channel: {
+        Args: {
+          cid: number;
+          wuid: string;
+        };
+        Returns: {
           name: string;
           profile_image: string;
+          workspace_user_id: string;
         }[];
       };
     };

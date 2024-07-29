@@ -4,6 +4,8 @@ import VideoRoom from '../_components/VideoRoom';
 type Params = {
   params: {
     name: string;
+    host_id: string;
+    channel_id: number;
   };
 };
 const VideoCallRoom = ({ params }: Params) => {

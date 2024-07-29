@@ -10,7 +10,7 @@ class ChannelAPI {
     this.path = '/api/channel';
   }
 
-  async getChannelList({type, workspace_id}: Pick<ChannelType, 'type' | 'workspace_id'>): Promise<ChannelType[]> {
+  async getChannelList({ type, workspace_id }: Pick<ChannelType, 'type' | 'workspace_id'>): Promise<ChannelType[]> {
     const response = await this.axios.get(this.path, {
       params: {
         type,
