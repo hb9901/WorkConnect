@@ -14,6 +14,7 @@ const SignUpPage = () => {
   const [passwordCheck, setPasswordCheck] = useState<string>('');
   const route = useRouter();
 
+  // TODO : 리팩터링 예정
   const signUpMutation = useMutation({
     mutationFn: async () => {
       if (!name || !email || !password || !passwordCheck) return alert('빈칸을 입력해주세요.');

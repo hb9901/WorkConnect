@@ -10,6 +10,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState<string>('');
   const route = useRouter();
 
+  // TODO : 리팩터링 예정
   const loginMutation = useMutation({
     mutationFn: async () => {
       const {

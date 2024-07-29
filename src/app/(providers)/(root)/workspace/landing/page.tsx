@@ -17,15 +17,16 @@ const InviteCodePage = () => {
   const setUserData = useUserStore((state) => state.setUserData);
   const route = useRouter();
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
-  const { userId, workspaceUserId } = useUserStore((state) => state);
 
-  console.log(user);
-  console.log('userId : ', userId);
-  console.log('workspaceUserId : ', workspaceUserId);
-
+  // TODO : 리팩터링 예정
   const handleSubmit = useMutation({
     mutationFn: async () => {
-      if (!user) return alert('로그인이 필요합니다.');
+      if (!user) {
+        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+        route.push('/landing');
+        return;
+      }
+
       if (!inviteCode) return alert('초대 코드를 입력해주세요.');
 
       const { data: workspaceData, error: workspaceError } = await supabase
@@ -46,7 +47,6 @@ const InviteCodePage = () => {
         .eq('user_id', user.id);
 
       if (workspaceUserError) {
-        console.log(workspaceUserError);
         alert('존재하지 않는 초대코드 입니다.');
         return;
       }

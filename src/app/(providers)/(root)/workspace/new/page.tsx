@@ -9,6 +9,12 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+const getRandomNumbers = (count: number, min: number, max: number) => {
+  const range = Array.from({ length: max - min + 1 }, (_, i) => i + min);
+  const shuffled = range.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+};
+
 type UserType = {
   user: AuthStoreTypes['user'];
 };
@@ -19,15 +25,14 @@ const NewWorkSpacePage = () => {
   const [workUserData, setWorkUserData] = useState<{ id: string } | null>(null);
   const setUserData = useUserStore((state) => state.setUserData);
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
-  const { userId, workspaceUserId } = useUserStore((state) => state);
-
-  console.log('workUserData : ', workUserData?.id);
-  console.log('userId : ', userId);
-  console.log('workspaceUserId : ', workspaceUserId);
 
   const handleJoin = useMutation({
     mutationFn: async () => {
-      if (!user) return alert('로그인이 필요합니다.');
+      if (!user) {
+        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+        route.push('/landing');
+        return;
+      }
       if (!orgName) return alert('조직 이름을 입력해주세요!');
 
       if (!workUserData) {
@@ -35,9 +40,12 @@ const NewWorkSpacePage = () => {
         return;
       }
 
+      const randomNumbers = getRandomNumbers(6, 1, 9);
+      const combinedNumber = Number(randomNumbers.join(''));
+
       const { error } = await supabase.from('workspace').insert({
         name: orgName,
-        invite_code: 123456,
+        invite_code: combinedNumber,
         admin_user_id: workUserData.id
       });
 
@@ -89,19 +97,25 @@ const NewWorkSpacePage = () => {
         data: { user }
       } = await supabase.auth.getUser();
 
+      if (!user) {
+        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+        route.push('/landing');
+        return;
+      }
+
       const { data: workspaceUserData, error: workspaceUserError } = await supabase
         .from('workspace_user')
         .select('id')
         .eq('user_id', user?.id || '')
         .single();
 
-      if (!workspaceUserData) {
-        alert('해당 유저는 워크스페이스에 속해있지 않습니다.');
+      if (workspaceUserError) {
+        console.log(`워크스페이스 유저를 가져오는 중 오류가 발생했습니다. : ${workspaceUserError}`);
         return;
       }
 
-      if (workspaceUserError) {
-        alert(`워크스페이스 유저를 가져오는 중 오류가 발생했습니다. : ${workspaceUserError}`);
+      if (!workspaceUserData) {
+        console.log('해당 유저는 워크스페이스에 속해있지 않습니다.');
         return;
       }
 

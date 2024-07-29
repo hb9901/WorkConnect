@@ -2,6 +2,7 @@
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useRouter } from 'next/navigation';
 
+// TODO : 테스트 (삭제예정)
 const Logout = () => {
   const route = useRouter();
 

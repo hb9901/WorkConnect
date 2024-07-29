@@ -19,6 +19,7 @@ const AuthVerifyPage = () => {
     return otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
   };
 
+  // TODO : 리팩터링 예정
   const otpMutation = useMutation({
     mutationFn: async () => {
       const fullOtp = getFullOtp();
