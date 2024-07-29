@@ -6,7 +6,7 @@ type ButtonTheme = 'primary' | 'grey' | 'text' | 'underlineText' | 'outline';
 interface ButtonProps {
   className?: string;
   theme: ButtonTheme;
-  children: string;
+  children: React.ReactNode;
   isDisabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   isFullWidth?: boolean;

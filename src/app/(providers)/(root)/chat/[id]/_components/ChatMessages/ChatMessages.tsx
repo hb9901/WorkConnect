@@ -1,5 +1,5 @@
 import type { GetChatMessageType } from '@/types/chat';
-import { ChatContainer, ChatImage, ChatMessage, ChatOtherProfileContainer, ChatOtherProfileName } from '../Chat';
+import { ChatContainer, ChatThumbnail, ChatMessage, ChatOtherProfileContainer, ChatOtherProfileName } from '../Chat';
 import type { GetUsersInChannelResponse } from '@/types/channel';
 
 // TODO: 임시 코드
@@ -9,6 +9,8 @@ type ChatMessagesProps = {
   data: GetChatMessageType[] & { channel_id?: string };
   usersInChannel: GetUsersInChannelResponse;
 };
+
+// TODO: video onLoad event 가 있으면 모두 다 로딩된 후에 스크롤을 가장 아래로 내리도록 수정
 
 const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
   return (
@@ -21,7 +23,7 @@ const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => 
           <ChatContainer key={chat.id} className={`flex ${isMe ? 'items-end' : 'items-start'} flex-col`}>
             {!isMe && (
               <ChatOtherProfileContainer>
-                <ChatImage
+                <ChatThumbnail
                   src={
                     userInfo.profile_image ??
                     'https://blog.kakaocdn.net/dn/bCXLP7/btrQuNirLbt/N30EKpk07InXpbReKWzde1/img.png'
@@ -30,7 +32,7 @@ const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => 
                 <ChatOtherProfileName>{userInfo.name}</ChatOtherProfileName>
               </ChatOtherProfileContainer>
             )}
-            <ChatMessage className={isMe ? 'bg-blue-500' : 'bg-gray-600 ml-[50px]'}>{chat.content}</ChatMessage>
+            <ChatMessage chat={chat} isMe={isMe} />
           </ChatContainer>
         );
       })}
