@@ -1,14 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import TestHeader from '../_components/TestHeader';
 import { useRouter } from 'next/navigation';
-import { useGetExistingChannelId, useGetSearchWorkspaceUsers } from '../_hooks/useQueryChat';
+import { useGetSearchWorkspaceUsers } from '../_hooks/useQueryChat';
 import { useSearchUsers } from './_provider/SearchUsersProvider';
 import useCreateChannel from './_hooks/useCreateChannel';
 import SearchResults from './_components/SearchResults';
 import SelectedUsers from './_components/SelectedUsers';
-import api from '@/api';
+import { getExistingChannelId } from './_utils/getExistingChannelId';
 
 //TODO: 임시 코드
 const WORKSPACE_ID = 2;
@@ -26,12 +26,6 @@ const AddChatPage = ({ params }: { params: { id: string } }) => {
     workspace_user_id: WORKSPACE_USER_ID
   });
 
-  // TODO: 왜 안되나요 ㅋㅋㅋㅋㅋㅋㅋ
-  // const { data: existingChannelId, refetch: refetchExistingChannelId } = useGetExistingChannelId({
-  //   workspace_user_id: WORKSPACE_USER_ID,
-  //   other_workspace_user_id: selectedUsers[0]?.id
-  // });
-
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const term = event.target.value;
     setSearchTerm(term);
@@ -46,12 +40,16 @@ const AddChatPage = ({ params }: { params: { id: string } }) => {
       router.push('/chat/add/group-setting');
       return;
     }
+    // TODO: 이거 복수여도 되는건데 ㅡㅡ 아 왜 아니ㅗ러아니러;ㅇ나러 왜 안돼 외ㅏㄹㅇ널; 1:1만 하고 싶다고 ㅡㅡ 판단..
+    const existingChannelId = await getExistingChannelId({
+      workspace_user_id: WORKSPACE_USER_ID,
+      other_workspace_user_id: userIds[0]
+    });
 
-    //refetchExistingChannelId();
-
-    // TODO: 데이터가 안 오는게 말이 안됨..
-    // TODO: 한박자 느림 refetch 하니까 한박자 느려서 정확히 안됨 ㅠㅠㅠㅠㅠ
-    //console.log('@@', existingChannelId);
+    if (existingChannelId) {
+      router.push(`/chat/${existingChannelId}`);
+      return;
+    }
 
     handleCreateChannelAndUsers({ userIds });
   };

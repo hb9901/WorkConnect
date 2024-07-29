@@ -27,6 +27,7 @@ const VideoConference = () => {
   );
   const speakerTrackRef = tracks.find((track) => track.participant.isSpeaking);
   const screenShareTrackRef = useTracks([Track.Source.ScreenShare])[0];
+
   useEffect(() => {
     if (screenShareTrackRef) {
       setFocusedTrack(screenShareTrackRef);

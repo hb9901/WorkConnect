@@ -1,4 +1,5 @@
 'use client';
+import useEnterdChannelStore from '@/store/enteredChannelStore';
 import { useRouter } from 'next/navigation';
 
 type VieoListItemType = {
@@ -9,9 +10,13 @@ type VieoListItemType = {
 const VideoListItem = ({ id, name, type }: VieoListItemType) => {
   const userName = 'minkon'; // 전역 관리 되야 하는 유저 정보.
   const router = useRouter();
+
+  const { setEnteredChannelId } = useEnterdChannelStore();
+
   const handleClick = () => {
     // TODO: DB에 방 추가 하는 로직 작성 해야함.
     if (name && userName) {
+      setEnteredChannelId(id);
       router.push(`/video-channel/${name}?username=${userName}`);
     } else {
       alert('방이름과 사용자 이름을 입력해 주세요.');
