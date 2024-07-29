@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 
-import ChannelAPI from './channelAPI';
+import ChannelAPI from './channelAPi';
 import ChannelUserAPI from './channelUser';
 import storageProfileAPI from './storageProfileAPI';
 import TodoAPI from './todoAPi';
