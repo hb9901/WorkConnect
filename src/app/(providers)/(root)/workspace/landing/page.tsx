@@ -1,5 +1,5 @@
 'use client';
-import useShallowSelector from '@/app/hooks/useShallowSelector';
+import useShallowSelector from '@/hooks/useShallowSelector';
 import { useAuthStore } from '@/providers/AuthStoreProvider';
 import { AuthStoreTypes } from '@/store/authStore';
 import useUserStore from '@/store/userStore';

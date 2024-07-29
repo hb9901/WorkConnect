@@ -1,6 +1,6 @@
 'use client';
 import BackButton from '../../auth/_components/BackButton';
-import useShallowSelector from '@/app/hooks/useShallowSelector';
+import useShallowSelector from '@/hooks/useShallowSelector';
 import { useAuthStore } from '@/providers/AuthStoreProvider';
 import { AuthStoreTypes } from '@/store/authStore';
 import useUserStore from '@/store/userStore';
@@ -26,6 +26,7 @@ const NewWorkSpacePage = () => {
   const setUserData = useUserStore((state) => state.setUserData);
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
 
+  // TODO : 리팩터링 예정
   const handleJoin = useMutation({
     mutationFn: async () => {
       if (!user) {
