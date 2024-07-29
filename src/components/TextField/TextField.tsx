@@ -20,11 +20,7 @@ const TextField = ({ id, children, message, value, isError, ...props }: TextFiel
   return (
     <div className="relative text-field">
       {/* 형빈님 Label 컴포넌트 받아서 넣을 예정 - 라벨로 바꿔주세요 */}
-      {/* <Typography className="p-1" color="grey200" htmlFor={customId}> */}
-      <Typography className="p-1" color="grey200">
-        {children}
-      </Typography>
-      <Input id={customId} value={value} type="text" className={`border ${isError ? 'border-error' : ''}`} {...props} />
+      <Input id={customId} value={value} type="text" className={`${isError ? 'border-error' : ''}`} {...props} />
       {message && (
         <Typography variant="Body14px" color="error" className="p-1">
           {message}

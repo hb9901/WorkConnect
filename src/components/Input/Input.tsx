@@ -217,7 +217,7 @@ const Input = ({
         onChange={onChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className={`px-[16px] py-[12px] border rounded-lg shadow-md focus:outline-none ${getBorderClass()}`}
+        className={`px-[16px] py-[12px] border rounded-lg shadow-md focus:outline-none text-[16px] ${getBorderClass()}`}
         {...props}
       />
       <span className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer">{renderIcon()}</span>
