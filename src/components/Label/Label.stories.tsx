@@ -15,7 +15,7 @@ export default {
     color: {
       control: 'select',
       description: '텍스트의 색상을 지정합니다.',
-      options: ['primary', 'grey', 'error']
+      options: ['primary200Main', 'grey700Black', 'error']
     },
     htmlFor: {
       control: 'text',
@@ -31,14 +31,14 @@ export default {
 export const Primary = {
   args: {
     children: 'Primary Label',
-    color: 'primary'
+    color: 'primary200Main'
   }
 };
 
 export const Grey = {
   args: {
     children: 'Grey Label',
-    color: 'grey'
+    color: 'grey700Black'
   }
 };
 

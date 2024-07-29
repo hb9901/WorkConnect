@@ -1,32 +1,26 @@
 import { StrictPropsWithChildren } from '@/types/common';
-import { cva, VariantProps } from 'class-variance-authority';
-import clsx from 'clsx';
 import { HTMLAttributes } from 'react';
+import Typography from '../Typography';
 
 type LabelProps = {
   htmlFor: string;
+  color: 'primary200Main' | 'grey700Black' | 'error' | undefined;
   className?: string;
-} & StrictPropsWithChildren<VariantProps<typeof LabelClass> & HTMLAttributes<HTMLLabelElement>>;
+} & HTMLAttributes<HTMLLabelElement>;
 
-const Label = ({ htmlFor, color: variant, className, children, ...props }: LabelProps) => {
+const Label = ({
+  htmlFor,
+  color = 'primary200Main',
+  className,
+  children,
+  ...props
+}: StrictPropsWithChildren<LabelProps>) => {
   return (
-    <label htmlFor={htmlFor} className={clsx(LabelClass({ color: variant }), className)} {...props}>
-      {children}
+    <label htmlFor={htmlFor} className={className} {...props}>
+      <Typography variant="Body14px" color={color}>
+        {children}
+      </Typography>
     </label>
   );
 };
-
-const LabelClass = cva('text-[14px] font-normal leading-[130%] tracking-[-0.28px]', {
-  variants: {
-    color: {
-      primary: 'text-primary200Main',
-      grey: 'text-grey700Black',
-      error: 'text-error'
-    }
-  },
-  defaultVariants: {
-    color: 'primary'
-  }
-});
-
 export default Label;

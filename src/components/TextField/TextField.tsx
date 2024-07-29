@@ -13,7 +13,7 @@ interface TextFieldProps {
   id: string;
   label: string;
   labelClassName?: string;
-  color: 'primary' | 'grey' | 'error' | undefined;
+  color: 'primary200Main' | 'grey700Black' | 'error' | undefined;
   message: string;
 }
 
@@ -21,7 +21,7 @@ const TextField = ({
   id,
   label,
   labelClassName,
-  color,
+  color = 'primary200Main',
   children,
   message,
   value,
