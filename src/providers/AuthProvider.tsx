@@ -14,6 +14,7 @@ export default function AuthProvider({ accessToken, children }: AuthProviderProp
   const supabase = createClient();
   const router = useRouter();
   const clearStore = useUserStore((state) => state.clearStore);
+  const { userId, workspaceId } = useUserStore((state) => state);
 
   useEffect(() => {
     const {
@@ -25,8 +26,12 @@ export default function AuthProvider({ accessToken, children }: AuthProviderProp
       }
 
       if (!session) {
-        alert('로그인이 필요한 페이지 입니다.');
         return router.replace('/landing');
+      }
+
+      if (session) {
+        console.log('userId', userId);
+        console.log('workspaceId', workspaceId);
       }
     });
 
