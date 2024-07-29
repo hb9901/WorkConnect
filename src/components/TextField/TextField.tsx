@@ -13,7 +13,7 @@ interface TextFieldProps {
   id: string;
   label: string;
   labelClassName?: string;
-  variant: 'primary' | 'grey' | 'error' | null | undefined;
+  color: 'primary' | 'grey' | 'error' | undefined;
   message: string;
 }
 
@@ -21,7 +21,7 @@ const TextField = ({
   id,
   label,
   labelClassName,
-  variant,
+  color,
   children,
   message,
   value,
@@ -33,7 +33,7 @@ const TextField = ({
 
   return (
     <div className="relative text-field">
-      <Label htmlFor={customId} variant={variant} className={labelClassName}>
+      <Label htmlFor={customId} color={color} className={labelClassName}>
         {label}
       </Label>
       <Typography className="p-1" color="grey200">

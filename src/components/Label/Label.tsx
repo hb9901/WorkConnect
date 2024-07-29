@@ -8,9 +8,9 @@ type LabelProps = {
   className?: string;
 } & StrictPropsWithChildren<VariantProps<typeof LabelClass> & HTMLAttributes<HTMLLabelElement>>;
 
-const Label = ({ htmlFor, variant, className, children, ...props }: LabelProps) => {
+const Label = ({ htmlFor, color: variant, className, children, ...props }: LabelProps) => {
   return (
-    <label htmlFor={htmlFor} className={clsx(LabelClass({ variant }), className)} {...props}>
+    <label htmlFor={htmlFor} className={clsx(LabelClass({ color: variant }), className)} {...props}>
       {children}
     </label>
   );
@@ -18,14 +18,14 @@ const Label = ({ htmlFor, variant, className, children, ...props }: LabelProps) 
 
 const LabelClass = cva('text-[14px] font-normal leading-[130%] tracking-[-0.28px]', {
   variants: {
-    variant: {
+    color: {
       primary: 'text-primary200Main',
       grey: 'text-grey700Black',
       error: 'text-error'
     }
   },
   defaultVariants: {
-    variant: 'primary'
+    color: 'primary'
   }
 });
 
