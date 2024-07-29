@@ -3,8 +3,8 @@ import { persist } from 'zustand/middleware';
 
 type UserDataType = {
   userId: string | null;
-  workspaceUserId: number | null;
-  setUserData: (userId: string, workspaceUserId: number) => void;
+  workspaceId: number | null;
+  setUserData: (userId: string, workspaceId: number) => void;
   clearStore: () => void;
 };
 
@@ -12,8 +12,8 @@ const useUserStore = create<UserDataType>()(
   persist<UserDataType>(
     (set, _, api) => ({
       userId: null,
-      workspaceUserId: null,
-      setUserData: (userId: string, workspaceUserId: number) => set({ userId, workspaceUserId }),
+      workspaceId: null,
+      setUserData: (userId: string, workspaceId: number) => set({ userId, workspaceId }),
       clearStore: () => {
         api.persist.clearStorage();
       }

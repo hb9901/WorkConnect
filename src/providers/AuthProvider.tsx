@@ -23,6 +23,11 @@ export default function AuthProvider({ accessToken, children }: AuthProviderProp
         clearStore();
         router.refresh();
       }
+
+      if (!session) {
+        alert('로그인이 필요한 페이지 입니다.');
+        return router.replace('/landing');
+      }
     });
 
     return () => {
