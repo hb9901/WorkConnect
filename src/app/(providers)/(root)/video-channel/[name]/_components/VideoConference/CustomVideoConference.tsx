@@ -1,9 +1,11 @@
 'use client';
 
 import {
-  CarouselLayout,
+  ControlBar,
   FocusLayout,
+  GridLayout,
   ParticipantTile,
+  RoomAudioRenderer,
   TrackReferenceOrPlaceholder,
   useTracks
 } from '@livekit/components-react';
@@ -16,7 +18,7 @@ enum FocusPriority {
   DEFAULT
 }
 
-const VideoConference = () => {
+const CustomVideoConference = () => {
   const [focusedTrack, setFocusedTrack] = useState<TrackReferenceOrPlaceholder | null>();
   const tracks = useTracks(
     [
@@ -31,25 +33,34 @@ const VideoConference = () => {
   useEffect(() => {
     if (screenShareTrackRef) {
       setFocusedTrack(screenShareTrackRef);
-    } else if (speakerTrackRef) {
+    } else {
+      setFocusedTrack(null);
+    }
+  }, [screenShareTrackRef]);
+
+  useEffect(() => {
+    if (screenShareTrackRef) return;
+    if (speakerTrackRef) {
       setFocusedTrack(speakerTrackRef);
     }
-  }, [speakerTrackRef, screenShareTrackRef]);
+  }, [speakerTrackRef]);
 
   return (
-    <div className="flex gap-2 h-[80vh] p-3">
-      {focusedTrack && <FocusLayout trackRef={focusedTrack}></FocusLayout>}
-      <div className={`${focusedTrack ? 'w-[25vw]' : ''}`}>
-        <CarouselLayout
-          orientation={`${focusedTrack ? 'vertical' : 'horizontal'}`}
-          tracks={tracks}
-          style={{ height: 'calc(50vh 50vw - var(--lk-control-bar-height))' }}
-        >
-          <ParticipantTile />
-        </CarouselLayout>
+    <div className="flex flex-col gap-2 h-[80vh] p-3">
+      <div className="flex p-4 h-full items-center">
+        <div className={`${focusedTrack ? 'w-[80vw] m-5' : 'none'}`}>
+          {focusedTrack && <FocusLayout trackRef={focusedTrack} />}
+        </div>
+        <div className={` ${focusedTrack ? 'w-[300px]' : 'w-full'}`}>
+          <GridLayout tracks={tracks} style={{ height: 'calc(50vh 50vw - var(--lk-control-bar-height))' }}>
+            <ParticipantTile />
+          </GridLayout>
+        </div>
       </div>
+      <RoomAudioRenderer />
+      <ControlBar className="h-[20vw]" />
     </div>
   );
 };
 
-export default VideoConference;
+export default CustomVideoConference;

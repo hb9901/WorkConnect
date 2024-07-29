@@ -3,12 +3,13 @@
 import useChannelUser from '@/hooks/useChannelUser';
 import useEnterdChannelStore from '@/store/enteredChannelStore';
 import useStreamSetStore from '@/store/streamSetStore';
-import { ControlBar, LiveKitRoom, RoomAudioRenderer } from '@livekit/components-react';
+import { LiveKitRoom } from '@livekit/components-react';
+import { RoomConnectOptions } from 'livekit-client';
 import { redirect, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { CONST } from '../../../_constants/contants';
 import { deleteChannel } from '../../_utils/videoChannelDelete';
-import VideoConference from '../VideoConference';
+import CustomVideoConference from '../VideoConference/CustomVideoConference';
 
 type videoRoomProps = {
   name: string;
@@ -21,16 +22,9 @@ const VideoRoom = ({ name }: videoRoomProps) => {
   const searchParams = useSearchParams();
   const userName = searchParams.get('username');
 
-  const { preJoinChoices, isSettingOk } = useStreamSetStore();
+  const { preJoinChoices, isSettingOk, setIsSettingOk } = useStreamSetStore();
   const { enteredChannelId } = useEnterdChannelStore();
   const { leaveChannel } = useChannelUser({ channelId: enteredChannelId! });
-
-  const onLeave = useCallback(() => {
-    // TODO : 삭제 되는 거 확인했으니, 현재 유저 아이디 값 받아오면 됨.
-    leaveChannel(CONST.FAKE_WORKSPACE_USER_ID);
-    deleteChannel(enteredChannelId);
-    router.push('/video-channel');
-  }, []);
 
   useEffect(() => {
     if (!userName || !isSettingOk) {
@@ -48,8 +42,25 @@ const VideoRoom = ({ name }: videoRoomProps) => {
     })();
   }, [userName]);
 
+  const onLeave = useCallback(() => {
+    // TODO : 삭제 되는 거 확인했으니, 현재 유저 아이디 값 받아오면 됨.
+    leaveChannel(CONST.FAKE_WORKSPACE_USER_ID);
+    deleteChannel(enteredChannelId);
+    setIsSettingOk(false);
+    router.push('/video-channel');
+  }, []);
+
+  const connectOptions = useMemo((): RoomConnectOptions => {
+    return {
+      autoSubscribe: true
+    };
+  }, []);
+
   if (token === '') {
     return <div>Getting token...</div>;
+  }
+  if (typeof token !== 'string') {
+    return <h2>Missing LiveKit token</h2>;
   }
 
   return (
@@ -60,11 +71,10 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       data-lk-theme="default"
       style={{ height: '100vh' }}
+      connectOptions={connectOptions}
       onDisconnected={onLeave}
     >
-      <VideoConference />
-      <RoomAudioRenderer />
-      <ControlBar />
+      <CustomVideoConference />
     </LiveKitRoom>
   );
 };
