@@ -1,4 +1,12 @@
-import { ChannelInsertType, ChannelType } from '@/types/channel';
+import type {
+  ChannelInsertType,
+  ChannelType,
+  GetChatChannelsProps,
+  GetChatChannelsResponse,
+  GetExistingChannelIdRequestProps,
+  GetUsersInChannelRequestProps,
+  GetUsersInChannelResponse
+} from '@/types/channel';
 import { AxiosInstance } from 'axios';
 
 class ChannelAPI {
@@ -36,5 +44,33 @@ class ChannelAPI {
     });
     return response.data;
   }
+
+  getChatChannels = async ({
+    workspace_id,
+    workspace_user_id
+  }: GetChatChannelsProps): Promise<GetChatChannelsResponse[]> => {
+    const { data } = await this.axios.get(
+      `/api/chat?workspace_id=${workspace_id}&workspace_user_id=${workspace_user_id}`
+    );
+
+    return data.data;
+  };
+
+  getUsersInChannel = async ({
+    channel_id,
+    workspace_user_id
+  }: GetUsersInChannelRequestProps): Promise<GetUsersInChannelResponse> => {
+    const { data } = await this.axios.get(`${this.path}/${channel_id}/users?workspace_user_id=${workspace_user_id}`);
+
+    return data.data;
+  };
+
+  getExistingChannelId = async ({ workspace_user_id, other_workspace_user_id }: GetExistingChannelIdRequestProps) => {
+    const { data } = await this.axios.get(
+      `${this.path}/existing-id?workspace_user_id=${workspace_user_id}&other_workspace_user_id=${other_workspace_user_id}`
+    );
+
+    return data.data;
+  };
 }
 export default ChannelAPI;
