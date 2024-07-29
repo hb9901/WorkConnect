@@ -1,0 +1,4 @@
+export const CONST = {
+  FAKE_WORKSPACE_USER_ID: '7ca87acc-b8a8-4518-9628-4c8a18196e5d',
+  FAKE_WORKSPACE_ID: 2
+};
