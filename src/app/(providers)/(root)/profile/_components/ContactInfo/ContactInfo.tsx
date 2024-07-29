@@ -5,7 +5,11 @@ import MailIcon from '@/icons/Mail.svg';
 import PhoneIcon from '@/icons/Phone.svg';
 import InfoForm from '../InfoForm';
 
-const ContactInfo = () => {
+interface ContactInfoProps {
+  isMyPage: boolean;
+}
+
+const ContactInfo = ({ isMyPage }: ContactInfoProps) => {
   const { workspaceUser } = useWorkspaceUser();
   const isOpen = workspaceUser && workspaceUser.is_open;
   const state = workspaceUser && workspaceUser.state;
@@ -23,9 +27,12 @@ const ContactInfo = () => {
       <InfoForm title="휴대폰 번호" content={phoneNum}>
         <PhoneIcon />
       </InfoForm>
-      <InfoForm title="내 정보" content={isOpen ? '공개' : '비공개'}>
-        <LockIcon />
-      </InfoForm>
+
+      {isMyPage && (
+        <InfoForm title="내 정보" content={isOpen ? '공개' : '비공개'}>
+          <LockIcon />
+        </InfoForm>
+      )}
     </div>
   );
 };

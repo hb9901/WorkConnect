@@ -20,7 +20,7 @@ const Profile = () => {
       <main>
         <div className="m-auto mx-5">
           <MainInfo isMyPage={isMyPage} />
-          <ContactInfo />
+          <ContactInfo isMyPage={isMyPage} />
         </div>
       </main>
     </>
