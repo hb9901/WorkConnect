@@ -1,443 +1,466 @@
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
 
 export type Database = {
   public: {
     Tables: {
       channel: {
         Row: {
-          created_at: string;
-          host_id: string | null;
-          id: number;
-          name: string | null;
-          thumbnail: string | null;
-          type: string | null;
-          workspace_id: number;
-        };
+          created_at: string
+          host_id: string | null
+          id: number
+          name: string | null
+          thumbnail: string | null
+          type: string | null
+          workspace_id: number
+        }
         Insert: {
-          created_at?: string;
-          host_id?: string | null;
-          id?: number;
-          name?: string | null;
-          thumbnail?: string | null;
-          type?: string | null;
-          workspace_id: number;
-        };
+          created_at?: string
+          host_id?: string | null
+          id?: number
+          name?: string | null
+          thumbnail?: string | null
+          type?: string | null
+          workspace_id: number
+        }
         Update: {
-          created_at?: string;
-          host_id?: string | null;
-          id?: number;
-          name?: string | null;
-          thumbnail?: string | null;
-          type?: string | null;
-          workspace_id?: number;
-        };
+          created_at?: string
+          host_id?: string | null
+          id?: number
+          name?: string | null
+          thumbnail?: string | null
+          type?: string | null
+          workspace_id?: number
+        }
         Relationships: [
           {
-            foreignKeyName: 'channel_workspace_id_fkey';
-            columns: ['workspace_id'];
-            isOneToOne: false;
-            referencedRelation: 'workspace';
-            referencedColumns: ['id'];
-          }
-        ];
-      };
+            foreignKeyName: "channel_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspace"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       channel_user: {
         Row: {
-          channel_id: number;
-          created_at: string;
-          id: number;
-          last_read_chat_id: number | null;
-          user_id: string | null;
-          workspace_user_id: string;
-        };
+          channel_id: number
+          created_at: string
+          id: number
+          last_read_chat_id: number | null
+          user_id: string | null
+          workspace_user_id: string
+        }
         Insert: {
-          channel_id: number;
-          created_at?: string;
-          id?: number;
-          last_read_chat_id?: number | null;
-          user_id?: string | null;
-          workspace_user_id: string;
-        };
+          channel_id: number
+          created_at?: string
+          id?: number
+          last_read_chat_id?: number | null
+          user_id?: string | null
+          workspace_user_id: string
+        }
         Update: {
-          channel_id?: number;
-          created_at?: string;
-          id?: number;
-          last_read_chat_id?: number | null;
-          user_id?: string | null;
-          workspace_user_id?: string;
-        };
+          channel_id?: number
+          created_at?: string
+          id?: number
+          last_read_chat_id?: number | null
+          user_id?: string | null
+          workspace_user_id?: string
+        }
         Relationships: [
           {
-            foreignKeyName: 'channel_user_workspace_user_id_fkey';
-            columns: ['workspace_user_id'];
-            isOneToOne: false;
-            referencedRelation: 'workspace_user';
-            referencedColumns: ['id'];
+            foreignKeyName: "channel_user_workspace_user_id_fkey"
+            columns: ["workspace_user_id"]
+            isOneToOne: false
+            referencedRelation: "workspace_user"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'room_user_room_id_fkey';
-            columns: ['channel_id'];
-            isOneToOne: false;
-            referencedRelation: 'channel';
-            referencedColumns: ['id'];
-          }
-        ];
-      };
+            foreignKeyName: "room_user_room_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "channel"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       chat: {
         Row: {
-          channel_id: number;
-          content: string;
-          created_at: string;
-          id: number;
-          is_notice: boolean;
-          type: string;
-          workspace_user_id: string;
-        };
+          channel_id: number
+          content: string
+          created_at: string
+          id: number
+          is_notice: boolean
+          type: string
+          workspace_user_id: string
+        }
         Insert: {
-          channel_id: number;
-          content: string;
-          created_at?: string;
-          id?: number;
-          is_notice: boolean;
-          type: string;
-          workspace_user_id: string;
-        };
+          channel_id: number
+          content: string
+          created_at?: string
+          id?: number
+          is_notice: boolean
+          type: string
+          workspace_user_id: string
+        }
         Update: {
-          channel_id?: number;
-          content?: string;
-          created_at?: string;
-          id?: number;
-          is_notice?: boolean;
-          type?: string;
-          workspace_user_id?: string;
-        };
+          channel_id?: number
+          content?: string
+          created_at?: string
+          id?: number
+          is_notice?: boolean
+          type?: string
+          workspace_user_id?: string
+        }
         Relationships: [
           {
-            foreignKeyName: 'chat_room_id_fkey';
-            columns: ['channel_id'];
-            isOneToOne: false;
-            referencedRelation: 'channel';
-            referencedColumns: ['id'];
+            foreignKeyName: "chat_room_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "channel"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'chat_workspace_user_id_fkey';
-            columns: ['workspace_user_id'];
-            isOneToOne: false;
-            referencedRelation: 'workspace_user';
-            referencedColumns: ['id'];
-          }
-        ];
-      };
+            foreignKeyName: "chat_workspace_user_id_fkey"
+            columns: ["workspace_user_id"]
+            isOneToOne: false
+            referencedRelation: "workspace_user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       file: {
         Row: {
-          chat_id: number;
-          created_at: string;
-          id: number;
-          type: string;
-          url: string;
-        };
+          chat_id: number
+          created_at: string
+          id: number
+          type: string
+          url: string
+        }
         Insert: {
-          chat_id: number;
-          created_at?: string;
-          id?: number;
-          type: string;
-          url: string;
-        };
+          chat_id: number
+          created_at?: string
+          id?: number
+          type: string
+          url: string
+        }
         Update: {
-          chat_id?: number;
-          created_at?: string;
-          id?: number;
-          type?: string;
-          url?: string;
-        };
+          chat_id?: number
+          created_at?: string
+          id?: number
+          type?: string
+          url?: string
+        }
         Relationships: [
           {
-            foreignKeyName: 'file_chat_id_fkey';
-            columns: ['chat_id'];
-            isOneToOne: false;
-            referencedRelation: 'chat';
-            referencedColumns: ['id'];
-          }
-        ];
-      };
+            foreignKeyName: "file_chat_id_fkey"
+            columns: ["chat_id"]
+            isOneToOne: false
+            referencedRelation: "chat"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       todo: {
         Row: {
-          end_date: string;
-          id: string;
-          place: string | null;
-          priority: string;
-          start_date: string;
-          status: string;
-          title: string;
-          user_id: string;
-        };
+          end_date: string
+          id: string
+          place: string | null
+          priority: string
+          start_date: string
+          status: string
+          title: string
+          user_id: string
+        }
         Insert: {
-          end_date: string;
-          id?: string;
-          place?: string | null;
-          priority: string;
-          start_date: string;
-          status: string;
-          title: string;
-          user_id: string;
-        };
+          end_date: string
+          id?: string
+          place?: string | null
+          priority: string
+          start_date: string
+          status: string
+          title: string
+          user_id: string
+        }
         Update: {
-          end_date?: string;
-          id?: string;
-          place?: string | null;
-          priority?: string;
-          start_date?: string;
-          status?: string;
-          title?: string;
-          user_id?: string;
-        };
+          end_date?: string
+          id?: string
+          place?: string | null
+          priority?: string
+          start_date?: string
+          status?: string
+          title?: string
+          user_id?: string
+        }
         Relationships: [
           {
-            foreignKeyName: 'todo2_user_id_fkey';
-            columns: ['user_id'];
-            isOneToOne: false;
-            referencedRelation: 'workspace_user';
-            referencedColumns: ['id'];
-          }
-        ];
-      };
+            foreignKeyName: "todo2_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "workspace_user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user: {
         Row: {
-          created_at: string;
-          email: string | null;
-          id: string;
-          name: string | null;
-          sns_type: string | null;
-        };
+          created_at: string
+          email: string | null
+          id: string
+          name: string | null
+          sns_type: string | null
+        }
         Insert: {
-          created_at?: string;
-          email?: string | null;
-          id: string;
-          name?: string | null;
-          sns_type?: string | null;
-        };
+          created_at?: string
+          email?: string | null
+          id: string
+          name?: string | null
+          sns_type?: string | null
+        }
         Update: {
-          created_at?: string;
-          email?: string | null;
-          id?: string;
-          name?: string | null;
-          sns_type?: string | null;
-        };
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          sns_type?: string | null
+        }
         Relationships: [
           {
-            foreignKeyName: 'users_id_fkey';
-            columns: ['id'];
-            isOneToOne: true;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          }
-        ];
-      };
+            foreignKeyName: "users_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       workspace: {
         Row: {
-          admin_user_id: string | null;
-          created_at: string;
-          id: number;
-          invite_code: number;
-          name: string;
-        };
+          admin_user_id: string | null
+          created_at: string
+          id: number
+          invite_code: number
+          name: string
+        }
         Insert: {
-          admin_user_id?: string | null;
-          created_at?: string;
-          id?: number;
-          invite_code: number;
-          name: string;
-        };
+          admin_user_id?: string | null
+          created_at?: string
+          id?: number
+          invite_code: number
+          name: string
+        }
         Update: {
-          admin_user_id?: string | null;
-          created_at?: string;
-          id?: number;
-          invite_code?: number;
-          name?: string;
-        };
+          admin_user_id?: string | null
+          created_at?: string
+          id?: number
+          invite_code?: number
+          name?: string
+        }
         Relationships: [
           {
-            foreignKeyName: 'workspace_admin_user_id_fkey';
-            columns: ['admin_user_id'];
-            isOneToOne: false;
-            referencedRelation: 'workspace_user';
-            referencedColumns: ['id'];
-          }
-        ];
-      };
+            foreignKeyName: "workspace_admin_user_id_fkey"
+            columns: ["admin_user_id"]
+            isOneToOne: false
+            referencedRelation: "workspace_user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       workspace_user: {
         Row: {
-          email: string | null;
-          id: string;
-          name: string;
-          phone: string | null;
-          profile_image: string | null;
-          state: string | null;
-          user_id: string;
-          workspace_id: number | null;
-        };
+          email: string | null
+          id: string
+          name: string
+          phone: string | null
+          profile_image: string | null
+          state: string | null
+          user_id: string
+          workspace_id: number | null
+        }
         Insert: {
-          email?: string | null;
-          id?: string;
-          name: string;
-          phone?: string | null;
-          profile_image?: string | null;
-          state?: string | null;
-          user_id: string;
-          workspace_id?: number | null;
-        };
+          email?: string | null
+          id?: string
+          name: string
+          phone?: string | null
+          profile_image?: string | null
+          state?: string | null
+          user_id: string
+          workspace_id?: number | null
+        }
         Update: {
-          email?: string | null;
-          id?: string;
-          name?: string;
-          phone?: string | null;
-          profile_image?: string | null;
-          state?: string | null;
-          user_id?: string;
-          workspace_id?: number | null;
-        };
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          profile_image?: string | null
+          state?: string | null
+          user_id?: string
+          workspace_id?: number | null
+        }
         Relationships: [
           {
-            foreignKeyName: 'workspace_user_user_id_fkey';
-            columns: ['user_id'];
-            isOneToOne: false;
-            referencedRelation: 'user';
-            referencedColumns: ['id'];
+            foreignKeyName: "workspace_user_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'workspace_user_workspace_id_fkey';
-            columns: ['workspace_id'];
-            isOneToOne: false;
-            referencedRelation: 'workspace';
-            referencedColumns: ['id'];
-          }
-        ];
-      };
-    };
+            foreignKeyName: "workspace_user_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspace"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+    }
     Views: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Functions: {
       get_chat_channels: {
         Args: {
-          wid: number;
-          wuid: string;
-        };
+          wid: number
+          wuid: string
+        }
         Returns: {
-          channel_id: number;
-          channel_name: string;
-          message_created_at: string;
-          message: string;
-          is_dm: boolean;
-          user_name: string;
-          user_state: string;
-          user_thumbnail: string;
-          workspace_user_id: string;
-          user_count: number;
-        }[];
-      };
+          channel_id: number
+          channel_name: string
+          message_created_at: string
+          message: string
+          is_dm: boolean
+          user_name: string
+          user_state: string
+          user_thumbnail: string
+          workspace_user_id: string
+          user_count: number
+        }[]
+      }
       get_chat_messages: {
         Args: {
-          cid: number;
-        };
+          cid: number
+        }
         Returns: {
-          id: number;
-          created_at: string;
-          content: string;
-          type: string;
-          is_notice: boolean;
-          workspace_user_id: string;
-        }[];
-      };
+          id: number
+          created_at: string
+          content: string
+          type: string
+          is_notice: boolean
+          workspace_user_id: string
+        }[]
+      }
+      get_duplicate_channel_id: {
+        Args: {
+          my_wuid: string
+          other_wuid: string
+        }
+        Returns: string
+      }
       get_users_in_channel: {
         Args: {
-          cid: number;
-          wuid: string;
-        };
+          cid: number
+          wuid: string
+        }
         Returns: {
-          name: string;
-          profile_image: string;
-          workspace_user_id: string;
-        }[];
-      };
-    };
+          name: string
+          profile_image: string
+          workspace_user_id: string
+        }[]
+      }
+    }
     Enums: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
-};
+      [_ in never]: never
+    }
+  }
+}
 
-type PublicSchema = Database[Extract<keyof Database, 'public'>];
+type PublicSchema = Database[Extract<keyof Database, "public">]
 
 export type Tables<
-  PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] & PublicSchema['Views']) | { schema: keyof Database },
+  PublicTableNameOrOptions extends
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
+    | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-        Database[PublicTableNameOrOptions['schema']]['Views'])
-    : never = never
+    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+        Database[PublicTableNameOrOptions["schema"]]["Views"])
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
-      Row: infer R;
+  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] & PublicSchema['Views'])
-    ? (PublicSchema['Tables'] & PublicSchema['Views'])[PublicTableNameOrOptions] extends {
-        Row: infer R;
+  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
+        PublicSchema["Views"])
+    ? (PublicSchema["Tables"] &
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+        Row: infer R
       }
       ? R
       : never
-    : never;
+    : never
 
 export type TablesInsert<
-  PublicTableNameOrOptions extends keyof PublicSchema['Tables'] | { schema: keyof Database },
+  PublicTableNameOrOptions extends
+    | keyof PublicSchema["Tables"]
+    | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
-    : never = never
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
-      Insert: infer I;
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
-        Insert: infer I;
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Insert: infer I
       }
       ? I
       : never
-    : never;
+    : never
 
 export type TablesUpdate<
-  PublicTableNameOrOptions extends keyof PublicSchema['Tables'] | { schema: keyof Database },
+  PublicTableNameOrOptions extends
+    | keyof PublicSchema["Tables"]
+    | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
-    : never = never
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
-      Update: infer U;
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
-        Update: infer U;
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Update: infer U
       }
       ? U
       : never
-    : never;
+    : never
 
 export type Enums<
-  PublicEnumNameOrOptions extends keyof PublicSchema['Enums'] | { schema: keyof Database },
+  PublicEnumNameOrOptions extends
+    | keyof PublicSchema["Enums"]
+    | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
-    : never = never
+    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
-    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
-    : never;
+  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
+    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
