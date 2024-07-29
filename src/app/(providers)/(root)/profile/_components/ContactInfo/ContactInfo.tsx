@@ -21,10 +21,10 @@ const ContactInfo = ({ isMyPage }: ContactInfoProps) => {
       <InfoForm title="활동 상태" content={state}>
         <BriefcaseIcon className="w-[20px] h-[20px]" />
       </InfoForm>
-      <InfoForm title="이메일 주소" content={email}>
+      <InfoForm title="이메일 주소" content={isOpen ? email : '-'}>
         <MailIcon />
       </InfoForm>
-      <InfoForm title="휴대폰 번호" content={phoneNum}>
+      <InfoForm title="휴대폰 번호" content={isOpen ? phoneNum : '-'}>
         <PhoneIcon />
       </InfoForm>
 

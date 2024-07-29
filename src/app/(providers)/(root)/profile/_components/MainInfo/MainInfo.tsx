@@ -37,9 +37,10 @@ const MainInfo = ({ isMyPage }: MainInfoProps) => {
         <Typography variant="Title20px" color="grey700Black">
           {name}
         </Typography>{' '}
-        <Typography variant="Subtitle16px" color="grey500">
+        {/*직책 넣기로 했었나요??*/}
+        {/* <Typography variant="Subtitle16px" color="grey500">
           Position
-        </Typography>
+        </Typography> */}
       </div>
       <EditOrMessageButton isMyPage={isMyPage} />
     </div>

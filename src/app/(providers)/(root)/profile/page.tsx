@@ -12,6 +12,7 @@ const Profile = () => {
   const { workspaceUser } = useWorkspaceUser();
   const workspaceUserId = workspaceUser && workspaceUser.user_id;
   const name = workspaceUser && workspaceUser.name;
+  const isOpen = workspaceUser && workspaceUser.isOpen;
   const isMyPage = FAKE_USER_ID_1 === workspaceUserId;
 
   return (
