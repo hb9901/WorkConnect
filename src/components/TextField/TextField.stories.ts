@@ -48,6 +48,47 @@ export const Default = {
     errorMessage: 'error!',
     isError: false,
     id: 'email',
-    children: 'email'
+    children: 'email',
+    label: '이메일 입력',
+    color: 'grey700Black'
+  }
+};
+
+export const Error = {
+  args: {
+    placeholder: 'Enter text...',
+    value: '',
+    errorMessage: 'error!',
+    isError: false,
+    id: 'email',
+    children: 'email',
+    label: '이메일 입력',
+    color: 'grey700Black'
+  }
+};
+
+export const Success = {
+  args: {
+    placeholder: 'Enter text...',
+    value: '',
+    errorMessage: 'error!',
+    isError: false,
+    id: 'email',
+    children: 'email',
+    label: '이메일 입력',
+    color: 'grey700Black'
+  }
+};
+
+export const BottomLine = {
+  args: {
+    placeholder: 'Enter text...',
+    value: '',
+    errorMessage: 'error!',
+    isError: false,
+    id: 'email',
+    children: 'email',
+    label: '이메일 입력',
+    color: 'grey700Black'
   }
 };
