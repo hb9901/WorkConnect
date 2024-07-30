@@ -6,7 +6,7 @@ import useUserStore from '@/store/userStore';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import BackButton from '../_components/BackButton';
 
 type UserType = {
@@ -17,7 +17,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const setUserData = useUserStore((state) => state.setUserData);
-
+  const workspaceId = useUserStore((state) => state.workspaceId);
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
   const route = useRouter();
 
@@ -45,15 +45,16 @@ const LoginPage = () => {
         .from('workspace_user')
         .select('workspace_id')
         .eq('user_id', session.user.id)
+        .limit(1)
         .single();
 
       if (workspaceUserError) {
-        alert('존재하지 않는 유저입니다.');
+        alert(`존재하지 않는 유저입니다. ${workspaceUserError.message}`);
         return;
       }
 
       if (workspaceUserData.workspace_id === null) {
-        route.push('/workspace/landing');
+        route.push(`/workspace/landing`);
         return;
       }
 
@@ -64,11 +65,19 @@ const LoginPage = () => {
 
   const { mutate: emailLoginMutate } = loginMutation;
 
-  useEffect(() => {
-    if (user) {
-      // alert('이미 로그인 중입니다.');
-      // route.push('/home'); // TODO : 메인 홈 화면 이동 변경
-    }
+  useLayoutEffect(() => {
+    const getSession = async () => {
+      const {
+        data: { session }
+      } = await supabase.auth.getSession();
+
+      if (session) {
+        route.replace(`/${workspaceId}`); // TODO : 메인 홈 화면 이동 변경
+      }
+      return;
+    };
+
+    getSession();
   }, []);
 
   return (
