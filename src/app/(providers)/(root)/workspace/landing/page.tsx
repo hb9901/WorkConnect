@@ -6,7 +6,7 @@ import useUserStore from '@/store/userStore';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 type UserType = {
   user: AuthStoreTypes['user'];
@@ -58,7 +58,7 @@ const InviteCodePage = () => {
 
   const { mutate: handleSubmitMutate } = handleSubmit;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getSession = async () => {
       const {
         data: { session }
@@ -81,8 +81,7 @@ const InviteCodePage = () => {
 
       if (workspaceUser.workspace_id !== null) {
         setUserData(session.user.id, workspaceUser.workspace_id);
-        alert('이미 워크스페이스가 가입돼있어 화면으로 이동합니다.');
-        route.push('/home'); // TODO: 홈 화면이동 처리
+        route.replace(`/${workspaceUser.workspace_id}`); // TODO: 홈 화면이동 처리
       }
       return;
     };
