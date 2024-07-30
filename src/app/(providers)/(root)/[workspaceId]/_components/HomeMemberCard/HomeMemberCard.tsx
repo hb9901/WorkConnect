@@ -3,11 +3,10 @@ import AvatarIcon from '@/icons/Avatar.svg';
 
 interface HomeMemberCardProps {
   name: string;
-  position: string;
-  status: string;
+  status: string | null;
 }
 
-const HomeMemberCard = ({ name, position, status }: HomeMemberCardProps) => {
+const HomeMemberCard = ({ name, status }: HomeMemberCardProps) => {
   return (
     <div className="flex flex-row gap-[16px] items-center">
       <div className="flex items-center justify-center size-[56px] rounded-full bg-[#BDBDBD]">
@@ -17,11 +16,6 @@ const HomeMemberCard = ({ name, position, status }: HomeMemberCardProps) => {
         <div>
           <Typography variant="Title18px" color="grey700Black">
             {name}
-          </Typography>
-        </div>
-        <div>
-          <Typography variant="Subtitle12px" color="grey300">
-            {position}
           </Typography>
         </div>
         <div>

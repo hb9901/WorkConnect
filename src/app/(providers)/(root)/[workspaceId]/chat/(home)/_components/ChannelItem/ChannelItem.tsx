@@ -8,6 +8,8 @@ import {
   ChannelListTitle,
   ChannelListUserState
 } from '../ChannelList';
+import useWorkspaceId from '@/hooks/useWorkspaceId';
+import { CHANNEL_TYPE } from '@/constants/channel';
 
 const ChannelItem = ({
   channel_name,
@@ -17,10 +19,15 @@ const ChannelItem = ({
   user_thumbnail,
   user_count,
   is_dm,
-  channel_id
+  channel_id,
+  type
 }: GetChatChannelsResponse) => {
+  const workspaceId = useWorkspaceId();
+  const href =
+    type === CHANNEL_TYPE.chat ? `/${workspaceId}/chat/${channel_id}` : `/${workspaceId}/video-channel/${channel_name}`;
+
   return (
-    <ChannelListItem href={`/chat/${channel_id}`}>
+    <ChannelListItem href={href}>
       <ChannelListImage
         src={user_thumbnail ?? 'https://blog.kakaocdn.net/dn/bCXLP7/btrQuNirLbt/N30EKpk07InXpbReKWzde1/img.png'}
       />

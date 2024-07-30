@@ -49,7 +49,7 @@ export const getExistingChannelId = async ({
 }: GetExistingChannelIdRequestProps) => {
   const supabase = createClient();
 
-  const response = await supabase.rpc('get_duplicate_channel_id', {
+  const response = await supabase.rpc('get_existing_channel_id', {
     my_wuid: workspace_user_id,
     other_wuid: other_workspace_user_id
   });
