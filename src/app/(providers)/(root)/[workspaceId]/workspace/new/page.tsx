@@ -1,5 +1,5 @@
 'use client';
-import BackButton from '../../auth/_components/BackButton';
+import BackButton from '../../../auth/_components/BackButton';
 import useShallowSelector from '@/hooks/useShallowSelector';
 import { useAuthStore } from '@/providers/AuthStoreProvider';
 import { AuthStoreTypes } from '@/store/authStore';
