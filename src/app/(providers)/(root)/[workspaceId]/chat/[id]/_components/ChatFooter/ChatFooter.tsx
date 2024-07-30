@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useMutationChatMessage } from '../../../_hooks/useMutationChat';
-import MessageInput from '../MessageInput';
+import MessageTextarea from '../MessageTextarea';
 import UtilsMenus from '../UtilsMenus';
 
 // TODO: 데이터 추가 시 수정 필요
@@ -25,7 +25,7 @@ const ChatFooter = ({ id, handleOpenUtil }: { id: string; handleOpenUtil: () => 
   return (
     <>
       <form onSubmit={handleSendMessage}>
-        <MessageInput handleOpenUtil={handleOpenUtil} />
+        <MessageTextarea handleOpenUtil={handleOpenUtil} ref={ref} />
       </form>
       <UtilsMenus />
     </>
