@@ -33,6 +33,7 @@ export type GetChatChannelsResponse = {
   workspace_user_id: WorkspaceUserType['id'];
   is_dm: boolean;
   user_count: number;
+  type: ChannelType['type'];
 };
 
 export type GetUsersInChannelRequestProps = {

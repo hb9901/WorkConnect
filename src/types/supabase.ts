@@ -355,6 +355,7 @@ export type Database = {
           user_thumbnail: string
           workspace_user_id: string
           user_count: number
+          type: string
         }[]
       }
       get_chat_messages: {

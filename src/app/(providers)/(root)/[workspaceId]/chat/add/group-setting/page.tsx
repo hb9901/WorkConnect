@@ -4,8 +4,12 @@ import { useRef } from 'react';
 import TestHeader from '../../_components/TestHeader';
 import { useSearchUsers } from '../_provider/SearchUsersProvider';
 import useCreateChannel from '../_hooks/useCreateChannel';
+import { useSearchParams } from 'next/navigation';
+import type { ChannelType } from '@/types/channel';
 
 const GroupSettingPage = () => {
+  const searchParams = useSearchParams();
+  const type = searchParams.get('type') as ChannelType['type'];
   const ref = useRef<HTMLInputElement>(null);
   const { getSelectedUserIds } = useSearchUsers();
   const { handleCreateChannelAndUsers } = useCreateChannel();
@@ -22,7 +26,7 @@ const GroupSettingPage = () => {
       return;
     }
 
-    handleCreateChannelAndUsers({ channelName: ref.current.value, userIds });
+    handleCreateChannelAndUsers({ channelName: ref.current.value, userIds, type });
   };
 
   return (
