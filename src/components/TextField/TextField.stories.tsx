@@ -80,7 +80,6 @@ Default.args = {
   id: 'default-id',
   label: '기본 TextField',
   LabelColor: 'grey700Black',
-  message: 'Helper Text',
   type: 'text'
 };
 
@@ -93,7 +92,6 @@ Error.args = {
   id: 'error-id',
   label: '에러 TextField',
   LabelColor: 'error',
-  message: 'Helper Text',
   type: 'text'
 };
 
@@ -106,7 +104,6 @@ Success.args = {
   id: 'success-id',
   label: '성공 TextField',
   LabelColor: 'grey700Black',
-  message: 'Helper Text',
   status: 'success',
   type: 'text'
 };
@@ -120,7 +117,6 @@ Password.args = {
   id: 'password-id',
   label: '비밀번호 TextField',
   LabelColor: 'grey700Black',
-  message: 'Helper Text',
   status: 'default',
   type: 'password'
 };
