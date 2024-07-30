@@ -18,7 +18,7 @@ const EditOrMessageButton = ({
   workspaceUserId,
   workspaceId
 }: EditOrMessageButtonProsp) => {
-  const { createChannel } = useChannel({ type: 'chat', workspace_id: Number(workspaceUserId) });
+  const { createChannel } = useChannel({ type: 'chat', workspace_id: Number(workspaceId) });
   const router = useRouter();
 
   const handleClick = async () => {
@@ -33,7 +33,7 @@ const EditOrMessageButton = ({
     });
 
     if (existChannel) {
-      router.push(`/chat/${existChannel}`);
+      router.push(`${workspaceId}/chat/${existChannel}`);
       return;
     } else {
       const newChannel: ChannelInsertType = {
@@ -45,7 +45,7 @@ const EditOrMessageButton = ({
       const channelId = Number(response.id);
       const channelUsersInfo = { workspaceUserIds: [workspaceId, workspaceUserId], channel_id: channelId };
       await api.channelUser.createChannelUsers(channelUsersInfo);
-      router.push(`/chat/${channelId}`);
+      router.push(`/${workspaceId}/chat/${channelId}`);
     }
   };
 
