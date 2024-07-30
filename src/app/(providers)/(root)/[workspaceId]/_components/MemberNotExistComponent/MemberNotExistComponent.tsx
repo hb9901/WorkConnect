@@ -2,7 +2,7 @@ import InviteCardWithoutMembers from '../InviteCardWithoutMembers';
 
 const MemberNotExistComponent = () => {
   return (
-    <div className="mt-[94px] flex items-center justify-center w-full h-full">
+    <div className="mt-[94px] w-full h-full">
       <InviteCardWithoutMembers />
     </div>
   );
