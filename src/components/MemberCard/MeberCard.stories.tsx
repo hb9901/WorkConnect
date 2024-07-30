@@ -17,5 +17,6 @@ Default.args = {
   name: 'Name',
   position: 'Position',
   status: 'Status',
-  icon: <div>👤</div>
+  icon: <div>👤</div>,
+  children: <div>⚪</div>
 };

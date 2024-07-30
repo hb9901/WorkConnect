@@ -6,11 +6,12 @@ export interface MemberCardProps {
   position: string;
   status: string;
   icon?: ReactNode;
+  children?: ReactNode;
 }
 
-const MemberCard = ({ name, position, status, icon }: MemberCardProps) => {
+const MemberCard = ({ name, position, status, icon, children }: MemberCardProps) => {
   return (
-    <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg w-full">
+    <div className="flex items-center justify-between p-4 border-b border-white bg-transparent w-full">
       <div className="flex items-center">
         <div className="flex items-center justify-center mr-4">{icon}</div>
         <div>
@@ -22,8 +23,9 @@ const MemberCard = ({ name, position, status, icon }: MemberCardProps) => {
           </Typography>
         </div>
       </div>
-      <Typography variant="Title14px" color="grey500">
+      <Typography variant="Title14px" color="grey500" className="flex flex-row gap-1">
         {status}
+        {children}
       </Typography>
     </div>
   );
