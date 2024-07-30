@@ -5,7 +5,7 @@ import { StrictPropsWithChildren } from '@/types/common';
 import { useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
-const HomeLayout = ({ children }: StrictPropsWithChildren) => {
+const RootLayout = ({ children }: StrictPropsWithChildren) => {
   const { userId, workspaceId, setWorkspaceData } = useUserStore(
     useShallow((state) => ({
       userId: state.userId,
@@ -27,4 +27,4 @@ const HomeLayout = ({ children }: StrictPropsWithChildren) => {
   return <>{children}</>;
 };
 
-export default HomeLayout;
+export default RootLayout;
