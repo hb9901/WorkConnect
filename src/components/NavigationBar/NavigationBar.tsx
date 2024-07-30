@@ -6,11 +6,11 @@ export interface TabProps {
   active?: boolean;
   as?: ElementType;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  className: string;
+  className?: string;
   icon?: ReactNode;
 }
 
-interface NavbarProps {
+export interface NavbarProps {
   children: ReactNode;
   className?: string;
 }

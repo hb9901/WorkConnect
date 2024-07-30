@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
 import TextField, { TextFieldProps } from './TextField';
 
@@ -20,9 +20,9 @@ export default {
       description: 'TextField의 값입니다.',
       defaultValue: ''
     },
-    errorMessage: {
+    message: {
       control: 'text',
-      description: '에러 메시지 텍스트를 지정합니다.',
+      description: 'Helper Text를 지정합니다.',
       defaultValue: ''
     },
     isError: {
@@ -45,11 +45,6 @@ export default {
       description: 'TextField의 레이블 텍스트를 지정합니다.',
       defaultValue: '레이블'
     },
-    message: {
-      control: 'text',
-      description: '도움말 또는 오류 메시지를 지정합니다.',
-      defaultValue: 'Helper Text'
-    },
     LabelColor: {
       control: 'select',
       options: ['primary200Main', 'grey700Black', 'error'],
@@ -60,7 +55,7 @@ export default {
   args: {
     onChange: () => {}
   }
-} as Meta;
+};
 
 const Template: StoryFn<TextFieldProps> = (args) => {
   const [value, setValue] = useState('');
@@ -99,7 +94,6 @@ Error.args = {
   label: '에러 TextField',
   LabelColor: 'error',
   message: 'Helper Text',
-  status: 'error',
   type: 'text'
 };
 
