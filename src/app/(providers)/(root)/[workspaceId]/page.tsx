@@ -29,7 +29,11 @@ const Homepage = () => {
       <main className="px-[16px] mt-[26px]">
         <HomeMemberCard name={workspaceUser.name} status={workspaceUser.state} />
 
-        {workspaceUserList.length === 0 ? <MemberNotExistComponent /> : <MemberExistComponent />}
+        {workspaceUserList.length === 0 ? (
+          <MemberNotExistComponent />
+        ) : (
+          <MemberExistComponent workspaceUserList={workspaceUserList} />
+        )}
       </main>
     </div>
   );
