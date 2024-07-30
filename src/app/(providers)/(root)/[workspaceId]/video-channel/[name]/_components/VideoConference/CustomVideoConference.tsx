@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  ControlBar,
   FocusLayout,
   GridLayout,
   ParticipantClickEvent,
@@ -12,6 +11,7 @@ import {
 } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import { useEffect, useState } from 'react';
+import BottomControlBar from '../BottomControlBar';
 
 enum FocusPriority {
   SCREEN_SHARE,
@@ -67,7 +67,7 @@ const CustomVideoConference = () => {
         </div>
       </div>
       <RoomAudioRenderer />
-      <ControlBar className="h-[20vw]" />
+      <BottomControlBar controls={{ microphone: true, camera: true, screenShare: true }} variation="verbose" />
     </div>
   );
 };

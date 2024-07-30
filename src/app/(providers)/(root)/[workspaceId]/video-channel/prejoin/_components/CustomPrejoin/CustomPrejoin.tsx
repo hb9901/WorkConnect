@@ -314,11 +314,15 @@ const CustomPrejoin = ({
   }
 
   return (
-    <div className="bg-white h-[100vh] flex flex-col justify-center" {...htmlProps}>
-      <div className="m-4 ">
-        {videoTrack && <video ref={videoEl} width="1280" height="720" data-lk-facing-mode={facingMode} />}
+    <div className="bg-white h-[100vh] flex flex-col justify-center items-center" {...htmlProps}>
+      <div className="flex items-center mt-4 mx-4 lg: w-[80vw]">
+        {videoTrack && (
+          <div>
+            <video ref={videoEl} width="1280" height="720" data-lk-facing-mode={facingMode} />
+          </div>
+        )}
         {(!videoTrack || !videoEnabled) && (
-          <div className="h-[50vh] bg-[#D9D9D9] rounded flex items-center justify-center">
+          <div className="h-[50vh] bg-[#D9D9D9] rounded flex items-center justify-center w-full ">
             <div className="rounded-full bg-[#BDBDBD] w-[140px] h-[140px] flex items-center justify-center">
               <PersonFilledIcon />
             </div>

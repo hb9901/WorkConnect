@@ -1,5 +1,3 @@
-'use client';
-
 import { setLogLevel } from '@livekit/components-react';
 import '@livekit/components-styles';
 import { Suspense } from 'react';

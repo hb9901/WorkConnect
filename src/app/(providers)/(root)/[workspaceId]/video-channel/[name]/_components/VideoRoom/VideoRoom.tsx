@@ -71,7 +71,6 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       video={preJoinChoices.videoEnabled}
       audio={preJoinChoices.audioEnabled}
       token={token}
-      data-lk-theme="default"
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       style={{ height: '100vh' }}
       connectOptions={connectOptions}

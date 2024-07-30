@@ -20,7 +20,6 @@ const PreJoinContent = () => {
   }, []);
 
   const handlePreJoinSubmit = useCallback((values: LocalUserChoices) => {
-    console.log('LocalUserChoices', values);
     setPreJoinChoices(values);
     setIsSettingOk(true);
     router.push(`/${workspaceId}/video-channel/${room}?username=${preJoinChoices.username}`);
