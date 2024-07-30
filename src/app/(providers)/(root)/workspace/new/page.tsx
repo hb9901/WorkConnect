@@ -86,7 +86,7 @@ const NewWorkSpacePage = () => {
       // TODO : 완료 후 페이지 이동처리하기
       alert('워크스페이스 생성 완료!');
       setOrgName('');
-      route.push('/home');
+      route.replace(`${workspaceData.id}`);
     }
   });
 
@@ -100,7 +100,7 @@ const NewWorkSpacePage = () => {
 
       if (!user) {
         alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-        route.push('/landing');
+        route.push('/');
         return;
       }
 
@@ -116,7 +116,7 @@ const NewWorkSpacePage = () => {
       }
 
       if (!workspaceUserData) {
-        console.log('해당 유저는 워크스페이스에 속해있지 않습니다.');
+        alert('해당 유저는 워크스페이스에 속해있지 않습니다.');
         return;
       }
 

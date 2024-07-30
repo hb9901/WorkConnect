@@ -64,7 +64,7 @@ const InviteCodePage = () => {
         data: { session }
       } = await supabase.auth.getSession();
 
-      if (!session) return route.push('/landing');
+      if (!session) return route.push('/');
 
       if (session.user.app_metadata.provider !== 'kakao') return;
 
