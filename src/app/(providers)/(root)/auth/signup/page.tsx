@@ -97,7 +97,7 @@ const SignUpPage = () => {
                 />
                 <button
                   onClick={() => handleEmailCheck(email)}
-                  className="w-full text-sm py-[12px] bg-[#333] text-white rounded-lg shadow-md"
+                  className="w-full text-sm py-[12px] bg-[#7173FA] text-white rounded-lg shadow-md"
                 >
                   중복확인
                 </button>
@@ -139,7 +139,7 @@ const SignUpPage = () => {
         <div className="flex justify-center pb-4 sticky bottom-0 z-10 bg-white">
           <button
             onClick={() => signUpMutate()}
-            className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
+            className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
             disabled={signUpMutation.isPending ? true : false}
           >
             {signUpMutation.isPending ? '메일 발송중...' : '인증 메일 발송'}

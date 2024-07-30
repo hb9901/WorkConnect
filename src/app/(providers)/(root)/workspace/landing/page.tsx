@@ -7,6 +7,7 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useState } from 'react';
+import { setCookie } from '../../auth/login/page';
 
 type UserType = {
   user: AuthStoreTypes['user'];
@@ -47,12 +48,15 @@ const InviteCodePage = () => {
         return;
       }
 
+      console.log('카카오 워크스페이스 유저 ID: ', workspaceData.id);
+
+      setCookie('userToken', String(workspaceData.id), 1);
       setUserData(user.id, workspaceData.id);
 
       // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
       setInviteCode('');
       alert('초대코드 입력이 완료되었습니다.');
-      route.push('/home');
+      route.replace(`/${workspaceData.id}`);
     }
   });
 
@@ -64,9 +68,7 @@ const InviteCodePage = () => {
         data: { session }
       } = await supabase.auth.getSession();
 
-      if (!session) return route.push('/');
-
-      if (session.user.app_metadata.provider !== 'kakao') return;
+      if (session?.user.app_metadata.provider !== 'kakao') return;
 
       const { data: workspaceUser, error: workspaceUserError } = await supabase
         .from('workspace_user')
@@ -75,11 +77,12 @@ const InviteCodePage = () => {
         .single();
 
       if (workspaceUserError) {
-        alert(`Error fetching workspace_user: ${workspaceUserError.message}`);
+        alert(`워크스페이스 유저 조회 에러: ${workspaceUserError.message}`);
         return;
       }
 
       if (workspaceUser.workspace_id !== null) {
+        setCookie('userToken', String(workspaceUser.workspace_id), 1);
         setUserData(session.user.id, workspaceUser.workspace_id);
         route.replace(`/${workspaceUser.workspace_id}`); // TODO: 홈 화면이동 처리
       }
@@ -114,7 +117,7 @@ const InviteCodePage = () => {
         <div className="flex justify-center mt-4 mb-[167px]">
           <button
             onClick={() => handleSubmitMutate()}
-            className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
+            className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
             disabled={handleSubmit.isPending}
           >
             {handleSubmit.isPending ? '초대코드 확인 중...' : '확인'}
