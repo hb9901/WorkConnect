@@ -51,6 +51,7 @@ export default {
       control: 'select',
       description: '텍스트의 크기를 지정합니다.',
       options: [
+        'Title22px',
         'Title20px',
         'Title18px',
         'Title16px',
@@ -64,6 +65,14 @@ export default {
         'Body12px'
       ]
     }
+  }
+};
+
+export const Title22px = {
+  args: {
+    children: 'Title22px 텍스트',
+    variant: 'Title22px',
+    color: 'black'
   }
 };
 

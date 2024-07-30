@@ -1,35 +1,47 @@
-import { ElementType, ReactNode } from 'react';
+import clsx from 'clsx';
+import React, { ElementType, ReactNode } from 'react';
 
 export interface TabProps {
   children: ReactNode;
   active?: boolean;
   as?: ElementType;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  className: string;
+  icon?: ReactNode;
 }
 
 interface NavbarProps {
   children: ReactNode;
+  className?: string;
 }
 
-const NavigationBar = ({ children, ...props }: NavbarProps) => {
+export const NavigationBar = ({ children, className, ...props }: NavbarProps) => {
   return (
-    <nav className="flex border-b border-gray-300 bg-white shadow-md w-full" {...props}>
-      {children}
+    <nav className={clsx('flex w-full px-4 pb-2', className)} {...props}>
+      {React.Children.map(children, (child) => (
+        <div className="flex-1">{child}</div>
+      ))}
     </nav>
   );
 };
 
-const Tab = ({ children, active = false, as: Component = 'div', ...props }: TabProps) => {
+export const Tab = ({
+  children,
+  className,
+  onClick,
+  active = false,
+  as: Component = 'div',
+  icon,
+  ...props
+}: TabProps) => {
   return (
     <Component
-      className={`flex-1 flex items-center justify-center h-12 px-6 cursor-pointer transition-colors duration-300 ${
-        active ? 'border-b-2 border-primary200Main text-primary200Main' : 'border-b-2 border-transparent text-gray-600'
+      className={`bg-white flex-1 flex text-center items-center justify-center border-t-4 text-[12px] pt-[14px] pb-[42px] cursor-pointer transition-colors duration-300 whitespace-nowrap min-w-[100px] ${
+        active ? 'border-primary200Main text-primary200Main' : 'border-transparent text-grey500'
       }`}
       {...props}
     >
-      {children}
+      <div className="flex flex-col items-center justify-center gap-y-3">{children}</div>
     </Component>
   );
 };
-
-export default { Tab, NavigationBar };

@@ -1,4 +1,3 @@
-import { StoryFn } from '@storybook/react';
 import Button from './Button';
 
 export default {
@@ -31,20 +30,18 @@ export default {
       description: '버튼 비활성화 여부',
       defaultValue: true
     },
+    isSmall: {
+      control: 'boolean',
+      description: '버튼의 Height 사이즈',
+      default: false
+    },
     type: {
       type: 'select',
       options: ['button', 'submit', 'reset'],
       description: '버튼의 type을 지정합니다.',
       defaultValue: 'button'
     }
-  },
-  decorators: [
-    (Story: StoryFn) => (
-      <div style={{ width: '360px' }}>
-        <Story />
-      </div>
-    )
-  ]
+  }
 };
 
 export const Default = {
@@ -92,5 +89,23 @@ export const UnderlineText = {
     children: 'Button',
     theme: 'underlineText',
     isDisabled: false
+  }
+};
+
+export const SmallPrimary = {
+  args: {
+    children: 'Button',
+    theme: 'primary',
+    isDisabled: false,
+    isSmall: true
+  }
+};
+
+export const SmallGrey = {
+  args: {
+    children: 'Button',
+    theme: 'grey',
+    isDisabled: false,
+    isSmall: true
   }
 };

@@ -26,6 +26,7 @@ const Typography = ({
 const typographyClass = cva('leading-[130%] tracking-[-2%]', {
   variants: {
     variant: {
+      Title22px: 'text-[22px] font-medium',
       Title20px: 'text-[20px] font-medium',
       Title18px: 'text-[18px] font-medium',
       Title16px: 'text-[16px] font-medium',
@@ -59,6 +60,16 @@ const typographyClass = cva('leading-[130%] tracking-[-2%]', {
       primary200Main: 'text-primary200Main',
       primary100: 'text-primary100',
       primary50: 'text-primary50',
+      secondary50: 'text-secondary50',
+      secondary100Main: 'text-secondary100Main',
+      secondary200: 'text-secondary200',
+      secondary300: 'text-secondary300',
+      secondary400: 'text-secondary400',
+      secondary500: 'text-secondary500',
+      secondary600: 'text-secondary600',
+      secondary700: 'text-secondary700',
+      secondary800: 'text-secondary800',
+      secondary900: 'text-secondary900',
       caution: 'text-caution',
       error: 'text-error',
       information: 'text-information',

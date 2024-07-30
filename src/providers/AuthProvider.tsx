@@ -14,6 +14,7 @@ export default function AuthProvider({ accessToken, children }: AuthProviderProp
   const supabase = createClient();
   const router = useRouter();
   const clearStore = useUserStore((state) => state.clearStore);
+  const { userId, workspaceId } = useUserStore((state) => state);
 
   useEffect(() => {
     const {
@@ -22,6 +23,16 @@ export default function AuthProvider({ accessToken, children }: AuthProviderProp
       if (session?.access_token !== accessToken) {
         clearStore();
         router.refresh();
+      }
+
+      if (!session) {
+        return router.replace('/landing');
+      }
+
+      // TODO : 세션이 있으면? 워크스페이스 가입 대상자 인지 먼저 확인 로직 작성
+      if (session) {
+        console.log('userId', userId);
+        console.log('workspaceId', workspaceId);
       }
     });
 

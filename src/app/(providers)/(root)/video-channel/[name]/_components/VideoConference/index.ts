@@ -1,1 +1,1 @@
-export { default } from './VideoConference';
+export { default } from './CustomVideoConference';

@@ -37,6 +37,7 @@ const AuthVerifyPage = () => {
     }
   });
 
+  // TODO : 수정작업 (MVP이후 작업 피드백)
   const resendOtp = async () => {
     const { data, error } = await supabase.auth.resend({
       type: 'signup',

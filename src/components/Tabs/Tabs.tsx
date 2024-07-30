@@ -19,7 +19,7 @@ const Tabs = ({ children, className, ...props }: TabsProps) => {
   return (
     <nav
       className={clsx(
-        `grid grid-cols-${childrenArray.length} gap-4 items-center justify-center text-center`,
+        `grid grid-cols-${childrenArray.length} gap-4 items-center justify-center w-full text-center`,
         className
       )}
       {...props}
@@ -33,8 +33,8 @@ const Tab = ({ children, active = false, as: Component = 'div', className, ...pr
   return (
     <Component
       className={clsx(
-        ' flex items-center justify-center p-4 border-b-2 whitespace-nowrap',
-        active ? 'text-primary200Main border-primary200Main' : 'border-transparent',
+        `flex text-center items-center justify-center p-4 border-b-2 cursor-pointer whitespace-nowrap`,
+        active ? `text-primary200Main border-primary200Main` : `border-transparent`,
         className
       )}
       {...props}

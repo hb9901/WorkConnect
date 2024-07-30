@@ -86,7 +86,7 @@ const NewWorkSpacePage = () => {
       // TODO : 완료 후 페이지 이동처리하기
       alert('워크스페이스 생성 완료!');
       setOrgName('');
-      route.push('/user');
+      route.push('/home');
     }
   });
 
@@ -107,7 +107,7 @@ const NewWorkSpacePage = () => {
       const { data: workspaceUserData, error: workspaceUserError } = await supabase
         .from('workspace_user')
         .select('id')
-        .eq('user_id', user?.id || '')
+        .eq('user_id', user.id)
         .single();
 
       if (workspaceUserError) {
@@ -119,8 +119,6 @@ const NewWorkSpacePage = () => {
         console.log('해당 유저는 워크스페이스에 속해있지 않습니다.');
         return;
       }
-
-      console.log('workspaceUserData: ', workspaceUserData.id);
 
       setWorkUserData({ id: workspaceUserData.id });
     };
