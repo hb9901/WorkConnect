@@ -5,7 +5,7 @@ import useEnterdChannelStore from '@/store/enteredChannelStore';
 import useStreamSetStore from '@/store/streamSetStore';
 import { LiveKitRoom } from '@livekit/components-react';
 import { RoomConnectOptions } from 'livekit-client';
-import { redirect, useRouter, useSearchParams } from 'next/navigation';
+import { redirect, useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { CONST } from '../../../_constants/contants';
 import { deleteChannel } from '../../_utils/videoChannelDelete';
@@ -17,6 +17,7 @@ type videoRoomProps = {
 
 const VideoRoom = ({ name }: videoRoomProps) => {
   const router = useRouter();
+  const params = useParams();
   const [token, setToken] = useState('');
 
   const searchParams = useSearchParams();
@@ -28,7 +29,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
 
   useEffect(() => {
     if (!userName || !isSettingOk) {
-      redirect(`/video-channel/prejoin?room=${name}`);
+      redirect(`/${params.workspaceId}/video-channel/prejoin?room=${name}`);
       return;
     }
     (async () => {
@@ -68,8 +69,8 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       video={preJoinChoices.videoEnabled}
       audio={preJoinChoices.audioEnabled}
       token={token}
-      serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       data-lk-theme="default"
+      serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       style={{ height: '100vh' }}
       connectOptions={connectOptions}
       onDisconnected={onLeave}

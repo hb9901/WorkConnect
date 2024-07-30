@@ -1,10 +1,12 @@
 'use client';
 import useStreamSetStore from '@/store/streamSetStore';
-import { LocalUserChoices, PreJoin } from '@livekit/components-react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { LocalUserChoices } from '@livekit/components-react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import CustomPrejoin from '../CustomPrejoin';
 
 const PreJoinContent = () => {
+  const prams = useParams();
   const searchParams = useSearchParams();
   const room = searchParams.get('room');
 
@@ -20,21 +22,21 @@ const PreJoinContent = () => {
     console.log('LocalUserChoices', values);
     setPreJoinChoices(values);
     setIsSettingOk(true);
-    router.push(`/video-channel/${room}?username=${preJoinChoices.username}`);
+    router.push(`/${prams.workspaceId}/video-channel/${room}?username=${preJoinChoices.username}`);
   }, []);
 
   return (
-    <div className="h-[100vh] bg-[#191919] flex items-center justify-center">
-      <PreJoin
+    <div className="h-[100vh] bg-[#fff] flex items-center justify-center ">
+      <CustomPrejoin
         joinLabel={'입장하기'}
         userLabel={userName}
-        data-lk-theme="default"
         defaults={preJoinChoices}
         onSubmit={handlePreJoinSubmit}
         onValidate={(values) => {
           return true;
         }}
       />
+      {/* <PreJoin/> */}
     </div>
   );
 };

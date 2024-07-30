@@ -4,6 +4,7 @@ import {
   ControlBar,
   FocusLayout,
   GridLayout,
+  ParticipantClickEvent,
   ParticipantTile,
   RoomAudioRenderer,
   TrackReferenceOrPlaceholder,
@@ -45,6 +46,14 @@ const CustomVideoConference = () => {
     }
   }, [speakerTrackRef]);
 
+  const clickFocus = (e: ParticipantClickEvent) => {
+    setFocusedTrack({
+      participant: e.participant,
+      publication: e.participant.getTrackPublication(e.track!.source),
+      source: e.track!.source
+    });
+  };
+
   return (
     <div className="flex flex-col gap-2 h-[80vh] p-3">
       <div className="flex p-4 h-full items-center">
@@ -53,7 +62,7 @@ const CustomVideoConference = () => {
         </div>
         <div className={` ${focusedTrack ? 'w-[300px]' : 'w-full'}`}>
           <GridLayout tracks={tracks} style={{ height: 'calc(50vh 50vw - var(--lk-control-bar-height))' }}>
-            <ParticipantTile />
+            <ParticipantTile onParticipantClick={clickFocus} />
           </GridLayout>
         </div>
       </div>

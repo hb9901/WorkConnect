@@ -1,8 +1,9 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import VideoChannelCreateHeader from './VideoChannelCreateHeader';
+import VideoChannelHeader from './VideoChannelHeader';
 
 export type HeaderProps = {
   back: () => void;
@@ -11,22 +12,22 @@ export type HeaderProps = {
 
 const Header = () => {
   const router = useRouter();
+  const params = useParams();
   const pathname = usePathname();
   const [path, setPath] = useState<string>('');
   const back = () => {
     router.back();
   };
 
-  switch (pathname) {
-    case '/':
-      return (
-        <div>
-          <VideoChannelCreateHeader back={back} next={() => router.push('/video-channel/create')} />
-        </div>
-      );
+  useEffect(() => {
+    setPath(pathname.replace(`/${params.workspaceId}/video-channel`, ''));
+  }, [pathname]);
 
+  switch (path) {
+    case '/create':
+      return <VideoChannelCreateHeader back={back} next={() => router.push('/video-channel/create')} />;
     default:
-      return <div>헤더</div>;
+      return <VideoChannelHeader back={back} next={() => router.push('/video-channel/create')} />;
   }
 };
 
