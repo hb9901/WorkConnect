@@ -4,6 +4,7 @@ import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useUserStore from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent } from 'react';
+import ToDoAddButton from '../ToDoAddButton';
 
 const Header = () => {
   const workspaceList = useUserStore((state) => state.workspaceList);
@@ -16,7 +17,7 @@ const Header = () => {
   if (!workspaceList) return;
 
   return (
-    <header className="mt-[14px] mx-[16px] mb-[12px]">
+    <header className="flex flex-row justify-between mt-[14px] mx-[16px] mb-[12px]">
       <Typography variant="Title20px" color="grey700Black">
         <select defaultValue={Number(workspaceId)} className="gap-[2px]" onChange={handleWorkspaceChange}>
           {workspaceList.map((workspace) => (
@@ -26,6 +27,7 @@ const Header = () => {
           ))}
         </select>
       </Typography>
+      <ToDoAddButton />
     </header>
   );
 };

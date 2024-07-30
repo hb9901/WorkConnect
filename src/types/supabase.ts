@@ -187,7 +187,6 @@ export type Database = {
           start_date: string
           status: string
           title: string
-          user_id: string
           workspace_user_id: string
         }
         Insert: {
@@ -198,7 +197,6 @@ export type Database = {
           start_date: string
           status: string
           title: string
-          user_id: string
           workspace_user_id: string
         }
         Update: {
@@ -209,20 +207,12 @@ export type Database = {
           start_date?: string
           status?: string
           title?: string
-          user_id?: string
           workspace_user_id?: string
         }
         Relationships: [
           {
             foreignKeyName: "todo_workspace_user_id_fkey"
             columns: ["workspace_user_id"]
-            isOneToOne: false
-            referencedRelation: "workspace_user"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "todo2_user_id_fkey"
-            columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "workspace_user"
             referencedColumns: ["id"]
