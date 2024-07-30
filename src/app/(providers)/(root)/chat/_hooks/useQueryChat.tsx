@@ -40,15 +40,3 @@ export const useGetUsersInChannel = ({ channel_id, workspace_user_id }: GetUsers
     refetchOnWindowFocus: false
   });
 };
-
-export const useGetExistingChannelId = ({
-  workspace_user_id,
-  other_workspace_user_id
-}: GetExistingChannelIdRequestProps) => {
-  return useQuery({
-    queryKey: QUERY_KEYS.EXISTING_CHANNEL_ID,
-    queryFn: () => api.channel.getExistingChannelId({ workspace_user_id, other_workspace_user_id }),
-    refetchOnWindowFocus: false,
-    enabled: false
-  });
-};

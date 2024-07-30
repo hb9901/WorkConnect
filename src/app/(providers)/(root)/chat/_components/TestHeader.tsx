@@ -18,7 +18,7 @@ const TestHeader = ({
   };
 
   return (
-    <header className="flex items-center justify-between p-4 relative border-b">
+    <header className="flex items-center justify-between p-4 relative border-b z-10 bg-white">
       <button type="button" className="absolute left-[3%] z-10 text-[18px] font-semibold" onClick={handleBack}>
         &lt;
       </button>
