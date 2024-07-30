@@ -1,4 +1,4 @@
-import PlusIcon from '@/icons/plus.svg';
+import PlusIcon from '@/icons/Plus.svg';
 import SmileIcon from '@/icons/Smile.svg';
 import SendIcon from '@/icons/Send.svg';
 import { forwardRef } from 'react';
