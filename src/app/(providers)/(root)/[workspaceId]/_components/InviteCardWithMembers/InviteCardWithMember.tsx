@@ -1,6 +1,8 @@
 import Typography from '@/components/Typography';
 import HandsIcon from '@/icons/Hands.svg';
 import XIcon from '@/icons/X.svg';
+import useUserStore from '@/store/userStore';
+import { useParams } from 'next/navigation';
 import InviteCodeButton from '../InviteCodeButton';
 
 interface InviteCardWithOutMemberProps {
@@ -8,8 +10,12 @@ interface InviteCardWithOutMemberProps {
 }
 
 const inviteCardWithMember = ({ handleCardClose }: InviteCardWithOutMemberProps) => {
-  const workspaceName = '예시용 워크스페이스';
-  const testWorkspaceId = 324355;
+  const params = useParams();
+  const workspaceId = Number(params.workspaceId as string);
+  const workspaceList = useUserStore((state) => state.workspaceList);
+  const selectedWorkspace = workspaceList?.filter((workspace) => workspace.id === workspaceId)[0];
+
+  if (!selectedWorkspace) return;
 
   return (
     <div className="relative flex flex-col p-[28px] gap-[20px] bg-[#EBECFE]">
@@ -17,7 +23,7 @@ const inviteCardWithMember = ({ handleCardClose }: InviteCardWithOutMemberProps)
         <div className="flex flex-col gap-[8px]">
           <Typography variant="Title18px" color="grey700Black">
             <div>동료들과 함께</div>
-            <div>{workspaceName}을 시작해보세요 !</div>
+            <div>{selectedWorkspace.name}을 시작해보세요 !</div>
           </Typography>
           <Typography variant="Body14px" color="grey500">
             <div>함께 일하는 동료들을 초대해보세요.</div>
@@ -30,7 +36,7 @@ const inviteCardWithMember = ({ handleCardClose }: InviteCardWithOutMemberProps)
         </div>
       </div>
       <div>
-        <InviteCodeButton workspaceId={testWorkspaceId} isFullWidth={false} />
+        <InviteCodeButton workspaceId={selectedWorkspace.id} isFullWidth={false} />
       </div>
       <HandsIcon className="absolute right-[23px] bottom-[0px] w-[90px] h-[93px]" />
     </div>

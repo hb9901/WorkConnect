@@ -1,13 +1,13 @@
 'use client';
+import useShallowSelector from '@/hooks/useShallowSelector';
+import { useAuthStore } from '@/providers/AuthStoreProvider';
+import { AuthStoreTypes } from '@/store/authStore';
+import useUserStore from '@/store/userStore';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import BackButton from '../_components/BackButton';
-import useShallowSelector from '@/hooks/useShallowSelector';
-import { AuthStoreTypes } from '@/store/authStore';
-import { useAuthStore } from '@/providers/AuthStoreProvider';
-import useUserStore from '@/store/userStore';
 
 type UserType = {
   user: AuthStoreTypes['user'];

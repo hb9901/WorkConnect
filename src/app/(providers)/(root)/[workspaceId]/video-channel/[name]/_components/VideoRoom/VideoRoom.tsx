@@ -10,12 +10,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { CONST } from '../../../_constants/contants';
 import { deleteChannel } from '../../_utils/videoChannelDelete';
 import CustomVideoConference from '../VideoConference/CustomVideoConference';
+import useWorkspaceId from '@/hooks/useWorkspaceId';
 
 type videoRoomProps = {
   name: string;
 };
 
 const VideoRoom = ({ name }: videoRoomProps) => {
+  const workspaceId = useWorkspaceId();
   const router = useRouter();
   const [token, setToken] = useState('');
 
@@ -28,7 +30,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
 
   useEffect(() => {
     if (!userName || !isSettingOk) {
-      redirect(`/video-channel/prejoin?room=${name}`);
+      redirect(`/${workspaceId}/video-channel/prejoin?room=${name}`);
       return;
     }
     (async () => {
@@ -47,7 +49,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
     leaveChannel(CONST.FAKE_WORKSPACE_USER_ID);
     deleteChannel(enteredChannelId);
     setIsSettingOk(false);
-    router.push('/video-channel');
+    router.push(`/${workspaceId}/chat`);
   }, []);
 
   const connectOptions = useMemo((): RoomConnectOptions => {
