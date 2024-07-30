@@ -1,4 +1,5 @@
-'use client';
+import Typography from '@/components/Typography';
+import BackButton from '../BackButton';
 
 interface HeaderProps {
   title: string;
@@ -8,12 +9,18 @@ interface HeaderProps {
 const Header = ({ title, type }: HeaderProps) => {
   return (
     <header>
-      <div className="grid grid-cols-3 items-center j h-10 px-4 w-full border-b-2 border-slate-200">
-        <button className="flex items-center justify-start text-sm">뒤로가기</button>
-        <div className="flex items-center justify-center font-bold text-lg">{title}</div>
+      <div className="grid grid-cols-3 items-center px-[16px] pt-[14px] pb-[12px] w-full">
+        <BackButton />
+        <Typography
+          variant="Title20px"
+          color="grey700Black"
+          className="text-center text-ellipsis whitespace-nowrap overflow-hidden"
+        >
+          {title}
+        </Typography>
+
         <div className="flex items-center justify-end">
-          {type === 'myPage' && <button className="text-sm">로그아웃</button>}
-          {type === 'edit' && <button className="text-sm">수정완료?</button>}
+          {/* {type === 'myPage' && <button className="text-sm">로그아웃</button>} */}
         </div>
       </div>
     </header>

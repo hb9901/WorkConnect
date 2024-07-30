@@ -1,5 +1,6 @@
 'use client';
 import api from '@/api/api';
+import { userStatusList } from '@/assets/userStatusList';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
@@ -21,6 +22,7 @@ const ProfileEditPage = () => {
   const name = workspaceUser && workspaceUser.name;
   const email = workspaceUser && workspaceUser.email;
   const phone = workspaceUser && workspaceUser.phone;
+  const state = workspaceUser && workspaceUser.state;
 
   useEffect(() => {
     setImageURL(profileImage);
@@ -57,6 +59,14 @@ const ProfileEditPage = () => {
     updateWorkspaceUser(workspaceUser);
   };
 
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const workspaceUser = {
+      id,
+      state: e.target.value
+    };
+    updateWorkspaceUser(workspaceUser);
+  };
+
   return (
     <div>
       <Header title="프로필 편집" type="edit" />
@@ -82,6 +92,13 @@ const ProfileEditPage = () => {
           <div className="flex flex-col w-full">
             <InputGroup title="개인 정보">
               <Input label="성명" defaultValue={name} ref={nameRef} />
+              <select className="text-sm" defaultValue={state} onChange={handleChange}>
+                {userStatusList.map((userstatus, index) => (
+                  <option key={index} value={userstatus}>
+                    {userstatus}
+                  </option>
+                ))}
+              </select>
             </InputGroup>
             <InputGroup title="연락처">
               <Input label="이메일" defaultValue={email} ref={emailRef} />
