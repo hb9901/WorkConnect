@@ -188,6 +188,7 @@ export type Database = {
           status: string
           title: string
           user_id: string
+          workspace_user_id: string
         }
         Insert: {
           end_date: string
@@ -198,6 +199,7 @@ export type Database = {
           status: string
           title: string
           user_id: string
+          workspace_user_id: string
         }
         Update: {
           end_date?: string
@@ -208,8 +210,16 @@ export type Database = {
           status?: string
           title?: string
           user_id?: string
+          workspace_user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "todo_workspace_user_id_fkey"
+            columns: ["workspace_user_id"]
+            isOneToOne: false
+            referencedRelation: "workspace_user"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "todo2_user_id_fkey"
             columns: ["user_id"]
@@ -355,6 +365,7 @@ export type Database = {
           user_thumbnail: string
           workspace_user_id: string
           user_count: number
+          type: string
         }[]
       }
       get_chat_messages: {
