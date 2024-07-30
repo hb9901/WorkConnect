@@ -1,15 +1,13 @@
 import Typography from '@/components/Typography';
 import AvatarIcon from '@/icons/Avatar.svg';
 import Image from 'next/image';
-import EditOrMessageButton from '../EditOrMessageButton';
 
 interface MainInfoProps {
-  isMyPage: boolean;
   profileImg: string | null;
   name: string | null;
 }
 
-const MainInfo = ({ isMyPage, profileImg, name }: MainInfoProps) => {
+const MainInfo = ({ profileImg, name }: MainInfoProps) => {
   return (
     <div className="flex flex-col items-center">
       {profileImg ? (
@@ -39,7 +37,6 @@ const MainInfo = ({ isMyPage, profileImg, name }: MainInfoProps) => {
           Position
         </Typography> */}
       </div>
-      <EditOrMessageButton isMyPage={isMyPage} />
     </div>
   );
 };
