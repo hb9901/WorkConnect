@@ -23,10 +23,10 @@ const MainInfo = ({ isMyPage }: MainInfoProps) => {
           <Image
             src={profileImg}
             alt="프로필이미지"
-            className="object-contain rounded-full"
+            className="object-cover rounded-full"
             fill
             priority
-            sizes="8rem"
+            sizes="140px"
           />
         </div>
       ) : (
