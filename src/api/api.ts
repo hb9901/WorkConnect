@@ -1,12 +1,13 @@
 import axios, { AxiosInstance } from 'axios';
 
 import ChannelAPI from './channelAPI';
-import storageProfileAPI from './storageProfileAPI';
-import TodoAPI from './todoAPI';
-import WorkspaceUserAPI from './workspaceUserAPI';
 import ChannelUserAPI from './channelUser';
 import ChatAPI from './chatAPI';
+import storageProfileAPI from './storageProfileAPI';
+import TodoAPI from './todoAPI';
 import WorkspaceAPI from './workspaceAPI';
+import WorkspaceListAPI from './workspaceListAPI';
+import WorkspaceUserAPI from './workspaceUserAPI';
 import WorkspaceUserListAPI from './workspaceUserListAPI';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -21,6 +22,7 @@ class API {
   channelUser;
   chat;
   workspace;
+  workspaceList;
 
   constructor() {
     this.axios = axios.create({ baseURL: BASE_URL });
@@ -33,6 +35,7 @@ class API {
     this.channelUser = new ChannelUserAPI(this.axios);
     this.chat = new ChatAPI(this.axios);
     this.workspace = new WorkspaceAPI(this.axios);
+    this.workspaceList = new WorkspaceListAPI(this.axios);
   }
 }
 
