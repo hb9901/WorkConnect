@@ -9,7 +9,7 @@ interface EditOrMessageButtonProsp {
   isMyPage: boolean;
   targetWorkspaceUserId: string;
   workspaceUserId: string | null;
-  workspaceId: string;
+  workspaceId: number;
 }
 
 const EditOrMessageButton = ({
@@ -18,7 +18,7 @@ const EditOrMessageButton = ({
   workspaceUserId,
   workspaceId
 }: EditOrMessageButtonProsp) => {
-  const { createChannel } = useChannel({ type: 'chat', workspace_id: Number(workspaceId) });
+  const { createChannel } = useChannel({ type: 'chat', workspace_id: workspaceId });
   const router = useRouter();
 
   const handleClick = async () => {
@@ -39,11 +39,11 @@ const EditOrMessageButton = ({
       const newChannel: ChannelInsertType = {
         name: '1대1 채팅',
         type: 'chat',
-        workspace_id: Number(workspaceId)
+        workspace_id: workspaceId
       };
       const response = await createChannel(newChannel);
       const channelId = Number(response.id);
-      const channelUsersInfo = { workspaceUserIds: [workspaceId, workspaceUserId], channel_id: channelId };
+      const channelUsersInfo = { workspaceUserIds: [String(workspaceId), workspaceUserId], channel_id: channelId };
       await api.channelUser.createChannelUsers(channelUsersInfo);
       router.push(`/${workspaceId}/chat/${channelId}`);
     }

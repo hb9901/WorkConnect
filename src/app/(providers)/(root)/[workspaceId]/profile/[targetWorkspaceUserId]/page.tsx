@@ -1,5 +1,6 @@
 'use client';
 
+import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import useUserStore from '@/store/userStore';
 import { useParams } from 'next/navigation';
@@ -10,7 +11,7 @@ import MainInfo from './_components/MainInfo';
 
 const Profile = () => {
   const params = useParams();
-  const workspaceId = params.workspaceId as string;
+  const workspaceId = useWorkspaceId();
   const targetWorkspaceUserId = params.targetWorkspaceUserId as string;
   const workspaceUserId = useUserStore((state) => state.workspaceUserId);
   const { workspaceUser } = useWorkspaceUser(workspaceUserId);
