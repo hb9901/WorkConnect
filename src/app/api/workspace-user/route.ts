@@ -9,7 +9,7 @@ export const GET = async (request: NextRequest) => {
   try {
     const { data, error } = await supabase
       .from('workspace_user')
-      .select('id, name, phone, email, profile_image, user(id)')
+      .select('id, name, phone, email, profile_image, user_id, state, is_open')
       .eq('id', id!);
     const workspaceUserInfo = data && data[0];
     if (error)
