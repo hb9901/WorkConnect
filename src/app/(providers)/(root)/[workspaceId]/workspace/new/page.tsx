@@ -149,6 +149,7 @@ const NewWorkSpacePage = () => {
               placeholder="회사, 단체, 조직 이름 입력."
               value={orgName}
               onChange={(e) => setOrgName(e.target.value)}
+              maxLength={20}
               required={true}
             />
           </div>
