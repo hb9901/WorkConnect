@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { subscribeToChat } from '../_utils/subscribe';
 import { useGetChatMessages, useGetUsersInChannel } from '../_hooks/useQueryChat';
 import TestHeader from '../_components/TestHeader';
@@ -9,6 +9,8 @@ import ChatFooter from './_components/ChatFooter';
 import ChatMessagesWrapper from './_components/ChatMessagesWrapper';
 import type { GetChatMessageType } from '@/types/chat';
 import MenuIcon from '@/icons/menu.svg';
+import { QUERY_KEYS } from '../_constants/constants';
+import { useQueryClient } from '@tanstack/react-query';
 
 // TODO: 데이터 추가 시 수정 필요
 const WORKSPACE_USER_ID = '2b5cc93d-1353-4adb-a8c5-60855dc4e5a2';
@@ -21,6 +23,7 @@ const ChatDetailPage = ({ params }: { params: { id: string } }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [payloadMessages, setPayloadMessages] = useState<RealtimePayloadMessagesType[]>([]);
   const [isOpenUtil, setIsOpenUtil] = useState(false);
+  const queryClient = useQueryClient();
 
   const { data: chatMessages = [], isPending: isPendingChatMessages } = useGetChatMessages({
     channel_id: Number(params.id)
@@ -36,19 +39,25 @@ const ChatDetailPage = ({ params }: { params: { id: string } }) => {
     setPayloadMessages((prev) => [...prev, payload.new]);
   };
 
+  const handleUserUpdates = () => {
+    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USERS_IN_CHANNEL });
+  };
+
   const handleOpenUtil = () => {
     setIsOpenUtil((prev) => !prev);
   };
 
-  //TODO 유저 정보 바뀌면~ 감지하자...
-  //QUERY_KEYS.USERS_IN_CHANNEL(channel_id, workspace_user_id)
+  const userIds = useMemo(() => {
+    return Object.keys(usersInChannel).join(',');
+  }, [usersInChannel]);
+
   useEffect(() => {
     if (!containerRef.current) return;
 
     containerRef.current.scrollIntoView({ block: 'end' });
   }, [isPending, payloadMessages]);
 
-  useEffect(subscribeToChat({ handleInserts, id: params.id }), []);
+  useEffect(subscribeToChat({ handleInserts, handleUserUpdates, id: params.id, userIds }), [userIds]);
 
   if (isPending) return <div>Loading...</div>;
 

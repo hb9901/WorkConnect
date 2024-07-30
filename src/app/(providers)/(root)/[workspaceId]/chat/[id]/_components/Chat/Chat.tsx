@@ -6,10 +6,10 @@ import { StrictPropsWithChildren } from '@/types/common';
 import { handleDownloadFile } from '@/utils/file';
 import Image from 'next/image';
 import clsx from 'clsx';
+import brokenFileImage from '/public/images/common/broken-file.png';
 import { useState } from 'react';
 
-const ERROR_IMAGE =
-  'https://ripbxzxpvscuqgdjpkix.supabase.co/storage/v1/object/public/photos/Frame%201707485450.png?t=2024-07-30T16%3A36%3A07.016Z';
+const ERROR_IMAGE = brokenFileImage.src;
 
 type ClassNameProps = Pick<ComponentProps<'div'>, 'className'>;
 
@@ -88,7 +88,9 @@ const ChatVideo = ({ fileUrl }: { fileUrl: string }) => {
 
 const ChatImage = ({ src = '' }: { src: string }) => {
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src = ERROR_IMAGE;
+    // if (!!ERROR_IMAGE && e.currentTarget.src !== ERROR_IMAGE) {
+    //   e.currentTarget.src = ERROR_IMAGE;
+    // }
   };
 
   return (
