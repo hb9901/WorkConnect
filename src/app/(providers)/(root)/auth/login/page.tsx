@@ -2,12 +2,23 @@
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BackButton from '../_components/BackButton';
+import useShallowSelector from '@/hooks/useShallowSelector';
+import { AuthStoreTypes } from '@/store/authStore';
+import { useAuthStore } from '@/providers/AuthStoreProvider';
+import useUserStore from '@/store/userStore';
+
+type UserType = {
+  user: AuthStoreTypes['user'];
+};
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const setUserData = useUserStore((state) => state.setUserData);
+
+  const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
   const route = useRouter();
 
   // TODO : 리팩터링 예정
@@ -21,18 +32,44 @@ const LoginPage = () => {
         password
       });
 
-      if (session) {
-        console.log('session', session);
-        route.push('/workspace/landing');
+      if (!session) {
+        alert('로그인이 실패했습니다.');
+        return;
       }
 
       if (error) {
         return alert('사용자 정보가 일치하지 않습니다.');
       }
+
+      const { data: workspaceUserData, error: workspaceUserError } = await supabase
+        .from('workspace_user')
+        .select('workspace_id')
+        .eq('user_id', session.user.id)
+        .single();
+
+      if (workspaceUserError) {
+        alert('존재하지 않는 유저입니다.');
+        return;
+      }
+
+      if (workspaceUserData.workspace_id === null) {
+        route.push('/workspace/landing');
+        return;
+      }
+
+      setUserData(session.user.id, workspaceUserData.workspace_id);
+      route.push('/home'); // TODO : 메인 홈 으로 이동
     }
   });
 
   const { mutate: emailLoginMutate } = loginMutation;
+
+  useEffect(() => {
+    if (user) {
+      alert('이미 로그인 중입니다.');
+      route.push('/home'); // TODO : 메인 홈 화면 이동 변경
+    }
+  }, []);
 
   return (
     <main className="flex justify-center items-center">
