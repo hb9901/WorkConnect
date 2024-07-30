@@ -8,7 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import BackButton from '../../auth/_components/BackButton';
-import { setCookie } from '../../auth/login/page';
+import { setCookie } from '../../auth/_utils/cookieUtils';
 
 const getRandomNumbers = (count: number, min: number, max: number) => {
   const range = Array.from({ length: max - min + 1 }, (_, i) => i + min);

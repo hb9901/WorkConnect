@@ -7,7 +7,7 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useState } from 'react';
-import { setCookie } from '../../auth/login/page';
+import { setCookie } from '../../auth/_utils/cookieUtils';
 
 type UserType = {
   user: AuthStoreTypes['user'];
