@@ -42,7 +42,7 @@ export const ChatOtherProfileName = ({ children }: StrictPropsWithChildren) => {
 
 const ChatText = ({ children, className }: StrictPropsWithChildren<ClassNameProps>) => {
   return (
-    <div className={clsx(`max-w-xs px-3 py-2 rounded-lg text-white`, className)}>
+    <div className={clsx(`max-w-xs px-3 py-2 text-white rounded-[20px] whitespace-pre-wrap`, className)}>
       <div>{children}</div>
     </div>
   );
@@ -73,12 +73,7 @@ export const ChatMessage = ({ chat, isMe }: { chat: GetChatMessageType; isMe: bo
       return <ChatVideo fileUrl={chat.content} />;
     case CHAT_TYPE.text:
       return (
-        <ChatText
-          className={clsx(
-            'rounded-[20px]',
-            isMe ? 'rounded-tr-none bg-[#EBECFE]' : 'rounded-tl-none bg-grey50 ml-[40px] mt-[6px]'
-          )}
-        >
+        <ChatText className={isMe ? 'rounded-tr-none bg-[#EBECFE]' : 'rounded-tl-none bg-grey50 ml-[40px] mt-[6px]'}>
           <Typography variant="Body12px" color="grey700Black">
             {chat.content}
           </Typography>
