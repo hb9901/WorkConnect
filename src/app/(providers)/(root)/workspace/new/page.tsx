@@ -1,5 +1,4 @@
 'use client';
-import BackButton from '../../../auth/_components/BackButton';
 import useShallowSelector from '@/hooks/useShallowSelector';
 import { useAuthStore } from '@/providers/AuthStoreProvider';
 import { AuthStoreTypes } from '@/store/authStore';
@@ -8,6 +7,7 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import BackButton from '../../auth/_components/BackButton';
 
 const getRandomNumbers = (count: number, min: number, max: number) => {
   const range = Array.from({ length: max - min + 1 }, (_, i) => i + min);
