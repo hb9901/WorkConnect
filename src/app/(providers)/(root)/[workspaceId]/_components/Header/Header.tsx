@@ -1,6 +1,11 @@
 import Typography from '@/components/Typography';
+import { TWorkspaceInfo } from '@/types/workspace';
 
-const Header = () => {
+interface HeaderProps {
+  workspaceList: TWorkspaceInfo[];
+}
+
+const Header = ({ workspaceList }: HeaderProps) => {
   const testList = ['예시 조직1', '예시 조직2'];
 
   return (
