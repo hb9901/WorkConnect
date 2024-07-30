@@ -19,6 +19,7 @@ const AuthVerifyPage = () => {
     return otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
   };
 
+  // TODO : 리팩터링 예정
   const otpMutation = useMutation({
     mutationFn: async () => {
       const fullOtp = getFullOtp();
@@ -31,11 +32,12 @@ const AuthVerifyPage = () => {
 
       if (error) return alert('인증번호가 일치하지 않습니다.');
 
-      if (data) return route.push('/user');
+      // TODO : 가입이 안됐으면 /workspace/landing페이지, 했으면 메인 페이지로 보내기
+      if (data) return route.push('/workspace/landing');
     }
   });
 
-  // OTP 재전송
+  // TODO : 수정작업 (MVP이후 작업 피드백)
   const resendOtp = async () => {
     const { data, error } = await supabase.auth.resend({
       type: 'signup',

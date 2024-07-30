@@ -10,7 +10,8 @@ export const getVideoChannelList = async () => {
 export const createVideoChannel = async (name: string) => {
   await channel.insert({
     name: name,
-    type: 'video'
+    type: 'video',
+    workspace_id: 2
   });
 };
 

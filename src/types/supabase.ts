@@ -12,24 +12,30 @@ export type Database = {
       channel: {
         Row: {
           created_at: string
+          host_id: string | null
           id: number
           name: string | null
+          thumbnail: string | null
           type: string | null
-          workspace_id: number | null
+          workspace_id: number
         }
         Insert: {
           created_at?: string
+          host_id?: string | null
           id?: number
           name?: string | null
+          thumbnail?: string | null
           type?: string | null
-          workspace_id?: number | null
+          workspace_id: number
         }
         Update: {
           created_at?: string
+          host_id?: string | null
           id?: number
           name?: string | null
+          thumbnail?: string | null
           type?: string | null
-          workspace_id?: number | null
+          workspace_id?: number
         }
         Relationships: [
           {
@@ -47,35 +53,38 @@ export type Database = {
           created_at: string
           id: number
           last_read_chat_id: number | null
-          user_id: string
+          user_id: string | null
+          workspace_user_id: string
         }
         Insert: {
           channel_id: number
           created_at?: string
           id?: number
           last_read_chat_id?: number | null
-          user_id: string
+          user_id?: string | null
+          workspace_user_id: string
         }
         Update: {
           channel_id?: number
           created_at?: string
           id?: number
           last_read_chat_id?: number | null
-          user_id?: string
+          user_id?: string | null
+          workspace_user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "channel_user_workspace_user_id_fkey"
+            columns: ["workspace_user_id"]
+            isOneToOne: false
+            referencedRelation: "workspace_user"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "room_user_room_id_fkey"
             columns: ["channel_id"]
             isOneToOne: false
             referencedRelation: "channel"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "room_user_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "user"
             referencedColumns: ["id"]
           },
         ]
@@ -88,7 +97,7 @@ export type Database = {
           id: number
           is_notice: boolean
           type: string
-          user_id: string
+          workspace_user_id: string
         }
         Insert: {
           channel_id: number
@@ -97,7 +106,7 @@ export type Database = {
           id?: number
           is_notice: boolean
           type: string
-          user_id: string
+          workspace_user_id: string
         }
         Update: {
           channel_id?: number
@@ -106,7 +115,7 @@ export type Database = {
           id?: number
           is_notice?: boolean
           type?: string
-          user_id?: string
+          workspace_user_id?: string
         }
         Relationships: [
           {
@@ -117,10 +126,10 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "chat_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "chat_workspace_user_id_fkey"
+            columns: ["workspace_user_id"]
             isOneToOne: false
-            referencedRelation: "user"
+            referencedRelation: "workspace_user"
             referencedColumns: ["id"]
           },
         ]
@@ -160,37 +169,40 @@ export type Database = {
       todo: {
         Row: {
           end_date: string
-          id: number
-          is_done: boolean
+          id: string
           place: string | null
+          priority: string
           start_date: string
+          status: string
           title: string
           user_id: string
         }
         Insert: {
           end_date: string
-          id?: number
-          is_done: boolean
+          id?: string
           place?: string | null
+          priority: string
           start_date: string
+          status: string
           title: string
-          user_id?: string
+          user_id: string
         }
         Update: {
           end_date?: string
-          id?: number
-          is_done?: boolean
+          id?: string
           place?: string | null
+          priority?: string
           start_date?: string
+          status?: string
           title?: string
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "to_do_list_user_id_fkey"
+            foreignKeyName: "todo2_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "user"
+            referencedRelation: "workspace_user"
             referencedColumns: ["id"]
           },
         ]
@@ -200,22 +212,22 @@ export type Database = {
           created_at: string
           email: string | null
           id: string
+          name: string | null
           sns_type: string | null
-          state: string | null
         }
         Insert: {
           created_at?: string
           email?: string | null
           id: string
+          name?: string | null
           sns_type?: string | null
-          state?: string | null
         }
         Update: {
           created_at?: string
           email?: string | null
           id?: string
+          name?: string | null
           sns_type?: string | null
-          state?: string | null
         }
         Relationships: [
           {
@@ -232,50 +244,61 @@ export type Database = {
           admin_user_id: string | null
           created_at: string
           id: number
-          invite_code: number | null
+          invite_code: number
           name: string
         }
         Insert: {
           admin_user_id?: string | null
           created_at?: string
           id?: number
-          invite_code?: number | null
+          invite_code: number
           name: string
         }
         Update: {
           admin_user_id?: string | null
           created_at?: string
           id?: number
-          invite_code?: number | null
+          invite_code?: number
           name?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "workspace_admin_user_id_fkey"
+            columns: ["admin_user_id"]
+            isOneToOne: false
+            referencedRelation: "workspace_user"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       workspace_user: {
         Row: {
           email: string | null
           id: string
-          name: string | null
+          name: string
           phone: string | null
           profile_image: string | null
+          state: string | null
           user_id: string
           workspace_id: number | null
         }
         Insert: {
           email?: string | null
           id?: string
-          name?: string | null
+          name: string
           phone?: string | null
           profile_image?: string | null
+          state?: string | null
           user_id: string
           workspace_id?: number | null
         }
         Update: {
           email?: string | null
           id?: string
-          name?: string | null
+          name?: string
           phone?: string | null
           profile_image?: string | null
+          state?: string | null
           user_id?: string
           workspace_id?: number | null
         }
@@ -301,7 +324,55 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_chat_channels: {
+        Args: {
+          wid: number
+          wuid: string
+        }
+        Returns: {
+          channel_id: number
+          channel_name: string
+          message_created_at: string
+          message: string
+          is_dm: boolean
+          user_name: string
+          user_state: string
+          user_thumbnail: string
+          workspace_user_id: string
+          user_count: number
+        }[]
+      }
+      get_chat_messages: {
+        Args: {
+          cid: number
+        }
+        Returns: {
+          id: number
+          created_at: string
+          content: string
+          type: string
+          is_notice: boolean
+          workspace_user_id: string
+        }[]
+      }
+      get_duplicate_channel_id: {
+        Args: {
+          my_wuid: string
+          other_wuid: string
+        }
+        Returns: string
+      }
+      get_users_in_channel: {
+        Args: {
+          cid: number
+          wuid: string
+        }
+        Returns: {
+          name: string
+          profile_image: string
+          workspace_user_id: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

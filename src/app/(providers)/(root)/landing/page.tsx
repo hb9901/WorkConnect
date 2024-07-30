@@ -1,30 +1,27 @@
-"use client";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Navigation, Pagination } from "swiper/modules";
-import { signInWithKakao } from "../auth/_utils/kakaoLogin";
-import Image from "next/image";
-import Link from "next/link";
+'use client';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Navigation, Pagination } from 'swiper/modules';
+import { signInWithKakao } from '../auth/_utils/kakaoLogin';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const mockData = [
   {
     id: 1,
-    image:
-      "https://helpx.adobe.com/content/dam/help/en/photoshop/using/quick-actions/remove-background-before-qa1.png",
+    image: 'https://helpx.adobe.com/content/dam/help/en/photoshop/using/quick-actions/remove-background-before-qa1.png'
   },
   {
     id: 2,
-    image:
-      "https://helpx.adobe.com/content/dam/help/en/photoshop/using/quick-actions/remove-background-before-qa1.png",
+    image: 'https://helpx.adobe.com/content/dam/help/en/photoshop/using/quick-actions/remove-background-before-qa1.png'
   },
   {
     id: 3,
-    image:
-      "https://helpx.adobe.com/content/dam/help/en/photoshop/using/quick-actions/remove-background-before-qa1.png",
-  },
+    image: 'https://helpx.adobe.com/content/dam/help/en/photoshop/using/quick-actions/remove-background-before-qa1.png'
+  }
 ];
-
+// TODO : 리팩터링 예정
 const LandingPage = () => {
   return (
     <main className="flex justify-center items-center">
@@ -35,7 +32,7 @@ const LandingPage = () => {
             slidesPerView={1}
             navigation
             pagination={{
-              clickable: true,
+              clickable: true
             }}
           >
             {mockData.map((item) => (
@@ -70,8 +67,7 @@ const LandingPage = () => {
             </button>
           </div>
           <div className="pb-7 text-[14px] text-[#333] flex justify-center items-center ">
-            <Link href="/auth/login">이메일로 로그인</Link> ㅣ{" "}
-            <Link href="/auth/signup">회원가입</Link>
+            <Link href="/auth/login">이메일로 로그인</Link> ㅣ <Link href="/auth/signup">회원가입</Link>
           </div>
         </div>
       </div>

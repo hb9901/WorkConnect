@@ -1,5 +1,6 @@
 // pages/api/channel.js
 
+import { createChannel } from '@/services/channel';
 import { createClient } from '@/utils/supabase/supabaseServer';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -12,7 +13,7 @@ export const GET = async (request: NextRequest) => {
   try {
     const { data, error } = await supabase
       .from('channel')
-      .select()
+      .select('*')
       .eq('type', type!)
       .eq('workspace_id', workspace_id!)
       .order('created_at', { ascending: true });
@@ -35,11 +36,9 @@ export const GET = async (request: NextRequest) => {
 };
 
 export const POST = async (request: NextRequest) => {
-  const supabase = createClient();
-
-  const { name, type, workspace_id } = await request.json();
+  const { name, type, workspace_id, host_id } = await request.json();
   try {
-    const { error } = await supabase.from('channel').insert({ name, type, workspace_id });
+    const { data, error } = await createChannel({ name, type, workspace_id, host_id });
 
     if (error)
       return NextResponse.json({
@@ -48,7 +47,7 @@ export const POST = async (request: NextRequest) => {
         status: false,
         statusCode: 500
       });
-    return NextResponse.json({ message: 'Create Channel' });
+    return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({
       message: 'Failed to insert data',
@@ -61,8 +60,7 @@ export const POST = async (request: NextRequest) => {
 
 export const DELETE = async (request: NextRequest) => {
   const supabase = createClient();
-  const { id } = await request.json();
-  const { workspace_id } = await request.json();
+  const { id, workspace_id } = await request.json();
   try {
     const { error } = await supabase.from('channel').delete().eq('id', id).eq('workspace_id', workspace_id);
     if (error)
