@@ -3,6 +3,7 @@ import BriefcaseIcon from '@/icons/Briefcase.svg';
 import LockIcon from '@/icons/Lock.svg';
 import MailIcon from '@/icons/Mail.svg';
 import PhoneIcon from '@/icons/Phone.svg';
+import { useParams } from 'next/navigation';
 import InfoForm from '../InfoForm';
 
 interface ContactInfoProps {
@@ -10,11 +11,15 @@ interface ContactInfoProps {
 }
 
 const ContactInfo = ({ isMyPage }: ContactInfoProps) => {
-  const { workspaceUser } = useWorkspaceUser();
+  const params = useParams();
+  const workspaceId = params.workspaceId as string;
+  const { workspaceUser } = useWorkspaceUser(workspaceId);
   const isOpen = workspaceUser && workspaceUser.is_open;
   const state = workspaceUser && workspaceUser.state;
   const email = workspaceUser && workspaceUser.email;
   const phoneNum = workspaceUser && workspaceUser.phone;
+
+  if (!(state && email && phoneNum)) return;
 
   return (
     <div className="flex flex-col gap-[20px] mt-[42px]">

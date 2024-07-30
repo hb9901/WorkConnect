@@ -23,7 +23,7 @@ export const subscribeToChannels =
           handler: handleChatInserts
         },
         {
-          event: 'INSERT',
+          event: '*',
           schema: 'public',
           table: 'channel_user',
           filter: `workspace_user_id=eq.${workspace_user_id}`,

@@ -12,15 +12,16 @@ import { updateChatChannels } from './_utils/updateChatChannels';
 import { subscribeToChannels } from '../_utils/subscribe';
 import type { GetChatChannelsResponse } from '@/types/channel';
 import type { ChatSubscribePayloadProps } from '@/types/chat';
+import useWorkspaceId from '@/hooks/useWorkspaceId';
 
 // TODO: 데이터 추가 시 수정 필요
-const WORKSPACE_ID = 2;
 const WORKSPACE_USER_ID = '2b5cc93d-1353-4adb-a8c5-60855dc4e5a2';
 
 const ChatListPage = () => {
+  const workspaceId = useWorkspaceId();
   const queryClient = useQueryClient();
   const { data: channels = [] } = useGetChatChannels({
-    workspace_id: WORKSPACE_ID,
+    workspace_id: workspaceId,
     workspace_user_id: WORKSPACE_USER_ID
   });
 
@@ -54,7 +55,15 @@ const ChatListPage = () => {
 
   return (
     <>
-      <TestHeader title="채팅 리스트" rightButton={<Link href="/chat/add">생성</Link>} />
+      <TestHeader
+        title="채팅 리스트"
+        rightButton={
+          <div className="flex items-center gap-2">
+            <Link href={`/${workspaceId}/chat/add?type=video`}>화상채팅</Link>
+            <Link href={`/${workspaceId}/chat/add?type=chat`}>채팅</Link>
+          </div>
+        }
+      />
       <div className="p-4" />
       <ChannelListContainer>
         {channels.map((item) => (

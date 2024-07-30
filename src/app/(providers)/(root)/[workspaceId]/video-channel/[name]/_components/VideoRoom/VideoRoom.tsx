@@ -1,6 +1,7 @@
 'use client';
 
 import useChannelUser from '@/hooks/useChannelUser';
+import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useEnterdChannelStore from '@/store/enteredChannelStore';
 import useStreamSetStore from '@/store/streamSetStore';
 import { LiveKitRoom } from '@livekit/components-react';
@@ -16,6 +17,7 @@ type videoRoomProps = {
 };
 
 const VideoRoom = ({ name }: videoRoomProps) => {
+  const workspaceId = useWorkspaceId();
   const router = useRouter();
   const params = useParams();
   const [token, setToken] = useState('');
@@ -29,7 +31,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
 
   useEffect(() => {
     if (!userName || !isSettingOk) {
-      redirect(`/${params.workspaceId}/video-channel/prejoin?room=${name}`);
+      redirect(`/${workspaceId}/video-channel/prejoin?room=${name}`);
       return;
     }
     (async () => {
@@ -48,7 +50,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
     leaveChannel(CONST.FAKE_WORKSPACE_USER_ID);
     deleteChannel(enteredChannelId);
     setIsSettingOk(false);
-    router.push('/video-channel');
+    router.push(`/${workspaceId}/chat`);
   }, []);
 
   const connectOptions = useMemo((): RoomConnectOptions => {

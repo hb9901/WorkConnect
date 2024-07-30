@@ -1,12 +1,13 @@
 'use client';
+import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useStreamSetStore from '@/store/streamSetStore';
 import { LocalUserChoices } from '@livekit/components-react';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import CustomPrejoin from '../CustomPrejoin';
 
 const PreJoinContent = () => {
-  const prams = useParams();
+  const workspaceId = useWorkspaceId();
   const searchParams = useSearchParams();
   const room = searchParams.get('room');
 
@@ -22,7 +23,7 @@ const PreJoinContent = () => {
     console.log('LocalUserChoices', values);
     setPreJoinChoices(values);
     setIsSettingOk(true);
-    router.push(`/${prams.workspaceId}/video-channel/${room}?username=${preJoinChoices.username}`);
+    router.push(`/${workspaceId}/video-channel/${room}?username=${preJoinChoices.username}`);
   }, []);
 
   return (

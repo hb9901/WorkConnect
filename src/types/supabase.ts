@@ -166,6 +166,18 @@ export type Database = {
           },
         ]
       }
+      result: {
+        Row: {
+          channel_id: number | null
+        }
+        Insert: {
+          channel_id?: number | null
+        }
+        Update: {
+          channel_id?: number | null
+        }
+        Relationships: []
+      }
       todo: {
         Row: {
           end_date: string
@@ -275,6 +287,7 @@ export type Database = {
         Row: {
           email: string | null
           id: string
+          is_open: boolean
           name: string
           phone: string | null
           profile_image: string | null
@@ -285,6 +298,7 @@ export type Database = {
         Insert: {
           email?: string | null
           id?: string
+          is_open: boolean
           name: string
           phone?: string | null
           profile_image?: string | null
@@ -295,6 +309,7 @@ export type Database = {
         Update: {
           email?: string | null
           id?: string
+          is_open?: boolean
           name?: string
           phone?: string | null
           profile_image?: string | null
@@ -340,6 +355,7 @@ export type Database = {
           user_thumbnail: string
           workspace_user_id: string
           user_count: number
+          type: string
         }[]
       }
       get_chat_messages: {
@@ -355,12 +371,12 @@ export type Database = {
           workspace_user_id: string
         }[]
       }
-      get_duplicate_channel_id: {
+      get_existing_channel_id: {
         Args: {
           my_wuid: string
           other_wuid: string
         }
-        Returns: string
+        Returns: number
       }
       get_users_in_channel: {
         Args: {
