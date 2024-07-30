@@ -41,7 +41,7 @@ export const Default = (args: BottomSheetProps) => {
         Open
       </Button>
       <BottomSheet {...args} isOpen={isOpen} onClose={handleClose}>
-        <p>BottomSheet 열림</p>
+        <p>BottomSheet content</p>
       </BottomSheet>
     </>
   );
