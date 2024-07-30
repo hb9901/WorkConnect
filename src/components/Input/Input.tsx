@@ -9,6 +9,8 @@ export interface InputProps {
   id: string;
   status?: 'default' | 'error' | 'success';
   togglePasswordVisibility?: boolean;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 const Input = ({
@@ -19,6 +21,8 @@ const Input = ({
   status = 'default',
   togglePasswordVisibility = false,
   onChange,
+  onFocus,
+  onBlur,
   ...props
 }: InputProps) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -38,6 +42,7 @@ const Input = ({
   const handleFocus = () => {
     setIsFocused(true);
     setState('focus');
+    if (onFocus) onFocus();
   };
 
   const handleBlur = () => {
@@ -47,6 +52,7 @@ const Input = ({
     } else {
       setState('default');
     }
+    if (onBlur) onBlur();
   };
 
   const handleClickDelete = () => {
