@@ -17,7 +17,7 @@ const Header = () => {
   if (!workspaceList) return;
 
   return (
-    <header className="flex flex-row justify-between mt-[14px] mx-[16px] mb-[12px]">
+    <header className="flex flex-row items-center justify-between mt-[14px] mx-[16px] mb-[12px]">
       <Typography variant="Title20px" color="grey700Black">
         <select defaultValue={Number(workspaceId)} className="gap-[2px]" onChange={handleWorkspaceChange}>
           {workspaceList.map((workspace) => (

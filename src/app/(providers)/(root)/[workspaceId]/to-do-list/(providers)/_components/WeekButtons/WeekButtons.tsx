@@ -7,8 +7,9 @@ import useDateStore from '@/store/dateStore';
 import dayjs from 'dayjs';
 
 const WeekButtons = () => {
-  const { selectedDate, handleClickNextWeek, handleClickPreviousWeek } = useDateStore();
+  const { selectedDate, handleClickNextWeek, handleClickPreviousWeek, handleClickDate } = useDateStore();
   const date = dayjs(selectedDate).format('YYYY.MM.');
+  const today = dayjs();
 
   return (
     <div className="flex flex-row justify-between">
@@ -29,7 +30,7 @@ const WeekButtons = () => {
           </button>
         </div>
       </div>
-      <button>
+      <button onClick={() => handleClickDate(today)}>
         <Typography variant="Subtitle16px" color="grey500">
           오늘
         </Typography>
