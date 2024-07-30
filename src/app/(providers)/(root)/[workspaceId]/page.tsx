@@ -2,14 +2,16 @@
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import useWorkspaceUserList from '@/hooks/useWorkspaceUserList';
 import useUserStore from '@/store/userStore';
+import { useParams } from 'next/navigation';
 import { useShallow } from 'zustand/react/shallow';
 import Header from './_components/Header';
 import HomeMemberCard from './_components/HomeMemberCard';
 import MemberExistComponent from './_components/MemberExistComponent';
 import MemberNotExistComponent from './_components/MemberNotExistComponent';
 
-const Homepage = ({ params }: { params: { workspaceId: string } }) => {
-  const workspaceId = params.workspaceId;
+const Homepage = () => {
+  const params = useParams();
+  const workspaceId = params.workspaceId as string;
   const { workspaceUserId, workspaceList } = useUserStore(
     useShallow((state) => ({
       workspaceUserId: state.workspaceUserId,
@@ -23,7 +25,7 @@ const Homepage = ({ params }: { params: { workspaceId: string } }) => {
 
   return (
     <div>
-      <Header workspaceList={workspaceList} />
+      <Header workspaceList={workspaceList} workspaceId={workspaceId} />
       <main className="px-[16px] mt-[26px]">
         <HomeMemberCard name={workspaceUser.name} status={workspaceUser.state} />
 
