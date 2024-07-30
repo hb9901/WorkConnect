@@ -7,7 +7,7 @@ import UtilsMenus from '../UtilsMenus';
 const WORKSPACE_USER_ID = '2b5cc93d-1353-4adb-a8c5-60855dc4e5a2';
 
 const ChatFooter = ({ id, handleOpenUtil }: { id: string; handleOpenUtil: () => void }) => {
-  const ref = useRef<HTMLInputElement>(null);
+  const ref = useRef<HTMLTextAreaElement>(null);
   const { mutate: mutateChatMessage } = useMutationChatMessage({
     channel_id: Number(id),
     workspace_user_id: WORKSPACE_USER_ID
