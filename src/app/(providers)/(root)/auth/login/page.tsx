@@ -1,13 +1,13 @@
 'use client';
+import useShallowSelector from '@/hooks/useShallowSelector';
+import { useAuthStore } from '@/providers/AuthStoreProvider';
+import { AuthStoreTypes } from '@/store/authStore';
+import useUserStore from '@/store/userStore';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import BackButton from '../_components/BackButton';
-import useShallowSelector from '@/hooks/useShallowSelector';
-import { AuthStoreTypes } from '@/store/authStore';
-import { useAuthStore } from '@/providers/AuthStoreProvider';
-import useUserStore from '@/store/userStore';
 
 type UserType = {
   user: AuthStoreTypes['user'];
@@ -58,7 +58,7 @@ const LoginPage = () => {
       }
 
       setUserData(session.user.id, workspaceUserData.workspace_id);
-      route.push('/home'); // TODO : 메인 홈 으로 이동
+      route.push(`/${workspaceUserData.workspace_id}`); // TODO : 메인 홈 으로 이동
     }
   });
 
@@ -67,7 +67,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (user) {
       // alert('이미 로그인 중입니다.');
-      route.push('/home'); // TODO : 메인 홈 화면 이동 변경
+      // route.push('/home'); // TODO : 메인 홈 화면 이동 변경
     }
   }, []);
 

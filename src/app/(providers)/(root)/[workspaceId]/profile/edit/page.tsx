@@ -3,6 +3,7 @@ import api from '@/api/api';
 import { userStatusList } from '@/assets/userStatusList';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Header from '../_components/Header';
 import Input from './_components/Input';
@@ -16,7 +17,9 @@ const ProfileEditPage = () => {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
-  const { workspaceUser, updateWorkspaceUser } = useWorkspaceUser();
+  const params = useParams();
+  const workspaceId = params.workspaceId as string;
+  const { workspaceUser, updateWorkspaceUser } = useWorkspaceUser(workspaceId);
   const id = workspaceUser && workspaceUser.id;
   const profileImage = workspaceUser && workspaceUser.profile_image;
   const name = workspaceUser && workspaceUser.name;
@@ -67,6 +70,7 @@ const ProfileEditPage = () => {
     updateWorkspaceUser(workspaceUser);
   };
 
+  if (!(name && email && phone && state)) return;
   return (
     <div>
       <Header title="프로필 편집" type="edit" />
