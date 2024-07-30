@@ -66,7 +66,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (user) {
-      alert('이미 로그인 중입니다.');
+      // alert('이미 로그인 중입니다.');
       route.push('/home'); // TODO : 메인 홈 화면 이동 변경
     }
   }, []);
