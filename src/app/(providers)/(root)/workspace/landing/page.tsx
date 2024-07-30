@@ -52,7 +52,7 @@ const InviteCodePage = () => {
       // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
       setInviteCode('');
       alert('초대코드 입력이 완료되었습니다.');
-      route.push('/user');
+      route.push('/home');
     }
   });
 

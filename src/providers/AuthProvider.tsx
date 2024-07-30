@@ -29,6 +29,7 @@ export default function AuthProvider({ accessToken, children }: AuthProviderProp
         return router.replace('/landing');
       }
 
+      // TODO : 세션이 있으면? 워크스페이스 가입 대상자 인지 먼저 확인 로직 작성
       if (session) {
         console.log('userId', userId);
         console.log('workspaceId', workspaceId);
