@@ -5,7 +5,7 @@ import { ChangeEvent } from 'react';
 
 interface HeaderProps {
   workspaceList: TWorkspaceInfo[];
-  workspaceId: string;
+  workspaceId: number;
 }
 
 const Header = ({ workspaceList, workspaceId }: HeaderProps) => {
@@ -17,7 +17,7 @@ const Header = ({ workspaceList, workspaceId }: HeaderProps) => {
   return (
     <header className="mt-[14px] mx-[16px] mb-[12px]">
       <Typography variant="Title20px" color="grey700Black">
-        <select defaultValue={Number(workspaceId)} className="gap-[2px]" onChange={handleWorkspaceChange}>
+        <select defaultValue={workspaceId} className="gap-[2px]" onChange={handleWorkspaceChange}>
           {workspaceList.map((workspace) => (
             <option key={workspace.id} value={workspace.id}>
               {workspace.name}

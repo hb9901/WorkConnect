@@ -1,24 +1,40 @@
 'use client';
 
+import Typography from '@/components/Typography';
+import ChevronLeftIcon from '@/icons/ChevronLeft.svg';
+import ChevronRightIcon from '@/icons/ChevronRight.svg';
 import useDateStore from '@/store/dateStore';
+import dayjs from 'dayjs';
 
 const WeekButtons = () => {
-  const { selectedDate, handleClickNextWeek, handleClickPreviousWeek } = useDateStore();
-  const year = selectedDate.year();
-  const month = selectedDate.month() + 1;
+  const { selectedDate, handleClickNextWeek, handleClickPreviousWeek, handleClickDate } = useDateStore();
+  const date = dayjs(selectedDate).format('YYYY.MM.');
+  const today = dayjs();
 
   return (
-    <div className="flex flex-row justify-between mb-5">
-      <div className="flex flex-row gap-4">
-        <strong>
-          {year}.{month}
-        </strong>
-        <div>
-          <button onClick={handleClickPreviousWeek}>{`<`}</button>
-          <button onClick={handleClickNextWeek}>{`>`}</button>
+    <div className="flex flex-row justify-between">
+      <div className="flex flex-row items-center gap-[16px]">
+        <Typography variant="Title22px" color="grey900">
+          {date}
+        </Typography>
+        <div className="flex flex-row gap-[8px]">
+          <button onClick={handleClickPreviousWeek}>
+            <div className="flex items-center justify-center w-[20px] h-[20px] rounded-full border-[1px] border-[#737B91]">
+              <ChevronLeftIcon className="w-[10px] h-[10px]" />
+            </div>
+          </button>
+          <button onClick={handleClickNextWeek}>
+            <div className="flex items-center justify-center w-[20px] h-[20px] rounded-full border-[1px] border-[#737B91]">
+              <ChevronRightIcon className="w-[10px] h-[10px]" />
+            </div>
+          </button>
         </div>
       </div>
-      <button className="text-slate-500 text-sm">오늘</button>
+      <button onClick={() => handleClickDate(today)}>
+        <Typography variant="Subtitle16px" color="grey500">
+          오늘
+        </Typography>
+      </button>
     </div>
   );
 };
