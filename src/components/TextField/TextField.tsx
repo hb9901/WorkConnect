@@ -1,24 +1,19 @@
 import clsx from 'clsx';
-import { useId, useState } from 'react';
+import { ChangeEventHandler, useId, useState } from 'react';
 import Input from '../Input/Input';
 import Label from '../Label';
-import Typography from '../Typography';
 
 export interface TextFieldProps {
-  errorMessage: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  placeholder: string;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  placeholder?: string;
   value: string;
-  isError: boolean;
-  isSuccess: boolean;
+  isError?: boolean;
+  isSuccess?: boolean;
   children: string;
   id: string;
   label: string;
   labelClassName?: string;
   LabelColor: 'primary200Main' | 'grey700Black' | 'error' | undefined;
-  message: string;
-  onFocus?: () => void;
-  onBlur?: () => void;
   status?: 'default' | 'error' | 'success';
   type?: string;
 }
@@ -29,22 +24,18 @@ const TextField = ({
   labelClassName,
   LabelColor = 'primary200Main',
   children,
-  message,
   value,
   isError,
   isSuccess,
   onChange,
-  onFocus,
-  onBlur,
   status,
-  type,
+  type = 'text',
   ...props
 }: TextFieldProps) => {
   const inputId = useId();
   const customId = id || inputId;
   const [state, setState] = useState<'default' | 'focus' | 'typing'>('default');
 
-  const messageColor = isError ? 'error' : isSuccess ? 'success' : 'grey200';
   const labelColor = isError
     ? 'error'
     : state === 'focus'
@@ -52,13 +43,6 @@ const TextField = ({
       : state === 'typing'
         ? 'grey700Black'
         : LabelColor;
-  const InputBorderColor = isError
-    ? 'error'
-    : state === 'focus'
-      ? 'primary200Main'
-      : state === 'typing'
-        ? 'grey700Black'
-        : 'grey200';
 
   const handleFocus = () => {
     setState('focus');
@@ -69,7 +53,7 @@ const TextField = ({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
+    if (onChange) onChange(e);
     setState(e.target.value ? 'typing' : 'default');
   };
 
@@ -86,14 +70,9 @@ const TextField = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         onChange={handleChange}
-        status={status}
+        status={isError ? 'error' : isSuccess ? 'success' : 'default'}
         {...props}
       />
-      {message && (
-        <Typography variant="Body14px" color={messageColor} className="px-[6px]">
-          {message}
-        </Typography>
-      )}
     </div>
   );
 };
