@@ -20,16 +20,22 @@ const ProfileEditPage = () => {
   const params = useParams();
   const workspaceUserId = params.targetWorkspaceUserId as string;
   const { workspaceUser, updateWorkspaceUser } = useWorkspaceUser(workspaceUserId);
-  const id = workspaceUser && workspaceUser.id;
-  const profileImage = workspaceUser && workspaceUser.profile_image;
-  const name = workspaceUser && workspaceUser.name;
-  const email = workspaceUser && workspaceUser.email;
-  const phone = workspaceUser && workspaceUser.phone;
-  const state = workspaceUser && workspaceUser.state;
+  if (!workspaceUser) return;
+  const id = workspaceUser.id;
+  const profileImage = workspaceUser.profile_image;
+  const name = workspaceUser.name;
+  const email = workspaceUser.email;
+  const phone = workspaceUser.phone;
+  const state = workspaceUser.state;
 
   useEffect(() => {
     setImageURL(profileImage);
   }, [profileImage]);
+
+  const setEmptyStr = (category: string | null): string => {
+    if (!category) return '-';
+    else return category;
+  };
 
   const handleProfileImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -70,7 +76,6 @@ const ProfileEditPage = () => {
     updateWorkspaceUser(workspaceUser);
   };
 
-  if (!(name && email && phone && state)) return;
   return (
     <div>
       <Header title="프로필 편집" type="edit" />
@@ -96,7 +101,7 @@ const ProfileEditPage = () => {
           <div className="flex flex-col w-full">
             <InputGroup title="개인 정보">
               <Input label="성명" defaultValue={name} ref={nameRef} />
-              <select className="text-sm" defaultValue={state} onChange={handleChange}>
+              <select className="text-sm" defaultValue={setEmptyStr(state)} onChange={handleChange}>
                 {userStatusList.map((userstatus, index) => (
                   <option key={index} value={userstatus}>
                     {userstatus}
@@ -105,8 +110,8 @@ const ProfileEditPage = () => {
               </select>
             </InputGroup>
             <InputGroup title="연락처">
-              <Input label="이메일" defaultValue={email} ref={emailRef} />
-              <Input label="전화번호" defaultValue={phone} ref={phoneRef} />
+              <Input label="이메일" defaultValue={setEmptyStr(email)} ref={emailRef} />
+              <Input label="전화번호" defaultValue={setEmptyStr(phone)} ref={phoneRef} />
             </InputGroup>
           </div>
 
