@@ -44,4 +44,4 @@ const Tab = ({ children, active = false, as: Component = 'div', className, ...pr
   );
 };
 
-export default { Tab, Tabs };
+export { Tab, Tabs };

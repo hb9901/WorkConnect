@@ -5,13 +5,13 @@ import { URL } from 'url';
 export const GET = async (request: NextRequest) => {
   const supabase = createClient();
   const { searchParams } = new URL(request.url);
-  const userId = searchParams.get('userId');
+  const workspaceUserId = searchParams.get('workspaceUserId');
 
   try {
     const { data, error } = await supabase
       .from('todo')
       .select()
-      .eq('user_id', userId!)
+      .eq('workspace_user_id', workspaceUserId!)
       .order('start_date', { ascending: true });
     if (error)
       return NextResponse.json({

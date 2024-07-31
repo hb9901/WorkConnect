@@ -1,8 +1,8 @@
 'use client';
+import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import useWorkspaceUserList from '@/hooks/useWorkspaceUserList';
 import useUserStore from '@/store/userStore';
-import { useParams } from 'next/navigation';
 import { useShallow } from 'zustand/react/shallow';
 import Header from './_components/Header';
 import HomeMemberCard from './_components/HomeMemberCard';
@@ -10,8 +10,7 @@ import MemberExistComponent from './_components/MemberExistComponent';
 import MemberNotExistComponent from './_components/MemberNotExistComponent';
 
 const Homepage = () => {
-  const params = useParams();
-  const workspaceId = params.workspaceId as string;
+  const workspaceId = useWorkspaceId();
   const { workspaceUserId, workspaceList } = useUserStore(
     useShallow((state) => ({
       workspaceUserId: state.workspaceUserId,
@@ -19,7 +18,7 @@ const Homepage = () => {
     }))
   );
   const { workspaceUser } = useWorkspaceUser(workspaceUserId);
-  const { workspaceUserList } = useWorkspaceUserList(Number(workspaceId));
+  const { workspaceUserList } = useWorkspaceUserList(workspaceId);
 
   if (!(workspaceUser && workspaceList && workspaceUserList)) return;
 

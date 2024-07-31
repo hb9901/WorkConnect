@@ -7,7 +7,6 @@ export const signInWithKakao = async () => {
       redirectTo: process.env.NEXT_PUBLIC_API_URL
         ? `${process.env.NEXT_PUBLIC_API_URL}/api/signup/kakao`
         : 'http://localhost:3100/api/signup/kakao'
-      // redirectTo: `${process.env.NEXT_PUBLIC_API_URL}/user`
     }
   });
   if (kakaoError) throw new Error(kakaoError.message);

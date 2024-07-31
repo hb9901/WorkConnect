@@ -1,13 +1,13 @@
 import { useRef } from 'react';
 import { useMutationChatMessage } from '../../../_hooks/useMutationChat';
-import MessageInput from '../MessageInput';
+import MessageTextarea from '../MessageTextarea';
 import UtilsMenus from '../UtilsMenus';
 
 // TODO: 데이터 추가 시 수정 필요
 const WORKSPACE_USER_ID = '2b5cc93d-1353-4adb-a8c5-60855dc4e5a2';
 
 const ChatFooter = ({ id, handleOpenUtil }: { id: string; handleOpenUtil: () => void }) => {
-  const ref = useRef<HTMLInputElement>(null);
+  const ref = useRef<HTMLTextAreaElement>(null);
   const { mutate: mutateChatMessage } = useMutationChatMessage({
     channel_id: Number(id),
     workspace_user_id: WORKSPACE_USER_ID
@@ -25,7 +25,7 @@ const ChatFooter = ({ id, handleOpenUtil }: { id: string; handleOpenUtil: () => 
   return (
     <>
       <form onSubmit={handleSendMessage}>
-        <MessageInput handleOpenUtil={handleOpenUtil} />
+        <MessageTextarea handleOpenUtil={handleOpenUtil} ref={ref} />
       </form>
       <UtilsMenus />
     </>

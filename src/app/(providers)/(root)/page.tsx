@@ -61,7 +61,7 @@ const LandingPage = () => {
           <div className="w-full flex flex-col items-start gap-2 p-4">
             <button
               onClick={signInWithKakao}
-              className="flex justify-center items-center w-full h-[56px] text-lg font-medium bg-[#333] rounded-lg text-white px-[22px] py-[12px]"
+              className="flex justify-center items-center w-full h-[56px] text-lg font-medium bg-[#FEE502] rounded-lg text-[#3B1E1D] px-[22px] py-[12px]"
             >
               카카오로 시작하기
             </button>
