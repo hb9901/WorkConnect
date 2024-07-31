@@ -8,7 +8,7 @@ import { LiveKitRoom } from '@livekit/components-react';
 import { RoomConnectOptions } from 'livekit-client';
 import { redirect, useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { CONST } from '../../../_constants/contants';
+import { CONST } from '../../../../_constants/contants';
 import { deleteChannel } from '../../_utils/videoChannelDelete';
 import CustomVideoConference from '../VideoConference/CustomVideoConference';
 

@@ -7,7 +7,7 @@ import {
 } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import React from 'react';
-import TrackToggle from '../../../prejoin/_components/TrackToggle';
+import TrackToggle from '../../../_components/TrackToggle';
 import { useMediaQuery } from '../../_hooks/useMediaQuery';
 import { supportsScreenSharing } from '../../_utils/supportsScreenSharing';
 
@@ -89,7 +89,7 @@ const BottomControlBar = ({ variation, controls, saveUserChoices = true, ...prop
   );
 
   return (
-    <div className="flex border-t-2  justify-between mx-4 p-4 fixed bottom-0 right-0 left-0  ">
+    <div className="flex border-t-2  justify-between mx-4 p-4 fixed bottom-1 right-0 left-0  bg-white w-[100vw] ">
       {visibleControls.microphone && (
         <div className="">
           <TrackToggle source={Track.Source.Microphone} showIcon={showIcon} onChange={microphoneOnChange}></TrackToggle>

@@ -14,7 +14,7 @@ import {
   VideoPresets
 } from 'livekit-client';
 import React from 'react';
-import TrackToggle from '../TrackToggle';
+import TrackToggle from '../../../_components/TrackToggle';
 
 export interface PreJoinProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSubmit' | 'onError'> {
   /** This function is called with the `LocalUserChoices` if validation is passed. */
@@ -318,7 +318,13 @@ const CustomPrejoin = ({
       <div className="flex items-center mt-4 mx-4 lg: w-[80vw]">
         {videoTrack && (
           <div>
-            <video ref={videoEl} width="1280" height="720" data-lk-facing-mode={facingMode} />
+            <video
+              className="transform scale-x-[-1]"
+              ref={videoEl}
+              width="1280"
+              height="720"
+              data-lk-facing-mode={facingMode}
+            />
           </div>
         )}
         {(!videoTrack || !videoEnabled) && (
