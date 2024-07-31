@@ -45,7 +45,7 @@ const config: Config = {
         grey800: '#191A1F',
         grey900: '#020203',
         white: '#FFFFFF',
-        bgBackground1: 'FAFAFA',
+        bgBackground1: '#FAFAFA',
         bgProfile: '#BDBDBD',
         error: '#FD4E39',
         caution: '#FFC73C',
