@@ -28,11 +28,13 @@ const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => 
                     userInfo.profile_image ??
                     'https://blog.kakaocdn.net/dn/bCXLP7/btrQuNirLbt/N30EKpk07InXpbReKWzde1/img.png'
                   }
+                  width={50}
+                  height={50}
                 />
                 <ChatOtherProfileName>{userInfo.name}</ChatOtherProfileName>
               </ChatOtherProfileContainer>
             )}
-            <ChatMessage chat={chat} isMe={isMe} />
+            <ChatMessage content={chat.content} type={chat.type} id={chat.id} isMe={isMe} />
           </ChatContainer>
         );
       })}

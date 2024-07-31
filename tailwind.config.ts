@@ -8,6 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        spin: 'spin 1s linear infinite'
+      },
+      keyframes: {
+        spin: {
+          '0%': { tranform: 'rotate(0deg)' },
+          '100%': { tranform: 'rotate(360deg)' }
+        }
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
