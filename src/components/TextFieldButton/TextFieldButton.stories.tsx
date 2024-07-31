@@ -19,6 +19,5 @@ const Template: StoryFn<TextFieldButtonProps> = (args) => <TextFieldButton {...a
 export const Default = Template.bind({});
 Default.args = {
   label: 'Default Label',
-  value: '',
-  buttonTitle: 'Submit'
+  value: ''
 };

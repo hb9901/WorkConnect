@@ -9,7 +9,6 @@ export interface TextFieldButtonProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   LabelColor: 'primary200Main' | 'grey400' | 'grey700Black' | 'error' | undefined;
-  buttonTitle?: string;
   onClick?: () => void;
 }
 
