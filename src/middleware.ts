@@ -32,13 +32,6 @@ export const middleware = (request: NextRequest) => {
     return NextResponse.next();
   }
 
-  // if (pathname.startsWith('/workspace')) {
-  //   if (emailToken) {
-  //     return NextResponse.redirect(new URL(`/${userToken}`, request.url));
-  //   }
-  //   return NextResponse.next();
-  // }
-
   if (pathname === '/') {
     if (emailToken || kakaoToken0 || kakaoToken1) {
       return NextResponse.redirect(new URL(`/${userToken}`, request.url));

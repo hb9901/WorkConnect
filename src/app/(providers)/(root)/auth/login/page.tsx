@@ -6,8 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import BackButton from '../_components/BackButton';
 import { setCookie } from '../_utils/cookieUtils';
-import ArrowLeftIcon from '@/icons/ArrowLeft.svg';
-import Input from '@/components/Input';
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -65,8 +63,7 @@ const LoginPage = () => {
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
         <div className="flex w-[375px] h-[52px] pt-[14px] pb-[12px] items-center">
-          {/* <BackButton /> */}
-          <ArrowLeftIcon className="h-[24px] w-[24px]" />
+          <BackButton />
         </div>
         <h1 className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] pb-[28px] flex items-center">
           이메일로 로그인
@@ -76,14 +73,7 @@ const LoginPage = () => {
             <label className="text-[14px] text-[#2F323C] pl-[6px] pb-2" htmlFor="email">
               이메일주소
             </label>
-            {/* <Input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              id="password"
-              placeholder="이메일을 입력해주세요."
-              type="email"
-            /> */}
-            {/* <input
+            <input
               className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
               type="email"
               id="email"
@@ -91,21 +81,13 @@ const LoginPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required={true}
-            /> */}
+            />
           </div>
           <div className="flex flex-col ">
             <label className="text-[14px] text-[#2F323C] pl-[6px] pb-2" htmlFor="password">
               비밀번호
             </label>
-            <Input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              id="password"
-              placeholder="비밀번호를 입력해주세요."
-              type="password"
-              status="default"
-            />
-            {/* <input
+            <input
               className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
               type="password"
               id="password"
@@ -113,7 +95,7 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required={true}
-            /> */}
+            />
           </div>
         </div>
         <div className="flex justify-center mt-[40px]">
@@ -125,6 +107,7 @@ const LoginPage = () => {
             {loginMutation.isPending ? '로그인 중입니다...' : '로그인'}
           </button>
         </div>
+        {/* // TODO: MVP이후 비밀번호 찾기 구현  */}
         {/* <button className="text-[#333] text-center text-[12px] font-normal underline">비밀번호를 잊으셨나요?</button> */}
       </div>
     </main>
