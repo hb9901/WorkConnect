@@ -1,16 +1,26 @@
 import { type ComponentProps, useState } from 'react';
 import brokenFileImage from '/public/images/common/broken-file.png';
 import ChatImage from '../ChatImage';
+import clsx from 'clsx';
 
 const ERROR_IMAGE = brokenFileImage.src;
 
-type ChatVideoProps = ComponentProps<'video'>;
+type ChatVideoProps = ComponentProps<'video'> & { width?: number; height?: number };
 
-const ChatVideo = ({ src = '', className, ...props }: ChatVideoProps) => {
+const ChatVideo = ({ src = '', className, width, height, ...props }: ChatVideoProps) => {
   const [hasError, setHasError] = useState(false);
 
   if (!src) return null;
-  if (hasError) return <ChatImage src={ERROR_IMAGE} alt="error" width={200} height={200} className="h-auto" />;
+  if (hasError)
+    return (
+      <ChatImage
+        src={ERROR_IMAGE}
+        alt="error"
+        width={width || 200}
+        height={height || 200}
+        className={clsx('h-auto', className)}
+      />
+    );
 
   return (
     <video
@@ -19,6 +29,8 @@ const ChatVideo = ({ src = '', className, ...props }: ChatVideoProps) => {
       onError={() => setHasError(true)}
       preload="metadata"
       playsInline
+      width={width}
+      height={height}
       {...props}
     />
   );
