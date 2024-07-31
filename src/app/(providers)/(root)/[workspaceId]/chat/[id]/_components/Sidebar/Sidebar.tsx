@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ImageIcon from '@/icons/image.svg';
-import PaperclipIcon from '@/icons/Paperclip.svg';
+import PaperclipIcon from '@/icons/paperclip.svg';
 import UserIcon from '@/icons/User.svg';
 import HashIcon from '@/icons/Hash.svg';
 import ChevronRightIcon from '@/icons/ChevronRight.svg';
