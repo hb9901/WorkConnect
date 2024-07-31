@@ -64,13 +64,13 @@ const UtilsMenus = () => {
   return (
     <div className="w-full bg-white gap-2 px-4 grid grid-cols-4 pt-3 pb-[15px]">
       <FileButton title="사진" name="imageFile" accept="image/*" onChange={handleChange}>
-        <ImageIcon />
+        <ImageIcon className="text-white stroke-current" />
       </FileButton>
       <FileButton title="동영상" name="videoFile" accept="video/*" onChange={handleChange}>
-        <VideoIcon />
+        <VideoIcon className="text-white stroke-current" />
       </FileButton>
       <FileButton title="파일" name="documentFile" accept=".pdf,.doc,.docx" onChange={handleChange}>
-        <PaperClipIcon />
+        <PaperClipIcon className="text-white stroke-current" />
       </FileButton>
     </div>
   );

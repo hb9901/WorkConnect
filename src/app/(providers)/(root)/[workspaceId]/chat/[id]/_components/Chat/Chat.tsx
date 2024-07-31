@@ -6,6 +6,10 @@ import { StrictPropsWithChildren } from '@/types/common';
 import { handleDownloadFile } from '@/utils/file';
 import Image from 'next/image';
 import clsx from 'clsx';
+import brokenFileImage from '/public/images/common/broken-file.png';
+import { useState } from 'react';
+
+const ERROR_IMAGE = brokenFileImage.src;
 
 type ClassNameProps = Pick<ComponentProps<'div'>, 'className'>;
 
@@ -59,14 +63,52 @@ const ChatFile = ({ fileUrl, fileName }: { fileUrl: string; fileName: string }) 
     </button>
   );
 };
+
 const ChatVideo = ({ fileUrl }: { fileUrl: string }) => {
-  return <video src={fileUrl} className="rounded-lg" width={200} controls preload="metadata" playsInline />;
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <>
+      {hasError ? (
+        <ChatImage src={ERROR_IMAGE} />
+      ) : (
+        <video
+          src={fileUrl}
+          className="rounded-lg"
+          width={200}
+          controls
+          preload="metadata"
+          playsInline
+          onError={() => setHasError(true)}
+        />
+      )}
+    </>
+  );
+};
+
+const ChatImage = ({ src = '' }: { src: string }) => {
+  const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    // if (!!ERROR_IMAGE && e.currentTarget.src !== ERROR_IMAGE) {
+    //   e.currentTarget.src = ERROR_IMAGE;
+    // }
+  };
+
+  return (
+    <Image
+      src={src}
+      alt="image"
+      width={300}
+      height={300}
+      className="rounded-lg w-[200px] h-auto"
+      onError={handleError}
+    />
+  );
 };
 
 export const ChatMessage = ({ chat, isMe }: { chat: GetChatMessageType; isMe: boolean }) => {
   switch (chat.type) {
     case CHAT_TYPE.image:
-      return <Image src={chat.content} alt="image" width={300} height={300} className="rounded-lg w-[200px] h-auto" />;
+      return <ChatImage src={chat.content} />;
     case CHAT_TYPE.document:
       return <ChatFile fileUrl={chat.content} fileName={chat.content.split('/').pop() || ''} />;
     case CHAT_TYPE.video:
