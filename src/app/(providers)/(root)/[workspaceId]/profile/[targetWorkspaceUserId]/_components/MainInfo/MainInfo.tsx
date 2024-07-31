@@ -1,21 +1,13 @@
 import Typography from '@/components/Typography';
-import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import AvatarIcon from '@/icons/Avatar.svg';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
-import EditOrMessageButton from '../EditOrMessageButton';
 
 interface MainInfoProps {
-  isMyPage: boolean;
+  profileImg: string | null;
+  name: string | null;
 }
 
-const MainInfo = ({ isMyPage }: MainInfoProps) => {
-  const params = useParams();
-  const workspaceId = params.workspaceId as string;
-  const { workspaceUser } = useWorkspaceUser(workspaceId);
-  const profileImg = workspaceUser && workspaceUser.profile_image;
-  const name = workspaceUser && workspaceUser.name;
-
+const MainInfo = ({ profileImg, name }: MainInfoProps) => {
   return (
     <div className="flex flex-col items-center">
       {profileImg ? (
@@ -23,10 +15,10 @@ const MainInfo = ({ isMyPage }: MainInfoProps) => {
           <Image
             src={profileImg}
             alt="프로필이미지"
-            className="object-contain rounded-full"
+            className="object-cover rounded-full"
             fill
             priority
-            sizes="8rem"
+            sizes="140px"
           />
         </div>
       ) : (
@@ -45,7 +37,6 @@ const MainInfo = ({ isMyPage }: MainInfoProps) => {
           Position
         </Typography> */}
       </div>
-      <EditOrMessageButton isMyPage={isMyPage} />
     </div>
   );
 };
