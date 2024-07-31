@@ -18,8 +18,8 @@ const ProfileEditPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
   const params = useParams();
-  const workspaceId = params.workspaceId as string;
-  const { workspaceUser, updateWorkspaceUser } = useWorkspaceUser(workspaceId);
+  const workspaceUserId = params.targetWorkspaceUserId as string;
+  const { workspaceUser, updateWorkspaceUser } = useWorkspaceUser(workspaceUserId);
   const id = workspaceUser && workspaceUser.id;
   const profileImage = workspaceUser && workspaceUser.profile_image;
   const name = workspaceUser && workspaceUser.name;

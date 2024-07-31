@@ -1,12 +1,11 @@
 import Typography from '@/components/Typography';
+import useWorkspaceId from '@/hooks/useWorkspaceId';
 import HandsIcon from '@/icons/Hands.svg';
 import useUserStore from '@/store/userStore';
-import { useParams } from 'next/navigation';
 import InviteCodeButton from '../InviteCodeButton';
 
 const InviteCardWithOutMember = () => {
-  const params = useParams();
-  const workspaceId = Number(params.workspaceId as string);
+  const workspaceId = useWorkspaceId();
   const workspaceList = useUserStore((state) => state.workspaceList);
   const selectedWorkspace = workspaceList?.filter((workspace) => workspace.id === workspaceId)[0];
 

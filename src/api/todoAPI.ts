@@ -8,11 +8,11 @@ class TodoAPI {
     this.axios = axios;
   }
 
-  async getTodoList(userId: string) {
+  async getTodoList(workspaceUserId: string) {
     const path = '/api/todo';
     const response = await this.axios.get(path, {
       params: {
-        userId
+        workspaceUserId
       }
     });
     const data = response.data;

@@ -1,32 +1,18 @@
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from 'dayjs';
 
 const changeDateStr = (start: string, end: string): string => {
-  const startDate = new Date(start);
-  const endDate = new Date(end);
+  const startTime = dayjs(start).format('hh:mm');
+  const endTime = dayjs(end).format('hh:mm');
 
-  return `${startDate.getHours()}:${startDate.getMinutes()} ~ ${endDate.getHours()}:${endDate.getMinutes()}`;
+  return `${startTime} ~ ${endTime}`;
 };
 
-const isDateSelected = (
-  start: string,
-  end: string,
-  selectedDate: Dayjs
-): boolean => {
-  const startDate = new Date(start);
-  const endDate = new Date(end);
-  const year = selectedDate.year();
-  const month = selectedDate.month();
-  const day = selectedDate.date();
+const isDateSelected = (start: string, end: string, selectedDate: Dayjs): boolean => {
+  const startDate = dayjs(start).format('YYYY-MM-DD');
+  const endDate = dayjs(end).format('YYYY-MM-DD');
+  const selectedDateForm = selectedDate.format('YYYY-MM-DD');
 
-  const isSelectedDateSameStartDate =
-    startDate.getFullYear() === year &&
-    startDate.getMonth() === month &&
-    startDate.getDate() === day;
-  const isSelectedDateSameEndDate =
-    endDate.getFullYear() === year &&
-    endDate.getMonth() === month &&
-    endDate.getDate() === day;
-  return isSelectedDateSameStartDate && isSelectedDateSameEndDate;
+  return startDate === selectedDateForm && endDate === selectedDateForm;
 };
 
 export { changeDateStr, isDateSelected };
