@@ -15,6 +15,7 @@ import {
   VideoPresets
 } from 'livekit-client';
 import React from 'react';
+import DeviceMenuButton from '../../../_components/DeviceMenuButton';
 import TrackToggle from '../../../_components/TrackToggle';
 
 export interface PreJoinProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSubmit' | 'onError'> {
@@ -183,8 +184,8 @@ const CustomPrejoin = ({
   onError,
   debug,
   joinLabel = 'Join Room',
-  micLabel = 'Microphone',
-  camLabel = 'Camera',
+  micLabel = '마이크',
+  camLabel = '카메라',
   userLabel = 'Username',
   persistUserChoices = true,
   ...htmlProps
@@ -351,6 +352,9 @@ const CustomPrejoin = ({
         >
           {camLabel}
         </TrackToggle>
+        <div>
+          <DeviceMenuButton />
+        </div>
       </div>
 
       <form className="flex flex-col items-center gap-3 ">
