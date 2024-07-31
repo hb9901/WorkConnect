@@ -15,12 +15,13 @@ export const ChatContainer = ({ className, children }: StrictPropsWithChildren<C
   return <div className={clsx('flex flex-col', className)}>{children}</div>;
 };
 
-export const ChatThumbnail = ({ src = '', width, height, ...props }: StrictNextImagePropsType) => {
+export const ChatThumbnail = ({ src = '', width, height, alt = '', ...props }: StrictNextImagePropsType) => {
   return (
     <Image
       src={src}
       width={width || 50}
       height={height || 50}
+      alt={alt}
       className="rounded-full object-cover w-[32px] h-[32px]"
       unoptimized
       {...props}
