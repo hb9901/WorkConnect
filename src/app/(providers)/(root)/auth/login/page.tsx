@@ -42,12 +42,11 @@ const LoginPage = () => {
         return alert('사용자 정보가 일치하지 않습니다.');
       }
 
-      console.log(session.user.id);
-
       const { data: workspaceUserData, error: workspaceUserError } = await supabase
         .from('workspace_user')
         .select('workspace_id')
         .eq('user_id', session.user.id)
+        .order('created_at', { ascending: false })
         .limit(1)
         .single();
 
