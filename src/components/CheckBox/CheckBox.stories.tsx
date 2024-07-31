@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import CheckBox from './CheckBox';
 
 export default {
@@ -11,7 +11,7 @@ export default {
 };
 
 export const Checkbox = () => {
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = useState(false);
 
   return (
     <CheckBox
