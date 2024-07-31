@@ -6,7 +6,7 @@ import DeleteButton from '../DeleteButton';
 const Header = () => {
   const params = useParams();
   const isExist = params.id !== 'new';
-  console.log(params);
+
   return (
     <header>
       <div

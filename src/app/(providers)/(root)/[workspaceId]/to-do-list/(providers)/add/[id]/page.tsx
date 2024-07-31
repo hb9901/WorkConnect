@@ -22,7 +22,6 @@ import Header from './_components/Header';
 import InputCard from './_components/InputCard';
 import OptionCard from './_components/OptionCard';
 
-const FAKE_USER_ID = '9f144ad8-59c1-4da1-be3d-e9e1c207eddb';
 const priorityList = ['high', 'medium', 'low'];
 const statusList = ['진행 전', '진행 중', '완료'];
 type ToDoAddPageProps = {
@@ -183,7 +182,12 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
           <div className="flex flex-col mt-[6px] gap-[4px]">
             {isStatusOpen &&
               statusList.map((status) => (
-                <OptionCard option={status} selectedOption={selectedStatus} handleChange={handleChangeStatus} />
+                <OptionCard
+                  key={status}
+                  option={status}
+                  selectedOption={selectedStatus}
+                  handleChange={handleChangeStatus}
+                />
               ))}
           </div>
         </div>
@@ -222,7 +226,12 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
           <div className="flex flex-col mt-[6px] gap-[4px]">
             {isPriorityOpen &&
               priorityList.map((priority) => (
-                <OptionCard option={priority} selectedOption={selectedPriority} handleChange={handleChangePriority} />
+                <OptionCard
+                  key={priority}
+                  option={priority}
+                  selectedOption={selectedPriority}
+                  handleChange={handleChangePriority}
+                />
               ))}
           </div>
         </div>
