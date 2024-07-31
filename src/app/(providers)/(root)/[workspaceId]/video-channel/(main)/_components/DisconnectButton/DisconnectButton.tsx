@@ -11,7 +11,11 @@ export const DisconnectButton: (
   function DisconnectButton(props: DisconnectButtonProps, ref) {
     const { buttonProps } = useDisconnectButton(props);
     return (
-      <button ref={ref} {...buttonProps}>
+      <button
+        ref={ref}
+        {...buttonProps}
+        className="bg-error p-4 hover:brightness-90 text-white rounded-lg h-[33px] flex items-center justify-center "
+      >
         {props.children}
       </button>
     );

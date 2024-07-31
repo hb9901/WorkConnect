@@ -11,6 +11,7 @@ import {
 import { Track } from 'livekit-client';
 import { useEffect, useState } from 'react';
 import BottomControlBar from '../BottomControlBar';
+import VideoChannelHeader from '../VideoChannelHeader';
 
 const CustomVideoConference = () => {
   const [focusedTrack, setFocusedTrack] = useState<TrackReferenceOrPlaceholder | null>();
@@ -48,21 +49,22 @@ const CustomVideoConference = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2 h-[80vh] p-3">
-      <div className="flex p-4 h-full items-center">
-        <div className={`${focusedTrack ? 'sm:w-[80vw] m-5 lg:w-full' : 'none'} rounded-lg overflow-hidden mr-5`}>
-          {focusedTrack && <FocusLayout trackRef={focusedTrack} className="fixed left-0 " />}
+    <>
+      <VideoChannelHeader />
+      <div className="flex flex-col gap-2 h-[80vh] p-3">
+        <div className="flex p-4 h-full items-center">
+          <div className={`${focusedTrack ? 'sm:w-[80vw] m-5 lg:w-full' : 'none'} rounded-lg overflow-hidden mr-5`}>
+            {focusedTrack && <FocusLayout trackRef={focusedTrack} className="fixed left-0 " />}
+          </div>
+          <div className={`${focusedTrack ? 'hidden md:block w-[300px]' : 'w-full'} h-full bg-slate-100`}>
+            <GridLayout tracks={tracks} style={{ height: 'calc(50vh 50vw - var(--lk-control-bar-height))' }}>
+              <ParticipantTile onParticipantClick={clickFocus} />
+            </GridLayout>
+          </div>
         </div>
-        <div
-          className={`${focusedTrack ? 'hidden md:block w-[300px]' : 'w-full'} h-full bg-slate-100 fixed right-0 bottom-0`}
-        >
-          <GridLayout tracks={tracks} style={{ height: 'calc(50vh 50vw - var(--lk-control-bar-height))' }}>
-            <ParticipantTile onParticipantClick={clickFocus} />
-          </GridLayout>
-        </div>
+        <BottomControlBar controls={{ microphone: true, camera: true, screenShare: true }} variation="verbose" />
       </div>
-      <BottomControlBar controls={{ microphone: true, camera: true, screenShare: true }} variation="verbose" />
-    </div>
+    </>
   );
 };
 

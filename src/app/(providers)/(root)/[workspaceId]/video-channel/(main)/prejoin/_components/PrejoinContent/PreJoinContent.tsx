@@ -1,10 +1,11 @@
 'use client';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useStreamSetStore from '@/store/streamSetStore';
-import { LocalUserChoices } from '@livekit/components-react';
+import { LocalUserChoices, usePersistentUserChoices } from '@livekit/components-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import CustomPrejoin from '../CustomPrejoin';
+import PrejoinHeader from '../PrejoinHeader';
 
 const PreJoinContent = () => {
   const workspaceId = useWorkspaceId();
@@ -12,32 +13,32 @@ const PreJoinContent = () => {
   const room = searchParams.get('room');
 
   const router = useRouter();
-  const [userName, setUserName] = useState<string>();
-  const { preJoinChoices, setPreJoinChoices, setIsSettingOk } = useStreamSetStore();
-
+  const { setIsSettingOk } = useStreamSetStore();
+  const { userChoices } = usePersistentUserChoices();
   useEffect(() => {
-    setUserName(preJoinChoices.username);
+    setIsSettingOk(true);
   }, []);
 
   const handlePreJoinSubmit = useCallback((values: LocalUserChoices) => {
-    setPreJoinChoices(values);
-    setIsSettingOk(true);
-    router.push(`/${workspaceId}/video-channel/${room}?username=${preJoinChoices.username}`);
+    if (!userChoices.username) return alert('유저 이름을 입력해주세요.');
+    router.push(`/${workspaceId}/video-channel/${room}?username=${userChoices.username}`);
   }, []);
 
   return (
-    <div className="h-[100vh] bg-[#fff] flex items-center justify-center ">
-      <CustomPrejoin
-        joinLabel={'입장하기'}
-        userLabel={userName}
-        defaults={preJoinChoices}
-        onSubmit={handlePreJoinSubmit}
-        onValidate={(values) => {
-          return true;
-        }}
-      />
-      {/* <PreJoin/> */}
-    </div>
+    <>
+      <PrejoinHeader />
+      <div className="h-[100vh] bg-[#fff] flex flex-col  items-center justify-center ">
+        <CustomPrejoin
+          joinLabel={'입장하기'}
+          userLabel={userChoices.username}
+          defaults={userChoices}
+          onSubmit={handlePreJoinSubmit}
+          onValidate={(values) => {
+            return true;
+          }}
+        />
+      </div>
+    </>
   );
 };
 
