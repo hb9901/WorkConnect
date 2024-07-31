@@ -1,7 +1,4 @@
 'use client';
-import useShallowSelector from '@/hooks/useShallowSelector';
-import { useAuthStore } from '@/providers/AuthStoreProvider';
-import { AuthStoreTypes } from '@/store/authStore';
 import useUserStore from '@/store/userStore';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
@@ -9,17 +6,13 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import BackButton from '../_components/BackButton';
 import { setCookie } from '../_utils/cookieUtils';
-
-type UserType = {
-  user: AuthStoreTypes['user'];
-};
+import ArrowLeftIcon from '@/icons/ArrowLeft.svg';
+import Input from '@/components/Input';
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const setUserData = useUserStore((state) => state.setUserData);
-  const workspaceId = useUserStore((state) => state.workspaceId);
-  const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
   const route = useRouter();
 
   // TODO : 리팩터링 예정
@@ -72,17 +65,25 @@ const LoginPage = () => {
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
         <div className="flex w-[375px] h-[52px] pt-[14px] pb-[12px] items-center">
-          <BackButton />
+          {/* <BackButton /> */}
+          <ArrowLeftIcon className="h-[24px] w-[24px]" />
         </div>
         <h1 className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] pb-[28px] flex items-center">
           이메일로 로그인
         </h1>
         <div className="flex flex-col gap-[24px]">
           <div className="flex flex-col">
-            <label className="text-[14px] text-[#333] opacity-60 pl-[6px] pb-2" htmlFor="email">
+            <label className="text-[14px] text-[#2F323C] pl-[6px] pb-2" htmlFor="email">
               이메일주소
             </label>
-            <input
+            {/* <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              id="password"
+              placeholder="이메일을 입력해주세요."
+              type="email"
+            /> */}
+            {/* <input
               className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
               type="email"
               id="email"
@@ -90,13 +91,21 @@ const LoginPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required={true}
-            />
+            /> */}
           </div>
-          <div className="flex flex-col pb-[13px] ">
-            <label className="text-[14px] text-[#333] opacity-60 pl-[6px] pb-2" htmlFor="password">
+          <div className="flex flex-col ">
+            <label className="text-[14px] text-[#2F323C] pl-[6px] pb-2" htmlFor="password">
               비밀번호
             </label>
-            <input
+            <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              id="password"
+              placeholder="비밀번호를 입력해주세요."
+              type="password"
+              status="default"
+            />
+            {/* <input
               className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
               type="password"
               id="password"
@@ -104,10 +113,10 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required={true}
-            />
+            /> */}
           </div>
         </div>
-        <div className="flex justify-center pb-4">
+        <div className="flex justify-center mt-[40px]">
           <button
             onClick={() => emailLoginMutate()}
             className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
@@ -116,7 +125,7 @@ const LoginPage = () => {
             {loginMutation.isPending ? '로그인 중입니다...' : '로그인'}
           </button>
         </div>
-        <button className="text-[#333] text-center text-[12px] font-normal underline">비밀번호를 잊으셨나요?</button>
+        {/* <button className="text-[#333] text-center text-[12px] font-normal underline">비밀번호를 잊으셨나요?</button> */}
       </div>
     </main>
   );
