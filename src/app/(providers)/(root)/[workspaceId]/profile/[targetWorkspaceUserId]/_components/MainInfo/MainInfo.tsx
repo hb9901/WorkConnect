@@ -1,5 +1,6 @@
 import Typography from '@/components/Typography';
 import AvatarIcon from '@/icons/Avatar.svg';
+import { cva } from 'class-variance-authority';
 import Image from 'next/image';
 
 interface MainInfoProps {
@@ -10,8 +11,8 @@ interface MainInfoProps {
 const MainInfo = ({ profileImg, name }: MainInfoProps) => {
   return (
     <div className="flex flex-col items-center">
-      {profileImg ? (
-        <div className="mt-[54px] w-[140px] h-[140px] aspect-auto relative rounded-full">
+      <div className={AvatarVariants({ isImageExist: profileImg ? true : false })}>
+        {profileImg ? (
           <Image
             src={profileImg}
             alt="프로필이미지"
@@ -20,12 +21,10 @@ const MainInfo = ({ profileImg, name }: MainInfoProps) => {
             priority
             sizes="140px"
           />
-        </div>
-      ) : (
-        <div className="mt-[54px] flex items-center justify-center w-[140px] h-[140px] bg-[#BDBDBD] rounded-full">
+        ) : (
           <AvatarIcon className="w-[84px] h-[84px] bg-[#BDBDBD]" />
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="flex flex-col mt-[18px] mb-[32px] items-center gap-[8px]">
         <Typography variant="Title22px" color="grey700Black">
@@ -41,3 +40,18 @@ const MainInfo = ({ profileImg, name }: MainInfoProps) => {
 };
 
 export default MainInfo;
+
+const AvatarVariants = cva(
+  'mt-[54px] flex items-center justify-center w-[140px] h-[140px] aspect-auto relative rounded-full',
+  {
+    variants: {
+      isImageExist: {
+        true: '',
+        false: 'bg-[#BDBDBD]'
+      }
+    },
+    defaultVariants: {
+      isImageExist: false
+    }
+  }
+);
