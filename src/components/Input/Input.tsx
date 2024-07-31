@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import EyeIcon from '@/icons/Eye.svg';
+import EyeOffIcon from '@/icons/EyeOff.svg';
 
 export interface InputProps {
   type?: string;
@@ -29,10 +31,6 @@ const Input = ({
   const [isFocused, setIsFocused] = useState(false);
   const [state, setState] = useState<'default' | 'focus' | 'typing'>('default');
 
-  useEffect(() => {
-    setState(value ? 'typing' : 'default');
-  }, [value]);
-
   const handleIconClick = () => {
     if (togglePasswordVisibility === false) {
       setIsPasswordVisible((prev) => !prev);
@@ -61,6 +59,9 @@ const Input = ({
   };
 
   const renderIcon = () => {
+    if (isPasswordVisible && type === 'password') {
+      return <EyeOffIcon />;
+    }
     if (status === 'error') {
       return (
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,66 +97,11 @@ const Input = ({
       switch (state) {
         case 'focus':
           if (type === 'password') {
-            return (
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clipPath="url(#clip0)">
-                  <path
-                    d="M0.667 8C0.667 8 3.333 2.667 8 2.667C12.667 2.667 15.333 8 15.333 8C15.333 8 12.667 13.333 8 13.333C3.333 13.333 0.667 8 0.667 8Z"
-                    stroke="#2F323C"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M8 10C9.105 10 10 9.105 10 8C10 6.895 9.105 6 8 6C6.896 6 6 6.895 6 8C6 9.105 6.896 10 8 10Z"
-                    stroke="#2F323C"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0">
-                    <rect width="16" height="16" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
-            );
+            return <EyeIcon className="text-[#2F323C] stroke-current" />;
           }
         case 'typing':
           if (type === 'password') {
-            return (
-              <svg
-                onClick={handleIconClick}
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g clipPath="url(#clip0)">
-                  <path
-                    d="M0.667 8C0.667 8 3.333 2.667 8 2.667C12.667 2.667 15.333 8 15.333 8C15.333 8 12.667 13.333 8 13.333C3.333 13.333 0.667 8 0.667 8Z"
-                    stroke="#2F323C"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M8 10C9.105 10 10 9.105 10 8C10 6.895 9.105 6 8 6C6.896 6 6 6.895 6 8C6 9.105 6.896 10 8 10Z"
-                    stroke="#2F323C"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0">
-                    <rect width="16" height="16" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
-            );
+            return <EyeIcon onClick={handleIconClick} className="text-[#2F323C] stroke-current" />;
           } else {
             return (
               <svg
@@ -223,8 +169,12 @@ const Input = ({
     return 'border-grey200';
   };
 
+  useEffect(() => {
+    setState(value ? 'typing' : 'default');
+  }, [value]);
+
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative inline-flex ${className}`}>
       <input
         id={id}
         type={isPasswordVisible && type === 'password' ? 'text' : type}
