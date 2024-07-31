@@ -28,8 +28,7 @@ const MainInfo = ({ profileImg, name }: MainInfoProps) => {
       )}
 
       <div className="flex flex-col mt-[18px] mb-[32px] items-center gap-[8px]">
-        {/*title22px로 수정 필요!*/}
-        <Typography variant="Title20px" color="grey700Black">
+        <Typography variant="Title22px" color="grey700Black">
           {name}
         </Typography>{' '}
         {/*직책 넣기로 했었나요??*/}
