@@ -118,7 +118,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
       const todo = {
         title: title,
         place: placeRef.current.value,
-        user_id: workspaceUserId,
+        workspace_user_id: workspaceUserId,
         start_date: startDate,
         end_date: endDate,
         priority: selectedPriority,
