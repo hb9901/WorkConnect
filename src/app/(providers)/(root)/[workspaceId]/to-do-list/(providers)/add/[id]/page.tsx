@@ -236,7 +236,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
           </div>
         </div>
 
-        <Button theme="primary" isFullWidth={true} className="mt-[65px]" onClick={handleAdd}>
+        <Button theme="primary" isFullWidth={true} className="mt-[65px] mb-[20px]" onClick={handleAdd}>
           {params.id === 'new' ? '작성 완료' : '수정 완료'}
         </Button>
       </div>
