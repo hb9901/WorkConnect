@@ -14,11 +14,7 @@ const Template: StoryFn<ChatCardProps> = (args) => <ChatCard {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  icon: (
-    <div className="flex w-10 h-10 bg-gray-400 rounded-full items-center justify-center">
-      <span className="text-white">👤</span>
-    </div>
-  ),
+  icon: <div className="flex w-10 h-10 bg-gray-400 rounded-full items-center justify-center" />,
   name: 'Name',
   status: '🌴 휴가중',
   date: '2024-07-31',
