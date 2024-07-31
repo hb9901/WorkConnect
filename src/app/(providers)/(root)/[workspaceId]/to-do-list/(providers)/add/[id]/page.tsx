@@ -1,4 +1,5 @@
 'use client';
+import BottomSheet from '@/components/BottomSheet';
 import Button from '@/components/Button';
 import TextField from '@/components/TextField';
 import Typography from '@/components/Typography';
@@ -13,11 +14,11 @@ import FlagIcon from '@/icons/Flag.svg';
 import ListIcon from '@/icons/List.svg';
 import MapPinIcon from '@/icons/MapPin.svg';
 import useDateStore from '@/store/dateStore';
-import useTimeModalStore from '@/store/timeModalStore';
 import useUserStore from '@/store/userStore';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import DateBottom from './_components/DateBottom';
 import Header from './_components/Header';
 import InputCard from './_components/InputCard';
 import OptionCard from './_components/OptionCard';
@@ -33,7 +34,7 @@ type ToDoAddPageProps = {
 const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const { workspaceUserId } = useUserStore();
   const workspaceId = useWorkspaceId();
-  const { startTime, endTime, setTimeModalOpen, setStartTime, setEndTime, setStart, setEnd } = useTimeModalStore();
+  // const { startTime, endTime, setTimeModalOpen, setStartTime, setEndTime, setStart, setEnd } = useTimeModalStore();
   const { todoList, addTodo, updateTodo } = useTodoList(workspaceUserId);
   const selectedTodo = todoList && todoList.filter((todo) => todo.id == params.id)[0];
   const { selectedDate } = useDateStore();
@@ -42,6 +43,11 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const [selectedStatus, setSelectedStatus] = useState<string>('');
   const [isPriorityOpen, setIsPriorityOpen] = useState<boolean>(false);
   const [isStatusOpen, setIsStatusOpen] = useState<boolean>(false);
+  const [isStartTime, setIsStartTime] = useState<boolean>(true);
+  const initTime = dayjs().set('hour', 9).set('minute', 0);
+  const [startTime, setStartTime] = useState<Dayjs>(initTime);
+  const [endTime, setEndTime] = useState<Dayjs>(initTime);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
   const titleRef = useRef<HTMLInputElement>(null);
   const placeRef = useRef<HTMLInputElement>(null);
   const existTitle = selectedTodo && selectedTodo.title;
@@ -56,7 +62,6 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const router = useRouter();
 
   useEffect(() => {
-    const initTime = selectedDate.set('hour', 9).set('minute', 0);
     existStartTime ? setStartTime(existStartTime) : setStartTime(initTime);
     existEndTime ? setEndTime(existEndTime) : setEndTime(initTime);
     if (!(existPriority && existStatus && existTitle)) return;
@@ -81,14 +86,24 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     setIsStatusOpen((prev) => !prev);
   };
 
+  const handleSetStartTime = (startTime: Dayjs) => {
+    setStartTime(endTime);
+  };
+  const handleSetEndTime = (endTime: Dayjs) => {
+    setEndTime(endTime);
+  };
+
   const handleTimeClick = (isStart: boolean) => {
-    isStart ? setStart() : setEnd();
+    setIsStartTime(isStart);
     isStart ? setStartTime(dayjs(startTime)) : setEndTime(dayjs(endTime));
-    setTimeModalOpen();
+    setIsBottomSheetOpen((prev) => !prev);
   };
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
+  };
+  const handleTimeClick2 = () => {
+    setIsBottomSheetOpen((prev) => !prev);
   };
 
   const handleAdd = async () => {
@@ -240,6 +255,17 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
           {params.id === 'new' ? '작성 완료' : '수정 완료'}
         </Button>
       </div>
+
+      <BottomSheet isOpen={isBottomSheetOpen} onClose={handleTimeClick2}>
+        <DateBottom
+          isStartTime={isStartTime}
+          handleClose={handleTimeClick2}
+          startTime={startTime}
+          endTime={endTime}
+          handleSetStartTime={handleSetStartTime}
+          handleSetEndTime={handleSetEndTime}
+        />
+      </BottomSheet>
     </>
   );
 };
