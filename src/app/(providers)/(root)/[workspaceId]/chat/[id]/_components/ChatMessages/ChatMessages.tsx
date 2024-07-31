@@ -34,7 +34,7 @@ const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => 
                 <ChatOtherProfileName>{userInfo.name}</ChatOtherProfileName>
               </ChatOtherProfileContainer>
             )}
-            <ChatMessage chat={chat} isMe={isMe} />
+            <ChatMessage content={chat.content} type={chat.type} id={chat.id} isMe={isMe} />
           </ChatContainer>
         );
       })}
