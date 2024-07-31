@@ -2,14 +2,12 @@ import type { ComponentProps } from 'react';
 import Typography from '@/components/Typography';
 import { CHAT_TYPE } from '@/constants/chat';
 import { GetChatMessageType } from '@/types/chat';
-import { StrictPropsWithChildren } from '@/types/common';
+import { StrictNextImagePropsType, StrictPropsWithChildren } from '@/types/common';
 import { handleDownloadFile } from '@/utils/file';
 import Image from 'next/image';
 import clsx from 'clsx';
-import brokenFileImage from '/public/images/common/broken-file.png';
-import { useState } from 'react';
-
-const ERROR_IMAGE = brokenFileImage.src;
+import ChatImage from '../ChatImage';
+import ChatVideo from '../ChatVideo';
 
 type ClassNameProps = Pick<ComponentProps<'div'>, 'className'>;
 
@@ -17,17 +15,16 @@ export const ChatContainer = ({ className, children }: StrictPropsWithChildren<C
   return <div className={clsx('flex flex-col', className)}>{children}</div>;
 };
 
-type ChatImageProps = Required<Pick<ComponentProps<'img'>, 'src'>>;
-
-export const ChatThumbnail = ({ src = '' }: ChatImageProps) => {
+export const ChatThumbnail = ({ src = '', width, height, alt = '', ...props }: StrictNextImagePropsType) => {
   return (
     <Image
       src={src}
-      width={50}
-      height={50}
+      width={width || 50}
+      height={height || 50}
+      alt={alt}
       className="rounded-full object-cover w-[32px] h-[32px]"
-      alt=""
       unoptimized
+      {...props}
     />
   );
 };
@@ -64,55 +61,14 @@ const ChatFile = ({ fileUrl, fileName }: { fileUrl: string; fileName: string }) 
   );
 };
 
-const ChatVideo = ({ fileUrl }: { fileUrl: string }) => {
-  const [hasError, setHasError] = useState(false);
-
-  return (
-    <>
-      {hasError ? (
-        <ChatImage src={ERROR_IMAGE} />
-      ) : (
-        <video
-          src={fileUrl}
-          className="rounded-lg"
-          width={200}
-          controls
-          preload="metadata"
-          playsInline
-          onError={() => setHasError(true)}
-        />
-      )}
-    </>
-  );
-};
-
-const ChatImage = ({ src = '' }: { src: string }) => {
-  const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    // if (!!ERROR_IMAGE && e.currentTarget.src !== ERROR_IMAGE) {
-    //   e.currentTarget.src = ERROR_IMAGE;
-    // }
-  };
-
-  return (
-    <Image
-      src={src}
-      alt="image"
-      width={300}
-      height={300}
-      className="rounded-lg w-[200px] h-auto"
-      onError={handleError}
-    />
-  );
-};
-
 export const ChatMessage = ({ chat, isMe }: { chat: GetChatMessageType; isMe: boolean }) => {
   switch (chat.type) {
     case CHAT_TYPE.image:
-      return <ChatImage src={chat.content} />;
+      return <ChatImage src={chat.content} className="rounded-lg w-[200px] h-auto" width={300} height={300} />;
     case CHAT_TYPE.document:
       return <ChatFile fileUrl={chat.content} fileName={chat.content.split('/').pop() || ''} />;
     case CHAT_TYPE.video:
-      return <ChatVideo fileUrl={chat.content} />;
+      return <ChatVideo src={chat.content} className="rounded-lg" width={200} controls />;
     case CHAT_TYPE.text:
       return (
         <ChatText className={isMe ? 'rounded-tr-none bg-[#EBECFE]' : 'rounded-tl-none bg-grey50 ml-[40px] mt-[6px]'}>
