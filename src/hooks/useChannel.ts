@@ -8,7 +8,7 @@ const useChannel = ({ type, workspace_id }: Pick<ChannelType, 'type' | 'workspac
     data: channelList,
     isPending,
     isError
-  } = useQuery({
+  } = useQuery<ChannelType[]>({
     queryKey: ['channel'],
     queryFn: () => api.channel.getChannelList({ type, workspace_id })
   });
