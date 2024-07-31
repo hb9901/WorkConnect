@@ -9,8 +9,22 @@ export default {
   },
   tags: ['autodocs'],
   argTypes: {
-    onChange: { action: 'changed' },
-    onClick: { action: 'clicked' }
+    label: {
+      control: 'text',
+      description: 'Label'
+    },
+    value: {
+      control: 'text',
+      description: '입력 필드의 현재 값'
+    },
+    onChange: {
+      action: 'changed',
+      description: '입력 필드의 값이 변경될 때 호출되는 함수'
+    },
+    onClick: {
+      action: 'clicked',
+      description: '버튼이 클릭될 때 호출되는 함수'
+    }
   }
 };
 

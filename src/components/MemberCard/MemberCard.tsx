@@ -3,11 +3,11 @@ import Typography from '../Typography';
 
 export interface MemberCardProps {
   name: string;
-  position: string;
-  status: string;
+  position?: string;
+  status?: string;
   icon?: ReactNode;
   checked: boolean;
-  onToggle: () => void;
+  onToggle?: () => void;
 }
 
 export const MemberCard = ({ name, position, status, icon, checked, onToggle }: MemberCardProps) => {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-type CheckboxTheme = 'primary200' | 'grey100';
+type CheckboxTheme = 'primary' | 'grey';
 
 export interface CheckBoxProps {
   theme?: CheckboxTheme;
@@ -14,17 +14,17 @@ const grey100Checked = 'bg-grey200 fill-white';
 const grey100Unchecked = 'bg-transparent fill-grey100';
 
 const color: Record<CheckboxTheme, { checked: string; unchecked: string }> = {
-  primary200: {
+  primary: {
     checked: primary200Checked,
     unchecked: primary200Unchecked
   },
-  grey100: {
+  grey: {
     checked: grey100Checked,
     unchecked: grey100Unchecked
   }
 };
 
-export const CheckBox = ({ theme = 'primary200', children, onClick }: CheckBoxProps) => {
+export const CheckBox = ({ theme = 'primary', children, onClick }: CheckBoxProps) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const toggleCheckbox = () => {

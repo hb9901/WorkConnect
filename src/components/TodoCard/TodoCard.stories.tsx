@@ -9,12 +9,28 @@ export default {
   },
   tags: ['autodocs'],
   argTypes: {
+    title: {
+      control: 'text',
+      description: 'Todo 카드의 제목'
+    },
+    subtitle: {
+      control: 'text',
+      description: 'Todo 카드의 부제목'
+    },
     tag: {
       control: {
         type: 'select',
         options: ['high', 'medium', 'low']
       },
-      description: 'Tag를 지정합니다.'
+      description: 'Todo 카드의 우선순위를 나타내는 태그'
+    },
+    onClick: {
+      action: 'clicked',
+      description: '카드가 클릭될 때 호출되는 함수'
+    },
+    className: {
+      control: 'text',
+      description: '추가적인 CSS 클래스를 지정할 수 있음'
     }
   }
 };
