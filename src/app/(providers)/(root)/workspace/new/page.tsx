@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import BackButton from '../../auth/_components/BackButton';
+import { setCookie } from '../../auth/_utils/cookieUtils';
 
 const getRandomNumbers = (count: number, min: number, max: number) => {
   const range = Array.from({ length: max - min + 1 }, (_, i) => i + min);
@@ -81,12 +82,13 @@ const NewWorkSpacePage = () => {
         return;
       }
 
+      setCookie('userToken', String(workspaceData.id), 1);
       setUserData(user.id, workspaceData.id);
 
       // TODO : 완료 후 페이지 이동처리하기
       alert('워크스페이스 생성 완료!');
       setOrgName('');
-      route.replace(`${workspaceData.id}`);
+      route.replace(`/${workspaceData.id}`);
     }
   });
 
@@ -157,7 +159,7 @@ const NewWorkSpacePage = () => {
         <div className="flex justify-center mt-8">
           <button
             onClick={() => handleJoinMutate()}
-            className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
+            className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
             type="button"
           >
             {handleJoin.isPending ? '가입중입니다...' : '가입하기'}

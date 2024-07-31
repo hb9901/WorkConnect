@@ -9,8 +9,6 @@ export async function GET(request: Request) {
   const next = searchParams.get('next') ?? '/workspace/landing';
 
   if (code) {
-    const { data: session } = await supabase.auth.getSession();
-    console.log('session ::: ', session);
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
       return NextResponse.redirect(`${origin}${next}`);

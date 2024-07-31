@@ -128,7 +128,7 @@ const AuthVerifyPage = () => {
         <div className="flex justify-center pb-4">
           <button
             onClick={() => otpMutate()}
-            className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
+            className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
           >
             가입 완료
           </button>

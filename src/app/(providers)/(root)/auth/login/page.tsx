@@ -6,8 +6,9 @@ import useUserStore from '@/store/userStore';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useLayoutEffect, useState } from 'react';
+import { useState } from 'react';
 import BackButton from '../_components/BackButton';
+import { setCookie } from '../_utils/cookieUtils';
 
 type UserType = {
   user: AuthStoreTypes['user'];
@@ -41,6 +42,8 @@ const LoginPage = () => {
         return alert('사용자 정보가 일치하지 않습니다.');
       }
 
+      console.log(session.user.id);
+
       const { data: workspaceUserData, error: workspaceUserError } = await supabase
         .from('workspace_user')
         .select('workspace_id')
@@ -58,27 +61,13 @@ const LoginPage = () => {
         return;
       }
 
+      setCookie('userToken', String(workspaceUserData.workspace_id), 1);
       setUserData(session.user.id, workspaceUserData.workspace_id);
       route.push(`/${workspaceUserData.workspace_id}`); // TODO : 메인 홈 으로 이동
     }
   });
 
   const { mutate: emailLoginMutate } = loginMutation;
-
-  useLayoutEffect(() => {
-    const getSession = async () => {
-      const {
-        data: { session }
-      } = await supabase.auth.getSession();
-
-      if (session) {
-        route.replace(`/${workspaceId}`); // TODO : 메인 홈 화면 이동 변경
-      }
-      return;
-    };
-
-    getSession();
-  }, []);
 
   return (
     <main className="flex justify-center items-center">
@@ -122,7 +111,7 @@ const LoginPage = () => {
         <div className="flex justify-center pb-4">
           <button
             onClick={() => emailLoginMutate()}
-            className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
+            className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
             disabled={loginMutation.isPending ? true : false}
           >
             {loginMutation.isPending ? '로그인 중입니다...' : '로그인'}
