@@ -1,5 +1,4 @@
-import TabsComponent, { TabProps } from './Tabs';
-const { Tabs, Tab } = TabsComponent;
+import { Tabs, Tab, TabProps } from './Tabs';
 
 export default {
   title: 'Components/Tabs',

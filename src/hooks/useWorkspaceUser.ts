@@ -2,16 +2,18 @@ import api from '@/api/api';
 import { Tables } from '@/types/supabase';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-const FAKE_WORKSPACE_USER_ID = '9f144ad8-59c1-4da1-be3d-e9e1c207eddb';
-
-const useWorkspaceUser = () => {
+const useWorkspaceUser = (workspaceUserId: string | null) => {
   const {
     data: workspaceUser,
     isPending,
     isError
-  } = useQuery({
+  } = useQuery<Tables<'workspace_user'> | undefined>({
     queryKey: ['workspaceUser'],
-    queryFn: () => api.workspaceUser.getWorkspaceUser(FAKE_WORKSPACE_USER_ID)
+    queryFn: () => {
+      if (!workspaceUserId) return;
+      return api.workspaceUser.getWorkspaceUser(workspaceUserId);
+    },
+    enabled: !!workspaceUserId
   });
 
   const { mutateAsync: updateWorkspaceUser } = useMutation({

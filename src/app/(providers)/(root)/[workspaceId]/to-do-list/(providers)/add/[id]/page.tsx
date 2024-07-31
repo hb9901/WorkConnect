@@ -2,6 +2,7 @@
 import useTodoList from '@/hooks/useTodo';
 import useDateStore from '@/store/dateStore';
 import useTimeModalStore from '@/store/timeModalStore';
+import useUserStore from '@/store/userStore';
 import dayjs from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
 import Header from './_components/Header';
@@ -16,8 +17,9 @@ type ToDoAddPageProps = {
 };
 
 const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
+  const { workspaceUserId } = useUserStore();
   const { startTime, endTime, setTimeModalOpen, setStartTime, setEndTime, setStart, setEnd } = useTimeModalStore();
-  const { todoList, addTodo, updateTodo } = useTodoList();
+  const { todoList, addTodo, updateTodo } = useTodoList(workspaceUserId);
   const selectedTodo = todoList && todoList.filter((todo) => todo.id == params.id)[0];
   const { selectedDate } = useDateStore();
   const [selectedPriority, setSelectedPriority] = useState<string>('');
@@ -67,7 +69,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   };
 
   const handleAdd = async () => {
-    if (!titleRef.current || !placeRef.current) return;
+    if (!titleRef.current || !placeRef.current || !workspaceUserId) return;
     const startDate = selectedDate
       .set('hour', dayjs(startTime).hour())
       .set('minute', dayjs(startTime).minute())
@@ -81,7 +83,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
         id: crypto.randomUUID(),
         title: titleRef.current.value,
         place: placeRef.current.value,
-        user_id: FAKE_USER_ID,
+        workspace_user_id: workspaceUserId,
         start_date: startDate,
         end_date: endDate,
         priority: selectedPriority,

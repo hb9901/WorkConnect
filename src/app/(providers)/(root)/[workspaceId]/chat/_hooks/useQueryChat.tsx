@@ -3,11 +3,7 @@ import type { GetChatMessagesProps } from '@/types/chat';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '../_constants/constants';
 import type { GetSearchWorkspaceUsersProps } from '@/types/workspaceUser';
-import type {
-  GetChatChannelsProps,
-  GetExistingChannelIdRequestProps,
-  GetUsersInChannelRequestProps
-} from '@/types/channel';
+import type { GetChatChannelsProps, GetUsersInChannelRequestProps } from '@/types/channel';
 
 export const useGetChatChannels = ({ workspace_id, workspace_user_id }: GetChatChannelsProps) => {
   return useQuery({
@@ -35,7 +31,7 @@ export const useGetSearchWorkspaceUsers = ({ workspace_id, term, workspace_user_
 
 export const useGetUsersInChannel = ({ channel_id, workspace_user_id }: GetUsersInChannelRequestProps) => {
   return useQuery({
-    queryKey: QUERY_KEYS.USERS_IN_CHANNEL(channel_id, workspace_user_id),
+    queryKey: QUERY_KEYS.USERS_IN_CHANNEL,
     queryFn: () => api.channel.getUsersInChannel({ channel_id, workspace_user_id }),
     refetchOnWindowFocus: false
   });

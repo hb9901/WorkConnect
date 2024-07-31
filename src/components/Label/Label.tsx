@@ -10,7 +10,7 @@ type LabelProps = {
 
 const Label = ({
   htmlFor,
-  color = 'primary200Main',
+  color = 'grey700Black',
   className,
   children,
   ...props

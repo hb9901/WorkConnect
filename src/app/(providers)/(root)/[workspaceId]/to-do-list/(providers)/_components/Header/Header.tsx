@@ -1,13 +1,33 @@
 'use client';
+import Typography from '@/components/Typography';
+import useWorkspaceId from '@/hooks/useWorkspaceId';
+import useUserStore from '@/store/userStore';
+import { useRouter } from 'next/navigation';
+import { ChangeEvent } from 'react';
+import ToDoAddButton from '../ToDoAddButton';
 
 const Header = () => {
+  const workspaceList = useUserStore((state) => state.workspaceList);
+  const workspaceId = useWorkspaceId();
+  const router = useRouter();
+  const handleWorkspaceChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    router.push(`/${e.target.value}/to-do-list`);
+  };
+
+  if (!workspaceList) return;
+
   return (
-    <header>
-      <div className="grid grid-cols-3 items-center j h-10 px-4 w-full border-b-2 border-slate-200">
-        <button className="flex items-center justify-start text-sm">뒤로가기</button>
-        <div className="flex items-center justify-center font-bold text-lg">일정 관리</div>
-        <div className="flex items-center justify-end">알림??</div>
-      </div>
+    <header className="flex flex-row items-center justify-between mt-[14px] mx-[16px] mb-[12px]">
+      <Typography variant="Title20px" color="grey700Black">
+        <select defaultValue={Number(workspaceId)} className="gap-[2px]" onChange={handleWorkspaceChange}>
+          {workspaceList.map((workspace) => (
+            <option key={workspace.id} value={workspace.id}>
+              {workspace.name}
+            </option>
+          ))}
+        </select>
+      </Typography>
+      <ToDoAddButton />
     </header>
   );
 };

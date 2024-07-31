@@ -32,7 +32,7 @@ const AuthVerifyPage = () => {
 
       if (error) return alert('인증번호가 일치하지 않습니다.');
 
-      // TODO : 가입이 안됐으면 /workspace/landing페이지, 했으면 메인 페이지로 보내기
+      // TODO : 처음 회원가입 시에는 /workspace/landing페이지
       if (data) return route.push('/workspace/landing');
     }
   });
@@ -58,7 +58,7 @@ const AuthVerifyPage = () => {
       const { error } = await supabase.auth.signOut();
       if (error) return alert(`세션 제거중 에러가 발생하였습니다. : ${error.message}`);
 
-      return route.push('/auth/signup');
+      return route.push('/');
     }
   };
 
@@ -128,7 +128,7 @@ const AuthVerifyPage = () => {
         <div className="flex justify-center pb-4">
           <button
             onClick={() => otpMutate()}
-            className="w-full text-lg py-[12px] px-[22px] bg-[#333] text-white rounded-lg shadow-md"
+            className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
           >
             가입 완료
           </button>

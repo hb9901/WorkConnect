@@ -2,7 +2,7 @@ type CheckboxTheme = 'primary200' | 'grey100';
 
 export interface CheckBoxProps {
   theme: CheckboxTheme;
-  children: string;
+  children?: string;
   isChecked: boolean;
   onClick: React.MouseEventHandler<HTMLLabelElement>;
 }
