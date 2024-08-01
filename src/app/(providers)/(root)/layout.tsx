@@ -1,8 +1,12 @@
-'use client';
+import { PageLayout } from '@/components/PageLayout';
 import { StrictPropsWithChildren } from '@/types/common';
 
 const RootLayout = ({ children }: StrictPropsWithChildren) => {
-  return <>{children}</>;
+  return (
+    <PageLayout showTopBar={false} title="">
+      {children}
+    </PageLayout>
+  );
 };
 
 export default RootLayout;
