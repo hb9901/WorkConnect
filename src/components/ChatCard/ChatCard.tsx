@@ -9,10 +9,11 @@ export interface ChatCardProps {
   date: string;
   message: string;
   unreadCount?: number | undefined;
+  userCount?: number;
   pin?: boolean;
 }
 
-const ChatCard = ({ icon, name, status, date, message, unreadCount, pin, ...props }: ChatCardProps) => {
+const ChatCard = ({ icon, name, status, date, message, unreadCount, pin, userCount, ...props }: ChatCardProps) => {
   return (
     <div className="flex items-start justify-between p-4 border-b border-white bg-transparent w-full" {...props}>
       <div className="flex flex-row w-full">
@@ -27,7 +28,12 @@ const ChatCard = ({ icon, name, status, date, message, unreadCount, pin, ...prop
               color="grey200"
               className="flex flex-row gap-1 items-center justify-center"
             >
-              <span>- {status}</span>
+              {userCount && (
+                <Typography as="span" variant="Subtitle18px" color="grey300">
+                  {userCount}
+                </Typography>
+              )}
+              <span>{status && `- ${status}`}</span>
               {pin ? (
                 <svg
                   className="mt-1"
