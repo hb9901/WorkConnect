@@ -1,5 +1,6 @@
 'use client';
 import api from '@/api';
+import { PageLayout } from '@/components/PageLayout';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import useWorkspaceUserList from '@/hooks/useWorkspaceUserList';
@@ -40,22 +41,24 @@ const Homepage = () => {
   if (!(workspaceUser && workspaceList && workspaceUserList)) return;
 
   return (
-    <div>
-      <Header workspaceList={workspaceList} workspaceId={workspaceId} />
-      <main className="px-[16px] mt-[26px]">
-        <HomeMemberCard
-          profileImg={workspaceUser.profile_image}
-          name={workspaceUser.name}
-          status={workspaceUser.state}
-        />
+    <PageLayout title="" showTopBar={false}>
+      <div>
+        <Header workspaceList={workspaceList} workspaceId={workspaceId} />
+        <main className="px-[16px] mt-[26px]">
+          <HomeMemberCard
+            profileImg={workspaceUser.profile_image}
+            name={workspaceUser.name}
+            status={workspaceUser.state}
+          />
 
-        {workspaceUserList.length === 0 ? (
-          <MemberNotExistComponent />
-        ) : (
-          <MemberExistComponent workspaceUserList={workspaceUserList} />
-        )}
-      </main>
-    </div>
+          {workspaceUserList.length === 0 ? (
+            <MemberNotExistComponent />
+          ) : (
+            <MemberExistComponent workspaceUserList={workspaceUserList} />
+          )}
+        </main>
+      </div>
+    </PageLayout>
   );
 };
 
