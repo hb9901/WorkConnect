@@ -50,6 +50,7 @@ const ProfileEditPage = () => {
   const handleProfileImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
+    if (!file) return;
     setImage(file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
