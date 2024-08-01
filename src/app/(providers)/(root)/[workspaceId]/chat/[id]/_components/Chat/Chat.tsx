@@ -7,7 +7,7 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import ChatImage from '../ChatImage';
 import ChatVideo from '../ChatVideo';
-import { useDropdown } from '../../_provider/DropdownProvider';
+import { OpenContextMenuProps } from '../../_provider/ContextMenuProvider';
 
 type ClassNameProps = Pick<ComponentProps<'div'>, 'className'>;
 
@@ -41,13 +41,20 @@ export const ChatOtherProfileName = ({ children }: StrictPropsWithChildren) => {
   );
 };
 
-type ChatTextProps = ComponentProps<'div'> & ClassNameProps;
+type ChatTextProps = ComponentProps<'div'> & ClassNameProps & { isMe: boolean };
 
-const ChatText = ({ children, className, ...props }: ChatTextProps) => {
+const ChatText = ({ children, className, isMe, ...props }: ChatTextProps) => {
+  const chatTextClass = isMe ? 'rounded-tr-none bg-[#EBECFE]' : 'rounded-tl-none bg-grey50 ml-[40px] mt-[6px]';
+
   return (
-    <div className={clsx(`max-w-xs px-3 py-2 text-white rounded-[20px] whitespace-pre-wrap`, className)} {...props}>
-      <div>{children}</div>
-    </div>
+    <Typography
+      variant="Body12px"
+      className={clsx(`max-w-xs px-3 py-2 rounded-[20px] whitespace-pre-wrap`, chatTextClass)}
+      {...props}
+      color="grey700Black"
+    >
+      {children}
+    </Typography>
   );
 };
 
@@ -66,29 +73,29 @@ const ChatFile = ({ fileUrl, fileName, ...props }: ChatFileProps) => {
   );
 };
 
-const CONTEXT_BOX_HEIGHT = 175;
-
-export const ChatMessage = ({
-  content,
-  type,
-  isMe,
-  id
-}: {
+type ChatMessageProps = {
   content: string;
   type: string;
   isMe: boolean;
   id: number;
-}) => {
-  const { openDropdown, setDropdownId } = useDropdown();
+  openContextMenu: (props: Omit<OpenContextMenuProps, 'isOpen'>) => void;
+};
 
+const TOP_BAR_HEIGHT = 52;
+
+export const ChatMessage = ({ content, type, isMe, id, openContextMenu }: ChatMessageProps) => {
   const handleContextMenu = (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement | HTMLVideoElement>) => {
     event.preventDefault();
 
-    const isTop = event.clientY - CONTEXT_BOX_HEIGHT < 0;
-    const pos = window.innerHeight - event.clientY;
+    const rect = (event.target as HTMLElement).getBoundingClientRect();
 
-    openDropdown(isTop ? pos - CONTEXT_BOX_HEIGHT : pos);
-    setDropdownId(id);
+    const screenHeight = window.innerHeight;
+    const elementOffsetTop = rect.top + window.scrollY;
+
+    const pos = screenHeight - elementOffsetTop - TOP_BAR_HEIGHT - rect.height;
+    const dynamicPos = pos >= 150 ? pos : pos + rect.height;
+
+    openContextMenu({ position: dynamicPos, id, type, text: content, isMe });
   };
 
   switch (type) {
@@ -108,13 +115,8 @@ export const ChatMessage = ({
       return <ChatVideo src={content} className="rounded-lg" width={200} onContextMenu={handleContextMenu} controls />;
     case CHAT_TYPE.text:
       return (
-        <ChatText
-          className={isMe ? 'rounded-tr-none bg-[#EBECFE]' : 'rounded-tl-none bg-grey50 ml-[40px] mt-[6px]'}
-          onContextMenu={handleContextMenu}
-        >
-          <Typography variant="Body12px" color="grey700Black">
-            {content}
-          </Typography>
+        <ChatText onContextMenu={handleContextMenu} isMe={isMe}>
+          {content}
         </ChatText>
       );
     default:

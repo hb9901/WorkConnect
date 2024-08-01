@@ -2,21 +2,22 @@
 
 import { Tabs, Tab } from '@/components/Tabs';
 import type { StrictPropsWithChildren } from '@/types/common';
-import TestHeader from '../../_components/TestHeader';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { PageLayout } from '@/components/PageLayout';
+import { XIcon } from '@/icons';
 
 const ResourceLayout = ({ children }: StrictPropsWithChildren) => {
+  const router = useRouter();
   const pathname = usePathname();
   const activeTab = pathname.includes('/media') ? 0 : pathname.includes('/file') ? 1 : 2;
   const originPath = pathname.substring(0, pathname.lastIndexOf('/'));
 
   return (
-    <>
-      <TestHeader title="채팅 상대" rightButton={<button>확인</button>} />
+    <PageLayout title="대화상대" showBottomBar={false} TopBarLeftIcon1={<XIcon onClick={() => router.back()} />}>
       <Tabs>
         <Tab as={Link} href={`${originPath}/media`} active={activeTab === 0}>
-          사진&amp;동영상
+          사진&middot;동영상
         </Tab>
         <Tab as={Link} href={`${originPath}/file`} active={activeTab === 1}>
           파일
@@ -25,8 +26,9 @@ const ResourceLayout = ({ children }: StrictPropsWithChildren) => {
           공지
         </Tab>
       </Tabs>
+
       {children}
-    </>
+    </PageLayout>
   );
 };
 

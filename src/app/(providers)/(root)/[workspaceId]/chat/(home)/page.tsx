@@ -1,13 +1,10 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGetChatChannels } from '../_hooks/useQueryChat';
 import ChannelItem from './_components/ChannelItem';
-import TestHeader from '../_components/TestHeader';
 import { QUERY_KEYS } from '../_constants/constants';
-import { ChannelListContainer } from './_components/ChannelList';
 import { updateChatChannels } from './_utils/updateChatChannels';
 import { subscribeToChannels } from '../_utils/subscribe';
 import type { GetChatChannelsResponse } from '@/types/channel';
@@ -54,23 +51,11 @@ const ChatListPage = () => {
   }
 
   return (
-    <>
-      {/* <TestHeader
-        title="채팅 리스트"
-        rightButton={
-          <div className="flex items-center gap-2">
-            <Link href={`/${workspaceId}/chat/add?type=video`}>화상채팅</Link>
-            <Link href={`/${workspaceId}/chat/add?type=chat`}>채팅</Link>
-          </div>
-        }
-      /> */}
-      <div className="p-4" />
-      <ChannelListContainer>
-        {channels.map((item) => (
-          <ChannelItem key={item.channel_id} {...item} />
-        ))}
-      </ChannelListContainer>
-    </>
+    <ul>
+      {channels.map((item) => (
+        <ChannelItem key={item.channel_id} {...item} />
+      ))}
+    </ul>
   );
 };
 

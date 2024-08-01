@@ -1,5 +1,7 @@
 import { SearchWorkspaceUserType } from '@/types/workspaceUser';
 import { useSearchUsers } from '../_provider/SearchUsersProvider';
+import Image from 'next/image';
+import { XIcon } from '@/icons';
 
 type SelectedUsersProps = {
   users: SearchWorkspaceUserType[];
@@ -9,19 +11,23 @@ const SelectedUsers = ({ users }: SelectedUsersProps) => {
   const { handleRemoveUser } = useSearchUsers();
 
   return (
-    <div className="mt-4 flex flex-wrap">
+    <div className="flex flex-wrap gap-x-[10px] px-4 mb-[2px]">
       {users.map((user) => (
-        <div key={user.id} className="flex items-center border-b py-2 relative">
-          <img
+        <div key={user.id} className="flex items-center ml-[-6px] relative p-[6px]">
+          <Image
             src={user.profile_image ?? 'https://blog.kakaocdn.net/dn/bCXLP7/btrQuNirLbt/N30EKpk07InXpbReKWzde1/img.png'}
             alt={user.name}
-            className="w-10 h-10 rounded-full mr-3"
+            width={48}
+            height={48}
+            className="w-[48px] h-[48px] rounded-full object-cover"
+            unoptimized
           />
           <button
+            type="button"
             onClick={() => handleRemoveUser(user)}
-            className="absolute top-0 right-0 transform translate-x-1 -translate-y-1 text-red-500"
+            className="absolute top-0 right-0 z-10 flex items-center justify-center bg-grey50 rounded-full w-[21px] h-[21px]"
           >
-            x
+            <XIcon className="w-4 h-4" />
           </button>
         </div>
       ))}
