@@ -1,50 +1,55 @@
 'use client';
 import api from '@/api/api';
-import { userStatusList } from '@/assets/userStatusList';
-import BottomLineTextField from '@/components/BottomLineTextField';
+import Button from '@/components/Button';
+import TextFieldButton from '@/components/TextFieldButton';
+import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import AvatarIcon from '@/icons/Avatar.svg';
 import CameraIcon from '@/icons/Camera.svg';
+import useUserStore from '@/store/userStore';
 import { cva } from 'class-variance-authority';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Header from '../_components/Header';
-import Input from './_components/Input';
-import InputGroup from './_components/InputGroup';
-
-const FAKE_USER_ID = '82400d9c-fc50-426c-b8d8-0761eeb81198';
+import IsOpenInput from './_components/Input/IsOpenInput';
+import InputBottomSheet from './_components/InputBottomSheets/InputBottomSheet';
+import useInput from './_hooks/useInput';
 
 const ProfileEditPage = () => {
+  const { editInputs, name, state, email, phone, setName, setState, setEmail, setPhone } = useInput();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const userId = useUserStore((state) => state.userId);
+  const workspaceId = useWorkspaceId();
+  const router = useRouter();
   const [image, setImage] = useState<File | null>();
   const [imageURL, setImageURL] = useState<string | ArrayBuffer | null>();
-  const [test, setTest] = useState<string>('');
-  const nameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const phoneRef = useRef<HTMLInputElement>(null);
   const params = useParams();
   const workspaceUserId = params.targetWorkspaceUserId as string;
   const { workspaceUser, updateWorkspaceUser } = useWorkspaceUser(workspaceUserId);
   const profileImage = workspaceUser && workspaceUser.profile_image;
+  const workspaceName = workspaceUser && workspaceUser.name;
+  const workspaceEmail = workspaceUser && workspaceUser.email;
+  const workspacePhone = workspaceUser && workspaceUser.phone;
+  const workspaceState = workspaceUser && workspaceUser.state;
+  const workspaceIsOpen = workspaceUser && workspaceUser.is_open;
 
-  useEffect(() => {
-    setImageURL(profileImage);
-  }, [profileImage]);
-
-  if (!workspaceUser) return;
-  const id = workspaceUser.id;
-  const name = workspaceUser.name;
-  const email = workspaceUser.email;
-  const phone = workspaceUser.phone;
-  const state = workspaceUser.state;
-
-  const setEmptyStr = (category: string | null): string => {
-    if (!category) return '-';
+  const setEmptyStr = (category: string | null | undefined): string => {
+    if (!category) return '';
     else return category;
   };
 
-  const handleTestChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTest(e.target.value);
+  useEffect(() => {
+    setImageURL(profileImage);
+    setName(setEmptyStr(workspaceName));
+    setState(setEmptyStr(workspaceState));
+    setEmail(setEmptyStr(workspaceEmail));
+    setPhone(setEmptyStr(workspacePhone));
+    setIsOpen(workspaceIsOpen ? workspaceIsOpen : false);
+  }, [profileImage, workspaceName, workspaceEmail, workspacePhone, workspaceState, workspaceIsOpen]);
+
+  const handleIsOpenClick = () => {
+    setIsOpen((prev) => !prev);
   };
 
   const handleProfileImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,30 +66,41 @@ const ProfileEditPage = () => {
   };
 
   const handleEdit = async () => {
-    if (!(nameRef.current && emailRef.current && phoneRef.current && image)) return;
+    if (!(userId && workspaceId)) return;
 
-    const filename = crypto.randomUUID();
-    await api.storageProfile.postStorageProfile(image, filename);
-    const profile_image = await api.storageProfile.getStorageProfile(filename);
-
-    const workspaceUser = {
-      id,
-      user_id: FAKE_USER_ID,
-      workspace_id: 2,
-      name: nameRef.current.value,
-      email: emailRef.current.value,
-      phone: phoneRef.current.value,
-      profile_image
-    };
-    updateWorkspaceUser(workspaceUser);
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const workspaceUser = {
-      id,
-      state: e.target.value
-    };
-    updateWorkspaceUser(workspaceUser);
+    if (image) {
+      const filename = crypto.randomUUID();
+      await api.storageProfile.postStorageProfile(image, filename);
+      const profile_image = await api.storageProfile.getStorageProfile(filename);
+      const workspaceUser = {
+        id: workspaceUserId,
+        user_id: userId,
+        workspace_id: workspaceId,
+        name,
+        email,
+        phone,
+        state,
+        is_open: isOpen,
+        profile_image
+      };
+      await updateWorkspaceUser(workspaceUser);
+      router.push(`/${workspaceId}/profile/${workspaceUserId}`);
+      return;
+    } else {
+      const workspaceUser = {
+        id: workspaceUserId,
+        user_id: userId,
+        workspace_id: workspaceId,
+        name,
+        email,
+        phone,
+        is_open: isOpen,
+        state
+      };
+      await updateWorkspaceUser(workspaceUser);
+      router.push(`/${workspaceId}/profile/${workspaceUserId}`);
+      return;
+    }
   };
 
   return (
@@ -114,35 +130,27 @@ const ProfileEditPage = () => {
             </button>
           </div>
           <input id="profile" type="file" accept="image/*" onChange={handleProfileImageChange} className="hidden" />
-
-          <BottomLineTextField
-            LabelColor="grey700Black"
-            label="이름"
-            children=""
-            id="1"
-            onChange={handleTestChange}
-          ></BottomLineTextField>
-
-          <div className="flex flex-col w-full">
-            <InputGroup title="개인 정보">
-              <Input label="성명" defaultValue={name} ref={nameRef} />
-              <select className="text-sm" defaultValue={setEmptyStr(state)} onChange={handleChange}>
-                {userStatusList.map((userstatus, index) => (
-                  <option key={index} value={userstatus}>
-                    {userstatus}
-                  </option>
-                ))}
-              </select>
-            </InputGroup>
-            <InputGroup title="연락처">
-              <Input label="이메일" defaultValue={setEmptyStr(email)} ref={emailRef} />
-              <Input label="전화번호" defaultValue={setEmptyStr(phone)} ref={phoneRef} />
-            </InputGroup>
+          <div className="flex flex-col w-full gap-[12px] mb-[30px]">
+            {editInputs.map((editInput) => (
+              <TextFieldButton
+                key={editInput.label}
+                LabelColor="grey400"
+                label={editInput.label}
+                value={editInput.value}
+                onClick={() => editInput.onClick(editInput.value)}
+              />
+            ))}
+            <IsOpenInput isOpen={isOpen} handleIsOpenClick={handleIsOpenClick} />
           </div>
-
-          <button onClick={handleEdit}>수정하기</button>
+          <Button theme="primary" isFullWidth onClick={handleEdit}>
+            수정하기
+          </Button>
         </div>
       </main>
+
+      {editInputs.map((editInput) => (
+        <InputBottomSheet editInput={editInput} key={editInput.label} />
+      ))}
     </div>
   );
 };
