@@ -5,13 +5,8 @@ import { TopBar, TopBarProps } from '../TopBar';
 type PageLayoutProps = {
   showTopBar?: boolean;
   showBottomBar?: boolean;
-  topBarProps?: TopBarProps;
-  title: string;
-} & StrictPropsWithChildren;
-
-export const LayoutContainer = ({ children }: StrictPropsWithChildren) => {
-  return <div>{children}</div>;
-};
+} & StrictPropsWithChildren &
+  TopBarProps;
 
 export const PageLayout = ({
   children,
