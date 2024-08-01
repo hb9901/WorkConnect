@@ -55,7 +55,7 @@ const ChatListPage = () => {
 
   return (
     <>
-      <TestHeader
+      {/* <TestHeader
         title="채팅 리스트"
         rightButton={
           <div className="flex items-center gap-2">
@@ -63,7 +63,7 @@ const ChatListPage = () => {
             <Link href={`/${workspaceId}/chat/add?type=chat`}>채팅</Link>
           </div>
         }
-      />
+      /> */}
       <div className="p-4" />
       <ChannelListContainer>
         {channels.map((item) => (

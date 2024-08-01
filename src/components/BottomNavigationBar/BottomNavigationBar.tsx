@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { NavigationBar, Tab } from '../NavigationBar/NavigationBar';
 
-const BottomNavigationBar = () => {
+const BottomNavigationBar = ({ className }: { className?: string }) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const handleClick = (index: number) => {
@@ -17,7 +17,7 @@ const BottomNavigationBar = () => {
   };
 
   return (
-    <div>
+    <div className={className}>
       <NavigationBar>
         <Tab active={activeIndex === 0} onClick={() => handleClick(0)}>
           <Link href="/">
