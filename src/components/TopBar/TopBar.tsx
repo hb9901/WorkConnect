@@ -2,6 +2,7 @@ import { useRouter } from 'next/navigation';
 import Typography from '../Typography';
 import { ArrowLeftIcon } from '@/icons';
 import type { ComponentProps, ReactNode } from 'react';
+import clsx from 'clsx';
 
 export const BackButton = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ export const BackButton = () => {
   );
 };
 
-type TopBarProps = {
+export type TopBarProps = {
   LeftIcon1?: ReactNode;
   LeftIcon2?: ReactNode;
   RightIcon1?: ReactNode;
@@ -21,11 +22,14 @@ type TopBarProps = {
   title: string;
 } & ComponentProps<'header'>;
 
-export const TopBar = ({ LeftIcon1, LeftIcon2, RightIcon1, RightIcon2, title, ...props }: TopBarProps) => {
+export const TopBar = ({ LeftIcon1, LeftIcon2, RightIcon1, RightIcon2, title, className, ...props }: TopBarProps) => {
   return (
-    <header className="flex items-center justify-between h-[52px] px-4 gap-x-4 bg-white z-10" {...props}>
+    <header
+      className={clsx('flex items-center justify-between h-[52px] px-4 gap-x-4 bg-white z-10', className)}
+      {...props}
+    >
       <div className="flex items-center gap-x-4 w-[62px]">
-        {LeftIcon1}
+        {LeftIcon1 || <BackButton />}
         {LeftIcon2}
       </div>
       <Typography as="h1" variant="Title20px" color="grey900" className="flex-1 text-center">

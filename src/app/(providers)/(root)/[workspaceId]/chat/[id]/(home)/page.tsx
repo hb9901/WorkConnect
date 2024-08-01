@@ -16,14 +16,14 @@ const ChatDetailPage = () => {
 
   return (
     <div className="h-dvh flex flex-col overflow-hidden">
-      <TestHeader
+      {/* <TestHeader
         title="채팅 상세"
         rightButton={
           <button type="button" onClick={handleOpenSidebar}>
             <MenuIcon />
           </button>
         }
-      />
+      /> */}
       <ChatDetail />
       <div
         className={`w-full h-full bg-[#333] z-20 fixed top-0 left-0 transition-opacity duration-300 ${isOpenSidebar ? 'opacity-70' : 'opacity-0 pointer-events-none'}`}
