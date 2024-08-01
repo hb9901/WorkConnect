@@ -85,10 +85,9 @@ const NewWorkSpacePage = () => {
       setCookie('userToken', String(workspaceData.id), 1);
       setUserData(user.id, workspaceData.id);
 
-      // TODO : 완료 후 페이지 이동처리하기
-      alert('워크스페이스 생성 완료!');
+      // TODO : 생성 완료 후 페이지 이동처리하기
       setOrgName('');
-      route.replace(`/${workspaceData.id}`);
+      route.replace('/welcome');
     }
   });
 
@@ -101,8 +100,6 @@ const NewWorkSpacePage = () => {
       } = await supabase.auth.getUser();
 
       if (!user) {
-        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-        route.push('/');
         return;
       }
 
@@ -113,12 +110,14 @@ const NewWorkSpacePage = () => {
         .single();
 
       if (workspaceUserError) {
-        console.log(`워크스페이스 유저를 가져오는 중 오류가 발생했습니다. : ${workspaceUserError}`);
+        alert(`워크스페이스 유저를 가져오는 중 오류가 발생했습니다. : ${workspaceUserError}`);
+        route.replace('/');
         return;
       }
 
       if (!workspaceUserData) {
         alert('해당 유저는 워크스페이스에 속해있지 않습니다.');
+        route.replace('/');
         return;
       }
 
@@ -137,34 +136,35 @@ const NewWorkSpacePage = () => {
             새 워크스페이스 만들기
           </strong>
         </div>
-        <strong className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] pb-[28px] flex items-center">
+        <strong className="text-[20px] text-[#2E2E2E] font-semibold mt-[42px] mb-[28px] flex items-center">
           계정 정보 입력
         </strong>
-        <div className="flex flex-col gap-[24px]">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleJoinMutate();
+          }}
+        >
           <div className="flex flex-col">
-            <label className="text-[14px] text-[#333] opacity-60 pl-[6px] pb-2" htmlFor="email">
+            <label className="text-[14px] text-[#333] opacity-60 pl-[6px]" htmlFor="email">
               조직이름
             </label>
             <input
-              className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
+              className="py-[12px] px-[16px] mt-2 mb-4 rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
               type="text"
-              placeholder="회사, 단체, 조직 이름 입력."
+              placeholder="회사, 단체, 조직 이름을 입력해 주세요"
               value={orgName}
               onChange={(e) => setOrgName(e.target.value)}
               maxLength={20}
               required={true}
             />
           </div>
-        </div>
-        <div className="flex justify-center mt-8">
-          <button
-            onClick={() => handleJoinMutate()}
-            className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
-            type="button"
-          >
-            {handleJoin.isPending ? '가입중입니다...' : '가입하기'}
-          </button>
-        </div>
+          <div className="flex justify-center">
+            <button className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md">
+              {handleJoin.isPending ? '가입중입니다...' : '가입하기'}
+            </button>
+          </div>
+        </form>
       </div>
     </main>
   );

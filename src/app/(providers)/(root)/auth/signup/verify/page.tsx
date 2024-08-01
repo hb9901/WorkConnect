@@ -2,7 +2,7 @@
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import BackButton from '../../_components/BackButton';
 
 const AuthVerifyPage = () => {
@@ -64,7 +64,7 @@ const AuthVerifyPage = () => {
 
   const { mutate: otpMutate } = otpMutation;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const emailFromQuery = query.get('email');
     setEmail(emailFromQuery || '');
@@ -73,17 +73,18 @@ const AuthVerifyPage = () => {
   return (
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
-        <div className="flex w-[375px] h-[52px] pt-[14px] pb-[12px] items-center">
+        <div className="flex pt-[14px] pb-[12px] items-center">
           <BackButton />
         </div>
         <div className="flex-grow">
-          <h1 className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] pb-[28px] flex items-center">
+          <h1 className="text-[20px] text-[#2F323C] font-semibold mt-[32px] mb-[16px] flex items-center">
             인증 코드 입력
           </h1>
-          <p className="text-[16px] text-[#333] font-normal pb-[12px]">
-            이메일로 전송된 6자리 인증 코드를 입력 후 [가입 완료] 버튼을 클릭해주세요.
-          </p>
-          <div className="flex justify-between gap-2">
+          <div className="flex flex-col gap-[12px] mb-[12px] text-[16px] text-[#5C6275]">
+            <p>({email})으로 인증코드를 전송하였습니다.</p>
+            <p>이메일에 있는 인증코드를 입력해 주세요.</p>
+          </div>
+          <div className="flex justify-between gap-2 mb-4">
             <input
               type="text"
               maxLength={1}
@@ -121,11 +122,14 @@ const AuthVerifyPage = () => {
               className="border-[1px] border-[#333] rounded-lg text-center flex-grow w-full h-16 text-lg"
             />
           </div>
-          <button onClick={resendOtp} className="text-[12px] text-[#333] font-normal underline pb-7 mt-4">
-            인증번호 재전송
-          </button>
+          <div className="text-[12px] text-[#464A59] flex items-center">
+            <span className="mr-[10px]">이메일을 받지 못하셨나요?</span>
+            <button onClick={resendOtp} className="underline">
+              인증 코드 재전송
+            </button>
+          </div>
         </div>
-        <div className="flex justify-center pb-4">
+        <div className="flex justify-center">
           <button
             onClick={() => otpMutate()}
             className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
@@ -133,9 +137,9 @@ const AuthVerifyPage = () => {
             가입 완료
           </button>
         </div>
-        <button onClick={resetToStart} className="text-[#333] text-center text-[12px] font-normal underline pb-7">
-          처음부터 다시 하기
-        </button>
+        <div className="text-[#2F323C] text-center text-[14px] my-3">
+          <button onClick={resetToStart}>처음부터 다시 하기</button>
+        </div>
       </div>
     </main>
   );
