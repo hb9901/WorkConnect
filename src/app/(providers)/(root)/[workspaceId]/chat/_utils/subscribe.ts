@@ -34,14 +34,14 @@ export const subscribeToChannels =
   };
 
 type SubscribeToChatProps = {
-  handleInserts: (payload: any) => void;
+  handleChatUpdates: (payload: any) => void;
   handleUserUpdates: () => void;
   id: string;
   userIds: string;
 };
 
 export const subscribeToChat =
-  ({ handleInserts, handleUserUpdates, id, userIds }: SubscribeToChatProps) =>
+  ({ handleChatUpdates, handleUserUpdates, id, userIds }: SubscribeToChatProps) =>
   () => {
     if (!userIds) return;
 
@@ -49,11 +49,11 @@ export const subscribeToChat =
       channelName: `chat_${id}`,
       eventHandlers: [
         {
-          event: 'INSERT',
+          event: '*',
           schema: 'public',
           table: 'chat',
           filter: `channel_id=eq.${id}`,
-          handler: handleInserts
+          handler: handleChatUpdates
         },
         {
           event: 'UPDATE',
