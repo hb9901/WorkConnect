@@ -1,16 +1,22 @@
 import Typography from '@/components/Typography';
 import AvatarIcon from '@/icons/Avatar.svg';
+import Image from 'next/image';
 
 interface HomeMemberCardProps {
+  profileImg: string | null;
   name: string;
   status: string | null;
 }
 
-const HomeMemberCard = ({ name, status }: HomeMemberCardProps) => {
+const HomeMemberCard = ({ profileImg, name, status }: HomeMemberCardProps) => {
   return (
     <div className="flex flex-row gap-[16px] items-center">
       <div className="flex items-center justify-center size-[56px] rounded-full bg-[#BDBDBD]">
-        <AvatarIcon className="size-[33.6px]" />
+        {profileImg ? (
+          <Image src={profileImg} alt={name} className="object-cover size-[56px] rounded-full" fill priority />
+        ) : (
+          <AvatarIcon className="size-[33.6px]" />
+        )}
       </div>
       <div className="flex flex-col gap-[4px]">
         <div>
