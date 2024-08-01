@@ -1,3 +1,4 @@
+'use client';
 import Button from '@/components/Button';
 import Typography from '@/components/Typography';
 import SpeakerIcon from '@/icons/Volume2.svg';
@@ -17,6 +18,7 @@ const DeviceMenu = ({ onClose }: DeviceMenueProps) => {
     setAudioOutputDevice(deviceId);
     setSelectedDeviceId(deviceId);
   };
+  console.log(devices);
   return (
     <div>
       <Typography variant="Title18px" color="grey700Black">

@@ -56,7 +56,7 @@ const CustomVideoConference = () => {
           <div className={`${focusedTrack ? 'sm:w-[full] m-5' : 'none'} rounded-lg overflow-hidden mr-5`}>
             {focusedTrack && <FocusLayout trackRef={focusedTrack} className="fixed left-0 " />}
           </div>
-          <div className={`${focusedTrack ? 'hidden md:block w-[300px]' : 'w-full'} h-full bg-slate-100`}>
+          <div className={`${focusedTrack ? 'hidden md:block w-[300px]' : 'w-full'} h-full`}>
             <GridLayout tracks={tracks} style={{ height: 'calc(50vh 50vw - var(--lk-control-bar-height))' }}>
               <ParticipantTile onParticipantClick={clickFocus} />
             </GridLayout>
