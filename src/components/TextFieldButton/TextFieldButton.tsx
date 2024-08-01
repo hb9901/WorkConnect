@@ -24,7 +24,7 @@ const TextFieldButton = ({
   ...props
 }: TextFieldButtonProps) => {
   return (
-    <button className="relative flex flex-col cursor-pointer w-full" {...props}>
+    <button className="relative flex flex-col cursor-pointer w-full" {...props} onClick={onClick}>
       {label && (
         <Typography variant="Body14px" color="grey400" className="mb-2">
           {label}
