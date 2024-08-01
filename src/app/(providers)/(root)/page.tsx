@@ -25,7 +25,7 @@ const mockData = [
 // TODO : 리팩터링 예정
 const LandingPage = () => {
   return (
-    <main className="flex justify-center items-center">
+    <main className="relative flex justify-center items-center">
       <div className="w-[375px] h-dvh flex flex-col">
         <div className="flex-grow px-4 flex items-center">
           <Swiper

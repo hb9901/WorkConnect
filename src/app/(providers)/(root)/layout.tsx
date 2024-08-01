@@ -5,6 +5,7 @@ import useUserStore from '@/store/userStore';
 import { StrictPropsWithChildren } from '@/types/common';
 import { useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow';
+import SplashPage from './_components/splash/SplashPage';
 
 const RootLayout = ({ children }: StrictPropsWithChildren) => {
   const workspaceId = useWorkspaceId();
@@ -25,7 +26,12 @@ const RootLayout = ({ children }: StrictPropsWithChildren) => {
     const workspaceList = data.workspaceListData;
     setWorkspaceData(workspaceUserId, workspaceList);
   };
-  return <>{children}</>;
+  return (
+    <>
+      <SplashPage />
+      {children}
+    </>
+  );
 };
 
 export default RootLayout;

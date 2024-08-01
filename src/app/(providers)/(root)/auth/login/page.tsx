@@ -53,7 +53,7 @@ const LoginPage = () => {
 
       setCookie('userToken', String(workspaceUserData.workspace_id), 1);
       setUserData(session.user.id, workspaceUserData.workspace_id);
-      route.push(`/${workspaceUserData.workspace_id}`); // TODO : 메인 홈 으로 이동
+      route.replace(`/${workspaceUserData.workspace_id}`); // TODO : 메인 홈 으로 이동
     }
   });
 
@@ -68,45 +68,51 @@ const LoginPage = () => {
         <h1 className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] pb-[28px] flex items-center">
           이메일로 로그인
         </h1>
-        <div className="flex flex-col gap-[24px]">
-          <div className="flex flex-col">
-            <label className="text-[14px] text-[#2F323C] pl-[6px] pb-2" htmlFor="email">
-              이메일주소
-            </label>
-            <input
-              className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
-              type="email"
-              id="email"
-              placeholder="이메일을 입력해주세요."
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required={true}
-            />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            emailLoginMutate();
+          }}
+        >
+          <div className="flex flex-col gap-[24px]">
+            <div className="flex flex-col">
+              <label className="text-[14px] text-[#2F323C] pl-[6px] pb-2" htmlFor="email">
+                이메일주소
+              </label>
+              <input
+                className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
+                type="email"
+                id="email"
+                placeholder="이메일을 입력해주세요."
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required={true}
+              />
+            </div>
+            <div className="flex flex-col ">
+              <label className="text-[14px] text-[#2F323C] pl-[6px] pb-2" htmlFor="password">
+                비밀번호
+              </label>
+              <input
+                className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
+                type="password"
+                id="password"
+                placeholder="비밀번호를 입력해주세요."
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required={true}
+              />
+            </div>
           </div>
-          <div className="flex flex-col ">
-            <label className="text-[14px] text-[#2F323C] pl-[6px] pb-2" htmlFor="password">
-              비밀번호
-            </label>
-            <input
-              className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
-              type="password"
-              id="password"
-              placeholder="비밀번호를 입력해주세요."
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required={true}
-            />
+          <div className="flex justify-center mt-[40px]">
+            <button
+              className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
+              disabled={loginMutation.isPending ? true : false}
+            >
+              {loginMutation.isPending ? '로그인 중입니다...' : '로그인'}
+            </button>
           </div>
-        </div>
-        <div className="flex justify-center mt-[40px]">
-          <button
-            onClick={() => emailLoginMutate()}
-            className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
-            disabled={loginMutation.isPending ? true : false}
-          >
-            {loginMutation.isPending ? '로그인 중입니다...' : '로그인'}
-          </button>
-        </div>
+        </form>
         {/* // TODO: MVP이후 비밀번호 찾기 구현  */}
         {/* <button className="text-[#333] text-center text-[12px] font-normal underline">비밀번호를 잊으셨나요?</button> */}
       </div>
