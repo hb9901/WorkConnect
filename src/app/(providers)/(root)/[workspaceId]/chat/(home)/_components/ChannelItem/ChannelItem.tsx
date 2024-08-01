@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ComponentProps } from 'react';
 import Image from 'next/image';
 import { AirPlayIcon } from '@/icons';
+import dayjs from 'dayjs';
 
 type ChannelListImageProps = Required<Pick<ComponentProps<'img'>, 'src'>> & {
   type: keyof typeof CHANNEL_TYPE;
@@ -20,7 +21,8 @@ const ChannelItem = ({
   user_count,
   is_dm,
   channel_id,
-  type
+  type,
+  created_at
 }: GetChatChannelsResponse) => {
   const workspaceId = useWorkspaceId();
   const href =
@@ -29,7 +31,7 @@ const ChannelItem = ({
   return (
     <Link href={href}>
       <ChatCard
-        date="2024-07-31"
+        date={dayjs(created_at).format('YYYY-MM-DD')}
         icon={
           <ChannelImage
             type={type}

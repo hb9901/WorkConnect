@@ -34,6 +34,7 @@ export type GetChatChannelsResponse = {
   is_dm: boolean;
   user_count: number;
   type: ChannelType['type'];
+  created_at: string;
 };
 
 export type GetUsersInChannelRequestProps = {
