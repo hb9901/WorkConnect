@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import EyeIcon from '@/icons/Eye.svg';
-import EyeOffIcon from '@/icons/EyeOff.svg';
+import React, { useEffect, useRef, useState } from 'react';
 
 export interface InputProps {
   type?: string;
@@ -8,7 +6,7 @@ export interface InputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
-  id: string;
+  id?: string;
   status?: 'default' | 'error' | 'success';
   togglePasswordVisibility?: boolean;
   onFocus?: () => void;
@@ -30,6 +28,11 @@ const Input = ({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [state, setState] = useState<'default' | 'focus' | 'typing'>('default');
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    setState(value ? 'typing' : 'default');
+  }, [value]);
 
   const handleIconClick = () => {
     if (togglePasswordVisibility === false) {
@@ -38,8 +41,9 @@ const Input = ({
   };
 
   const handleFocus = () => {
-    setIsFocused(true);
-    setState('focus');
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   };
 
   const handleBlur = () => {
@@ -59,9 +63,6 @@ const Input = ({
   };
 
   const renderIcon = () => {
-    if (isPasswordVisible && type === 'password') {
-      return <EyeOffIcon />;
-    }
     if (status === 'error') {
       return (
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -97,11 +98,66 @@ const Input = ({
       switch (state) {
         case 'focus':
           if (type === 'password') {
-            return <EyeIcon className="text-[#2F323C] stroke-current" />;
+            return (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clipPath="url(#clip0)">
+                  <path
+                    d="M0.667 8C0.667 8 3.333 2.667 8 2.667C12.667 2.667 15.333 8 15.333 8C15.333 8 12.667 13.333 8 13.333C3.333 13.333 0.667 8 0.667 8Z"
+                    stroke="#2F323C"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M8 10C9.105 10 10 9.105 10 8C10 6.895 9.105 6 8 6C6.896 6 6 6.895 6 8C6 9.105 6.896 10 8 10Z"
+                    stroke="#2F323C"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            );
           }
         case 'typing':
           if (type === 'password') {
-            return <EyeIcon onClick={handleIconClick} className="text-[#2F323C] stroke-current" />;
+            return (
+              <svg
+                onClick={handleIconClick}
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clipPath="url(#clip0)">
+                  <path
+                    d="M0.667 8C0.667 8 3.333 2.667 8 2.667C12.667 2.667 15.333 8 15.333 8C15.333 8 12.667 13.333 8 13.333C3.333 13.333 0.667 8 0.667 8Z"
+                    stroke="#2F323C"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M8 10C9.105 10 10 9.105 10 8C10 6.895 9.105 6 8 6C6.896 6 6 6.895 6 8C6 9.105 6.896 10 8 10Z"
+                    stroke="#2F323C"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            );
           } else {
             return (
               <svg
@@ -169,12 +225,8 @@ const Input = ({
     return 'border-grey200';
   };
 
-  useEffect(() => {
-    setState(value ? 'typing' : 'default');
-  }, [value]);
-
   return (
-    <div className={`relative inline-flex ${className}`}>
+    <div className={`relative ${className}`}>
       <input
         id={id}
         type={isPasswordVisible && type === 'password' ? 'text' : type}
@@ -182,7 +234,8 @@ const Input = ({
         onChange={onChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className={`px-[16px] py-[12px] pr-[40px] border rounded-lg shadow-md focus:outline-none text-[16px] ${getBorderClass()}`}
+        ref={inputRef}
+        className={`px-[16px] py-[12px] pr-[40px] border rounded-lg shadow-md focus:outline-none text-[16px] w-full ${getBorderClass()}`}
         {...props}
       />
       <span className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer">{renderIcon()}</span>
