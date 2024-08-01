@@ -6,3 +6,4 @@ export { default as XIcon } from '@/icons/X.svg';
 export { default as CheckIcon } from '@/icons/Check.svg';
 export { default as MenuIcon } from '@/icons/menu.svg';
 export { default as AirPlayIcon } from '@/icons/AirPlayIcon.svg';
+export { default as CheckCircleIcon } from '@/icons/CheckCircle.svg';
