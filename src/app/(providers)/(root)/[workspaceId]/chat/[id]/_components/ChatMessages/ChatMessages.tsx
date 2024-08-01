@@ -13,6 +13,8 @@ type ChatMessagesProps = {
 // TODO: video onLoad event 가 있으면 모두 다 로딩된 후에 스크롤을 가장 아래로 내리도록 수정
 
 const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
+  if (Object.keys(usersInChannel).length === 0) return null;
+
   return (
     <>
       {data.map((chat) => {
