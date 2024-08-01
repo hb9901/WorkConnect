@@ -3,7 +3,6 @@ import { LocalUserChoices, useMediaDevices, usePersistentUserChoices } from '@li
 
 import Button from '@/components/Button';
 import PersonFilledIcon from '@/icons/PersonFilled.svg';
-import useStreamSetStore from '@/store/streamSetStore';
 import type { CreateLocalTracksOptions, LocalAudioTrack, LocalTrack, LocalVideoTrack } from 'livekit-client';
 import {
   createLocalAudioTrack,
@@ -191,7 +190,6 @@ const CustomPrejoin = ({
   ...htmlProps
 }: PreJoinProps) => {
   const [userChoices, setUserChoices] = React.useState(defaultUserChoices);
-  const { setPreJoinChoices } = useStreamSetStore();
 
   // TODO: Remove and pipe `defaults` object directly into `usePersistentUserChoices` once we fully switch from type `LocalUserChoices` to `UserChoices`.
   const partialDefaults: Partial<LocalUserChoices> = {

@@ -19,7 +19,7 @@ const DeviceMenuButton = () => {
         </Typography>
       </button>
       <BottomSheet isOpen={isOpen} onClose={handleClose}>
-        <DeviceMenu />
+        <DeviceMenu onClose={handleClose} />
       </BottomSheet>
     </>
   );

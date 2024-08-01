@@ -90,7 +90,7 @@ const BottomControlBar = ({ variation, controls, saveUserChoices = true, ...prop
   );
 
   return (
-    <div className="flex border-t-2  justify-between mx-4 p-4 fixed bottom-1 right-0 left-0  bg-white w-[100vw] ">
+    <div className="flex border-t-2  justify-between mx-4 p-4 fixed bottom-1 bg-white w-[100vw] ">
       {visibleControls.microphone && (
         <div className="">
           <TrackToggle source={Track.Source.Microphone} showIcon={showIcon} onChange={microphoneOnChange}></TrackToggle>

@@ -8,6 +8,7 @@ interface Device {
 
 const useAudioOutput = () => {
   const [devices, setDevices] = useState<Device[]>([]);
+  const [isMuted, setIsMuted] = useState(false);
   const audioRef: RefObject<HTMLAudioElement> = useRef(null);
 
   useEffect(() => {
@@ -37,7 +38,14 @@ const useAudioOutput = () => {
     }
   };
 
-  return { audioRef, devices, setAudioOutputDevice };
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !audioRef.current.muted;
+      setIsMuted(audioRef.current.muted);
+    }
+  };
+
+  return { audioRef, devices, setAudioOutputDevice, toggleMute, isMuted };
 };
 
 export default useAudioOutput;
