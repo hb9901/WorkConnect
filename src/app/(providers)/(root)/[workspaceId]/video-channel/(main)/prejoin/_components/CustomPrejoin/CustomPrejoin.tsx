@@ -1,9 +1,9 @@
+'use client';
 import { defaultUserChoices, log } from '@livekit/components-core';
 import { LocalUserChoices, useMediaDevices, usePersistentUserChoices } from '@livekit/components-react';
 
 import Button from '@/components/Button';
 import PersonFilledIcon from '@/icons/PersonFilled.svg';
-import useStreamSetStore from '@/store/streamSetStore';
 import type { CreateLocalTracksOptions, LocalAudioTrack, LocalTrack, LocalVideoTrack } from 'livekit-client';
 import {
   createLocalAudioTrack,
@@ -15,6 +15,7 @@ import {
   VideoPresets
 } from 'livekit-client';
 import React from 'react';
+import DeviceMenuButton from '../../../_components/DeviceMenuButton';
 import TrackToggle from '../../../_components/TrackToggle';
 
 export interface PreJoinProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSubmit' | 'onError'> {
@@ -183,14 +184,13 @@ const CustomPrejoin = ({
   onError,
   debug,
   joinLabel = 'Join Room',
-  micLabel = 'Microphone',
-  camLabel = 'Camera',
+  micLabel = '마이크',
+  camLabel = '카메라',
   userLabel = 'Username',
   persistUserChoices = true,
   ...htmlProps
 }: PreJoinProps) => {
   const [userChoices, setUserChoices] = React.useState(defaultUserChoices);
-  const { setPreJoinChoices } = useStreamSetStore();
 
   // TODO: Remove and pipe `defaults` object directly into `usePersistentUserChoices` once we fully switch from type `LocalUserChoices` to `UserChoices`.
   const partialDefaults: Partial<LocalUserChoices> = {
@@ -351,6 +351,9 @@ const CustomPrejoin = ({
         >
           {camLabel}
         </TrackToggle>
+        <div>
+          <DeviceMenuButton />
+        </div>
       </div>
 
       <form className="flex flex-col items-center gap-3 ">
