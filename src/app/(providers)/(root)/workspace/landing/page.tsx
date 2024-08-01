@@ -53,8 +53,7 @@ const InviteCodePage = () => {
 
       // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
       setInviteCode('');
-      alert('초대코드 입력이 완료되었습니다.');
-      route.replace(`/${workspaceData.id}`);
+      route.replace('/welcome');
     }
   });
 
@@ -93,14 +92,14 @@ const InviteCodePage = () => {
   return (
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
-        <div className="flex flex-col items-center mt-[109px] mb-[38px] gap-[12px]">
+        <div className="flex flex-col items-center mt-[109px]">
           <div className="w-[166px] h-[166px] bg-black"></div>
-          <strong className="text-[20px] text-[#2E2E2E]">슬로건, 프로덕트명</strong>
-          <p className="text-[14px] text-[rgb(46,46,46)] opacity-60 pl-[6px] pb-2">
-            전달 받은 초대 코드를 입력해주세요
-          </p>
+          <div className="mt-8 mb-7 flex flex-col items-center gap-3">
+            <strong className="text-[20px] text-[#2E2E2E]">협업의 새로운 연결, 워크커넥트</strong>
+            <p className="text-[14px] text-[rgb(46,46,46)] opacity-60">전달 받은 초대 코드를 입력해주세요</p>
+          </div>
         </div>
-        <div className="flex flex-col gap-[24px]">
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col">
             <input
               className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
@@ -121,15 +120,10 @@ const InviteCodePage = () => {
             {handleSubmit.isPending ? '초대코드 확인 중...' : '확인'}
           </button>
         </div>
-        <div className="flex justify-center items-center py-2 px-4 gap-[10px]">
-          <button className="text-[#333] text-center text-[14px] font-normal">도움말</button>
+        <div className="flex justify-center items-center py-3 px-[6px] gap-[10px] text-[#2F323C] text-[14px]">
+          <button>도움말</button>
           <span className="text-[12px]">|</span>
-          <button
-            onClick={() => route.push('/workspace/new')}
-            className="text-[#333] text-center text-[14px] font-normal"
-          >
-            워크스페이스 만들기
-          </button>
+          <button onClick={() => route.push('/workspace/new')}>워크스페이스 만들기</button>
         </div>
       </div>
     </main>
