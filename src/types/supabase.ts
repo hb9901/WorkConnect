@@ -285,6 +285,7 @@ export type Database = {
       }
       workspace_user: {
         Row: {
+          created_at: string
           email: string | null
           id: string
           is_open: boolean
@@ -296,9 +297,10 @@ export type Database = {
           workspace_id: number | null
         }
         Insert: {
+          created_at?: string
           email?: string | null
           id?: string
-          is_open: boolean
+          is_open?: boolean
           name: string
           phone?: string | null
           profile_image?: string | null
@@ -307,6 +309,7 @@ export type Database = {
           workspace_id?: number | null
         }
         Update: {
+          created_at?: string
           email?: string | null
           id?: string
           is_open?: boolean
