@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 import Typography from '../Typography';
 import { ArrowLeftIcon } from '@/icons';
