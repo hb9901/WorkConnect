@@ -30,7 +30,7 @@ const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => 
               <ChatOtherProfileContainer>
                 <ChatThumbnail
                   src={
-                    userInfo.profile_image ??
+                    userInfo?.profile_image ??
                     'https://blog.kakaocdn.net/dn/bCXLP7/btrQuNirLbt/N30EKpk07InXpbReKWzde1/img.png'
                   }
                   width={50}
