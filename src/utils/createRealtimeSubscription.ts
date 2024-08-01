@@ -1,7 +1,7 @@
 import type { Database } from '@/types/supabase';
 import { supabase } from '@/utils/supabase/supabaseClient';
 
-type RealtimeSubscribeProps = {
+export type RealtimeSubscribeProps = {
   channelName: string;
   eventHandlers: {
     event: 'INSERT' | 'UPDATE' | 'DELETE' | '*';

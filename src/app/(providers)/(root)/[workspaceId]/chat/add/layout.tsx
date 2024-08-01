@@ -1,3 +1,5 @@
+'use client';
+
 import type { StrictPropsWithChildren } from '@/types/common';
 import { SearchUsersProvider } from './_provider/SearchUsersProvider';
 

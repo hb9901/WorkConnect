@@ -17,7 +17,7 @@ export interface NavbarProps {
 
 export const NavigationBar = ({ children, className, ...props }: NavbarProps) => {
   return (
-    <nav className={clsx('flex w-full px-4 pb-2', className)} {...props}>
+    <nav className={clsx('flex w-full', className)} {...props}>
       {React.Children.map(children, (child) => (
         <div className="flex-1">{child}</div>
       ))}
@@ -37,7 +37,7 @@ export const Tab = ({
   return (
     <Component
       onClick={onClick}
-      className={`bg-white flex-1 flex text-center items-center justify-center border-t-4 text-[12px] pt-[14px] pb-[42px] cursor-pointer transition-colors duration-300 whitespace-nowrap min-w-[100px] ${
+      className={`bg-white flex-1 flex text-center items-center justify-center border-t-4 text-[12px] pt-[14px] pb-[6px] cursor-pointer transition-colors duration-300 whitespace-nowrap ${
         active ? 'border-primary200Main text-primary200Main' : 'border-transparent text-grey500'
       }`}
       {...props}
