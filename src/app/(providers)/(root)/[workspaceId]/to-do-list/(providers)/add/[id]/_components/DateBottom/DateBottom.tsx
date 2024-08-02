@@ -2,10 +2,9 @@
 
 import Button from '@/components/Button';
 import Typography from '@/components/Typography';
-import ChevronDownIcon from '@/icons/ChevronDown.svg';
-import ChevronUpIcon from '@/icons/ChevronUpIcon.svg';
 import dayjs, { Dayjs } from 'dayjs';
 import useTime from '../../_hooks/useTime';
+import TimeInput from '../TimeInput';
 
 interface DateBottomProps {
   isStartTime: boolean;
@@ -25,6 +24,9 @@ const DateBottom = ({
   handleSetEndTime
 }: DateBottomProps) => {
   const time = isStartTime ? dayjs(startTime) : dayjs(endTime);
+  const initIsAM = time.format('a') === 'am';
+  const initHour = time.format('a') === 'am' ? time.hour() : time.hour() - 12;
+  const initMinute = time.minute();
   const {
     isAm,
     hour,
@@ -37,7 +39,7 @@ const DateBottom = ({
     handleHourDown,
     handleMinuteUp,
     handleMinuteDown
-  } = useTime(time);
+  } = useTime(initIsAM, initHour, initMinute);
 
   const handleCheck = () => {
     const newTime = dayjs()
@@ -60,49 +62,11 @@ const DateBottom = ({
           </Button>
         </div>
         <div className="flex flex-row items-center mt-[12px] mb-[24px] gap-[42px]">
-          <div className="flex flex-col items-center gap-2">
-            <button onClick={handleHourUp}>
-              <ChevronUpIcon />
-            </button>
-            <Typography variant="Title22px" color="grey900">
-              <div className="flex items-center justify-center w-[71px] h-[71px] bg-[#FAFAFA] rounded-[6px]">
-                <input
-                  className="w-10 text-center bg-[#FAFAFA] appearance-none"
-                  type="text"
-                  inputMode="numeric"
-                  value={Number(hour)}
-                  pattern="[0-9]*"
-                  onChange={(e) => checkHourStr(Number(e.target.value))}
-                />
-              </div>
-            </Typography>
-            <button onClick={handleHourDown}>
-              <ChevronDownIcon />
-            </button>
-          </div>
+          <TimeInput handleUp={handleHourUp} handleDown={handleHourDown} time={hour} checkStr={checkHourStr} />
           <Typography variant="Title22px" color="grey900">
             :
           </Typography>
-          <div className="flex flex-col items-center gap-2">
-            <button onClick={handleMinuteUp}>
-              <ChevronUpIcon />
-            </button>
-            <Typography variant="Title22px" color="grey900">
-              <div className="flex items-center justify-center w-[71px] h-[71px] bg-[#FAFAFA] rounded-[6px]">
-                <input
-                  className="w-10 text-center bg-[#FAFAFA] appearance-none focus:outline-none"
-                  type="text"
-                  inputMode="numeric"
-                  value={Number(minute)}
-                  pattern="[0-9]*"
-                  onChange={(e) => checkMinuteStr(Number(e.target.value))}
-                />
-              </div>
-            </Typography>
-            <button onClick={handleMinuteDown}>
-              <ChevronDownIcon />
-            </button>
-          </div>
+          <TimeInput handleUp={handleMinuteUp} handleDown={handleMinuteDown} time={minute} checkStr={checkMinuteStr} />
         </div>
         <Button theme="primary" isFullWidth onClick={handleCheck}>
           확인

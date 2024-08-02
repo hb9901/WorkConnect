@@ -1,10 +1,9 @@
-import { Dayjs } from 'dayjs';
 import { useState } from 'react';
 
-const useTime = (time: Dayjs) => {
-  const [isAm, setIsAm] = useState(time.format('a') === 'am');
-  const [hour, setHour] = useState(time.format('a') === 'am' ? time.hour() : time.hour() - 12);
-  const [minute, setMinute] = useState(time.minute());
+const useTime = (initIsAm: boolean, initHour: number, initMinute: number) => {
+  const [isAm, setIsAm] = useState(initIsAm);
+  const [hour, setHour] = useState(initHour);
+  const [minute, setMinute] = useState(initMinute);
   const regHour = /^([0-9]|1[0-2])$/;
   const regMinute = /^([0-5][0-9]|[0-9])$/;
 
