@@ -1,3 +1,4 @@
+import Typography from '@/components/Typography';
 import '@livekit/components-styles';
 import { Suspense } from 'react';
 import VideoRoom from './_components/VideoRoom';
@@ -10,7 +11,11 @@ type Params = {
 };
 const VideoCallRoom = ({ params }: Params) => {
   if (!params.name) {
-    return <div>잘못된 접근입니다.</div>;
+    return (
+      <div className="h-screen justify-center items-center">
+        <Typography variant="Title16px">404 잘못된 접근입니다.</Typography>
+      </div>
+    );
   }
   return (
     <Suspense fallback={<div>Loading...</div>}>

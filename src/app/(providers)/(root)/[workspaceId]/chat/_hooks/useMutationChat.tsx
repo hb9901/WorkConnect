@@ -4,10 +4,12 @@ import type { CreateChannelUsersProps } from '@/types/channelUser';
 import type { CreateChatMessageProps } from '@/types/chat';
 import { useMutation } from '@tanstack/react-query';
 
-type UseChatMessageProps = Pick<CreateChatMessageProps, 'channel_id' | 'workspace_user_id'>;
+type UseChatMessageProps = Pick<CreateChatMessageProps, 'channel_id' | 'workspace_user_id'> & {
+  onSuccess?: () => void;
+};
 type UseChatMessageMutationProps = Omit<CreateChatMessageProps, 'channel_id' | 'workspace_user_id'>;
 
-export const useMutationChatMessage = ({ channel_id, workspace_user_id }: UseChatMessageProps) => {
+export const useMutationChatMessage = ({ channel_id, workspace_user_id, ...props }: UseChatMessageProps) => {
   return useMutation({
     mutationFn: ({ content, type, is_notice }: UseChatMessageMutationProps) => {
       return api.chat.createChatMessage({
@@ -17,7 +19,8 @@ export const useMutationChatMessage = ({ channel_id, workspace_user_id }: UseCha
         type,
         is_notice
       });
-    }
+    },
+    ...props
   });
 };
 

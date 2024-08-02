@@ -18,7 +18,7 @@ const DeviceMenuButton = () => {
           스피커
         </Typography>
       </button>
-      <BottomSheet isOpen={isOpen} onClose={handleClose}>
+      <BottomSheet isOpen={isOpen} onClose={handleClose} className="z-100">
         <DeviceMenu onClose={handleClose} />
       </BottomSheet>
     </>

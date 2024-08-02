@@ -20,10 +20,11 @@ const DeviceMenu = ({ onClose }: DeviceMenueProps) => {
   };
   console.log(devices);
   return (
-    <div>
+    <div className="h-[33vh] ">
       <Typography variant="Title18px" color="grey700Black">
         오디오 장치 선택
       </Typography>
+
       <ul className="">
         {devices.length === 0 && <li>오디오를 찾을 수 없습니다.</li>}
         {devices.map((device) => (
@@ -47,9 +48,11 @@ const DeviceMenu = ({ onClose }: DeviceMenueProps) => {
           오디오 끔
         </Typography>
       </div>
-      <Button theme="primary" isFullWidth className="mt-3" onClick={onClose}>
-        다음
-      </Button>
+      <div>
+        <Button theme="primary" isFullWidth className="mt-3" onClick={onClose}>
+          다음
+        </Button>
+      </div>
     </div>
   );
 };

@@ -36,3 +36,11 @@ export const useGetUsersInChannel = ({ channel_id, workspace_user_id }: GetUsers
     refetchOnWindowFocus: false
   });
 };
+
+export const useGetChannelName = ({ id }: { id: string }) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.CHANNEL_NAME(id),
+    queryFn: () => api.chat.getChannelName({ id }),
+    refetchOnWindowFocus: false
+  });
+};
