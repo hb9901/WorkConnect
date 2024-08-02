@@ -95,7 +95,6 @@ export type Database = {
           content: string
           created_at: string
           id: number
-          is_notice: boolean
           type: string
           workspace_user_id: string
         }
@@ -104,7 +103,6 @@ export type Database = {
           content: string
           created_at?: string
           id?: number
-          is_notice: boolean
           type: string
           workspace_user_id: string
         }
@@ -113,7 +111,6 @@ export type Database = {
           content?: string
           created_at?: string
           id?: number
-          is_notice?: boolean
           type?: string
           workspace_user_id?: string
         }
@@ -371,7 +368,6 @@ export type Database = {
           created_at: string
           content: string
           type: string
-          is_notice: boolean
           workspace_user_id: string
         }[]
       }

@@ -13,14 +13,10 @@ export type ChatSubscribePayloadProps = ChatInsertType & Pick<ChatType, 'created
 
 export type GetChatMessagesProps = Pick<ChatType, 'channel_id'>;
 
-export type CreateChatMessageProps = Pick<
-  ChatType,
-  'channel_id' | 'workspace_user_id' | 'content' | 'type' | 'is_notice'
->;
+export type GetLatestNoticeProps = Pick<ChatType, 'channel_id'>;
 
-export type GetChatMessageType = Pick<
-  ChatType,
-  'type' | 'is_notice' | 'id' | 'created_at' | 'content' | 'workspace_user_id'
->;
+export type CreateChatMessageProps = Pick<ChatType, 'channel_id' | 'workspace_user_id' | 'content' | 'type'>;
+
+export type GetChatMessageType = Pick<ChatType, 'type' | 'id' | 'created_at' | 'content' | 'workspace_user_id'>;
 
 export type GetChatMessagesResponse = GetChatMessageType[];

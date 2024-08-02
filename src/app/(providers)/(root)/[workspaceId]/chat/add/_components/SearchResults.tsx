@@ -2,6 +2,7 @@ import { SearchWorkspaceUserType } from '@/types/workspaceUser';
 import { useSearchUsers } from '../_provider/SearchUsersProvider';
 import MemberCard from '@/components/MemberCard';
 import Image from 'next/image';
+import { isEmpty } from '@/utils/isEmpty';
 
 type SearchResultsProps = {
   searchUsers: SearchWorkspaceUserType[];
@@ -11,7 +12,7 @@ type SearchResultsProps = {
 const SearchResults = ({ searchUsers, selectedUsers }: SearchResultsProps) => {
   const { handleSelectUser } = useSearchUsers();
 
-  if (searchUsers.length === 0) {
+  if (isEmpty(searchUsers)) {
     return <div className="text-gray-500 text-center">검색 결과가 없습니다.</div>;
   }
 

@@ -26,7 +26,7 @@ const MediaListPage = () => {
   }, []);
 
   return (
-    <ul className="grid grid-cols-3 gap-x-2 gap-y-3">
+    <ul className="grid grid-cols-3 gap-x-2 gap-y-3 py-[22px] px-4">
       {mediaList.map((media) => {
         if (!media.content) return null;
 
