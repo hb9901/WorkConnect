@@ -24,10 +24,13 @@ const PreJoinContent = () => {
   }, []);
 
   const handlePreJoinSubmit = useCallback((values: LocalUserChoices) => {
-    if (!userChoices.username) setIsError(true);
-    return (
-      <SnackBar onClose={() => setIsError(false)} isOpen={isError} duration={2000} message="이름을 입력해주세요." />
-    );
+    if (!userChoices.username) {
+      setIsError(true);
+      return (
+        <SnackBar onClose={() => setIsError(false)} isOpen={isError} duration={2000} message="이름을 입력해주세요." />
+      );
+    }
+
     router.push(`/${workspaceId}/video-channel/${room}?username=${userChoices.username}`);
   }, []);
 
