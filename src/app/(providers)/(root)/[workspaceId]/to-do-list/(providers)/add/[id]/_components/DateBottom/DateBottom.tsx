@@ -106,7 +106,8 @@ const DateBottom = ({
               <div className="flex items-center justify-center w-[71px] h-[71px] bg-[#FAFAFA] rounded-[6px]">
                 <input
                   className="w-10 text-center bg-[#FAFAFA] appearance-none"
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   value={Number(hour)}
                   pattern="[0-9]*"
                   onChange={(e) => checkHourStr(Number(e.target.value))}
@@ -128,7 +129,8 @@ const DateBottom = ({
               <div className="flex items-center justify-center w-[71px] h-[71px] bg-[#FAFAFA] rounded-[6px]">
                 <input
                   className="w-10 text-center bg-[#FAFAFA] appearance-none focus:outline-none"
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   value={Number(minute)}
                   pattern="[0-9]*"
                   onChange={(e) => checkMinuteStr(Number(e.target.value))}
