@@ -10,7 +10,6 @@ import { subscribeToChat } from '../../_utils/subscribe';
 import ChatMessagesWrapper from '../_components/ChatMessagesWrapper';
 import ChatMessages from '../_components/ChatMessages';
 import ChatFooter from '../_components/ChatFooter';
-import ContextMenu from '../ContextMenu';
 import { RealtimeSubscribeProps } from '@/utils/createRealtimeSubscription';
 
 // TODO: 데이터 추가 시 수정 필요
@@ -27,7 +26,7 @@ type RealtimeChatPayloadType = {
 };
 
 const ChatDetailPage = () => {
-  const { id: channelId }: { id: string } = useParams();
+  const { id: channelId }: { id: string; workspaceId: string } = useParams();
   const containerRef = useRef<HTMLDivElement>(null);
   const [payloadMessages, setPayloadMessages] = useState<RealtimePayloadMessagesType[]>([]);
   const [isOpenUtil, setIsOpenUtil] = useState(false);
@@ -36,6 +35,7 @@ const ChatDetailPage = () => {
   const { data: chatMessages = [], isPending: isPendingChatMessages } = useGetChatMessages({
     channel_id: Number(channelId)
   });
+
   const { data: usersInChannel = {}, isPending: isPendingUsersInChannel } = useGetUsersInChannel({
     channel_id: Number(channelId),
     workspace_user_id: WORKSPACE_USER_ID
@@ -89,7 +89,7 @@ const ChatDetailPage = () => {
           <ChatMessages data={payloadMessages} usersInChannel={usersInChannel} />
         </ChatMessagesWrapper>
         <ChatFooter id={channelId} handleOpenUtil={handleOpenUtil} />
-        <ContextMenu />
+        {isOpenUtil && <div className="fixed top-0 left-0 w-full h-full z-40" onClick={handleOpenUtil} />}
       </div>
     </div>
   );

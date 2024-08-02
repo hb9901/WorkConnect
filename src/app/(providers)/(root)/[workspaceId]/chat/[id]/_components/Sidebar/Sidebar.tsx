@@ -1,11 +1,10 @@
 'use client';
 
 import useWorkspaceId from '@/hooks/useWorkspaceId';
-import { supabase } from '@/utils/supabase/supabaseClient';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import ImageIcon from '@/icons/image.svg';
 import PaperclipIcon from '@/icons/paperclip.svg';
 import UserIcon from '@/icons/User.svg';
@@ -13,28 +12,38 @@ import HashIcon from '@/icons/Hash.svg';
 import ChevronRightIcon from '@/icons/ChevronRight.svg';
 import Typography from '@/components/Typography';
 
+type SidebarProps = {
+  isOpenSidebar: boolean;
+  handleOpenSidebar: () => void;
+  channelName: string;
+};
 // TODO 유저목록에 나를 포함해야됨;
-const Sidebar = ({ isOpenSidebar, handleOpenSidebar }: { isOpenSidebar: boolean; handleOpenSidebar: () => void }) => {
+const Sidebar = ({ isOpenSidebar, handleOpenSidebar, channelName }: SidebarProps) => {
   const workspaceId = useWorkspaceId();
   const { id } = useParams();
-  const [channelName, setChannelName] = useState('');
 
   const menuItems = useMemo(() => {
     return [
-      { href: `/${workspaceId}/chat/${id}/media`, icon: ImageIcon, label: '사진·동영상', svgType: 'stroke' },
-      { href: `/${workspaceId}/chat/${id}/file`, icon: PaperclipIcon, label: '파일', svgType: 'fill' },
-      { href: `/${workspaceId}/chat/${id}/notice`, icon: HashIcon, label: '공지', svgType: 'fill' }
+      {
+        href: `/${workspaceId}/chat/${id}/media`,
+        icon: ImageIcon,
+        label: '사진·동영상',
+        svgType: 'stroke'
+      },
+      {
+        href: `/${workspaceId}/chat/${id}/file`,
+        icon: PaperclipIcon,
+        label: '파일',
+        svgType: 'fill'
+      },
+      {
+        href: `/${workspaceId}/chat/${id}/notice`,
+        icon: HashIcon,
+        label: '공지',
+        svgType: 'fill'
+      }
     ];
   }, [workspaceId, id]);
-
-  //TODO: 근데 이거 채팅 상세에서 헤더에서도 불러와야해서 고민 필요
-  useEffect(() => {
-    const getChannelName = async () => {
-      const { data } = await supabase.from('channel').select('name').eq('id', id).single();
-      setChannelName(data?.name ?? '');
-    };
-    getChannelName();
-  }, []);
 
   return (
     <>

@@ -1,7 +1,7 @@
 'use client';
 
 import { StrictPropsWithChildren } from '@/types/common';
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 export type SnackBarProps = {
   message: string;
@@ -26,9 +26,9 @@ export const useSnackBar = () => {
 export const SnackBarContextProvider = ({ children }: StrictPropsWithChildren) => {
   const [snackBarProps, setSnackBarProps] = useState<SnackBarProps | undefined>(undefined);
 
-  const openSnackBar = (props: SnackBarProps) => {
+  const openSnackBar = useCallback((props: SnackBarProps) => {
     setSnackBarProps(props);
-  };
+  }, []);
 
   useEffect(() => {
     if (!snackBarProps) return;

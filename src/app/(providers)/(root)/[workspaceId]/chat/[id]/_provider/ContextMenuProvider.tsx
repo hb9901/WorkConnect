@@ -1,7 +1,7 @@
 'use client';
 
 import type { StrictPropsWithChildren } from '@/types/common';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useCallback } from 'react';
 
 export type OpenContextMenuProps = {
   isOpen: boolean;
@@ -40,17 +40,17 @@ export const useContextMenu = () => {
 export const ContextMenuProvider = ({ children }: StrictPropsWithChildren) => {
   const [contextMenuState, setContextMenuState] = useState<OpenContextMenuProps>(defaultContextMenuState);
 
-  const openContextMenu = (props: Omit<OpenContextMenuProps, 'isOpen'>) => {
+  const openContextMenu = useCallback((props: Omit<OpenContextMenuProps, 'isOpen'>) => {
     setContextMenuState((prev) => ({
       ...prev,
       isOpen: true,
       ...props
     }));
-  };
+  }, []);
 
-  const closeContextMenu = () => {
+  const closeContextMenu = useCallback(() => {
     setContextMenuState(defaultContextMenuState);
-  };
+  }, []);
 
   return (
     <ContextMenuContext.Provider value={{ openContextMenu, closeContextMenu, contextMenuState }}>
