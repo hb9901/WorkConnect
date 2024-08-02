@@ -9,19 +9,18 @@ import Sidebar from '../_components/Sidebar';
 import { useGetChannelName, useGetUsersInChannel } from '../../_hooks/useQueryChat';
 import { useParams } from 'next/navigation';
 import { getDmChannelName } from '../../_utils/getDmChannelName';
-
-// TODO: 데이터 추가 시 수정 필요
-const WORKSPACE_USER_ID = '2b5cc93d-1353-4adb-a8c5-60855dc4e5a2';
+import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 
 const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+  const workspaceUserId = useWorkspaceUserId();
   const { id } = useParams();
   const stringId = Array.isArray(id) ? id[0] : id;
   const { data: groupChannelName } = useGetChannelName({ id: stringId });
 
   const { data: usersInChannel = {} } = useGetUsersInChannel({
     channel_id: Number(stringId),
-    workspace_user_id: WORKSPACE_USER_ID
+    workspace_user_id: workspaceUserId
   });
 
   const dmChannelName = getDmChannelName(usersInChannel);

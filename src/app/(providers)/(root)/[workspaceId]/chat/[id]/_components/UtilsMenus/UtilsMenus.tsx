@@ -7,9 +7,9 @@ import { useMutationChatMessage } from '../../../_hooks/useMutationChat';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { ChatType } from '@/types/chat';
 import { useSnackBar } from '@/providers/SnackBarContext';
+import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 
 const MAX_FILE_SIZE = mbToBytes(3);
-const WORKSPACE_USER_ID = '2b5cc93d-1353-4adb-a8c5-60855dc4e5a2';
 const RESOURCE_URL = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/`;
 
 type UploadFileProps = {
@@ -36,9 +36,11 @@ const UtilsMenus = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
   };
 
   const { openSnackBar } = useSnackBar();
+  const workspaceUserId = useWorkspaceUserId();
+
   const { mutate: mutateChatMessage } = useMutationChatMessage({
     channel_id: Number(4),
-    workspace_user_id: WORKSPACE_USER_ID,
+    workspace_user_id: workspaceUserId,
     onSuccess: onFinish
   });
 
