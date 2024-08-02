@@ -9,7 +9,10 @@ export type ChannelType = {
 } & Omit<Tables<'channel'>, 'type'>;
 
 // `channel` 테이블의 Insert 타입
-export type ChannelInsertType = Pick<TablesInsert<'channel'>, 'name' | 'type' | 'workspace_id' | 'host_id'>;
+export type ChannelInsertType = Pick<
+  TablesInsert<'channel'>,
+  'name' | 'type' | 'workspace_id' | 'host_id' | 'thumbnail'
+>;
 
 // `channel` 테이블의 Update 타입
 export type ChannelUpdateType = {

@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useMutationChatMessage } from '../../../_hooks/useMutationChat';
 import MessageTextarea from '../MessageTextarea';
 import UtilsMenus from '../UtilsMenus';
-import ContextMenu from '../../ContextMenu';
+import ContextMenu from '../ContextMenu';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 
 type ChatFooterProps = {

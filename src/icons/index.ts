@@ -9,3 +9,4 @@ export { default as AirPlayIcon } from '@/icons/AirPlayIcon.svg';
 export { default as CheckCircleIcon } from '@/icons/CheckCircle.svg';
 export { default as PinIcon } from '@/icons/Pin.svg';
 export { default as AvatarIcon } from '@/icons/Avatar.svg';
+export { default as CameraIcon } from '@/icons/Camera.svg';

@@ -10,6 +10,7 @@ type CreateChannelAndUsersParams = {
   channelName?: string;
   userIds: string[];
   type?: ChannelType['type'];
+  thumbnail?: string;
 };
 
 const useCreateChannel = () => {
@@ -18,8 +19,13 @@ const useCreateChannel = () => {
   const { mutateAsync: createChannelUsers } = useMutationCreateChannelUsers();
   const { mutateAsync: createChannel } = useMutationCreateChannel({ workspace_id: workspaceId });
 
-  const handleCreateChannelAndUsers = async ({ channelName, userIds, type = 'chat' }: CreateChannelAndUsersParams) => {
-    const { id: channelId } = await createChannel({ name: channelName || '', type });
+  const handleCreateChannelAndUsers = async ({
+    channelName,
+    userIds,
+    type = 'chat',
+    thumbnail
+  }: CreateChannelAndUsersParams) => {
+    const { id: channelId } = await createChannel({ name: channelName || '', type, thumbnail });
     await createChannelUsers({ channel_id: channelId, workspaceUserIds: userIds });
 
     if (type === CHANNEL_TYPE.chat) {
