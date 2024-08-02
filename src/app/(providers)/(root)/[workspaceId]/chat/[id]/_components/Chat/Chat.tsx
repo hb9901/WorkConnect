@@ -112,16 +112,31 @@ export const ChatMessage = ({ content, type, isMe, id }: ChatMessageProps) => {
       return (
         <ChatImage
           src={content}
-          className="rounded-lg w-[200px] h-auto"
+          className={clsx('rounded-lg w-[200px] h-auto', isMe ? '' : 'ml-[40px] mt-[6px]')}
           width={300}
           height={300}
           onContextMenu={handleContextMenu}
         />
       );
     case CHAT_TYPE.document:
-      return <ChatFile fileUrl={content} fileName={content.split('/').pop() || ''} onContextMenu={handleContextMenu} />;
+      return (
+        <ChatFile
+          fileUrl={content}
+          fileName={content.split('/').pop() || ''}
+          onContextMenu={handleContextMenu}
+          className={clsx(isMe ? '' : 'ml-[40px] mt-[6px]')}
+        />
+      );
     case CHAT_TYPE.video:
-      return <ChatVideo src={content} className="rounded-lg" width={200} onContextMenu={handleContextMenu} controls />;
+      return (
+        <ChatVideo
+          src={content}
+          className={clsx('rounded-lg', isMe ? '' : 'ml-[40px] mt-[6px]')}
+          width={200}
+          onContextMenu={handleContextMenu}
+          controls
+        />
+      );
     case CHAT_TYPE.text:
       return (
         <ChatText onContextMenu={handleContextMenu} isMe={isMe}>
