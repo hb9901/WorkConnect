@@ -7,7 +7,7 @@ import useCreateChannel from '../_hooks/useCreateChannel';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { ChannelType } from '@/types/channel';
 import { PageLayout } from '@/components/PageLayout';
-import { CheckIcon, XIcon } from '@/icons';
+import { AvatarIcon, CheckIcon, XIcon } from '@/icons';
 
 const GroupSettingPage = () => {
   const router = useRouter();
@@ -44,11 +44,14 @@ const GroupSettingPage = () => {
       }
     >
       <div className="flex flex-col gap-4 p-4 h-[300px] w-[300px] items-center justify-center mx-auto">
+        <div className="flex flex-col items-center w-[140px] h-[140px] bg-[#BDBDBD] justify-center rounded-full">
+          <AvatarIcon className="w-[84px] h-[84px] bg-[#BDBDBD]" />
+        </div>
         <input
           ref={ref}
           type="text"
           className="text-black border-b border-gray-300 w-full h-[45px]"
-          placeholder="그룹채팅방 이름"
+          placeholder="그룹대화방 이름"
         />
       </div>
     </PageLayout>
