@@ -54,10 +54,10 @@ const CustomVideoConference = () => {
       <div className="flex flex-col items-center gap-2 h-[80vh] p-3">
         <div className="flex p-4 h-full items-center">
           <div className={`${focusedTrack ? 'sm:w-[full] m-5' : 'none'} rounded-lg overflow-hidden mr-5`}>
-            {focusedTrack && <FocusLayout trackRef={focusedTrack} className="fixed left-0 " />}
+            {focusedTrack && <FocusLayout trackRef={focusedTrack} className="" />}
           </div>
           <div className={`${focusedTrack ? 'hidden md:block w-[300px]' : 'w-full'} h-full`}>
-            <GridLayout tracks={tracks} style={{ height: 'calc(50vh 50vw - var(--lk-control-bar-height))' }}>
+            <GridLayout tracks={tracks} style={{ height: 'calc(50vh 50vw)' }}>
               <ParticipantTile onParticipantClick={clickFocus} />
             </GridLayout>
           </div>
