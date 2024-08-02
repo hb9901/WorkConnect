@@ -24,7 +24,7 @@ const Homepage = () => {
     }))
   );
   const { workspaceUser } = useWorkspaceUser(workspaceUserId);
-  const { workspaceUserList } = useWorkspaceUserList(workspaceId, workspaceUserId);
+  const { workspaceUserList } = useWorkspaceUserList(workspaceId);
 
   const getWorkspacaeList = async (workspaceId: number, userId: string) => {
     const data = await api.workspaceList.getWorkspaceList(workspaceId, userId);
