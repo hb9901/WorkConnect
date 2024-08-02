@@ -5,7 +5,7 @@ import Typography from '@/components/Typography';
 import ChevronDownIcon from '@/icons/ChevronDown.svg';
 import ChevronUpIcon from '@/icons/ChevronUpIcon.svg';
 import dayjs, { Dayjs } from 'dayjs';
-import { useState } from 'react';
+import useTime from '../../_hooks/useTime';
 
 interface DateBottomProps {
   isStartTime: boolean;
@@ -25,57 +25,19 @@ const DateBottom = ({
   handleSetEndTime
 }: DateBottomProps) => {
   const time = isStartTime ? dayjs(startTime) : dayjs(endTime);
-  const [isAm, setIsAm] = useState(time.format('a') === 'am');
-  const [hour, setHour] = useState(time.format('a') === 'am' ? time.hour() : time.hour() - 12);
-  const [minute, setMinute] = useState(time.minute());
-  const regHour = /^([0-9]|1[0-2])$/;
-  const regMinute = /^([0-5][0-9]|[0-9])$/;
-
-  const checkHourStr = (hour: number) => {
-    if (regHour.test(String(hour))) setHour(hour);
-  };
-
-  const checkMinuteStr = (minute: number) => {
-    if (regMinute.test(String(minute))) setMinute(minute);
-  };
-
-  const handleAM = () => {
-    setIsAm(true);
-  };
-
-  const handlePM = () => {
-    setIsAm(false);
-  };
-
-  const handleHourUp = () => {
-    if (hour >= 12) {
-      setHour(1);
-    } else {
-      if (regHour.test(String(hour))) setHour((prevHour) => prevHour + 1);
-    }
-  };
-
-  const handleHourDown = () => {
-    if (hour <= 1) {
-      setHour(12);
-    } else {
-      if (regHour.test(String(hour))) setHour((prevHour) => prevHour - 1);
-    }
-  };
-  const handleMinuteUp = () => {
-    if (minute >= 59) {
-      setMinute(0);
-    } else {
-      if (regMinute.test(String(minute))) setMinute((prevMinute) => prevMinute + 1);
-    }
-  };
-  const handleMinuteDown = () => {
-    if (minute <= 0) {
-      setMinute(59);
-    } else {
-      if (regMinute.test(String(minute))) setMinute((prevMinute) => prevMinute - 1);
-    }
-  };
+  const {
+    isAm,
+    hour,
+    minute,
+    checkHourStr,
+    checkMinuteStr,
+    handleAM,
+    handlePM,
+    handleHourUp,
+    handleHourDown,
+    handleMinuteUp,
+    handleMinuteDown
+  } = useTime(time);
 
   const handleCheck = () => {
     const newTime = dayjs()
