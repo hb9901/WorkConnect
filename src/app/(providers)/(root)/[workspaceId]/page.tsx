@@ -24,7 +24,7 @@ const Homepage = () => {
     }))
   );
   const { workspaceUser } = useWorkspaceUser(workspaceUserId);
-  const { workspaceUserList } = useWorkspaceUserList(workspaceId);
+  const { workspaceUserList } = useWorkspaceUserList(workspaceId, workspaceUserId);
 
   const getWorkspacaeList = async (workspaceId: number, userId: string) => {
     const data = await api.workspaceList.getWorkspaceList(workspaceId, userId);
@@ -51,7 +51,7 @@ const Homepage = () => {
             status={workspaceUser.state}
           />
 
-          {workspaceUserList.length === 0 ? (
+          {workspaceUserList.length <= 1 ? (
             <MemberNotExistComponent />
           ) : (
             <MemberExistComponent workspaceUserList={workspaceUserList} />
