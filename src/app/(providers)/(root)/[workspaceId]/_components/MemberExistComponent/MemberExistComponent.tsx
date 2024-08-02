@@ -1,5 +1,6 @@
 'use client';
 import Typography from '@/components/Typography';
+import useUserStore from '@/store/userStore';
 import { Tables } from '@/types/supabase';
 import { useState } from 'react';
 import AvatarCard from '../AvatarCard';
@@ -10,6 +11,7 @@ interface MemberExistComponentProps {
 }
 
 const MemberExistComponent = ({ workspaceUserList }: MemberExistComponentProps) => {
+  const workspaceUserId = useUserStore((state) => state.workspaceUserId);
   const [isCardExist, setIsCardExist] = useState<Boolean>(true);
 
   const handleCardClose = () => {
@@ -29,9 +31,12 @@ const MemberExistComponent = ({ workspaceUserList }: MemberExistComponentProps) 
         </Typography>
         <div>
           {workspaceUserList &&
-            workspaceUserList.map((workspaceUser) => (
-              <AvatarCard key={workspaceUser.id} workspaceUser={workspaceUser} />
-            ))}
+            workspaceUserList.map(
+              (workspaceUser) =>
+                workspaceUserId !== workspaceUser.id && (
+                  <AvatarCard key={workspaceUser.id} workspaceUser={workspaceUser} />
+                )
+            )}
         </div>
       </div>
     </>
