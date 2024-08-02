@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 const EMAIL_TOKEN = 'sb-ripbxzxpvscuqgdjpkix-auth-token';
 const KAKAO_TOKEN_0 = 'sb-ripbxzxpvscuqgdjpkix-auth-token.0';
 const KAKAO_TOKEN_1 = 'sb-ripbxzxpvscuqgdjpkix-auth-token.1';
+const AUTH_PATHS = ['/auth', '/null', '/undefined'];
 
 const hasValidToken = (request: NextRequest) => {
   const emailToken = request.cookies.get(EMAIL_TOKEN)?.value;
@@ -21,14 +22,14 @@ export const middleware = (request: NextRequest) => {
     .find((row) => row.startsWith('userToken='))
     ?.split('=')[1];
 
-  if (pathname.startsWith(`/${workspaceId}`) || pathname === '/auth/signup/verify') {
+  if (pathname.startsWith(`/${workspaceId}`)) {
     if (!hasValidToken(request)) {
       return NextResponse.redirect(new URL('/', request.url));
     }
     return NextResponse.next();
   }
 
-  if (pathname === '/') {
+  if (AUTH_PATHS.some((path) => pathname.startsWith(path)) || pathname === '/') {
     if (hasValidToken(request)) {
       return NextResponse.redirect(new URL(`/${userToken}`, request.url));
     }

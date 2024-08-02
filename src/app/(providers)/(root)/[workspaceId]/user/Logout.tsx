@@ -1,17 +1,20 @@
 'use client';
-import { deleteCookie } from '@/utils/cookieUtils';
+import useUserStore from '@/store/userStore';
+import { deleteAllCookies } from '@/utils/cookieUtils';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useRouter } from 'next/navigation';
 
 // TODO : 테스트 (삭제예정)
 const Logout = () => {
   const route = useRouter();
+  const { clearStore } = useUserStore((state) => state);
 
   const logout = async () => {
     const logoutConfirm = confirm('로그아웃 하시겠습니까?');
     if (logoutConfirm) {
       await supabase.auth.signOut();
-      deleteCookie('userToken');
+      clearStore();
+      deleteAllCookies();
       route.push('/');
     }
   };

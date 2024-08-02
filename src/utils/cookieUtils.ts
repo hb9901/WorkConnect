@@ -22,3 +22,12 @@ export const getCookie = (name: string) => {
 export const deleteCookie = (name: string) => {
   document.cookie = name + '=; Max-Age=0; path=/';
 };
+
+export const deleteAllCookies = () => {
+  const cookies = document.cookie.split(';');
+  cookies.forEach((cookie) => {
+    const eqPos = cookie.indexOf('=');
+    const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+    document.cookie = name + '=; Max-Age=0; path=/';
+  });
+};

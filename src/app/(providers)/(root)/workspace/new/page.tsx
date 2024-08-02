@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import BackButton from '../../auth/_components/BackButton';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
+import CountTextField from '@/components/CountTextField';
 
 const getRandomNumbers = (count: number, min: number, max: number) => {
   const range = Array.from({ length: max - min + 1 }, (_, i) => i + min);
