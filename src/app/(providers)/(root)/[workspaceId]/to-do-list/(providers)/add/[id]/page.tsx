@@ -226,7 +226,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
               <div className="flex flex-row items-center gap-[12px]">
                 <FlagIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
                 <Typography variant="Subtitle16px" color="grey700Black">
-                  진행 상태
+                  우선 순위
                 </Typography>
               </div>
 
