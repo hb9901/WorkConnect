@@ -21,7 +21,7 @@ const InviteCardWithOutMember = () => {
         </Typography>
         <Typography>함께 일하는 동료들을 초대해보세요</Typography>
       </div>
-      <InviteCodeButton workspaceId={selectedWorkspace.id} isFullWidth={true} />
+      <InviteCodeButton workspaceId={selectedWorkspace.invite_code} isFullWidth={true} />
     </div>
   );
 };

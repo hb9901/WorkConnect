@@ -84,7 +84,7 @@ const ProfileEditPage = () => {
         profile_image
       };
       await updateWorkspaceUser(workspaceUser);
-      router.push(`/${workspaceId}/profile/${workspaceUserId}`);
+      router.back();
       return;
     } else {
       const workspaceUser = {
@@ -98,7 +98,7 @@ const ProfileEditPage = () => {
         state
       };
       await updateWorkspaceUser(workspaceUser);
-      router.push(`/${workspaceId}/profile/${workspaceUserId}`);
+      router.back();
       return;
     }
   };

@@ -13,6 +13,7 @@ import ClockIcon from '@/icons/Clock.svg';
 import FlagIcon from '@/icons/Flag.svg';
 import ListIcon from '@/icons/List.svg';
 import MapPinIcon from '@/icons/MapPin.svg';
+import { useSnackBar } from '@/providers/SnackBarContext';
 import useDateStore from '@/store/dateStore';
 import useUserStore from '@/store/userStore';
 import dayjs, { Dayjs } from 'dayjs';
@@ -32,9 +33,9 @@ type ToDoAddPageProps = {
 };
 
 const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
+  const { openSnackBar } = useSnackBar();
   const { workspaceUserId } = useUserStore();
   const workspaceId = useWorkspaceId();
-  // const { startTime, endTime, setTimeModalOpen, setStartTime, setEndTime, setStart, setEnd } = useTimeModalStore();
   const { todoList, addTodo, updateTodo } = useTodoList(workspaceUserId);
   const selectedTodo = todoList && todoList.filter((todo) => todo.id == params.id)[0];
   const { selectedDate } = useDateStore();
@@ -48,7 +49,6 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const [startTime, setStartTime] = useState<Dayjs>(initTime);
   const [endTime, setEndTime] = useState<Dayjs>(initTime);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
-  const titleRef = useRef<HTMLInputElement>(null);
   const placeRef = useRef<HTMLInputElement>(null);
   const existTitle = selectedTodo && selectedTodo.title;
   const existStatus = selectedTodo && selectedTodo.status;
@@ -87,7 +87,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   };
 
   const handleSetStartTime = (startTime: Dayjs) => {
-    setStartTime(endTime);
+    setStartTime(startTime);
   };
   const handleSetEndTime = (endTime: Dayjs) => {
     setEndTime(endTime);
@@ -102,12 +102,15 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-  const handleTimeClick2 = () => {
+  const hanldeBottomSheetClick = () => {
     setIsBottomSheetOpen((prev) => !prev);
   };
 
   const handleAdd = async () => {
-    if (!title || !placeRef.current || !workspaceUserId) return;
+    if (!title || !placeRef.current || !workspaceUserId || !selectedPriority || !selectedStatus) {
+      openSnackBar({ message: '빈 입력 값이 존재합니다!' });
+      return;
+    }
     const startDate = selectedDate
       .set('hour', dayjs(startTime).hour())
       .set('minute', dayjs(startTime).minute())
@@ -226,7 +229,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
               <div className="flex flex-row items-center gap-[12px]">
                 <FlagIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
                 <Typography variant="Subtitle16px" color="grey700Black">
-                  진행 상태
+                  우선 순위
                 </Typography>
               </div>
 
@@ -256,10 +259,10 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
         </Button>
       </div>
 
-      <BottomSheet isOpen={isBottomSheetOpen} onClose={handleTimeClick2}>
+      <BottomSheet isOpen={isBottomSheetOpen} onClose={hanldeBottomSheetClick}>
         <DateBottom
           isStartTime={isStartTime}
-          handleClose={handleTimeClick2}
+          handleClose={hanldeBottomSheetClick}
           startTime={startTime}
           endTime={endTime}
           handleSetStartTime={handleSetStartTime}
