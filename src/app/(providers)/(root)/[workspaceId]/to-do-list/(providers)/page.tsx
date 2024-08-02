@@ -1,4 +1,5 @@
 'use client';
+import { PageLayout } from '@/components/PageLayout';
 import useTodoList from '@/hooks/useTodo';
 import useUserStore from '@/store/userStore';
 import Header from './_components/Header';
@@ -16,16 +17,18 @@ const ToDoListPage = () => {
 
   return (
     <>
-      <header>
-        <Header />
-      </header>
-      <main className="px-[16px]">
-        <WeekButtons />
-        <WeekDate />
-        <ToDoList title="진행 전" todoList={beforeTodoList} />
-        <ToDoList title="진행 중" todoList={progressTodoList} />
-        <ToDoList title="완료" todoList={completedTodoList} />
-      </main>
+      <PageLayout title="" showTopBar={false}>
+        <header>
+          <Header />
+        </header>
+        <main className="px-[16px]">
+          <WeekButtons />
+          <WeekDate />
+          <ToDoList title="진행 전" todoList={beforeTodoList} />
+          <ToDoList title="진행 중" todoList={progressTodoList} />
+          <ToDoList title="완료" todoList={completedTodoList} />
+        </main>
+      </PageLayout>
     </>
   );
 };

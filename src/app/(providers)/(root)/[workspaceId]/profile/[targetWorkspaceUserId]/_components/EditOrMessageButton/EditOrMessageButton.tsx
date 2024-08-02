@@ -21,10 +21,11 @@ const EditOrMessageButton = ({
   const { createChannel } = useChannel({ type: 'chat', workspace_id: workspaceId });
   const router = useRouter();
 
-  const handleClick = async () => {
-    if (isMyPage) {
-      router.push('/profile/edit');
-    }
+  const handleEditClick = async () => {
+    router.push(`/${workspaceId}/profile/${workspaceUserId}/edit`);
+  };
+
+  const handleMessageClick = async () => {
     if (!(workspaceUserId && targetWorkspaceUserId)) return;
 
     const existChannel = await api.channel.getExistingChannelId({
@@ -33,7 +34,7 @@ const EditOrMessageButton = ({
     });
 
     if (existChannel) {
-      router.push(`${workspaceId}/chat/${existChannel}`);
+      router.push(`/${workspaceId}/chat/${existChannel}`);
       return;
     } else {
       const newChannel: ChannelInsertType = {
@@ -50,8 +51,8 @@ const EditOrMessageButton = ({
   };
 
   return (
-    <Button theme="primary" isFullWidth={true} onClick={handleClick}>
-      {isMyPage ? '' : <MessageCircleIcon />}
+    <Button theme="primary" isFullWidth={true} onClick={isMyPage ? handleEditClick : handleMessageClick}>
+      {isMyPage ? '' : <MessageCircleIcon className="stroke-white" />}
       {isMyPage ? '프로필 편집' : '메시지 보내기'}
     </Button>
   );
