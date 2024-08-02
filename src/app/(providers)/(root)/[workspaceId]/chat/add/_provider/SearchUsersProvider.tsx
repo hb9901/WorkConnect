@@ -1,11 +1,9 @@
 'use client';
 
+import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import type { StrictPropsWithChildren } from '@/types/common';
 import type { SearchWorkspaceUserType } from '@/types/workspaceUser';
-import { createContext, useContext, useState } from 'react';
-
-//TODO
-const WORKSPACE_USER_ID = '2b5cc93d-1353-4adb-a8c5-60855dc4e5a2';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 type SearchUsersContextType = {
   selectedUsers: SearchWorkspaceUserType[];
@@ -24,23 +22,28 @@ const initialState = {
 const SearchUsersContext = createContext<SearchUsersContextType>(initialState);
 
 export const SearchUsersProvider = ({ children }: StrictPropsWithChildren) => {
+  const workspaceUserId = useWorkspaceUserId();
   const [selectedUsers, setSelectedUsers] = useState<SearchUsersContextType['selectedUsers']>([]);
 
-  const handleSelectUser: SearchUsersContextType['handleSelectUser'] = (user) => {
-    if (selectedUsers.find((selectedUser) => selectedUser.id === user.id)) {
-      handleRemoveUser(user);
-      return;
-    }
+  const handleSelectUser: SearchUsersContextType['handleSelectUser'] = useCallback(
+    (user) => {
+      if (selectedUsers.find((selectedUser) => selectedUser.id === user.id)) {
+        handleRemoveUser(user);
+        return;
+      }
 
-    setSelectedUsers((prev) => [...prev, user]);
-  };
+      setSelectedUsers((prev) => [...prev, user]);
+    },
+    [selectedUsers]
+  );
+
   const handleRemoveUser: SearchUsersContextType['handleRemoveUser'] = (user) => {
     setSelectedUsers((prev) => prev.filter((selectedUser) => selectedUser.id !== user.id));
   };
 
-  const getSelectedUserIds: SearchUsersContextType['getSelectedUserIds'] = () => {
-    return selectedUsers.map((user) => user.id).concat([WORKSPACE_USER_ID]);
-  };
+  const getSelectedUserIds: SearchUsersContextType['getSelectedUserIds'] = useCallback(() => {
+    return selectedUsers.map((user) => user.id).concat([workspaceUserId]);
+  }, [selectedUsers, workspaceUserId]);
 
   return (
     <SearchUsersContext.Provider

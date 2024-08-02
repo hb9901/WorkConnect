@@ -3,9 +3,7 @@ import { ChatContainer, ChatThumbnail, ChatMessage, ChatOtherProfileContainer, C
 import type { GetUsersInChannelResponse } from '@/types/channel';
 import Link from 'next/link';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
-
-// TODO: 임시 코드
-const WORKSPACE_USER_ID = '2b5cc93d-1353-4adb-a8c5-60855dc4e5a2';
+import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 
 type ChatMessagesProps = {
   data: GetChatMessageType[] & { channel_id?: string };
@@ -16,6 +14,7 @@ type ChatMessagesProps = {
 
 const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
   const workspaceId = useWorkspaceId();
+  const workspaceUserId = useWorkspaceUserId();
 
   if (Object.keys(usersInChannel).length === 0) return null;
 
@@ -23,7 +22,7 @@ const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => 
     <>
       {data.map((chat) => {
         const userInfo = usersInChannel[chat.workspace_user_id];
-        const isMe = chat.workspace_user_id === WORKSPACE_USER_ID;
+        const isMe = chat.workspace_user_id === workspaceUserId;
 
         return (
           <ChatContainer key={chat.id} className={`flex ${isMe ? 'items-end' : 'items-start'} flex-col`}>
