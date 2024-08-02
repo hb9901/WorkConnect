@@ -11,7 +11,7 @@ interface HomeMemberCardProps {
 const HomeMemberCard = ({ profileImg, name, status }: HomeMemberCardProps) => {
   return (
     <div className="flex flex-row gap-[16px] items-center">
-      <div className="flex items-center justify-center size-[56px] rounded-full bg-[#BDBDBD]">
+      <div className="flex items-center justify-center relative size-[56px] rounded-full bg-[#BDBDBD]">
         {profileImg ? (
           <Image src={profileImg} alt={name} className="object-cover size-[56px] rounded-full" fill priority />
         ) : (
