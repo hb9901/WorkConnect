@@ -31,7 +31,7 @@ const CHAT_TYPE: Record<string, ChatType['type']> = {
   documentFile: 'document'
 };
 
-const UtilsMenus = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
+const UtilsMenu = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
   const { id } = useParams();
   const onFinish = () => {
     handleOpenUtil();
@@ -54,7 +54,7 @@ const UtilsMenus = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
       return null;
     }
 
-    mutateChatMessage({ content: `${RESOURCE_URL}${data.fullPath}`, type: fileType, is_notice: false });
+    mutateChatMessage({ content: `${RESOURCE_URL}${data.fullPath}`, type: fileType });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,4 +89,4 @@ const UtilsMenus = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
   );
 };
 
-export default UtilsMenus;
+export default UtilsMenu;

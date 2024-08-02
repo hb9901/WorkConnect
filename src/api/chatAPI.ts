@@ -1,4 +1,9 @@
-import type { CreateChatMessageProps, GetChatMessagesProps, GetChatMessagesResponse } from '@/types/chat';
+import type {
+  CreateChatMessageProps,
+  GetChatMessagesProps,
+  GetChatMessagesResponse,
+  GetChatMessageType
+} from '@/types/chat';
 import type { APIResponse } from '@/types/common';
 import { AxiosInstance } from 'axios';
 
@@ -19,14 +24,12 @@ class ChatAPI {
     channel_id,
     content,
     workspace_user_id,
-    type,
-    is_notice
+    type
   }: CreateChatMessageProps): Promise<APIResponse<[]>> => {
     const { data } = await this.axios.post(`/api/chat/${channel_id}`, {
       content,
       workspace_user_id,
-      type,
-      is_notice
+      type
     });
 
     return data;
@@ -36,6 +39,12 @@ class ChatAPI {
     const { data } = await this.axios.get(`/api/channel/${id}/channel-name`);
 
     return data.data?.name;
+  };
+
+  getLatestNotice = async ({ id }: { id: string }): Promise<GetChatMessageType> => {
+    const { data } = await this.axios.get(`/api/chat/${id}/latest-notice`);
+
+    return data.data;
   };
 }
 

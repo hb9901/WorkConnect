@@ -12,6 +12,7 @@ import ChatMessages from '../_components/ChatMessages';
 import ChatFooter from '../_components/ChatFooter';
 import { RealtimeSubscribeProps } from '@/utils/createRealtimeSubscription';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
+import ChatNotice from '../_components/ChatNotice';
 
 type RealtimePayloadMessagesType = GetChatMessageType & {
   channel_id: string;
@@ -24,7 +25,8 @@ type RealtimeChatPayloadType = {
 };
 
 const ChatDetailPage = () => {
-  const { id: channelId }: { id: string; workspaceId: string } = useParams();
+  const { id: channelId } = useParams();
+  const stringId = Array.isArray(channelId) ? channelId[0] : channelId;
   const workspaceUserId = useWorkspaceUserId();
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -73,25 +75,26 @@ const ChatDetailPage = () => {
     containerRef.current.scrollIntoView({ block: 'end' });
   }, [isPending, payloadMessages]);
 
-  useEffect(subscribeToChat({ handleUserUpdates, handleChatUpdates, id: channelId, userIds }), [userIds]);
+  useEffect(subscribeToChat({ handleUserUpdates, handleChatUpdates, id: stringId, userIds }), [userIds]);
 
   if (isPending) return <div>Loading...</div>;
 
   return (
-    <div className="flex flex-col">
+    <>
       <div
-        className={`flex flex-col flex-grow h-[calc(100dvh+35px)] transform ease-in-out duration-300 ${
+        className={`flex flex-col flex-grow h-[calc(100dvh+42px)] transform ease-in-out duration-300 ${
           isOpenUtil ? 'translate-y-[-96px]' : 'translate-y-[0px]'
         }`}
       >
+        <ChatNotice />
         <ChatMessagesWrapper ref={containerRef}>
           <ChatMessages data={chatMessages} usersInChannel={usersInChannel} />
           <ChatMessages data={payloadMessages} usersInChannel={usersInChannel} />
         </ChatMessagesWrapper>
-        <ChatFooter id={channelId} handleOpenUtil={handleOpenUtil} />
+        <ChatFooter id={stringId} handleOpenUtil={handleOpenUtil} />
         {isOpenUtil && <div className="fixed top-0 left-0 w-full h-full z-40" onClick={handleOpenUtil} />}
       </div>
-    </div>
+    </>
   );
 };
 

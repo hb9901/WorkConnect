@@ -7,6 +7,7 @@ export interface SnackBarProps {
   duration?: number;
 }
 
+//TODO: Provider 랑 연결 시켜야함 지금은 미사용중
 const SnackBar = ({ message, isOpen, onClose, duration }: SnackBarProps) => {
   useEffect(() => {
     if (isOpen) {
