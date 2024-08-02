@@ -6,9 +6,6 @@ import { ChannelType } from '@/types/channel';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { CHANNEL_TYPE } from '@/constants/channel';
 
-//TODO: 임시 코드
-const WORKSPACE_ID = 2;
-
 type CreateChannelAndUsersParams = {
   channelName?: string;
   userIds: string[];
@@ -19,7 +16,7 @@ const useCreateChannel = () => {
   const workspaceId = useWorkspaceId();
   const router = useRouter();
   const { mutateAsync: createChannelUsers } = useMutationCreateChannelUsers();
-  const { mutateAsync: createChannel } = useMutationCreateChannel({ workspace_id: WORKSPACE_ID });
+  const { mutateAsync: createChannel } = useMutationCreateChannel({ workspace_id: workspaceId });
 
   const handleCreateChannelAndUsers = async ({ channelName, userIds, type = 'chat' }: CreateChannelAndUsersParams) => {
     const { id: channelId } = await createChannel({ name: channelName || '', type });

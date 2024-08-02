@@ -11,9 +11,7 @@ import ChatMessagesWrapper from '../_components/ChatMessagesWrapper';
 import ChatMessages from '../_components/ChatMessages';
 import ChatFooter from '../_components/ChatFooter';
 import { RealtimeSubscribeProps } from '@/utils/createRealtimeSubscription';
-
-// TODO: 데이터 추가 시 수정 필요
-const WORKSPACE_USER_ID = '2b5cc93d-1353-4adb-a8c5-60855dc4e5a2';
+import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 
 type RealtimePayloadMessagesType = GetChatMessageType & {
   channel_id: string;
@@ -27,6 +25,8 @@ type RealtimeChatPayloadType = {
 
 const ChatDetailPage = () => {
   const { id: channelId }: { id: string; workspaceId: string } = useParams();
+  const workspaceUserId = useWorkspaceUserId();
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [payloadMessages, setPayloadMessages] = useState<RealtimePayloadMessagesType[]>([]);
   const [isOpenUtil, setIsOpenUtil] = useState(false);
@@ -38,7 +38,7 @@ const ChatDetailPage = () => {
 
   const { data: usersInChannel = {}, isPending: isPendingUsersInChannel } = useGetUsersInChannel({
     channel_id: Number(channelId),
-    workspace_user_id: WORKSPACE_USER_ID
+    workspace_user_id: workspaceUserId
   });
 
   const isPending = isPendingChatMessages || isPendingUsersInChannel;

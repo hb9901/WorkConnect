@@ -6,19 +6,19 @@ import { useSearchUsers } from '../_provider/SearchUsersProvider';
 import { useGetSearchWorkspaceUsers } from '../../_hooks/useQueryChat';
 import SelectedUsers from '../_components/SelectedUsers';
 import SearchResults from '../_components/SearchResults';
-
-//TODO: 임시 코드
-const WORKSPACE_USER_ID = '2b5cc93d-1353-4adb-a8c5-60855dc4e5a2';
+import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 
 const AddChatPage = () => {
   const workspaceId = useWorkspaceId();
+  const workspaceUserId = useWorkspaceUserId();
+
   const [searchTerm, setSearchTerm] = useState('');
   const { selectedUsers } = useSearchUsers();
 
   const { data: searchUsers = [], refetch: refetchSearchUsers } = useGetSearchWorkspaceUsers({
     workspace_id: workspaceId,
     term: searchTerm,
-    workspace_user_id: WORKSPACE_USER_ID
+    workspace_user_id: workspaceUserId
   });
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
