@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import brokenFileImage from '/public/images/common/broken-file.png';
 import { StrictNextImagePropsType } from '@/types/common';
+import { memo } from 'react';
 
 const ERROR_IMAGE = brokenFileImage.src;
 
@@ -29,4 +30,8 @@ const ChatImage = ({ src = '', className, onError, alt = '', ...props }: ChatIma
   );
 };
 
-export default ChatImage;
+const MemoChatImage = memo(ChatImage, (prevProps, nextProps) => {
+  return prevProps.src === nextProps.src;
+});
+
+export default MemoChatImage;

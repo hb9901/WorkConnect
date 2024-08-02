@@ -7,7 +7,7 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import ChatImage from '../ChatImage';
 import ChatVideo from '../ChatVideo';
-import { OpenContextMenuProps } from '../../_provider/ContextMenuProvider';
+import { OpenContextMenuProps, useContextMenu } from '../../_provider/ContextMenuProvider';
 
 type ClassNameProps = Pick<ComponentProps<'div'>, 'className'>;
 
@@ -78,12 +78,13 @@ type ChatMessageProps = {
   type: string;
   isMe: boolean;
   id: number;
-  openContextMenu: (props: Omit<OpenContextMenuProps, 'isOpen'>) => void;
 };
 
 const TOP_BAR_HEIGHT = 52;
 
-export const ChatMessage = ({ content, type, isMe, id, openContextMenu }: ChatMessageProps) => {
+export const ChatMessage = ({ content, type, isMe, id }: ChatMessageProps) => {
+  const { openContextMenu } = useContextMenu();
+
   const handleContextMenu = (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement | HTMLVideoElement>) => {
     event.preventDefault();
 

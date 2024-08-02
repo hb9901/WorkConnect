@@ -36,6 +36,7 @@ const ChatDetailPage = () => {
   const { data: chatMessages = [], isPending: isPendingChatMessages } = useGetChatMessages({
     channel_id: Number(channelId)
   });
+
   const { data: usersInChannel = {}, isPending: isPendingUsersInChannel } = useGetUsersInChannel({
     channel_id: Number(channelId),
     workspace_user_id: WORKSPACE_USER_ID
