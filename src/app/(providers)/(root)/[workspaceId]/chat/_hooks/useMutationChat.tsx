@@ -37,11 +37,12 @@ type UseCreateChannelMutationProps = Omit<ChannelInsertType, 'workspace_id'>;
 
 export const useMutationCreateChannel = ({ workspace_id }: UseCreateChannelProps) => {
   return useMutation({
-    mutationFn: ({ name, type }: UseCreateChannelMutationProps) =>
+    mutationFn: ({ name, type, thumbnail }: UseCreateChannelMutationProps) =>
       api.channel.postChannel({
         name,
         type,
-        workspace_id
+        workspace_id,
+        thumbnail
       })
   });
 };

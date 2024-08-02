@@ -1,5 +1,5 @@
 import Typography from '@/components/Typography';
-import { useContextMenu } from '../_provider/ContextMenuProvider';
+import { useContextMenu } from '../../_provider/ContextMenuProvider';
 import CopyIcon from '@/icons/Copy.svg';
 import HashIcon from '@/icons/Hash.svg';
 import TrashIcon from '@/icons/Trash.svg';

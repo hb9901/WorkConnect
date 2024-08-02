@@ -36,9 +36,9 @@ export const GET = async (request: NextRequest) => {
 };
 
 export const POST = async (request: NextRequest) => {
-  const { name, type, workspace_id, host_id } = await request.json();
+  const { name, type, workspace_id, host_id, thumbnail } = await request.json();
   try {
-    const { data, error } = await createChannel({ name, type, workspace_id, host_id });
+    const { data, error } = await createChannel({ name, type, workspace_id, host_id, thumbnail });
 
     if (error)
       return NextResponse.json({

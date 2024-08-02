@@ -7,7 +7,7 @@ import type {
 } from '@/types/channel';
 import { createClient } from '@/utils/supabase/supabaseServer';
 
-export const createChannel = async ({ name, type, workspace_id }: ChannelInsertType) => {
+export const createChannel = async ({ name, type, workspace_id, thumbnail }: ChannelInsertType) => {
   const supabase = createClient();
 
   const response = await supabase
@@ -15,7 +15,8 @@ export const createChannel = async ({ name, type, workspace_id }: ChannelInsertT
     .insert({
       name,
       type,
-      workspace_id
+      workspace_id,
+      thumbnail
     })
     .select('id')
     .single();
