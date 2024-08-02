@@ -8,6 +8,7 @@ type UserDataType = {
   workspaceUserId: string | null;
   workspaceList: TWorkspaceInfo[] | null;
   setUserData: (userId: string, workspaceId: number) => void;
+  setWorkspaceUserIdData: (workspaceUserId: string) => void;
   setWorkspaceData: (workspaceUserId: string, workspaceList: TWorkspaceInfo[]) => void;
   clearStore: () => void;
 };
@@ -20,6 +21,7 @@ const useUserStore = create<UserDataType>()(
       workspaceUserId: null,
       workspaceList: null,
       setUserData: (userId: string, workspaceId: number) => set({ userId, workspaceId }),
+      setWorkspaceUserIdData: (workspaceUserId: string) => set({ workspaceUserId }),
       setWorkspaceData: (workspaceUserId: string, workspaceList: TWorkspaceInfo[]) =>
         set({
           workspaceUserId,
