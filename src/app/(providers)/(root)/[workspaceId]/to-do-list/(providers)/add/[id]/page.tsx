@@ -87,7 +87,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   };
 
   const handleSetStartTime = (startTime: Dayjs) => {
-    setStartTime(endTime);
+    setStartTime(startTime);
   };
   const handleSetEndTime = (endTime: Dayjs) => {
     setEndTime(endTime);
