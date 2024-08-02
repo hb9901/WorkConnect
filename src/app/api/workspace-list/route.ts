@@ -21,9 +21,10 @@ export const GET = async (request: NextRequest) => {
     const workspaceList = workspaceListData?.map((workspace) => {
       const workspaceUserId = workspace.id;
       const workspaceInfo = workspace.workspace_id;
-      // console.log(workspace, workspaceInfo, workspaceListData);
+
       return { workspace_user_id: workspaceUserId, ...workspaceInfo };
     });
+
     const data = {
       userData,
       workspaceListData: workspaceList
