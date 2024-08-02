@@ -6,6 +6,7 @@ import FileButton from '../FileButton';
 import { useMutationChatMessage } from '../../../_hooks/useMutationChat';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { ChatType } from '@/types/chat';
+import { useSnackBar } from '@/providers/SnackBarContext';
 
 const MAX_FILE_SIZE = mbToBytes(3);
 const WORKSPACE_USER_ID = '2b5cc93d-1353-4adb-a8c5-60855dc4e5a2';
@@ -29,16 +30,23 @@ const CHAT_TYPE: Record<string, ChatType['type']> = {
   documentFile: 'document'
 };
 
-const UtilsMenus = () => {
+const UtilsMenus = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
+  const onFinish = () => {
+    handleOpenUtil();
+  };
+
+  const { openSnackBar } = useSnackBar();
   const { mutate: mutateChatMessage } = useMutationChatMessage({
     channel_id: Number(4),
-    workspace_user_id: WORKSPACE_USER_ID
+    workspace_user_id: WORKSPACE_USER_ID,
+    onSuccess: onFinish
   });
 
   const uploadFile = async ({ blob, bucketName, fileType }: UploadFileProps) => {
     const { data, error } = await supabase.storage.from(bucketName).upload(`${Date.now()}`, blob);
     if (error) {
-      console.error('파일 업로드 오류:', error);
+      openSnackBar({ message: '파일을 업로드하지 못했어요' });
+      onFinish();
       return null;
     }
 
@@ -49,8 +57,9 @@ const UtilsMenus = () => {
     const { name, files } = event.target;
     if (!files) return;
 
-    if (files[0].size >= MAX_FILE_SIZE) {
-      alert('파일 크기가 3MB를 초과합니다.');
+    if (files[0]?.size >= MAX_FILE_SIZE) {
+      openSnackBar({ message: '3MB가 넘는 파일은 업로드할 수 없어요' });
+      onFinish();
       return;
     }
 

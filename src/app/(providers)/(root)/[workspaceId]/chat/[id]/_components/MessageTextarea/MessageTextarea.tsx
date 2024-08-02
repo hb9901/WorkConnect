@@ -3,12 +3,11 @@ import SmileIcon from '@/icons/Smile.svg';
 import SendIcon from '@/icons/Send.svg';
 import { forwardRef } from 'react';
 
-const MessageTextarea = forwardRef<
-  HTMLTextAreaElement,
-  {
-    handleOpenUtil: () => void;
-  }
->(({ handleOpenUtil }, ref) => {
+type MessageTextareaProps = {
+  handleOpenUtil: () => void;
+};
+
+const MessageTextarea = forwardRef<HTMLTextAreaElement, MessageTextareaProps>(({ handleOpenUtil }, ref) => {
   const handleResizeHeight = () => {
     const textArea = ref as React.RefObject<HTMLTextAreaElement>;
     if (!textArea.current) return;

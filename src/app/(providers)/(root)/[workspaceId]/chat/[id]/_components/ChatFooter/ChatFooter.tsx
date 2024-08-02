@@ -2,11 +2,17 @@ import { useRef } from 'react';
 import { useMutationChatMessage } from '../../../_hooks/useMutationChat';
 import MessageTextarea from '../MessageTextarea';
 import UtilsMenus from '../UtilsMenus';
+import ContextMenu from '../../ContextMenu';
 
 // TODO: 데이터 추가 시 수정 필요
 const WORKSPACE_USER_ID = '2b5cc93d-1353-4adb-a8c5-60855dc4e5a2';
 
-const ChatFooter = ({ id, handleOpenUtil }: { id: string; handleOpenUtil: () => void }) => {
+type ChatFooterProps = {
+  id: string;
+  handleOpenUtil: () => void;
+};
+
+const ChatFooter = ({ id, handleOpenUtil }: ChatFooterProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
   const { mutate: mutateChatMessage } = useMutationChatMessage({
     channel_id: Number(id),
@@ -23,12 +29,13 @@ const ChatFooter = ({ id, handleOpenUtil }: { id: string; handleOpenUtil: () => 
   };
 
   return (
-    <>
+    <div className="relative z-50">
       <form onSubmit={handleSendMessage}>
         <MessageTextarea handleOpenUtil={handleOpenUtil} ref={ref} />
       </form>
-      <UtilsMenus />
-    </>
+      <UtilsMenus handleOpenUtil={handleOpenUtil} />
+      <ContextMenu />
+    </div>
   );
 };
 
