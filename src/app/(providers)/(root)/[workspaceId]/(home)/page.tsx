@@ -1,6 +1,5 @@
 'use client';
 import api from '@/api';
-import { PageLayout } from '@/components/PageLayout';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import useWorkspaceUserList from '@/hooks/useWorkspaceUserList';
@@ -8,10 +7,10 @@ import useUserStore from '@/store/userStore';
 import { TWorkspaceInfo } from '@/types/workspace';
 import { useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
-import Header from './_components/Header';
-import HomeMemberCard from './_components/HomeMemberCard';
-import MemberExistComponent from './_components/MemberExistComponent';
-import MemberNotExistComponent from './_components/MemberNotExistComponent';
+import Header from '../_components/Header';
+import HomeMemberCard from '../_components/HomeMemberCard';
+import MemberExistComponent from '../_components/MemberExistComponent';
+import MemberNotExistComponent from '../_components/MemberNotExistComponent';
 
 const Homepage = () => {
   const workspaceId = useWorkspaceId();
@@ -41,24 +40,22 @@ const Homepage = () => {
   if (!(workspaceUser && workspaceList && workspaceUserList)) return;
 
   return (
-    <PageLayout title="" showTopBar={false}>
-      <div>
-        <Header workspaceList={workspaceList} workspaceId={workspaceId} />
-        <main className="px-[16px] mt-[26px]">
-          <HomeMemberCard
-            profileImg={workspaceUser.profile_image}
-            name={workspaceUser.name}
-            status={workspaceUser.state}
-          />
+    <div>
+      <Header workspaceList={workspaceList} workspaceId={workspaceId} />
+      <main className="px-[16px] mt-[26px]">
+        <HomeMemberCard
+          profileImg={workspaceUser.profile_image}
+          name={workspaceUser.name}
+          status={workspaceUser.state}
+        />
 
-          {workspaceUserList.length <= 1 ? (
-            <MemberNotExistComponent />
-          ) : (
-            <MemberExistComponent workspaceUserList={workspaceUserList} />
-          )}
-        </main>
-      </div>
-    </PageLayout>
+        {workspaceUserList.length <= 1 ? (
+          <MemberNotExistComponent />
+        ) : (
+          <MemberExistComponent workspaceUserList={workspaceUserList} />
+        )}
+      </main>
+    </div>
   );
 };
 

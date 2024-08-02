@@ -2,10 +2,10 @@
 import { PageLayout } from '@/components/PageLayout';
 import useTodoList from '@/hooks/useTodo';
 import useUserStore from '@/store/userStore';
-import Header from './_components/Header';
-import ToDoList from './_components/ToDoList';
-import WeekButtons from './_components/WeekButtons';
-import WeekDate from './_components/WeekDate';
+import Header from '../_components/Header';
+import ToDoList from '../_components/ToDoList';
+import WeekButtons from '../_components/WeekButtons';
+import WeekDate from '../_components/WeekDate';
 
 const ToDoListPage = () => {
   const { workspaceUserId } = useUserStore();
