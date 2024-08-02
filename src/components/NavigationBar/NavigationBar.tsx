@@ -42,7 +42,7 @@ export const Tab = ({
       }`}
       {...props}
     >
-      <div className="flex flex-col items-center justify-center gap-y-3">{children}</div>
+      <div className="flex flex-col items-center justify-center gap-y-3 w-full">{children}</div>
     </Component>
   );
 };
