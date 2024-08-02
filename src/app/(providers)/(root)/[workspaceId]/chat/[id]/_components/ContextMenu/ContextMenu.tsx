@@ -7,10 +7,21 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { CHAT_TYPE } from '@/constants/chat';
 import clsx from 'clsx';
 import { useSnackBar } from '@/providers/SnackBarContext';
+import { useMutationChatMessage } from '../../../_hooks/useMutationChat';
+import { useParams } from 'next/navigation';
+import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 
 const ContextMenu = () => {
+  const { id } = useParams();
+  const workspaceUserId = useWorkspaceUserId();
+
   const { contextMenuState, closeContextMenu } = useContextMenu();
   const { openSnackBar } = useSnackBar();
+
+  const { mutate: mutateChatMessage } = useMutationChatMessage({
+    channel_id: Number(id),
+    workspace_user_id: workspaceUserId
+  });
 
   const deleteChat = async () => {
     if (!contextMenuState.id) return;
@@ -18,6 +29,7 @@ const ContextMenu = () => {
     await supabase.from('chat').delete().eq('id', contextMenuState.id);
 
     openSnackBar({ message: '삭제가 완료되었어요' });
+
     closeContextMenu();
   };
 
@@ -25,6 +37,12 @@ const ContextMenu = () => {
     window.navigator.clipboard.writeText(contextMenuState.text || '').then(() => {
       openSnackBar({ message: '복사가 완료되었어요' });
     });
+
+    closeContextMenu();
+  };
+
+  const handleNotice = () => {
+    mutateChatMessage({ content: contextMenuState.text || '', type: CHAT_TYPE.notice });
     closeContextMenu();
   };
 
@@ -50,12 +68,7 @@ const ContextMenu = () => {
             <CopyIcon />
           </li>
         )}
-        <li
-          className="flex items-center justify-between"
-          onClick={() => {
-            closeContextMenu();
-          }}
-        >
+        <li className="flex items-center justify-between" onClick={handleNotice}>
           <Typography variant="Subtitle16px" color="grey900">
             공지
           </Typography>
@@ -70,7 +83,7 @@ const ContextMenu = () => {
           </li>
         )}
       </ul>
-      <div className="fixed top-0 left-0 w-full h-full" onClick={closeContextMenu} />
+      <div className="fixed top-0 left-0 w-full h-full z-40" onClick={closeContextMenu} />
     </>
   );
 };

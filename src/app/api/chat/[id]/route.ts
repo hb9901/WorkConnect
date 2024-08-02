@@ -36,7 +36,7 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
  */
 export const POST = async (req: NextRequest, { params }: { params: { id: string } }) => {
   const { id: channel_id } = params;
-  const { content, workspace_user_id, type, is_notice } = await req.json();
+  const { content, workspace_user_id, type } = await req.json();
 
   if (!content || !workspace_user_id) {
     return NextResponse.json(CHAT_RESPONSE_POST_INVALID_REQUEST);
@@ -47,8 +47,7 @@ export const POST = async (req: NextRequest, { params }: { params: { id: string 
       channel_id: Number(channel_id),
       content,
       workspace_user_id,
-      type,
-      is_notice
+      type
     });
 
     if (error) {

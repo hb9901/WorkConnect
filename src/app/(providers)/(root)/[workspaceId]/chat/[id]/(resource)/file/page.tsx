@@ -28,7 +28,7 @@ const FileListPage = () => {
   }, []);
 
   return (
-    <ul className="grid grid-cols-2 gap-x-2 gap-y-3 mt-[26px]">
+    <ul className="grid grid-cols-2 gap-x-2 gap-y-3 py-[22px] px-4">
       {fileList.map((file) => (
         <li
           key={file.id}

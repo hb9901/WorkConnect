@@ -1,5 +1,5 @@
 import { CHAT_TYPE } from '@/constants/chat';
-import type { CreateChatMessageProps, GetChatMessagesProps } from '@/types/chat';
+import type { CreateChatMessageProps, GetChatMessagesProps, GetLatestNoticeProps } from '@/types/chat';
 import { createClient } from '@/utils/supabase/supabaseServer';
 
 export const getChatMessages = async ({ channel_id }: GetChatMessagesProps) => {
@@ -16,8 +16,7 @@ export const createChatMessage = async ({
   channel_id,
   workspace_user_id,
   content,
-  type = CHAT_TYPE.text,
-  is_notice = false
+  type = CHAT_TYPE.text
 }: CreateChatMessageProps) => {
   const supabase = createClient();
 
@@ -25,9 +24,23 @@ export const createChatMessage = async ({
     channel_id: Number(channel_id),
     workspace_user_id,
     content,
-    type,
-    is_notice
+    type
   });
+
+  return response;
+};
+
+export const getLatestNotice = async ({ channel_id }: GetLatestNoticeProps) => {
+  const supabase = createClient();
+
+  const response = await supabase
+    .from('chat')
+    .select('*')
+    .eq('channel_id', channel_id)
+    .eq('type', 'notice')
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single();
 
   return response;
 };

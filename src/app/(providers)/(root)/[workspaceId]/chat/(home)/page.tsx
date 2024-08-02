@@ -11,6 +11,7 @@ import type { GetChatChannelsResponse } from '@/types/channel';
 import type { ChatSubscribePayloadProps } from '@/types/chat';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
+import { isEmpty } from '@/utils/isEmpty';
 
 const ChatListPage = () => {
   const workspaceId = useWorkspaceId();
@@ -46,7 +47,7 @@ const ChatListPage = () => {
     [channelIds]
   );
 
-  if (!channels || channels.length === 0) {
+  if (isEmpty(channels)) {
     return <div>채팅 리스트가 없습니다.</div>;
   }
 

@@ -10,3 +10,6 @@ export { default as CheckCircleIcon } from '@/icons/CheckCircle.svg';
 export { default as PinIcon } from '@/icons/Pin.svg';
 export { default as AvatarIcon } from '@/icons/Avatar.svg';
 export { default as CameraIcon } from '@/icons/Camera.svg';
+export { default as FileTextIcon } from '@/icons/FileText.svg';
+export { default as BellIcon } from '@/icons/Bell.svg';
+export { default as ChevronDownIcon } from '@/icons/ChevronDownIcon.svg';

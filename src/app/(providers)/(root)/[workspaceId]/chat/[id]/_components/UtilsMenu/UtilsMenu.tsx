@@ -8,6 +8,7 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { ChatType } from '@/types/chat';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
+import { useParams } from 'next/navigation';
 
 const MAX_FILE_SIZE = mbToBytes(3);
 const RESOURCE_URL = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/`;
@@ -30,7 +31,8 @@ const CHAT_TYPE: Record<string, ChatType['type']> = {
   documentFile: 'document'
 };
 
-const UtilsMenus = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
+const UtilsMenu = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
+  const { id } = useParams();
   const onFinish = () => {
     handleOpenUtil();
   };
@@ -39,7 +41,7 @@ const UtilsMenus = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
   const workspaceUserId = useWorkspaceUserId();
 
   const { mutate: mutateChatMessage } = useMutationChatMessage({
-    channel_id: Number(4),
+    channel_id: Number(id),
     workspace_user_id: workspaceUserId,
     onSuccess: onFinish
   });
@@ -52,7 +54,7 @@ const UtilsMenus = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
       return null;
     }
 
-    mutateChatMessage({ content: `${RESOURCE_URL}${data.fullPath}`, type: fileType, is_notice: false });
+    mutateChatMessage({ content: `${RESOURCE_URL}${data.fullPath}`, type: fileType });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,4 +89,4 @@ const UtilsMenus = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
   );
 };
 
-export default UtilsMenus;
+export default UtilsMenu;
