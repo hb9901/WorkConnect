@@ -26,7 +26,7 @@ type RealtimeChatPayloadType = {
 };
 
 const ChatDetailPage = () => {
-  const { id: channelId }: { id: string } = useParams();
+  const { id: channelId }: { id: string; workspaceId: string } = useParams();
   const containerRef = useRef<HTMLDivElement>(null);
   const [payloadMessages, setPayloadMessages] = useState<RealtimePayloadMessagesType[]>([]);
   const [isOpenUtil, setIsOpenUtil] = useState(false);

@@ -7,7 +7,7 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import ChatImage from '../ChatImage';
 import ChatVideo from '../ChatVideo';
-import { OpenContextMenuProps, useContextMenu } from '../../_provider/ContextMenuProvider';
+import { useContextMenu } from '../../_provider/ContextMenuProvider';
 
 type ClassNameProps = Pick<ComponentProps<'div'>, 'className'>;
 
@@ -29,8 +29,16 @@ export const ChatThumbnail = ({ src = '', width, height, alt = '', ...props }: S
   );
 };
 
-export const ChatOtherProfileContainer = ({ children }: StrictPropsWithChildren) => {
-  return <div className="flex items-center gap-2">{children}</div>;
+export const ChatOtherProfileContainer = ({
+  children,
+  as: Component = 'div',
+  href
+}: StrictPropsWithChildren<{ as?: React.ElementType; href?: string }>) => {
+  return (
+    <Component className="flex items-center gap-2" href={href}>
+      {children}
+    </Component>
+  );
 };
 
 export const ChatOtherProfileName = ({ children }: StrictPropsWithChildren) => {

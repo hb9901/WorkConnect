@@ -56,3 +56,11 @@ export const getExistingChannelId = async ({
 
   return response;
 };
+
+export const getChannelName = async ({ id }: { id: string }) => {
+  const supabase = createClient();
+
+  const response = await supabase.from('channel').select('name').eq('id', id).single();
+
+  return response;
+};
