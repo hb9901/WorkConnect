@@ -1,9 +1,10 @@
 'use client';
+import SnackBar from '@/components/SnackBar';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useStreamSetStore from '@/store/streamSetStore';
 import { LocalUserChoices, usePersistentUserChoices } from '@livekit/components-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import CustomPrejoin from '../CustomPrejoin';
 import PrejoinHeader from '../PrejoinHeader';
 
@@ -15,12 +16,18 @@ const PreJoinContent = () => {
   const router = useRouter();
   const { setIsSettingOk } = useStreamSetStore();
   const { userChoices } = usePersistentUserChoices();
+
+  const [isError, setIsError] = useState(false);
+
   useEffect(() => {
     setIsSettingOk(true);
   }, []);
 
   const handlePreJoinSubmit = useCallback((values: LocalUserChoices) => {
-    if (!userChoices.username) return alert('유저 이름을 입력해주세요.');
+    if (!userChoices.username) setIsError(true);
+    return (
+      <SnackBar onClose={() => setIsError(false)} isOpen={isError} duration={2000} message="이름을 입력해주세요." />
+    );
     router.push(`/${workspaceId}/video-channel/${room}?username=${userChoices.username}`);
   }, []);
 
