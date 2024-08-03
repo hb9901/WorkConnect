@@ -13,7 +13,8 @@ export const metadata: Metadata = {
   applicationName: '워크커넥트',
   appleWebApp: {
     title: '워크커넥트',
-    capable: true
+    capable: true,
+    statusBarStyle: 'default'
   },
   icons: [
     {
