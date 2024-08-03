@@ -5,13 +5,15 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import BackButton from '../_components/BackButton';
-import { setCookie } from '../_utils/cookieUtils';
+import { useSnackBar } from '@/providers/SnackBarContext';
+import { setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const setUserData = useUserStore((state) => state.setUserData);
   const route = useRouter();
+  const { openSnackBar } = useSnackBar();
 
   // TODO : 리팩터링 예정
   const loginMutation = useMutation({
@@ -24,14 +26,9 @@ const LoginPage = () => {
         password
       });
 
-      if (!session) {
-        alert('로그인이 실패했습니다.');
-        return;
-      }
+      if (!session) return openSnackBar({ message: '로그인에 실패했어요' });
 
-      if (error) {
-        return alert('사용자 정보가 일치하지 않습니다.');
-      }
+      if (error) return openSnackBar({ message: '정보가 일치하지 않아요' });
 
       const { data: workspaceUserData, error: workspaceUserError } = await supabase
         .from('workspace_user')
@@ -41,17 +38,15 @@ const LoginPage = () => {
         .limit(1)
         .single();
 
-      if (workspaceUserError) {
-        alert(`존재하지 않는 유저입니다. ${workspaceUserError.message}`);
-        return;
-      }
+      if (workspaceUserError) return openSnackBar({ message: '존재하지 않는 유저에요' });
 
       if (workspaceUserData.workspace_id === null) {
         route.push(`/workspace/landing`);
         return;
       }
 
-      setCookie('userToken', String(workspaceUserData.workspace_id), 1);
+      setWorkspaceId(workspaceUserData.workspace_id);
+      setWorkspaceUserId(session.user.id);
       setUserData(session.user.id, workspaceUserData.workspace_id);
       route.replace(`/${workspaceUserData.workspace_id}`); // TODO : 메인 홈 으로 이동
     }

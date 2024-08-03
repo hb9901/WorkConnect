@@ -8,7 +8,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import BackButton from '../../auth/_components/BackButton';
-import { setCookie } from '../../auth/_utils/cookieUtils';
+import { useSnackBar } from '@/providers/SnackBarContext';
+import { setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
 
 const getRandomNumbers = (count: number, min: number, max: number) => {
   const range = Array.from({ length: max - min + 1 }, (_, i) => i + min);
@@ -26,19 +27,20 @@ const NewWorkSpacePage = () => {
   const [workUserData, setWorkUserData] = useState<{ id: string } | null>(null);
   const setUserData = useUserStore((state) => state.setUserData);
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
+  const { openSnackBar } = useSnackBar();
 
   // TODO : 리팩터링 예정
   const handleJoin = useMutation({
     mutationFn: async () => {
       if (!user) {
-        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+        openSnackBar({ message: '로그인이 필요해요' });
         route.push('/landing');
         return;
       }
-      if (!orgName) return alert('조직 이름을 입력해주세요!');
+      if (!orgName) return openSnackBar({ message: '조직 이름을 입력해주세요!' });
 
       if (!workUserData) {
-        alert('워크스페이스에 유저 데이터가 없습니다.');
+        openSnackBar({ message: '워크스페이스에 유저 데이터가 없어요' });
         return;
       }
 
@@ -52,7 +54,7 @@ const NewWorkSpacePage = () => {
       });
 
       if (error) {
-        alert(`워크스페이스를 생성하는 중 오류가 발생했습니다. ${error.message}`);
+        openSnackBar({ message: '오류가 발생했어요' });
         return;
       }
 
@@ -63,12 +65,12 @@ const NewWorkSpacePage = () => {
         .single();
 
       if (workspaceError) {
-        alert(`워크스페이스 생성 중 오류가 발생했습니다. ${workspaceError.message}`);
+        openSnackBar({ message: `워크스페이스 생성 중 오류가 발생했습니다. ${workspaceError.message}` });
         return;
       }
 
       if (!workspaceData) {
-        alert('워크스페이스 생성 중 오류가 발생했습니다.');
+        openSnackBar({ message: '워크스페이스 생성 중 오류가 발생했어요' });
         return;
       }
 
@@ -78,11 +80,12 @@ const NewWorkSpacePage = () => {
         .eq('user_id', user.id);
 
       if (workspaceUserError) {
-        alert(`워크스페이스 유저 업데이트 중 오류가 발생했습니다. ${workspaceUserError.message}`);
+        openSnackBar({ message: '오류가 발생했어요' });
         return;
       }
 
-      setCookie('userToken', String(workspaceData.id), 1);
+      setWorkspaceId(workspaceData.id);
+      setWorkspaceUserId(user.id);
       setUserData(user.id, workspaceData.id);
 
       // TODO : 생성 완료 후 페이지 이동처리하기
@@ -110,13 +113,13 @@ const NewWorkSpacePage = () => {
         .single();
 
       if (workspaceUserError) {
-        alert(`워크스페이스 유저를 가져오는 중 오류가 발생했습니다. : ${workspaceUserError}`);
+        openSnackBar({ message: '오류가 발생했어요' });
         route.replace('/');
         return;
       }
 
       if (!workspaceUserData) {
-        alert('해당 유저는 워크스페이스에 속해있지 않습니다.');
+        openSnackBar({ message: '해당 유저는 워크스페이스에 속해있지 않아요' });
         route.replace('/');
         return;
       }

@@ -7,7 +7,8 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useState } from 'react';
-import { setCookie } from '../../auth/_utils/cookieUtils';
+import { useSnackBar } from '@/providers/SnackBarContext';
+import { setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
 
 type UserType = {
   user: AuthStoreTypes['user'];
@@ -18,17 +19,18 @@ const InviteCodePage = () => {
   const setUserData = useUserStore((state) => state.setUserData);
   const route = useRouter();
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
+  const { openSnackBar } = useSnackBar();
 
   // TODO : 리팩터링 예정
   const handleSubmit = useMutation({
     mutationFn: async () => {
       if (!user) {
-        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+        openSnackBar({ message: '로그인이 필요해요' });
         route.push('/');
         return;
       }
 
-      if (!inviteCode) return alert('초대 코드를 입력해주세요.');
+      if (!inviteCode) return openSnackBar({ message: '초대 코드를 입력해주세요' });
 
       const { data: workspaceData, error: workspaceError } = await supabase
         .from('workspace')
@@ -36,7 +38,7 @@ const InviteCodePage = () => {
         .eq('invite_code', Number(inviteCode))
         .single();
 
-      if (workspaceError) return alert(`존재하지 않는 초대코드 입니다. ${workspaceError.message}`);
+      if (workspaceError) return openSnackBar({ message: '존재하지 않는 초대코드에요' });
 
       const { error: workspaceUserError } = await supabase
         .from('workspace_user')
@@ -44,11 +46,12 @@ const InviteCodePage = () => {
         .eq('user_id', user.id);
 
       if (workspaceUserError) {
-        alert(`워크스페이스 업데이트 오류. ${workspaceUserError.message}`);
+        openSnackBar({ message: '에러가 발생했어요' });
         return;
       }
 
-      setCookie('userToken', String(workspaceData.id), 1);
+      setWorkspaceId(workspaceData.id);
+      setWorkspaceUserId(user.id);
       setUserData(user.id, workspaceData.id);
 
       // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
@@ -79,7 +82,8 @@ const InviteCodePage = () => {
       }
 
       if (workspaceUser.workspace_id !== null) {
-        setCookie('userToken', String(workspaceUser.workspace_id), 1);
+        setWorkspaceId(workspaceUser.workspace_id);
+        setWorkspaceUserId(session.user.id);
         setUserData(session.user.id, workspaceUser.workspace_id);
         route.replace(`/${workspaceUser.workspace_id}`); // TODO: 홈 화면이동 처리
       }

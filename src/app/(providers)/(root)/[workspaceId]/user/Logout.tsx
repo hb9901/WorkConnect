@@ -1,10 +1,7 @@
 'use client';
+import { deleteCookie } from '@/utils/cookieUtils';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useRouter } from 'next/navigation';
-
-const deleteCookie = (name: string) => {
-  document.cookie = name + '=; Max-Age=0; path=/';
-};
 
 // TODO : 테스트 (삭제예정)
 const Logout = () => {

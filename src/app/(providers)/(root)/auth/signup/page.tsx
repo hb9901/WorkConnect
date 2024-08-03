@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { checkEmail, emailRegex } from '../_utils/emailCheck';
 import BackButton from '../_components/BackButton';
+import { useSnackBar } from '@/providers/SnackBarContext';
 
 const SignUpPage = () => {
   const [name, setName] = useState<string>('');
@@ -13,12 +14,13 @@ const SignUpPage = () => {
   const [password, setPassword] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<string>('');
   const route = useRouter();
+  const { openSnackBar } = useSnackBar();
 
   // TODO : 리팩터링 예정
   const signUpMutation = useMutation({
     mutationFn: async () => {
-      if (!emailCheck) return alert('이메일 중복확인을 진행해주세요.');
-      if (password !== passwordCheck) return alert('비밀번호가 일치하지 않습니다.');
+      if (!emailCheck) return openSnackBar({ message: '이메일 중복확인을 해주세요' });
+      if (password !== passwordCheck) return openSnackBar({ message: '비밀번호가 일치하지 않아요' });
 
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -31,9 +33,9 @@ const SignUpPage = () => {
         }
       });
 
-      if (error?.message === 'Email rate limit exceeded') return alert('이메일 전송 할당량이 초과되었습니다.');
+      if (error?.message === 'Email rate limit exceeded') return openSnackBar({ message: '할당량이 초과되었어요.' });
 
-      if (error) return alert(`회원가입 중 에러 : ${error.message}`);
+      if (error) return openSnackBar({ message: '에러가 발생했어요.' });
 
       if (data) {
         setEmailCheck(false);
@@ -46,7 +48,7 @@ const SignUpPage = () => {
     mutationFn: async (email: string) => {
       if (!emailRegex(email)) {
         setEmailCheck(false);
-        alert('이메일 형식이 올바르지 않습니다.');
+        openSnackBar({ message: '이메일 형식이 올바르지 않아요' });
         return;
       }
 
@@ -54,7 +56,7 @@ const SignUpPage = () => {
       if (!isDuplicateEmail) return setEmailCheck(true);
       if (isDuplicateEmail) {
         setEmailCheck(false);
-        return alert('이미 존재하는 이메일입니다.');
+        return openSnackBar({ message: '이미 존재하는 이메일이에요' });
       }
     }
   });
