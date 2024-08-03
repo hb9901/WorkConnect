@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { signInWithKakao } from './auth/_utils/kakaoLogin';
 import KakaoIcon from '@/icons/Kakao.svg';
+import Typography from '@/components/Typography';
 
 const mockData = [
   {
@@ -39,9 +40,9 @@ const LandingPage = () => {
             {mockData.map((item) => (
               <SwiperSlide key={item.id}>
                 <div className="flex flex-col items-center justify-center">
-                  <div className="w-full h-[454px]">
+                  <div className="w-full">
                     <Image
-                      className="h-full object-cover"
+                      className="w-full h-auto object-cover aspect-square"
                       src={item.image}
                       alt="일러스트 이미지"
                       width={375}
@@ -50,8 +51,11 @@ const LandingPage = () => {
                     />
                   </div>
                   <div className="flex flex-col items-center justify-center h-[132px] text-[24px] font-bold">
-                    <p>기능설명 TEXT</p>
-                    <p>최대 2줄로!</p>
+                    <Typography variant="Title22px" className="text-center mb-5" color="grey900">
+                      기능설명 TEXT
+                      <br />
+                      최대 2줄로!
+                    </Typography>
                   </div>
                 </div>
               </SwiperSlide>
@@ -62,14 +66,24 @@ const LandingPage = () => {
           <div className="w-full flex flex-col items-start gap-2 p-4">
             <button
               onClick={signInWithKakao}
-              className="flex justify-center items-center w-full h-[56px] text-lg font-medium bg-[#FEE502] rounded-lg text-[#3B1E1D] px-[22px] py-[12px]"
+              className="flex justify-center items-center w-full h-[56px] text-lg font-medium bg-[#FEE502] rounded-lg text-[#3B1E1D] px-[22px] py-[12px] shadow-[0px_1px_5px_0px_rgba(0,0,0,0.12)]"
             >
               <KakaoIcon className="h-6 w-6" />
               <span className="ml-3">카카오로 시작하기</span>
             </button>
           </div>
-          <div className="pb-7 text-[14px] text-[#2F323C] flex justify-center items-center ">
-            <Link href="/auth/login">이메일로 로그인</Link> ㅣ <Link href="/auth/signup">회원가입</Link>
+          <div className="pb-7 text-[14px] text-[#2F323C] flex justify-center items-center gap-1">
+            <Link href="/auth/login">
+              <Typography as="span" variant="Body14px" color="grey700Black">
+                이메일로 로그인
+              </Typography>
+            </Link>
+            <span>ㅣ</span>
+            <Link href="/auth/signup">
+              <Typography as="span" variant="Body14px" color="grey700Black">
+                회원가입
+              </Typography>
+            </Link>
           </div>
         </div>
       </div>
