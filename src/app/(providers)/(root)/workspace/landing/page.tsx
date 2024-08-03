@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
+import WorkConnectLogoIcon from '@/icons/WorkConnectLogo.svg';
 
 type UserType = {
   user: AuthStoreTypes['user'];
@@ -97,7 +98,9 @@ const InviteCodePage = () => {
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
         <div className="flex flex-col items-center mt-[109px]">
-          <div className="w-[166px] h-[166px] bg-black"></div>
+          <div className="w-[166px] h-[166px]">
+            <WorkConnectLogoIcon className="w-full h-full" />
+          </div>
           <div className="mt-8 mb-7 flex flex-col items-center gap-3">
             <strong className="text-[20px] text-[#2E2E2E]">협업의 새로운 연결, 워크커넥트</strong>
             <p className="text-[14px] text-[rgb(46,46,46)] opacity-60">전달 받은 초대 코드를 입력해주세요</p>
