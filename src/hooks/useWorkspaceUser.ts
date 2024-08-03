@@ -8,7 +8,7 @@ const useWorkspaceUser = (workspaceUserId: string | null) => {
     isPending,
     isError
   } = useQuery<Tables<'workspace_user'> | undefined>({
-    queryKey: ['workspaceUser'],
+    queryKey: ['workspaceUser', workspaceUserId],
     queryFn: () => {
       if (!workspaceUserId) return;
       return api.workspaceUser.getWorkspaceUser(workspaceUserId);
@@ -20,6 +20,7 @@ const useWorkspaceUser = (workspaceUserId: string | null) => {
     mutationFn: (workspaceUser: Partial<Tables<'workspace_user'>>) =>
       api.workspaceUser.updateWorkspaceUser(workspaceUser)
   });
+
   return { workspaceUser, isPending, isError, updateWorkspaceUser };
 };
 
