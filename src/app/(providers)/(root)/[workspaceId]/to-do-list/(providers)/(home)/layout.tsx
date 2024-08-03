@@ -12,7 +12,13 @@ function TodoListHomeLayout({ children }: { children: React.ReactNode }) {
     }))
   );
 
-  if (!(workspaceId && workspaceList)) return;
+  if (!(workspaceId && workspaceList))
+    return (
+      <PageLayout title="" showTopBar={false}>
+        <></>
+      </PageLayout>
+    );
+
   return (
     <PageLayout title="" showTopBar={false}>
       <SelectHeader workspaceList={workspaceList} workspaceId={workspaceId} />

@@ -30,7 +30,12 @@ const HomeLayout = ({ children }: StrictPropsWithChildren) => {
     if (workspaceId && userId) getWorkspacaeList(workspaceId, userId);
   }, [userId, workspaceId]);
 
-  if (!(workspaceId && workspaceList)) return;
+  if (!(workspaceId && workspaceList))
+    return (
+      <PageLayout title="" showTopBar={false}>
+        <></>
+      </PageLayout>
+    );
 
   return (
     <PageLayout title="" showTopBar={false}>
