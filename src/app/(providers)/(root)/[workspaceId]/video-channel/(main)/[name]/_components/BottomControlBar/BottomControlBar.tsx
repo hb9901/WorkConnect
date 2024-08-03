@@ -1,4 +1,3 @@
-import GearIcon from '@/icons/Gear.svg';
 import UserIcon from '@/icons/User2.svg';
 import {
   useLocalParticipantPermissions,
@@ -90,7 +89,7 @@ const BottomControlBar = ({ variation, controls, saveUserChoices = true, ...prop
   );
 
   return (
-    <div className="flex border-t-2  justify-between mx-4 p-4 fixed bottom-1 bg-white w-[100vw] ">
+    <div className="flex border-t-2 justify-between mx-4 py-4 px-6 fixed bottom-0 bg-white w-[100vw] ">
       {visibleControls.microphone && (
         <div className="">
           <TrackToggle source={Track.Source.Microphone} showIcon={showIcon} onChange={microphoneOnChange}></TrackToggle>
@@ -125,9 +124,6 @@ const BottomControlBar = ({ variation, controls, saveUserChoices = true, ...prop
       )}
       <button className="w-12 h-6 flex justify-center">
         <UserIcon />
-      </button>
-      <button className="w-12 h-6 flex justify-center">
-        <GearIcon />
       </button>
     </div>
   );
