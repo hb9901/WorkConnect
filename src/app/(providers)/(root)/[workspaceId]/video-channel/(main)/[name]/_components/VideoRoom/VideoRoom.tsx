@@ -9,6 +9,7 @@ import { RoomConnectOptions } from 'livekit-client';
 import { redirect, useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import Loading from '../../../_components/Loading';
+import VideoChannelHeader from '../VideoChannelHeader';
 import CustomVideoConference from '../VideoConference/CustomVideoConference';
 
 type videoRoomProps = {
@@ -72,6 +73,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       style={{ height: '100vh' }}
       connectOptions={connectOptions}
     >
+      <VideoChannelHeader />
       <CustomVideoConference />
       <RoomAudioRenderer />
     </LiveKitRoom>
