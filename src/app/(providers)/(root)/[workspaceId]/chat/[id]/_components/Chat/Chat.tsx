@@ -59,7 +59,10 @@ const ChatText = ({ children, className, isMe, ...props }: ChatTextProps) => {
   return (
     <Typography
       variant="Body12px"
-      className={clsx(`max-w-[280px] px-3 py-2 rounded-[20px] whitespace-pre-wrap break-words`, chatTextClass)}
+      className={clsx(
+        `max-w-[280px] px-3 py-2 rounded-[20px] whitespace-pre-wrap break-words selection:bg-transparent`,
+        chatTextClass
+      )}
       {...props}
       color="grey700Black"
     >
