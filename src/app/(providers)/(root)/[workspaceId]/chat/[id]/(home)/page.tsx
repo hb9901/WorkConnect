@@ -48,17 +48,23 @@ const ChatDetailPage = () => {
   // TODO: 나의 삭제만 처리해야하나? 근데 위치에 고정시키면 굳이 다른 사람의 삭제 또한 막을 필요가 없을듯..
   // TODO: 그런 관점에서 useState를 굳이 유지할 필요가 있낭? 근데... 필요하긴 한데 왜냐면 db 호출 계속 하는거 아니니까 ㅠㅠ
   const handleChatUpdates = (payload: RealtimeChatPayloadType) => {
+    if (payload.new.type === 'notice') {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LATEST_NOTICE(stringId) });
+    }
+
     if (payload.eventType === 'INSERT') {
       setPayloadMessages((prev) => [...prev, payload.new]);
       return;
     }
 
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CHAT_MESSAGES(Number(channelId)) });
-    setPayloadMessages([]);
+    if (payload.eventType === 'DELETE') {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CHAT_MESSAGES(Number(channelId)) });
+      setPayloadMessages([]);
+    }
   };
 
   const handleUserUpdates = () => {
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USERS_IN_CHANNEL });
+    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USERS_IN_CHANNEL(Number(channelId)) });
   };
 
   const handleOpenUtil = () => {

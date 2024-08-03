@@ -59,7 +59,7 @@ const ChatText = ({ children, className, isMe, ...props }: ChatTextProps) => {
   return (
     <Typography
       variant="Body12px"
-      className={clsx(`max-w-xs px-3 py-2 rounded-[20px] whitespace-pre-wrap`, chatTextClass)}
+      className={clsx(`max-w-[280px] px-3 py-2 rounded-[20px] whitespace-pre-wrap break-words`, chatTextClass)}
       {...props}
       color="grey700Black"
     >
@@ -89,14 +89,17 @@ const ChatNotice = ({ children, className, isMe, noticeUrl, ...props }: ChatNoti
   const chatTextClass = isMe ? 'rounded-br-none' : 'rounded-tl-none ml-[40px] mt-[6px]';
 
   return (
-    <div className={clsx(chatTextClass, 'rounded-[20px] bg-[#F7F7F7] py-2 px-3 min-w-[188px]')} {...props}>
+    <div
+      className={clsx(chatTextClass, 'max-w-[280px] rounded-[20px] bg-[#F7F7F7] py-2 px-3 min-w-[188px]')}
+      {...props}
+    >
       <Typography as="span" variant="Body12px" className="border-b border-grey100 pb-[6px] mb-[5px] block">
         공지가 등록되었습니다.
       </Typography>
       <Typography
         as="span"
         variant="Body12px"
-        className="whitespace-pre-wrap border-b border-grey100 h-[45px] flex items-center pb-[3px]"
+        className="whitespace-pre-wrap border-b border-grey100 py-[12px] flex items-center pb-[15px] break-all"
         color="grey700Black"
       >
         {children}
