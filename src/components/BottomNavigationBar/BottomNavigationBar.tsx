@@ -24,7 +24,7 @@ const BottomNavigationBar = ({ className }: { className?: string }) => {
     <div className={className}>
       <NavigationBar>
         <Tab active={activeIndex === 0} onClick={() => handleClick(0)}>
-          <Link href={`/${workspaceId}`}>
+          <Link href={`/${workspaceId}`} className="w-full">
             <HomeIcon
               className={clsx(
                 'stroke-current items-center justify-center mx-auto mb-3',
@@ -35,7 +35,7 @@ const BottomNavigationBar = ({ className }: { className?: string }) => {
           </Link>
         </Tab>
         <Tab active={activeIndex === 1} onClick={() => handleClick(1)}>
-          <Link href={`/${workspaceId}/chat`}>
+          <Link href={`/${workspaceId}/chat`} className="w-full">
             <MessageCircleIcon
               className={clsx(
                 'stroke-current items-center justify-center mx-auto mb-3',
@@ -46,7 +46,7 @@ const BottomNavigationBar = ({ className }: { className?: string }) => {
           </Link>
         </Tab>
         <Tab active={activeIndex === 2} onClick={() => handleClick(2)}>
-          <Link href={`/${workspaceId}/to-do-list`}>
+          <Link href={`/${workspaceId}/to-do-list`} className="w-full">
             <CalendarIcon
               className={clsx(
                 'stroke-current items-center justify-center mx-auto mb-3',
@@ -57,7 +57,7 @@ const BottomNavigationBar = ({ className }: { className?: string }) => {
           </Link>
         </Tab>
         <Tab active={activeIndex === 3} onClick={() => handleClick(3)}>
-          <Link href={`/${workspaceId}/profile/${workspaceUserId}`}>
+          <Link href={`/${workspaceId}/profile/${workspaceUserId}`} className="w-full">
             <UserIcon
               className={clsx(
                 'stroke-current items-center justify-center mx-auto mb-3',

@@ -44,3 +44,11 @@ export const useGetChannelName = ({ id }: { id: string }) => {
     refetchOnWindowFocus: false
   });
 };
+
+export const useGetLatestNotice = ({ id }: { id: string }) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.LATEST_NOTICE(id),
+    queryFn: () => api.chat.getLatestNotice({ id }),
+    refetchOnWindowFocus: false
+  });
+};

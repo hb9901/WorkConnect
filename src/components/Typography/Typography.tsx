@@ -23,21 +23,21 @@ const Typography = ({
   );
 };
 
-const typographyClass = cva('leading-[130%] tracking-[-2%]', {
+const typographyClass = cva('tracking-[-2%]', {
   variants: {
     variant: {
-      Title22px: 'text-[22px] font-medium',
-      Title20px: 'text-[20px] font-medium',
-      Title18px: 'text-[18px] font-medium',
-      Title16px: 'text-[16px] font-medium',
-      Title14px: 'text-[14px] font-medium',
-      Subtitle18px: 'text-[18px] font-normal',
-      Subtitle16px: 'text-[16px] font-normal',
-      Subtitle14px: 'text-[14px] font-normal',
-      Subtitle12px: 'text-[12px] font-normal',
-      Body16px: 'text-[16px] font-normal',
-      Body14px: 'text-[14px] font-normal',
-      Body12px: 'text-[12px] font-normal'
+      Title22px: 'text-[22px] font-medium leading-[130%]',
+      Title20px: 'text-[20px] font-medium leading-[130%]',
+      Title18px: 'text-[18px] font-medium leading-[150%]',
+      Title16px: 'text-[16px] font-medium leading-[150%]',
+      Title14px: 'text-[14px] font-medium leading-[150%]',
+      Subtitle18px: 'text-[18px] font-normal leading-[150%]',
+      Subtitle16px: 'text-[16px] font-normal leading-[150%]',
+      Subtitle14px: 'text-[14px] font-normal leading-[150%]',
+      Subtitle12px: 'text-[12px] font-normal leading-[150%]',
+      Body16px: 'text-[16px] font-normal leading-[150%]',
+      Body14px: 'text-[14px] font-normal leading-[150%]',
+      Body12px: 'text-[12px] font-normal leading-[150%]'
     },
     color: {
       grey900: 'text-grey900',

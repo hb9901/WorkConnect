@@ -10,6 +10,7 @@ import { CHANNEL_TYPE } from '@/constants/channel';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { getExistingChannelId } from '../_utils/getExistingChannelId';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
+import { isEmpty } from '@/utils/isEmpty';
 
 const AddChatHomeLayout = ({ children }: StrictPropsWithChildren) => {
   const workspaceId = useWorkspaceId();
@@ -23,7 +24,7 @@ const AddChatHomeLayout = ({ children }: StrictPropsWithChildren) => {
 
   const handleAddChat = async () => {
     const userIds = getSelectedUserIds();
-    if (userIds.length === 0) return;
+    if (isEmpty(userIds)) return;
 
     if (userIds.length > 2 || type === CHANNEL_TYPE.video) {
       router.push(`/${workspaceId}/chat/add/group-setting?type=${type}`);

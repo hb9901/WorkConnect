@@ -11,13 +11,12 @@ type UseChatMessageMutationProps = Omit<CreateChatMessageProps, 'channel_id' | '
 
 export const useMutationChatMessage = ({ channel_id, workspace_user_id, ...props }: UseChatMessageProps) => {
   return useMutation({
-    mutationFn: ({ content, type, is_notice }: UseChatMessageMutationProps) => {
+    mutationFn: ({ content, type }: UseChatMessageMutationProps) => {
       return api.chat.createChatMessage({
         channel_id,
         content,
         workspace_user_id,
-        type,
-        is_notice
+        type
       });
     },
     ...props
@@ -37,11 +36,12 @@ type UseCreateChannelMutationProps = Omit<ChannelInsertType, 'workspace_id'>;
 
 export const useMutationCreateChannel = ({ workspace_id }: UseCreateChannelProps) => {
   return useMutation({
-    mutationFn: ({ name, type }: UseCreateChannelMutationProps) =>
+    mutationFn: ({ name, type, thumbnail }: UseCreateChannelMutationProps) =>
       api.channel.postChannel({
         name,
         type,
-        workspace_id
+        workspace_id,
+        thumbnail
       })
   });
 };

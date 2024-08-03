@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type CheckboxTheme = 'primary' | 'grey';
 
 export interface CheckBoxProps {
   theme?: CheckboxTheme;
   children?: string;
-  onClick?: (checked: boolean) => void;
+  isChecked?: boolean;
+  onClick?: () => void;
 }
 
 const primary200Checked = 'bg-primary200Main fill-white';
@@ -24,24 +25,13 @@ const color: Record<CheckboxTheme, { checked: string; unchecked: string }> = {
   }
 };
 
-export const CheckBox = ({ theme = 'primary', children, onClick }: CheckBoxProps) => {
-  const [isChecked, setIsChecked] = useState(false);
-
-  const toggleCheckbox = () => {
-    const newChecked = !isChecked;
-    setIsChecked(newChecked);
-
-    if (onClick) {
-      onClick(newChecked);
-    }
-  };
-
+export const CheckBox = ({ theme = 'primary', children, isChecked = false, onClick }: CheckBoxProps) => {
   const iconStyle = isChecked ? color[theme].checked : color[theme].unchecked;
   const strokeColor = isChecked ? 'white' : color[theme].checked;
 
   return (
-    <div onClick={toggleCheckbox} className="flex items-center cursor-pointer">
-      <input type="checkbox" checked={isChecked} onChange={() => {}} className="hidden" />
+    <div onClick={onClick} className="flex items-center cursor-pointer">
+      <input type="checkbox" checked={isChecked} className="hidden" />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="30"

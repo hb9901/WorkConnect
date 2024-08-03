@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { useMutationChatMessage } from '../../../_hooks/useMutationChat';
 import MessageTextarea from '../MessageTextarea';
-import UtilsMenus from '../UtilsMenus';
-import ContextMenu from '../../ContextMenu';
+import UtilsMenu from '../UtilsMenu';
+import ContextMenu from '../ContextMenu';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 
 type ChatFooterProps = {
@@ -23,7 +23,7 @@ const ChatFooter = ({ id, handleOpenUtil }: ChatFooterProps) => {
 
     if (!ref.current?.value) return;
 
-    mutateChatMessage({ content: ref.current.value, type: 'text', is_notice: false });
+    mutateChatMessage({ content: ref.current.value, type: 'text' });
     ref.current.value = '';
   };
 
@@ -32,7 +32,7 @@ const ChatFooter = ({ id, handleOpenUtil }: ChatFooterProps) => {
       <form onSubmit={handleSendMessage}>
         <MessageTextarea handleOpenUtil={handleOpenUtil} ref={ref} />
       </form>
-      <UtilsMenus handleOpenUtil={handleOpenUtil} />
+      <UtilsMenu handleOpenUtil={handleOpenUtil} />
       <ContextMenu />
     </div>
   );
