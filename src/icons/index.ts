@@ -14,3 +14,4 @@ export { default as FileTextIcon } from '@/icons/FileText.svg';
 export { default as BellIcon } from '@/icons/Bell.svg';
 export { default as ChevronDownIcon } from '@/icons/ChevronDownIcon.svg';
 export { default as PersonFilledIcon } from '@/icons/PersonFilled.svg';
+export { default as WorkConnectLogoIcon } from '@/icons/WorkConnectLogo.svg';

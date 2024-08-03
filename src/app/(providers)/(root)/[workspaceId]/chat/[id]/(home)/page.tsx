@@ -77,24 +77,22 @@ const ChatDetailPage = () => {
 
   useEffect(subscribeToChat({ handleUserUpdates, handleChatUpdates, id: stringId, userIds }), [userIds]);
 
-  if (isPending) return <div>Loading...</div>;
+  if (isPending) return null;
 
   return (
-    <>
-      <div
-        className={`flex flex-col flex-grow h-[calc(100dvh+42px)] transform ease-in-out duration-300 ${
-          isOpenUtil ? 'translate-y-[-96px]' : 'translate-y-[0px]'
-        }`}
-      >
-        <ChatNotice />
-        <ChatMessagesWrapper ref={containerRef}>
-          <ChatMessages data={chatMessages} usersInChannel={usersInChannel} />
-          <ChatMessages data={payloadMessages} usersInChannel={usersInChannel} />
-        </ChatMessagesWrapper>
-        <ChatFooter id={stringId} handleOpenUtil={handleOpenUtil} />
-        {isOpenUtil && <div className="fixed top-0 left-0 w-full h-full z-40" onClick={handleOpenUtil} />}
-      </div>
-    </>
+    <div
+      className={`flex flex-col flex-grow h-[calc(100dvh+42px)] transform ease-in-out duration-300 ${
+        isOpenUtil ? 'translate-y-[-96px]' : 'translate-y-[0px]'
+      }`}
+    >
+      <ChatNotice />
+      <ChatMessagesWrapper ref={containerRef}>
+        <ChatMessages data={chatMessages} usersInChannel={usersInChannel} />
+        <ChatMessages data={payloadMessages} usersInChannel={usersInChannel} />
+      </ChatMessagesWrapper>
+      <ChatFooter id={stringId} handleOpenUtil={handleOpenUtil} />
+      {isOpenUtil && <div className="fixed top-0 left-0 w-full h-full z-40" onClick={handleOpenUtil} />}
+    </div>
   );
 };
 

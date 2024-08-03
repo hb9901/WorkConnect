@@ -47,9 +47,7 @@ const ChatListPage = () => {
     [channelIds]
   );
 
-  if (isEmpty(channels)) {
-    return <div>채팅 리스트가 없습니다.</div>;
-  }
+  if (isEmpty(channels)) return null;
 
   return (
     <ul>
