@@ -21,7 +21,7 @@ function TodoListHomeLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <PageLayout title="" showTopBar={false}>
-      <SelectHeader workspaceList={workspaceList} workspaceId={workspaceId} />
+      <SelectHeader workspaceList={workspaceList} workspaceId={workspaceId} isTodoList />
       {children}
     </PageLayout>
   );
