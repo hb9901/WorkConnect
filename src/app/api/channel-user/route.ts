@@ -1,4 +1,4 @@
-import { createChannelUsers, deleteUserInChannel, getUserListByChannel } from '@/services/channelUser';
+import { createChannelUsers } from '@/services/channelUser';
 import { NextRequest, NextResponse } from 'next/server';
 import { CHANNEL_USER_RESPONSE } from './constants';
 
@@ -28,58 +28,6 @@ export const POST = async (request: NextRequest) => {
   } catch (error) {
     return NextResponse.json({
       message: CHANNEL_USER_RESPONSE.FAILED_TO_CREATE,
-      error,
-      status: false,
-      statusCode: 500
-    });
-  }
-};
-
-export const GET = async (request: NextRequest) => {
-  const { searchParams } = new URL(request.url);
-  const channel_id = searchParams.get('channel_id');
-
-  try {
-    if (!channel_id) return;
-    const { data, error } = await getUserListByChannel(Number(channel_id));
-    if (error)
-      return NextResponse.json({
-        message: CHANNEL_USER_RESPONSE.FAILED_TO_CREATE,
-        error,
-        status: false,
-        statusCode: 500
-      });
-    return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json({
-      message: CHANNEL_USER_RESPONSE.FAILED_TO_CREATE,
-      error,
-      status: false,
-      statusCode: 500
-    });
-  }
-};
-
-export const DELETE = async (request: NextRequest) => {
-  const { searchParams } = new URL(request.url);
-  const channelId = searchParams.get('channel_id');
-  const workspaceUserId = searchParams.get('workspace_user_id');
-  try {
-    const { error } = await deleteUserInChannel({
-      workspace_user_id: workspaceUserId!,
-      channel_id: Number(channelId!)
-    });
-    if (error)
-      return NextResponse.json({
-        message: CHANNEL_USER_RESPONSE.FAILED_TO_DELETE,
-        error,
-        status: false,
-        statusCode: 500
-      });
-    return NextResponse.json({ message: CHANNEL_USER_RESPONSE.SUCCESS_TO_DELETE });
-  } catch (error) {
-    return NextResponse.json({
-      message: CHANNEL_USER_RESPONSE.FAILED_TO_DELETE,
       error,
       status: false,
       statusCode: 500

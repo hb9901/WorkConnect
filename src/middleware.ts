@@ -13,7 +13,7 @@ const hasValidToken = (request: NextRequest) => {
 };
 
 export const middleware = (request: NextRequest) => {
-  console.log('redirect 미들웨어 실행~~~');
+  // console.log('redirect 미들웨어 실행~~~');
   const { pathname } = request.nextUrl;
   const workspaceIdMatch = pathname.match(/^\/(\d+)/);
   const workspaceId = workspaceIdMatch ? workspaceIdMatch[1] : null;
