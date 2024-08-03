@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { checkEmail, emailRegex } from '../_utils/emailCheck';
 import BackButton from '../_components/BackButton';
+import { useSnackBar } from '@/providers/SnackBarContext';
+import AgreeBottomSheet from './_components/AgreeBottomSheet';
 
 const SignUpPage = () => {
   const [name, setName] = useState<string>('');
@@ -12,13 +14,15 @@ const SignUpPage = () => {
   const [emailCheck, setEmailCheck] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<string>('');
+  const [isOpen, setIsOpen] = useState(false);
   const route = useRouter();
+  const { openSnackBar } = useSnackBar();
 
   // TODO : 리팩터링 예정
   const signUpMutation = useMutation({
     mutationFn: async () => {
-      if (!emailCheck) return alert('이메일 중복확인을 진행해주세요.');
-      if (password !== passwordCheck) return alert('비밀번호가 일치하지 않습니다.');
+      if (!emailCheck) return openSnackBar({ message: '이메일 중복확인을 해주세요' });
+      if (password !== passwordCheck) return openSnackBar({ message: '비밀번호가 일치하지 않아요' });
 
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -31,13 +35,17 @@ const SignUpPage = () => {
         }
       });
 
-      if (error?.message === 'Email rate limit exceeded') return alert('이메일 전송 할당량이 초과되었습니다.');
+      if (error?.message === 'Email rate limit exceeded') {
+        return openSnackBar({ message: '할당량이 초과되었어요.' });
+      }
 
-      if (error) return alert(`회원가입 중 에러 : ${error.message}`);
+      if (error) {
+        return openSnackBar({ message: '에러가 발생했어요.' });
+      }
 
       if (data) {
         setEmailCheck(false);
-        route.push(`/auth/signup/verify?email=${encodeURIComponent(email)}`);
+        handleToggleBottomSheet();
       }
     }
   });
@@ -46,7 +54,7 @@ const SignUpPage = () => {
     mutationFn: async (email: string) => {
       if (!emailRegex(email)) {
         setEmailCheck(false);
-        alert('이메일 형식이 올바르지 않습니다.');
+        openSnackBar({ message: '이메일 형식이 올바르지 않아요' });
         return;
       }
 
@@ -54,10 +62,14 @@ const SignUpPage = () => {
       if (!isDuplicateEmail) return setEmailCheck(true);
       if (isDuplicateEmail) {
         setEmailCheck(false);
-        return alert('이미 존재하는 이메일입니다.');
+        return openSnackBar({ message: '이미 존재하는 이메일이에요' });
       }
     }
   });
+
+  const handleToggleBottomSheet = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   const { mutate: handleSignUp } = signUpMutation;
   const { mutate: handleEmailCheck } = emailCheckMutation;
@@ -116,7 +128,7 @@ const SignUpPage = () => {
                     {emailCheckMutation.isPending ? '확인중...' : '중복확인'}
                   </button>
                 </div>
-                {emailCheck ? <p className="text-[14px] text-[#6C6C6C] pt-2">사용 가능한 이메일 입니다!</p> : null}
+                {emailCheck ? <p className="text-[14px] text-[#6C6C6C] pt-2">사용 가능한 이메일 입니다</p> : null}
               </div>
               <div className="flex flex-col">
                 <label className="text-[14px] text-[#2F323C] pl-[6px] mb-2" htmlFor="password">
@@ -126,7 +138,7 @@ const SignUpPage = () => {
                   className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
                   type="password"
                   id="password"
-                  placeholder="비밀번호 입력."
+                  placeholder="비밀번호 입력"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required={true}
@@ -141,7 +153,7 @@ const SignUpPage = () => {
                   className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
                   type="password"
                   id="passwordCheck"
-                  placeholder="비밀번호 재입력."
+                  placeholder="비밀번호 재입력"
                   value={passwordCheck}
                   onChange={(e) => setPasswordCheck(e.target.value)}
                   required={true}
@@ -150,7 +162,7 @@ const SignUpPage = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center pb-4 sticky bottom-0 z-10 bg-white">
+          <div className="flex justify-center pb-4 sticky bottom-0 bg-white">
             <button
               className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
               disabled={signUpMutation.isPending ? true : false}
@@ -160,6 +172,7 @@ const SignUpPage = () => {
           </div>
         </form>
       </div>
+      <AgreeBottomSheet isOpen={isOpen} handleToggleBottomSheet={handleToggleBottomSheet} email={email} />
     </main>
   );
 };
