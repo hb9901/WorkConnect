@@ -20,7 +20,7 @@ const TopSelect = ({ workspaceList, isOpen, onClick }: TopSelectProps) => {
       >
         <div className="flex flex-col p-[12px] gap-[16px]">
           {workspaceList.map((workspace) => (
-            <Link href={`/${workspace.id}`}>
+            <Link key={workspace.id} href={`/${workspace.id}`}>
               <Typography variant="Subtitle16px" color="grey500" className="ml-[8px">
                 {workspace.name}
               </Typography>
