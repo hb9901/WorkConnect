@@ -14,9 +14,10 @@ const Profile = () => {
   const workspaceId = useWorkspaceId();
   const targetWorkspaceUserId = params.targetWorkspaceUserId as string;
   const workspaceUserId = useUserStore((state) => state.workspaceUserId);
-  const { workspaceUser } = useWorkspaceUser(targetWorkspaceUserId);
+  const { workspaceUser, isPending } = useWorkspaceUser(targetWorkspaceUserId);
 
   if (!workspaceUser) return;
+
   const profileImg = workspaceUser.profile_image;
   const name = workspaceUser.name;
   const isOpen = workspaceUser.is_open;
@@ -24,6 +25,8 @@ const Profile = () => {
   const email = workspaceUser.email;
   const phoneNum = workspaceUser.phone;
   const isMyPage = targetWorkspaceUserId === workspaceUserId;
+
+  if (isPending) return null;
 
   return (
     <>
