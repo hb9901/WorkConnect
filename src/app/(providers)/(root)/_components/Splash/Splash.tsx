@@ -1,6 +1,6 @@
 'use client';
 
-import WorkConnectLogoIcon from '@/icons/WorkConnectLogo.svg';
+import { WorkConnectLogoIcon } from '@/icons';
 import WorkConnectLogoTextIcon from '@/icons/WorkConnectLogoText.svg';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';

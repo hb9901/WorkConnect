@@ -23,6 +23,8 @@ const Homepage = () => {
           profileImg={workspaceUser.profile_image}
           name={workspaceUser.name}
           status={workspaceUser.state}
+          workspaceId={workspaceId}
+          workspaceUserId={workspaceUserId}
         />
 
         {workspaceUserList.length <= 1 ? (

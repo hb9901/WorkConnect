@@ -3,7 +3,7 @@
 import type { StrictPropsWithChildren } from '@/types/common';
 import { useSearchUsers } from '../_provider/SearchUsersProvider';
 import { PageLayout } from '@/components/PageLayout';
-import { CheckIcon, XIcon } from '@/icons';
+import { Check1Icon, XIcon } from '@/icons';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useCreateChannel from '../_hooks/useCreateChannel';
 import { CHANNEL_TYPE } from '@/constants/channel';
@@ -50,7 +50,7 @@ const AddChatHomeLayout = ({ children }: StrictPropsWithChildren) => {
       TopBarLeftIcon1={<XIcon onClick={() => router.back()} />}
       TopBarRightIcon1={
         <button onClick={handleAddChat}>
-          <CheckIcon />
+          <Check1Icon />
         </button>
       }
     >

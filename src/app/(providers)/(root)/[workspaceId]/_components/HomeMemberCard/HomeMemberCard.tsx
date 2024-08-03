@@ -1,16 +1,19 @@
 import Typography from '@/components/Typography';
 import AvatarIcon from '@/icons/Avatar.svg';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface HomeMemberCardProps {
   profileImg: string | null;
   name: string;
   status: string | null;
+  workspaceId: number;
+  workspaceUserId: string | null;
 }
 
-const HomeMemberCard = ({ profileImg, name, status }: HomeMemberCardProps) => {
+const HomeMemberCard = ({ profileImg, name, status, workspaceId, workspaceUserId }: HomeMemberCardProps) => {
   return (
-    <div className="flex flex-row gap-[16px] items-center">
+    <Link href={`${workspaceId}/profile/${workspaceUserId}`} className="flex flex-row gap-[16px] items-center">
       <div className="flex items-center justify-center relative size-[56px] rounded-full bg-[#BDBDBD]">
         {profileImg ? (
           <Image src={profileImg} alt={name} className="object-cover size-[56px] rounded-full" fill priority />
@@ -30,7 +33,7 @@ const HomeMemberCard = ({ profileImg, name, status }: HomeMemberCardProps) => {
           </Typography>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
