@@ -1,1 +1,1 @@
-export { default } from './SplashPage';
+export { default } from './Splash';
