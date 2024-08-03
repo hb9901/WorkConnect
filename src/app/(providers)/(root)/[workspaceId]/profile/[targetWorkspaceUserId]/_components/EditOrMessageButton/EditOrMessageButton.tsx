@@ -44,7 +44,7 @@ const EditOrMessageButton = ({
       };
       const response = await createChannel(newChannel);
       const channelId = Number(response.id);
-      const channelUsersInfo = { workspaceUserIds: [String(workspaceId), workspaceUserId], channel_id: channelId };
+      const channelUsersInfo = { workspaceUserIds: [targetWorkspaceUserId, workspaceUserId], channel_id: channelId };
       await api.channelUser.createChannelUsers(channelUsersInfo);
       router.push(`/${workspaceId}/chat/${channelId}`);
     }

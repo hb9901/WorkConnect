@@ -1,5 +1,5 @@
 import api from '@/api/api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 type ChannelUserProps = {
   channelId?: number;
@@ -8,15 +8,6 @@ type ChannelUserProps = {
 
 const useChannelUser = ({ workspaceUserIds, channelId }: ChannelUserProps) => {
   const queryClient = useQueryClient();
-  const {
-    data: channelUsers,
-    isPending,
-    isError
-  } = useQuery({
-    queryKey: ['channelUser'],
-    queryFn: () => api.channelUser.getChannelUserList(channelId!)
-  });
-
   const { mutateAsync: enterChannel } = useMutation({
     mutationFn: (enteredChannelId: number) =>
       api.channelUser.createChannelUsers({ channel_id: enteredChannelId!, workspaceUserIds: workspaceUserIds! }),
@@ -33,7 +24,7 @@ const useChannelUser = ({ workspaceUserIds, channelId }: ChannelUserProps) => {
     }
   });
 
-  return { channelUsers, isPending, isError, enterChannel, leaveChannel };
+  return { enterChannel, leaveChannel };
 };
 
 export default useChannelUser;

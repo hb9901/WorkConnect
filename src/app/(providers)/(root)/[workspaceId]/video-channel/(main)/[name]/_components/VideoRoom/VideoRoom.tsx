@@ -1,16 +1,14 @@
 'use client';
 
-import useChannelUser from '@/hooks/useChannelUser';
+import Typography from '@/components/Typography';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
-import useEnterdChannelStore from '@/store/enteredChannelStore';
 import useStreamSetStore from '@/store/streamSetStore';
 import useUserStore from '@/store/userStore';
 import { LiveKitRoom, RoomAudioRenderer, usePersistentUserChoices } from '@livekit/components-react';
 import { RoomConnectOptions } from 'livekit-client';
 import { redirect, useParams, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Loading from '../../../_components/Loading';
-import { deleteChannel } from '../../_utils/videoChannelDelete';
 import CustomVideoConference from '../VideoConference/CustomVideoConference';
 
 type videoRoomProps = {
@@ -25,9 +23,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
   const [token, setToken] = useState('');
 
   const { userChoices } = usePersistentUserChoices();
-  const { isSettingOk, setIsSettingOk } = useStreamSetStore();
-  const { enteredChannelId } = useEnterdChannelStore();
-  const { leaveChannel } = useChannelUser({ channelId: enteredChannelId! });
+  const { isSettingOk } = useStreamSetStore();
   const { workspaceUserId } = useUserStore();
 
   useEffect(() => {
@@ -48,14 +44,6 @@ const VideoRoom = ({ name }: videoRoomProps) => {
     })();
   }, []);
 
-  const onLeave = useCallback(() => {
-    if (!workspaceUserId) return;
-    leaveChannel(workspaceUserId);
-    deleteChannel(enteredChannelId);
-    setIsSettingOk(false);
-    router.push(`/${workspaceId}/chat`);
-  }, []);
-
   const connectOptions = useMemo((): RoomConnectOptions => {
     return {
       autoSubscribe: true
@@ -66,7 +54,13 @@ const VideoRoom = ({ name }: videoRoomProps) => {
     return <Loading />;
   }
   if (typeof token !== 'string') {
-    return <h2>Missing LiveKit token</h2>;
+    return (
+      <div className="flex h-[100vh] items-center justify-center">
+        <Typography as="h5" variant="Body16px">
+          호스트가 서버를 열지 않았습니다...
+        </Typography>
+      </div>
+    );
   }
 
   return (
@@ -77,7 +71,6 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       style={{ height: '100vh' }}
       connectOptions={connectOptions}
-      onDisconnected={onLeave}
     >
       <CustomVideoConference />
       <RoomAudioRenderer />

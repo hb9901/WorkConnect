@@ -10,7 +10,7 @@ const VideoChannelHeader = () => {
   const name = decodeURIComponent(params.name as string);
   const workspaceId = useWorkspaceId();
   const { setIsSettingOk } = useStreamSetStore();
-  const handleDisconnet = () => {
+  const handleDisconnect = () => {
     setIsSettingOk(false);
     router.push(`/${workspaceId}/chat`);
   };
@@ -21,7 +21,7 @@ const VideoChannelHeader = () => {
       <Typography color="grey700Black" variant="Title20px" as="h2">
         {name}
       </Typography>
-      <DisconnectButton onClick={handleDisconnet}>{'종료'}</DisconnectButton>
+      <DisconnectButton onClick={handleDisconnect}>{'종료'}</DisconnectButton>
     </div>
   );
 };
