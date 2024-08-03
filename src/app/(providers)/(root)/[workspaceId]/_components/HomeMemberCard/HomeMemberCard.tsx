@@ -7,8 +7,8 @@ interface HomeMemberCardProps {
   profileImg: string | null;
   name: string;
   status: string | null;
-  workspaceId: string;
-  workspaceUserId: string;
+  workspaceId: number;
+  workspaceUserId: string | null;
 }
 
 const HomeMemberCard = ({ profileImg, name, status, workspaceId, workspaceUserId }: HomeMemberCardProps) => {
