@@ -10,6 +10,11 @@ const FAVICON_PATH = '/images/favicons';
 export const metadata: Metadata = {
   title: '협업의 새로운 연결, 워크커넥트',
   description: '협업의 새로운 연결, 워크커넥트',
+  applicationName: '워크커넥트',
+  appleWebApp: {
+    title: '워크커넥트',
+    capable: true
+  },
   icons: [
     {
       rel: 'icon',
