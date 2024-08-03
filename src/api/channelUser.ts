@@ -14,13 +14,13 @@ class ChannelUserAPI {
   }
 
   // 특정 채널에 소속된 유저 목록 가져오기.
-  async getChannelUserList(channel_id: number): Promise<ChannelUserType[]> {
-    const response = await this.axios.get(this.path, {
-      params: { channel_id }
-    });
+  // async getChannelUserList(channel_id: number): Promise<ChannelUserType[]> {
+  //   const response = await this.axios.get(this.path, {
+  //     params: { channel_id }
+  //   });
 
-    return response.data;
-  }
+  //   return response.data;
+  // }
 
   async createChannelUsers({ workspaceUserIds, channel_id }: CreateChannelUserParams) {
     const response = await this.axios.post(this.path, {

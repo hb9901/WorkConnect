@@ -262,10 +262,10 @@ const CustomPrejoin = ({
     }
   }, [videoTrack]);
 
-  const audioTrack = React.useMemo(
-    () => tracks?.filter((track) => track.kind === Track.Kind.Audio)[0] as LocalAudioTrack,
-    [tracks]
-  );
+  // const audioTrack = React.useMemo(
+  //   () => tracks?.filter((track) => track.kind === Track.Kind.Audio)[0] as LocalAudioTrack,
+  //   [tracks]
+  // );
 
   React.useEffect(() => {
     if (videoEl.current && videoTrack) {
@@ -315,10 +315,10 @@ const CustomPrejoin = ({
   }
 
   return (
-    <div className="bg-white h-[100vh] flex flex-col justify-center items-center" {...htmlProps}>
+    <div className="bg-white flex flex-col gap-8 justify-center" {...htmlProps}>
       <div className="flex items-center mt-4 mx-4 lg: w-[80vw]">
-        {videoTrack && (
-          <div>
+        {videoTrack && videoEnabled && (
+          <div className="flex items-center justify-center w-full bg-[#121212] rounded-[10px] top-0  h-[55vh] overflow-hidden">
             <video
               className="transform scale-x-[-1]"
               ref={videoEl}
@@ -344,6 +344,16 @@ const CustomPrejoin = ({
         >
           {micLabel}
         </TrackToggle>
+        {/* 미디어 메뉴 UI */}
+        {/* <div className="lk-button-group-menu">
+          <MediaDeviceMenu
+            initialSelection={audioDeviceId}
+            kind="audioinput"
+            disabled={!audioTrack}
+            tracks={{ audioinput: audioTrack }}
+            onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
+          />
+        </div> */}
         <TrackToggle
           initialState={videoEnabled}
           source={Track.Source.Camera}
@@ -362,7 +372,7 @@ const CustomPrejoin = ({
           id="username"
           name="username"
           type="text"
-          defaultValue={username}
+          defaultValue={userLabel}
           placeholder={userLabel}
           onChange={(inputEl) => setUsername(inputEl.target.value)}
           autoComplete="off"
