@@ -19,7 +19,7 @@ export const middleware = (request: NextRequest) => {
   const cookies = request.headers.get('cookie');
   const userToken = cookies
     ?.split('; ')
-    .find((row) => row.startsWith('userToken='))
+    .find((row) => row.startsWith('workspaceId='))
     ?.split('=')[1];
 
   if (pathname.startsWith(`/${workspaceId}`)) {
