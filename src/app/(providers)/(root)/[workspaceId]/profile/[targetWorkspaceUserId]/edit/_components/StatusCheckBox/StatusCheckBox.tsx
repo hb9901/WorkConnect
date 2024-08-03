@@ -1,6 +1,6 @@
 import { userStatusList } from '@/assets/userStatusList';
+import CheckBox from '@/components/CheckBox';
 import Typography from '@/components/Typography';
-import CheckIcon from '@/icons/Check.svg';
 import { ChangeEvent } from 'react';
 
 interface StatusCheckBoxProps {
@@ -15,11 +15,11 @@ const StatusCheckBox = ({ status, onChange }: StatusCheckBoxProps) => {
         활동상태
       </Typography>
       {userStatusList.map((userStatus) => (
-        <label key={userStatus} className="flex flex-row justify-between py-[15px]">
+        <label key={userStatus} className="flex flex-row justify-between py-[15px] cursor-pointer">
           <Typography variant="Subtitle16px" color="grey700Black">
             {userStatus}
           </Typography>
-          <div>{status === userStatus && <CheckIcon className="w-[16px] h-[16px] stroke-[#7173FA]" />}</div>
+          <div>{status === userStatus && <CheckBox />}</div>
           <input
             className="hidden"
             type="checkbox"
