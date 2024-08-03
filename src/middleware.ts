@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 const EMAIL_TOKEN = 'sb-ripbxzxpvscuqgdjpkix-auth-token';
 const KAKAO_TOKEN_0 = 'sb-ripbxzxpvscuqgdjpkix-auth-token.0';
 const KAKAO_TOKEN_1 = 'sb-ripbxzxpvscuqgdjpkix-auth-token.1';
-const AUTH_PATHS = ['/auth', '/null'];
+const AUTH_PATHS = ['/auth', '/null', '/undefined'];
 
 const hasValidToken = (request: NextRequest) => {
   const emailToken = request.cookies.get(EMAIL_TOKEN)?.value;
@@ -13,7 +13,6 @@ const hasValidToken = (request: NextRequest) => {
 };
 
 export const middleware = (request: NextRequest) => {
-  console.log('redirect 미들웨어 실행~~~');
   const { pathname } = request.nextUrl;
   const workspaceIdMatch = pathname.match(/^\/(\d+)/);
   const workspaceId = workspaceIdMatch ? workspaceIdMatch[1] : null;
@@ -23,7 +22,7 @@ export const middleware = (request: NextRequest) => {
     .find((row) => row.startsWith('userToken='))
     ?.split('=')[1];
 
-  if (pathname.startsWith(`/${workspaceId}`) || pathname === '/auth/signup/verify') {
+  if (pathname.startsWith(`/${workspaceId}`)) {
     if (!hasValidToken(request)) {
       return NextResponse.redirect(new URL('/', request.url));
     }

@@ -5,7 +5,7 @@ import WorkConnectLogoTextIcon from '@/icons/WorkConnectLogoText.svg';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const SplashPage = () => {
+const Splash = () => {
   const [isFadeOut, setIsFadeOut] = useState<boolean>(false);
   const [isHidden, setIsHidden] = useState<boolean>(false);
   const pathname = usePathname();
@@ -39,4 +39,4 @@ const SplashPage = () => {
   );
 };
 
-export default SplashPage;
+export default Splash;

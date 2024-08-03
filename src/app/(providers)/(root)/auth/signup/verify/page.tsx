@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useState } from 'react';
 import BackButton from '../../_components/BackButton';
+import { useSnackBar } from '@/providers/SnackBarContext';
 
 const AuthVerifyPage = () => {
   const [otp1, setOtp1] = useState<string>('');
@@ -14,7 +15,7 @@ const AuthVerifyPage = () => {
   const [otp6, setOtp6] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const route = useRouter();
-
+  const { openSnackBar } = useSnackBar();
   const getFullOtp = (): string => {
     return otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
   };
@@ -30,7 +31,7 @@ const AuthVerifyPage = () => {
         token: fullOtp
       });
 
-      if (error) return alert('인증번호가 일치하지 않습니다.');
+      if (error) return openSnackBar({ message: '인증번호가 일치하지 않아요' });
 
       // TODO : 처음 회원가입 시에는 /workspace/landing페이지
       if (data) return route.push('/workspace/landing');
@@ -47,19 +48,17 @@ const AuthVerifyPage = () => {
       }
     });
 
-    if (error) return alert(`인증번호 재전송 중 에러가 발생하였습니다. : ${error.message}`);
-    if (data) return alert('인증번호가 재전송되었습니다.');
+    if (error) return openSnackBar({ message: '에러가 발생했어요' });
+    if (data) return openSnackBar({ message: '인증번호가 재전송되었어요' });
   };
 
   const resetToStart = async () => {
-    const reset = confirm(`처음부터 다시하시겠습니까?\n입력하신 정보가 삭제되며, 복구가 어렵습니다.`);
+    const reset = confirm('처음부터 다시할까요?\n입력하신 정보가 삭제되며, 복구가 어려워요');
 
     if (reset) {
-      const { error } = await supabase.auth.signOut();
-      if (error) return alert(`세션 제거중 에러가 발생하였습니다. : ${error.message}`);
-
-      return route.push('/');
+      await supabase.auth.signOut();
     }
+    return route.push('/');
   };
 
   const { mutate: otpMutate } = otpMutation;
@@ -81,7 +80,7 @@ const AuthVerifyPage = () => {
             인증 코드 입력
           </h1>
           <div className="flex flex-col gap-[12px] mb-[12px] text-[16px] text-[#5C6275]">
-            <p>({email})으로 인증코드를 전송하였습니다.</p>
+            <p>{email}으로 인증코드를 전송하였습니다.</p>
             <p>이메일에 있는 인증코드를 입력해 주세요.</p>
           </div>
           <div className="flex justify-between gap-2 mb-4">

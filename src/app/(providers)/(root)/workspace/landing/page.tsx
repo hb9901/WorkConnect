@@ -7,7 +7,9 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useState } from 'react';
-import { setCookie } from '../../auth/_utils/cookieUtils';
+import { useSnackBar } from '@/providers/SnackBarContext';
+import { setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
+import WorkConnectLogoIcon from '@/icons/WorkConnectLogo.svg';
 
 type UserType = {
   user: AuthStoreTypes['user'];
@@ -18,17 +20,18 @@ const InviteCodePage = () => {
   const setUserData = useUserStore((state) => state.setUserData);
   const route = useRouter();
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
+  const { openSnackBar } = useSnackBar();
 
   // TODO : 리팩터링 예정
   const handleSubmit = useMutation({
     mutationFn: async () => {
       if (!user) {
-        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+        openSnackBar({ message: '로그인이 필요해요' });
         route.push('/');
         return;
       }
 
-      if (!inviteCode) return alert('초대 코드를 입력해주세요.');
+      if (!inviteCode) return openSnackBar({ message: '초대 코드를 입력해주세요' });
 
       const { data: workspaceData, error: workspaceError } = await supabase
         .from('workspace')
@@ -36,7 +39,7 @@ const InviteCodePage = () => {
         .eq('invite_code', Number(inviteCode))
         .single();
 
-      if (workspaceError) return alert(`존재하지 않는 초대코드 입니다. ${workspaceError.message}`);
+      if (workspaceError) return openSnackBar({ message: '존재하지 않는 초대코드에요' });
 
       const { error: workspaceUserError } = await supabase
         .from('workspace_user')
@@ -44,11 +47,12 @@ const InviteCodePage = () => {
         .eq('user_id', user.id);
 
       if (workspaceUserError) {
-        alert(`워크스페이스 업데이트 오류. ${workspaceUserError.message}`);
+        openSnackBar({ message: '에러가 발생했어요' });
         return;
       }
 
-      setCookie('userToken', String(workspaceData.id), 1);
+      setWorkspaceId(workspaceData.id);
+      setWorkspaceUserId(user.id);
       setUserData(user.id, workspaceData.id);
 
       // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
@@ -79,7 +83,8 @@ const InviteCodePage = () => {
       }
 
       if (workspaceUser.workspace_id !== null) {
-        setCookie('userToken', String(workspaceUser.workspace_id), 1);
+        setWorkspaceId(workspaceUser.workspace_id);
+        setWorkspaceUserId(session.user.id);
         setUserData(session.user.id, workspaceUser.workspace_id);
         route.replace(`/${workspaceUser.workspace_id}`); // TODO: 홈 화면이동 처리
       }
@@ -93,7 +98,9 @@ const InviteCodePage = () => {
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
         <div className="flex flex-col items-center mt-[109px]">
-          <div className="w-[166px] h-[166px] bg-black"></div>
+          <div className="w-[166px] h-[166px]">
+            <WorkConnectLogoIcon className="w-full h-full" />
+          </div>
           <div className="mt-8 mb-7 flex flex-col items-center gap-3">
             <strong className="text-[20px] text-[#2E2E2E]">협업의 새로운 연결, 워크커넥트</strong>
             <p className="text-[14px] text-[rgb(46,46,46)] opacity-60">전달 받은 초대 코드를 입력해주세요</p>

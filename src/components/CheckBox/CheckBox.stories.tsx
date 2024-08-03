@@ -28,12 +28,9 @@ export default {
 
 export const Checkbox = () => {
   const [checked, setChecked] = useState(false);
-
   return (
-    <CheckBox
-      theme="primary"
-      onClick={(newChecked) => setChecked(newChecked)}
-      children={checked ? 'Checked' : 'Unchecked'}
-    />
+    <CheckBox theme="primary" onClick={() => setChecked((prev) => !prev)} isChecked={checked}>
+      동의
+    </CheckBox>
   );
 };
