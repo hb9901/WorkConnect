@@ -35,7 +35,7 @@ const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => 
           <ChatContainer key={chat.id} className={`flex ${isMe ? 'items-end' : 'items-start'} flex-col`}>
             {!isMe && (
               <ChatOtherProfileContainer as={Link} href={`/${workspaceId}/profile/${chat.workspace_user_id}`}>
-                <Avatar src={userInfo?.profile_image ?? undefined} sizes="32px" />
+                <Avatar src={userInfo?.profile_image ?? undefined} size="32px" />
                 <ChatOtherProfileName>{userInfo?.name}</ChatOtherProfileName>
               </ChatOtherProfileContainer>
             )}
