@@ -7,6 +7,7 @@ interface TimeInputProps {
   handleDown: () => void;
   checkStr: (time: number) => void;
   time: number;
+  initTime: number;
 }
 
 const TimeInput = ({ handleUp, handleDown, checkStr, time }: TimeInputProps) => {

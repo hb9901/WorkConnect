@@ -62,11 +62,23 @@ const DateBottom = ({
           </Button>
         </div>
         <div className="flex flex-row items-center mt-[12px] mb-[24px] gap-[42px]">
-          <TimeInput handleUp={handleHourUp} handleDown={handleHourDown} time={hour} checkStr={checkHourStr} />
+          <TimeInput
+            handleUp={handleHourUp}
+            handleDown={handleHourDown}
+            time={hour}
+            checkStr={checkHourStr}
+            initTime={initHour}
+          />
           <Typography variant="Title22px" color="grey900">
             :
           </Typography>
-          <TimeInput handleUp={handleMinuteUp} handleDown={handleMinuteDown} time={minute} checkStr={checkMinuteStr} />
+          <TimeInput
+            handleUp={handleMinuteUp}
+            handleDown={handleMinuteDown}
+            time={minute}
+            checkStr={checkMinuteStr}
+            initTime={initMinute}
+          />
         </div>
         <Button theme="primary" isFullWidth onClick={handleCheck}>
           확인
