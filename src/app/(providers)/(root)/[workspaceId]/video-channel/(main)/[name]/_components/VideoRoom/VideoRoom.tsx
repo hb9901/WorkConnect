@@ -1,6 +1,5 @@
 'use client';
 
-import Typography from '@/components/Typography';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useStreamSetStore from '@/store/streamSetStore';
 import useUserStore from '@/store/userStore';
@@ -51,18 +50,18 @@ const VideoRoom = ({ name }: videoRoomProps) => {
     };
   }, []);
 
-  if (token === '') {
+  if (token === '' || token === null) {
     return <Loading />;
   }
-  if (typeof token !== 'string') {
-    return (
-      <div className="flex h-[100vh] items-center justify-center">
-        <Typography as="h5" variant="Body16px">
-          호스트가 서버를 열지 않았습니다...
-        </Typography>
-      </div>
-    );
-  }
+  // if (typeof token !== 'string') {
+  //   return (
+  //     <div className="flex h-[100vh] items-center justify-center">
+  //       <Typography as="h5" variant="Body16px">
+  //         토근을 가져오는 중 입니다...
+  //       </Typography>
+  //     </div>
+  //   );
+  // }
 
   return (
     <LiveKitRoom
