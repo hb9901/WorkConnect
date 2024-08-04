@@ -3,8 +3,8 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useState } from 'react';
-import BackButton from '../../_components/BackButton';
 import { useSnackBar } from '@/providers/SnackBarContext';
+import { TopBar } from '@/components/TopBar';
 
 const AuthVerifyPage = () => {
   const [otp1, setOtp1] = useState<string>('');
@@ -72,9 +72,7 @@ const AuthVerifyPage = () => {
   return (
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
-        <div className="flex pt-[14px] pb-[12px] items-center">
-          <BackButton />
-        </div>
+        <TopBar title="" className="px-0" />
         <div className="flex-grow">
           <h1 className="text-[20px] text-[#2F323C] font-semibold mt-[32px] mb-[16px] flex items-center">
             인증 코드 입력

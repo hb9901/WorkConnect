@@ -7,10 +7,9 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import BackButton from '../../auth/_components/BackButton';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
-import CountTextField from '@/components/CountTextField';
+import { TopBar } from '@/components/TopBar';
 
 const getRandomNumbers = (count: number, min: number, max: number) => {
   const range = Array.from({ length: max - min + 1 }, (_, i) => i + min);
@@ -134,12 +133,7 @@ const NewWorkSpacePage = () => {
   return (
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
-        <div className="flex w-[375px] h-[52px] pt-[14px] pb-[12px] items-center relative">
-          <BackButton className="absolute left-0" />
-          <strong className="text-[20px] text-[#2E2E2E] font-semibold text-center flex-1">
-            새 워크스페이스 만들기
-          </strong>
-        </div>
+        <TopBar title="워크스페이스 만들기" className="px-0" />
         <strong className="text-[20px] text-[#2E2E2E] font-semibold mt-[42px] mb-[28px] flex items-center">
           계정 정보 입력
         </strong>

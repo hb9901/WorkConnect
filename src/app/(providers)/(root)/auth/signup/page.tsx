@@ -4,9 +4,9 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { checkEmail, emailRegex } from '../_utils/emailCheck';
-import BackButton from '../_components/BackButton';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import AgreeBottomSheet from './_components/AgreeBottomSheet';
+import { TopBar } from '@/components/TopBar';
 
 const SignUpPage = () => {
   const [name, setName] = useState<string>('');
@@ -77,9 +77,7 @@ const SignUpPage = () => {
   return (
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
-        <div className="flex w-[375px] h-[52px] pt-[14px] pb-[12px] items-center">
-          <BackButton />
-        </div>
+        <TopBar title="" className="px-0" />
         <form
           onSubmit={(e) => {
             e.preventDefault();
