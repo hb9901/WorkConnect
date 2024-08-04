@@ -1,28 +1,20 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
 import { GetChatMessageType } from '@/types/chat';
 import { useParams } from 'next/navigation';
 import { useGetChatMessages, useGetLatestNotice, useGetUsersInChannel } from '../../_hooks/useQueryChat';
-import { QUERY_KEYS } from '../../_constants/constants';
 import { subscribeToChat } from '../../_utils/subscribe';
 import ChatMessagesWrapper from '../_components/ChatMessagesWrapper';
 import ChatMessages from '../_components/ChatMessages';
 import ChatFooter from '../_components/ChatFooter';
-import { RealtimeSubscribeProps } from '@/utils/createRealtimeSubscription';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import ChatNotice from '../_components/ChatNotice';
 import { isEmpty } from '@/utils/isEmpty';
+import { useChatHandlers } from '../../(home)/_hooks/useChatHandlers';
 
 type RealtimePayloadMessagesType = GetChatMessageType & {
   channel_id: string;
-};
-
-type RealtimeChatPayloadType = {
-  new: RealtimePayloadMessagesType;
-  old: RealtimePayloadMessagesType;
-  eventType: RealtimeSubscribeProps['eventHandlers'][0]['event'];
 };
 
 const ChatDetailPage = () => {
@@ -31,9 +23,9 @@ const ChatDetailPage = () => {
   const workspaceUserId = useWorkspaceUserId();
 
   const containerRef = useRef<HTMLDivElement>(null);
+  // TODO: useState를 계속 유지할지 고민
   const [payloadMessages, setPayloadMessages] = useState<RealtimePayloadMessagesType[]>([]);
   const [isOpenUtil, setIsOpenUtil] = useState(false);
-  const queryClient = useQueryClient();
 
   const { data: chatMessages = [], isPending: isPendingChatMessages } = useGetChatMessages({
     channel_id: Number(channelId)
@@ -44,36 +36,14 @@ const ChatDetailPage = () => {
     workspace_user_id: workspaceUserId
   });
 
-  const isPending = isPendingChatMessages || isPendingUsersInChannel;
-
   const { data: latestNotice } = useGetLatestNotice({ id: stringId });
 
-  const isExistLatestNotice = !isEmpty(latestNotice);
-
-  // TODO: 그런 관점에서 useState를 굳이 유지할 필요가 있낭? 근데... 필요하긴 한데 왜냐면 db 호출 계속 하는거 아니니까 ㅠㅠ
-  const handleChatUpdates = (payload: RealtimeChatPayloadType) => {
-    if (payload.eventType === 'DELETE' && latestNotice?.id === payload.old.id) {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LATEST_NOTICE(stringId) });
-    }
-
-    if (payload.new.type === 'notice') {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LATEST_NOTICE(stringId) });
-    }
-
-    if (payload.eventType === 'INSERT') {
-      setPayloadMessages((prev) => [...prev, payload.new]);
-      return;
-    }
-
-    if (payload.eventType === 'DELETE') {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CHAT_MESSAGES(Number(channelId)) });
-      setPayloadMessages([]);
-    }
-  };
-
-  const handleUserUpdates = () => {
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USERS_IN_CHANNEL(Number(channelId)) });
-  };
+  const { handleChatUpdates, handleUserUpdates } = useChatHandlers({
+    stringId,
+    latestNotice,
+    channelId: stringId,
+    setPayloadMessages
+  });
 
   const handleOpenUtil = () => {
     setIsOpenUtil((prev) => !prev);
@@ -82,6 +52,9 @@ const ChatDetailPage = () => {
   const userIds = useMemo(() => {
     return Object.keys(usersInChannel).join(',');
   }, [usersInChannel]);
+
+  const isPending = isPendingChatMessages || isPendingUsersInChannel;
+  const isExistLatestNotice = !isEmpty(latestNotice);
 
   useEffect(() => {
     if (!containerRef.current) return;
