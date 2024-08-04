@@ -13,6 +13,7 @@ import ChatFooter from '../_components/ChatFooter';
 import { RealtimeSubscribeProps } from '@/utils/createRealtimeSubscription';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import ChatNotice from '../_components/ChatNotice';
+import { isEmpty } from '@/utils/isEmpty';
 
 type RealtimePayloadMessagesType = GetChatMessageType & {
   channel_id: string;
@@ -46,6 +47,8 @@ const ChatDetailPage = () => {
   const isPending = isPendingChatMessages || isPendingUsersInChannel;
 
   const { data: latestNotice } = useGetLatestNotice({ id: stringId });
+
+  const isExistLatestNotice = !isEmpty(latestNotice);
 
   // TODO: 그런 관점에서 useState를 굳이 유지할 필요가 있낭? 근데... 필요하긴 한데 왜냐면 db 호출 계속 하는거 아니니까 ㅠㅠ
   const handleChatUpdates = (payload: RealtimeChatPayloadType) => {
@@ -99,7 +102,7 @@ const ChatDetailPage = () => {
         isOpenUtil ? 'translate-y-[-96px]' : 'translate-y-[0px]'
       }`}
     >
-      <ChatNotice latestNotice={latestNotice} />
+      {isExistLatestNotice && <ChatNotice latestNotice={latestNotice} />}
       <ChatMessagesWrapper ref={containerRef}>
         <ChatMessages data={chatMessages} usersInChannel={usersInChannel} />
         <ChatMessages data={payloadMessages} usersInChannel={usersInChannel} />

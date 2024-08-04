@@ -3,15 +3,12 @@ import { BellIcon, ChevronDownIcon } from '@/icons';
 import Typography from '@/components/Typography';
 import Link from 'next/link';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
-import { isEmpty } from '@/utils/isEmpty';
 import { GetChatMessageType } from '@/types/chat';
 
 const ChatNotice = ({ latestNotice }: { latestNotice: GetChatMessageType }) => {
   const { id } = useParams();
   const workspaceId = useWorkspaceId();
   const stringId = Array.isArray(id) ? id[0] : id;
-
-  if (isEmpty(latestNotice)) return null;
 
   return (
     <>
