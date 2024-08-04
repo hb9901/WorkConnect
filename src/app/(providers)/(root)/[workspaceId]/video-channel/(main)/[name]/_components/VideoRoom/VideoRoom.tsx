@@ -1,5 +1,6 @@
 'use client';
 
+import Typography from '@/components/Typography';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useStreamSetStore from '@/store/streamSetStore';
 import useUserStore from '@/store/userStore';
@@ -49,19 +50,19 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       autoSubscribe: true
     };
   }, []);
+  if (typeof token !== 'string' && token!) {
+    return (
+      <div className="flex h-[100vh] items-center justify-center">
+        <Typography as="h5" variant="Body16px">
+          토근을 가져오는 중 입니다...
+        </Typography>
+      </div>
+    );
+  }
 
   if (token === '' || token === null) {
     return <Loading />;
   }
-  // if (typeof token !== 'string') {
-  //   return (
-  //     <div className="flex h-[100vh] items-center justify-center">
-  //       <Typography as="h5" variant="Body16px">
-  //         토근을 가져오는 중 입니다...
-  //       </Typography>
-  //     </div>
-  //   );
-  // }
 
   return (
     <LiveKitRoom
