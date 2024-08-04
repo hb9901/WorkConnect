@@ -1,16 +1,18 @@
 import { ComponentProps } from 'react';
 import { PersonFilledIcon } from '@/icons';
-import Image from 'next/image';
+import Image, { ImageProps } from 'next/image';
 import { cva, VariantProps } from 'class-variance-authority';
+import clsx from 'clsx';
 
 type AvatarProps = Omit<ComponentProps<'img'>, 'width' | 'height'> & {
   size?: NonNullable<VariantProps<typeof AvatarVariants>['size']>;
-} & Omit<VariantProps<typeof AvatarVariants>, 'size'>;
+} & Omit<ImageProps, 'alt' | 'src'> &
+  Omit<VariantProps<typeof AvatarVariants>, 'size'>;
 
-const Avatar = ({ src, size = '48px', variant, ...props }: AvatarProps) => {
+const Avatar = ({ src, size = '48px', variant, className, ...props }: AvatarProps) => {
   if (!src) {
     return (
-      <div className={AvatarVariants({ size, variant })} {...props}>
+      <div className={clsx(AvatarVariants({ size, variant }), className)} {...props}>
         <PersonFilledIcon className={AvatarIconVariants({ size })} />
       </div>
     );
@@ -22,7 +24,7 @@ const Avatar = ({ src, size = '48px', variant, ...props }: AvatarProps) => {
     <Image
       src={src}
       alt="프로필"
-      className={AvatarVariants({ size, variant })}
+      className={clsx(AvatarVariants({ size, variant }), className)}
       width={imageSize}
       height={imageSize}
       {...props}
