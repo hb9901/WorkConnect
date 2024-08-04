@@ -21,7 +21,7 @@ const ChatFooter = ({ id, handleOpenUtil }: ChatFooterProps) => {
   const handleSendMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!ref.current?.value) return;
+    if (!ref.current?.value || ref.current?.value.trim() === '') return;
 
     mutateChatMessage({ content: ref.current.value, type: 'text' });
     ref.current.value = '';

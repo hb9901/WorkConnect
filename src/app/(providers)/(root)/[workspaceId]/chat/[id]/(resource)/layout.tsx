@@ -13,16 +13,20 @@ const ResourceLayout = ({ children }: StrictPropsWithChildren) => {
   const activeTab = pathname.includes('/media') ? 0 : pathname.includes('/file') ? 1 : 2;
   const originPath = pathname.substring(0, pathname.lastIndexOf('/'));
 
+  const handleReplace = (path: string) => {
+    router.replace(path);
+  };
+
   return (
     <PageLayout title="파일 내역" showBottomBar={false} TopBarLeftIcon1={<XIcon onClick={() => router.back()} />}>
       <Tabs>
-        <Tab as={Link} href={`${originPath}/media`} active={activeTab === 0}>
+        <Tab as="button" onClick={() => handleReplace(`${originPath}/media`)} active={activeTab === 0}>
           사진&middot;동영상
         </Tab>
-        <Tab as={Link} href={`${originPath}/file`} active={activeTab === 1}>
+        <Tab as="button" onClick={() => handleReplace(`${originPath}/file`)} active={activeTab === 1}>
           파일
         </Tab>
-        <Tab as={Link} href={`${originPath}/notice`} active={activeTab === 2}>
+        <Tab as="button" onClick={() => handleReplace(`${originPath}/notice`)} active={activeTab === 2}>
           공지
         </Tab>
       </Tabs>

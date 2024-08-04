@@ -6,7 +6,7 @@ import useCreateChannel from '../_hooks/useCreateChannel';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { ChannelType } from '@/types/channel';
 import { PageLayout } from '@/components/PageLayout';
-import { AvatarIcon, CameraIcon, CheckIcon, XIcon } from '@/icons';
+import { AvatarIcon, CameraIcon, Check1Icon, XIcon } from '@/icons';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import FileInput from '../../[id]/_components/FileInput';
 import { useSnackBar } from '@/providers/SnackBarContext';
@@ -72,7 +72,7 @@ const GroupSettingPage = () => {
       TopBarLeftIcon1={<XIcon onClick={() => router.back()} />}
       TopBarRightIcon1={
         <button onClick={handleSubmit}>
-          <CheckIcon />
+          <Check1Icon />
         </button>
       }
     >
