@@ -77,7 +77,7 @@ const SignUpPage = () => {
   return (
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
-        <TopBar title="" className="px-0" />
+        <TopBar title="" style={{ padding: '0px' }} />
         <form
           onSubmit={(e) => {
             e.preventDefault();

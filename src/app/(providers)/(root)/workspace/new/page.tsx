@@ -133,7 +133,7 @@ const NewWorkSpacePage = () => {
   return (
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
-        <TopBar title="워크스페이스 만들기" className="px-0" />
+        <TopBar title="워크스페이스 만들기" style={{ padding: '0px' }} />
         <strong className="text-[20px] text-[#2E2E2E] font-semibold mt-[42px] mb-[28px] flex items-center">
           계정 정보 입력
         </strong>

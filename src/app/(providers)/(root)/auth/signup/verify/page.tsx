@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { TopBar } from '@/components/TopBar';
+import Modal from '@/components/Modal';
+import Button from '@/components/Button';
+import Typography from '@/components/Typography';
 
 const AuthVerifyPage = () => {
   const [otp1, setOtp1] = useState<string>('');
@@ -13,6 +16,7 @@ const AuthVerifyPage = () => {
   const [otp4, setOtp4] = useState<string>('');
   const [otp5, setOtp5] = useState<string>('');
   const [otp6, setOtp6] = useState<string>('');
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const route = useRouter();
   const { openSnackBar } = useSnackBar();
@@ -52,12 +56,13 @@ const AuthVerifyPage = () => {
     if (data) return openSnackBar({ message: '인증번호가 재전송되었어요' });
   };
 
-  const resetToStart = async () => {
-    const reset = confirm('처음부터 다시할까요?\n입력하신 정보가 삭제되며, 복구가 어려워요');
+  const isModalOpen = () => {
+    setModalOpen((prev) => !prev);
+  };
 
-    if (reset) {
-      await supabase.auth.signOut();
-    }
+  const resetToStart = async () => {
+    await supabase.auth.signOut();
+    isModalOpen();
     return route.push('/');
   };
 
@@ -72,7 +77,23 @@ const AuthVerifyPage = () => {
   return (
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
-        <TopBar title="" className="px-0" />
+        <TopBar title="메일 인증" style={{ padding: '0px' }} />
+        <Modal isOpen={modalOpen} onClose={() => {}} isModal={false}>
+          <div className="flex flex-col w-[335px] h-auto px-[6px] py-5 gap-5">
+            <div className="flex flex-col items-center gap-2">
+              <Typography variant="Title18px" color="grey700Black">
+                처음부터 다시 하시겠어요?
+              </Typography>
+              <Typography variant="Subtitle16px" color="grey400">
+                지금까지 입력하신 정보가 모두 사라져요
+              </Typography>
+            </div>
+            <div className="flex gap-2">
+              <Button theme="grey" isFullWidth={true} children="취소" onClick={isModalOpen} />
+              <Button theme="primary" isFullWidth={true} children="처음으로" onClick={resetToStart} />
+            </div>
+          </div>
+        </Modal>
         <div className="flex-grow">
           <h1 className="text-[20px] text-[#2F323C] font-semibold mt-[32px] mb-[16px] flex items-center">
             인증 코드 입력
@@ -135,7 +156,7 @@ const AuthVerifyPage = () => {
           </button>
         </div>
         <div className="text-[#2F323C] text-center text-[14px] my-3">
-          <button onClick={resetToStart}>처음부터 다시 하기</button>
+          <button onClick={isModalOpen}>처음부터 다시 하기</button>
         </div>
       </div>
     </main>

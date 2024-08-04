@@ -4,7 +4,6 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import BackButton from '../_components/BackButton';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
 import { TopBar } from '@/components/TopBar';
@@ -58,7 +57,7 @@ const LoginPage = () => {
   return (
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
-        <TopBar title="" className="px-0" />
+        <TopBar title="" style={{ padding: '0px' }} />
         <h1 className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] pb-[28px] flex items-center">
           이메일로 로그인
         </h1>
