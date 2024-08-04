@@ -7,6 +7,7 @@ import { checkEmail, emailRegex } from '../_utils/emailCheck';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import AgreeBottomSheet from './_components/AgreeBottomSheet';
 import { TopBar } from '@/components/TopBar';
+import { validatePassword } from './verify/_utils/validatePassword';
 
 const SignUpPage = () => {
   const [name, setName] = useState<string>('');
@@ -21,8 +22,10 @@ const SignUpPage = () => {
   // TODO : 리팩터링 예정
   const signUpMutation = useMutation({
     mutationFn: async () => {
+      const passwordValidationMessage = validatePassword(password);
       if (!emailCheck) return openSnackBar({ message: '이메일 중복확인을 해주세요' });
       if (password !== passwordCheck) return openSnackBar({ message: '비밀번호가 일치하지 않아요' });
+      if (passwordValidationMessage !== true) return openSnackBar({ message: passwordValidationMessage });
 
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -140,6 +143,7 @@ const SignUpPage = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required={true}
+                  maxLength={8}
                 />
                 <p className="text-[14px] text-[#ACB1BE] pl-[6px] mt-2">영문자 및 숫자 조합으로 8자 이내 입력</p>
               </div>
@@ -155,6 +159,7 @@ const SignUpPage = () => {
                   value={passwordCheck}
                   onChange={(e) => setPasswordCheck(e.target.value)}
                   required={true}
+                  maxLength={8}
                 />
                 <p className="text-[14px] text-[#ACB1BE]  pl-[6px] mt-2">영문자 및 숫자 조합으로 8자 이내 입력</p>
               </div>
