@@ -26,7 +26,7 @@ const InputBottomSheet = ({ editInput }: InputBottomSheetsProps) => {
       <BottomSheet key={editInput.label} isOpen={editInput.isOpen} onClose={() => editInput.onClick(editInput.value)}>
         <div className="mt-[12px] mb-[20px]">
           {editInput.label === '활동상태' ? (
-            <StatusCheckBox status={editInput.value} onChange={handleInputChange} />
+            <StatusCheckBox status={inputValue} onChange={handleInputChange} />
           ) : (
             <BottomLineTextFieldCount
               label={editInput.label}
