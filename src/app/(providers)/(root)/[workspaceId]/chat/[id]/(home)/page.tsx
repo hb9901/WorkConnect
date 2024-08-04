@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { GetChatMessageType } from '@/types/chat';
 import { useParams } from 'next/navigation';
-import { useGetChatMessages, useGetUsersInChannel } from '../../_hooks/useQueryChat';
+import { useGetChatMessages, useGetLatestNotice, useGetUsersInChannel } from '../../_hooks/useQueryChat';
 import { QUERY_KEYS } from '../../_constants/constants';
 import { subscribeToChat } from '../../_utils/subscribe';
 import ChatMessagesWrapper from '../_components/ChatMessagesWrapper';
@@ -45,9 +45,14 @@ const ChatDetailPage = () => {
 
   const isPending = isPendingChatMessages || isPendingUsersInChannel;
 
-  // TODO: 나의 삭제만 처리해야하나? 근데 위치에 고정시키면 굳이 다른 사람의 삭제 또한 막을 필요가 없을듯..
+  const { data: latestNotice } = useGetLatestNotice({ id: stringId });
+
   // TODO: 그런 관점에서 useState를 굳이 유지할 필요가 있낭? 근데... 필요하긴 한데 왜냐면 db 호출 계속 하는거 아니니까 ㅠㅠ
   const handleChatUpdates = (payload: RealtimeChatPayloadType) => {
+    if (payload.eventType === 'DELETE' && latestNotice?.id === payload.old.id) {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LATEST_NOTICE(stringId) });
+    }
+
     if (payload.new.type === 'notice') {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LATEST_NOTICE(stringId) });
     }
@@ -81,7 +86,10 @@ const ChatDetailPage = () => {
     containerRef.current.scrollIntoView({ block: 'end' });
   }, [isPending, payloadMessages]);
 
-  useEffect(subscribeToChat({ handleUserUpdates, handleChatUpdates, id: stringId, userIds }), [userIds]);
+  useEffect(subscribeToChat({ handleUserUpdates, handleChatUpdates, id: stringId, userIds }), [
+    userIds,
+    latestNotice?.id
+  ]);
 
   if (isPending) return null;
 
@@ -91,7 +99,7 @@ const ChatDetailPage = () => {
         isOpenUtil ? 'translate-y-[-96px]' : 'translate-y-[0px]'
       }`}
     >
-      <ChatNotice />
+      <ChatNotice latestNotice={latestNotice} />
       <ChatMessagesWrapper ref={containerRef}>
         <ChatMessages data={chatMessages} usersInChannel={usersInChannel} />
         <ChatMessages data={payloadMessages} usersInChannel={usersInChannel} />
