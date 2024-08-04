@@ -1,7 +1,7 @@
 import { SearchWorkspaceUserType } from '@/types/workspaceUser';
 import { useSearchUsers } from '../_provider/SearchUsersProvider';
-import Image from 'next/image';
 import { XIcon } from '@/icons';
+import Avatar from '@/components/Avatar';
 
 type SelectedUsersProps = {
   users: SearchWorkspaceUserType[];
@@ -14,14 +14,7 @@ const SelectedUsers = ({ users }: SelectedUsersProps) => {
     <div className="flex flex-wrap gap-x-[10px] px-4 mb-[2px]">
       {users.map((user) => (
         <div key={user.id} className="flex items-center ml-[-6px] relative p-[6px]">
-          <Image
-            src={user.profile_image ?? 'https://blog.kakaocdn.net/dn/bCXLP7/btrQuNirLbt/N30EKpk07InXpbReKWzde1/img.png'}
-            alt={user.name}
-            width={48}
-            height={48}
-            className="w-[48px] h-[48px] rounded-full object-cover"
-            unoptimized
-          />
+          <Avatar size="48px" src={user.profile_image ?? undefined} />
           <button
             type="button"
             onClick={() => handleRemoveUser(user)}

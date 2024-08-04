@@ -4,11 +4,11 @@ import { CHANNEL_TYPE } from '@/constants/channel';
 import ChatCard from '@/components/ChatCard/ChatCard';
 import Link from 'next/link';
 import { ComponentProps } from 'react';
-import Image from 'next/image';
 import { AirPlayIcon } from '@/icons';
 import dayjs from 'dayjs';
+import Avatar from '@/components/Avatar';
 
-type ChannelListImageProps = Required<Pick<ComponentProps<'img'>, 'src'>> & {
+type ChannelListImageProps = Pick<ComponentProps<'img'>, 'src'> & {
   type: keyof typeof CHANNEL_TYPE;
 };
 
@@ -32,12 +32,7 @@ const ChannelItem = ({
     <Link href={href}>
       <ChatCard
         date={dayjs(created_at).format('YYYY-MM-DD')}
-        icon={
-          <ChannelImage
-            type={type}
-            src={user_thumbnail ?? 'https://blog.kakaocdn.net/dn/bCXLP7/btrQuNirLbt/N30EKpk07InXpbReKWzde1/img.png'}
-          />
-        }
+        icon={<ChannelImage type={type} src={user_thumbnail ?? undefined} />}
         message={message}
         name={user_name ?? channel_name}
         status={user_state}
@@ -56,16 +51,7 @@ const ChannelImage = ({ src = '', type }: ChannelListImageProps) => {
     );
   }
 
-  return (
-    <Image
-      src={src}
-      width={40}
-      height={40}
-      className="rounded-full object-cover w-[40px] h-[40px]"
-      alt=""
-      unoptimized
-    />
-  );
+  return <Avatar src={src} size="40px" />;
 };
 
 export default ChannelItem;

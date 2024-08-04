@@ -1,8 +1,8 @@
 import { SearchWorkspaceUserType } from '@/types/workspaceUser';
 import { useSearchUsers } from '../_provider/SearchUsersProvider';
 import MemberCard from '@/components/MemberCard';
-import Image from 'next/image';
 import { isEmpty } from '@/utils/isEmpty';
+import Avatar from '@/components/Avatar';
 
 type SearchResultsProps = {
   searchUsers: SearchWorkspaceUserType[];
@@ -21,18 +21,7 @@ const SearchResults = ({ searchUsers, selectedUsers }: SearchResultsProps) => {
       {searchUsers.map((result) => (
         <MemberCard
           name={result.name}
-          icon={
-            <Image
-              src={
-                result.profile_image ?? 'https://blog.kakaocdn.net/dn/bCXLP7/btrQuNirLbt/N30EKpk07InXpbReKWzde1/img.png'
-              }
-              alt={result.name}
-              width={48}
-              height={48}
-              className="w-[48px] h-[48px] rounded-full object-cover"
-              unoptimized
-            />
-          }
+          icon={<Avatar size="48px" src={result.profile_image ?? undefined} />}
           onToggle={() => handleSelectUser(result)}
           checked={selectedUsers.some((user) => user.id === result.id)}
         />
