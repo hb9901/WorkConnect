@@ -1,11 +1,12 @@
 import type { GetChatMessageType } from '@/types/chat';
-import { ChatContainer, ChatThumbnail, ChatMessage, ChatOtherProfileContainer, ChatOtherProfileName } from '../Chat';
+import { ChatContainer, ChatMessage, ChatOtherProfileContainer, ChatOtherProfileName } from '../Chat';
 import type { GetUsersInChannelResponse } from '@/types/channel';
 import Link from 'next/link';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import { useParams } from 'next/navigation';
 import { isEmpty } from '@/utils/isEmpty';
+import Avatar from '@/components/Avatar';
 
 type ChatMessagesProps = {
   data: GetChatMessageType[] & { channel_id?: string };
@@ -34,14 +35,7 @@ const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => 
           <ChatContainer key={chat.id} className={`flex ${isMe ? 'items-end' : 'items-start'} flex-col`}>
             {!isMe && (
               <ChatOtherProfileContainer as={Link} href={`/${workspaceId}/profile/${chat.workspace_user_id}`}>
-                <ChatThumbnail
-                  src={
-                    userInfo?.profile_image ??
-                    'https://blog.kakaocdn.net/dn/bCXLP7/btrQuNirLbt/N30EKpk07InXpbReKWzde1/img.png'
-                  }
-                  width={32}
-                  height={32}
-                />
+                <Avatar src={userInfo?.profile_image ?? undefined} sizes="32px" />
                 <ChatOtherProfileName>{userInfo?.name}</ChatOtherProfileName>
               </ChatOtherProfileContainer>
             )}

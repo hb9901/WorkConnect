@@ -3,32 +3,18 @@ import Typography from '@/components/Typography';
 import { CHAT_TYPE } from '@/constants/chat';
 import { StrictNextImagePropsType, StrictPropsWithChildren } from '@/types/common';
 import { handleDownloadFile } from '@/utils/file';
-import Image from 'next/image';
 import clsx from 'clsx';
 import ChatImage from '../ChatImage';
 import ChatVideo from '../ChatVideo';
 import { useContextMenu } from '../../_provider/ContextMenuProvider';
 import Link from 'next/link';
 import { FileTextIcon } from '@/icons';
+import Avatar from '@/components/Avatar';
 
 type ClassNameProps = Pick<ComponentProps<'div'>, 'className'>;
 
 export const ChatContainer = ({ className, children }: StrictPropsWithChildren<ClassNameProps>) => {
   return <div className={clsx('flex flex-col', className)}>{children}</div>;
-};
-
-export const ChatThumbnail = ({ src = '', width, height, alt = '', ...props }: StrictNextImagePropsType) => {
-  return (
-    <Image
-      src={src}
-      width={width || 50}
-      height={height || 50}
-      alt={alt}
-      className="rounded-full object-cover w-[32px] h-[32px]"
-      unoptimized
-      {...props}
-    />
-  );
 };
 
 export const ChatOtherProfileContainer = ({
@@ -60,7 +46,7 @@ const ChatText = ({ children, className, isMe, ...props }: ChatTextProps) => {
     <Typography
       variant="Body12px"
       className={clsx(
-        `max-w-[280px] px-3 py-2 rounded-[20px] whitespace-pre-wrap break-words selection:bg-transparent`,
+        `max-w-[280px] px-3 py-2 rounded-[20px] whitespace-pre-wrap break-words selection:bg-transparent break-keep`,
         chatTextClass
       )}
       {...props}
