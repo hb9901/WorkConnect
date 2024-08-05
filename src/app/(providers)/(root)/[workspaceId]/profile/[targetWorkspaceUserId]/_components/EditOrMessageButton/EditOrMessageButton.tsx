@@ -5,7 +5,7 @@ import MessageCircleIcon from '@/icons/MessageCircle.svg';
 import { ChannelInsertType } from '@/types/channel';
 import { useRouter } from 'next/navigation';
 
-interface EditOrMessageButtonProsp {
+interface EditOrMessageButtonProps {
   isMyPage: boolean;
   targetWorkspaceUserId: string;
   workspaceUserId: string | null;
@@ -17,7 +17,7 @@ const EditOrMessageButton = ({
   targetWorkspaceUserId,
   workspaceUserId,
   workspaceId
-}: EditOrMessageButtonProsp) => {
+}: EditOrMessageButtonProps) => {
   const { createChannel } = useChannel({ type: 'chat', workspace_id: workspaceId });
   const router = useRouter();
 
