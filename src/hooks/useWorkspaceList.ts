@@ -10,7 +10,7 @@ const useWorkspaceList = (workspaceId: number, userId: string | null) => {
     isPending,
     isError
   } = useQuery({
-    queryKey: ['workspaceList'],
+    queryKey: [`workspaceList${workspaceId}${userId}`],
     queryFn: () => {
       if (!userId) return;
       return api.workspaceList.getWorkspaceList(workspaceId, userId);

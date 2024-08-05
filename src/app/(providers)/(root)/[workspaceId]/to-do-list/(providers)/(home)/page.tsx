@@ -7,7 +7,7 @@ import WeekButtons from '../_components/WeekButtons';
 import WeekDate from '../_components/WeekDate';
 
 const ToDoListPage = () => {
-  const { workspaceUserId } = useUserStore();
+  const workspaceUserId = useUserStore((state) => state.workspaceUserId);
   const { todoList } = useTodoList(workspaceUserId);
   if (!todoList) return;
   const beforeTodoList = todoList.filter((todo) => todo.status === '진행 전');

@@ -9,7 +9,7 @@ const useTodoList = (workspaceUserId: string | null) => {
     isPending,
     isError
   } = useQuery<Tables<'todo'>[] | undefined>({
-    queryKey: ['todo'],
+    queryKey: [`todo${workspaceUserId}`],
     queryFn: () => {
       if (!workspaceUserId) return;
       return api.todo.getTodoList(workspaceUserId);
