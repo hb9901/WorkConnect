@@ -1,13 +1,14 @@
 'use client';
 import { PageLayout } from '@/components/PageLayout';
 import SelectHeader from '@/components/SelectHeader';
+import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useUserStore from '@/store/userStore';
 import { useShallow } from 'zustand/react/shallow';
 
 function TodoListHomeLayout({ children }: { children: React.ReactNode }) {
-  const { workspaceId, workspaceList } = useUserStore(
+  const workspaceId = useWorkspaceId();
+  const { workspaceList } = useUserStore(
     useShallow((state) => ({
-      workspaceId: state.workspaceId,
       workspaceList: state.workspaceList
     }))
   );
