@@ -93,23 +93,11 @@ const BottomControlBar = ({ variation, controls, saveUserChoices = true, ...prop
       {visibleControls.microphone && (
         <div className="">
           <TrackToggle source={Track.Source.Microphone} showIcon={showIcon} onChange={microphoneOnChange}></TrackToggle>
-          {/* <div className="">
-            <MediaDeviceMenu
-              kind="audioinput"
-              onActiveDeviceChange={(_kind, deviceId) => saveAudioInputDeviceId(deviceId ?? '')}
-            />
-          </div> */}
         </div>
       )}
       {visibleControls.camera && (
         <div className="">
           <TrackToggle source={Track.Source.Camera} showIcon={showIcon} onChange={cameraOnChange}></TrackToggle>
-          {/* <div className="">
-            <MediaDeviceMenu
-              kind="videoinput"
-              onActiveDeviceChange={(_kind, deviceId) => saveVideoInputDeviceId(deviceId ?? '')}
-            />
-          </div> */}
         </div>
       )}
       {visibleControls.screenShare && browserSupportsScreenSharing && (
