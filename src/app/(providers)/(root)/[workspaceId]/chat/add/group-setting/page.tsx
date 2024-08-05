@@ -34,7 +34,7 @@ const GroupSettingPage = () => {
 
   const handleSubmit = async () => {
     if (!ref.current?.value) {
-      alert('그룹채팅방 이름을 입력해주세요.');
+      openSnackBar({ message: '채팅방 이름을 입력해주세요' });
       return;
     }
 
