@@ -24,13 +24,16 @@ const ChatListPage = () => {
   });
 
   const handleChatInserts = ({ new: payload }: { new: ChatSubscribePayloadProps }) => {
-    queryClient.setQueryData(QUERY_KEYS.CHAT_CHANNELS, (prev: GetChatChannelsResponse[]) => {
-      return updateChatChannels(prev, payload);
-    });
+    queryClient.setQueryData(
+      QUERY_KEYS.CHAT_CHANNELS(workspaceId, workspaceUserId),
+      (prev: GetChatChannelsResponse[]) => {
+        return updateChatChannels(prev, payload);
+      }
+    );
   };
 
   const handleChannelUserInserts = () => {
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CHAT_CHANNELS });
+    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CHAT_CHANNELS(workspaceId, workspaceUserId) });
   };
 
   const channelIds = useMemo(() => {
