@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const useTime = (initIsAm: boolean, initHour: number, initMinute: number) => {
   const [isAm, setIsAm] = useState(initIsAm);
@@ -6,6 +6,12 @@ const useTime = (initIsAm: boolean, initHour: number, initMinute: number) => {
   const [minute, setMinute] = useState(initMinute);
   const regHour = /^([0-9]|1[0-2])$/;
   const regMinute = /^([0-5][0-9]|[0-9])$/;
+
+  useEffect(() => {
+    setIsAm(initIsAm);
+    setHour(initHour);
+    setMinute(initMinute);
+  }, [initIsAm, initHour, initMinute]);
 
   const checkHourStr = (hour: number) => {
     if (regHour.test(String(hour))) setHour(hour);
