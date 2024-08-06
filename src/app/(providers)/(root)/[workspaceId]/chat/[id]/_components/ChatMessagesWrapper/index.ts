@@ -1,1 +1,1 @@
-export { default } from './ChatMessagesWrapper';
+export * from './ChatMessagesWrapper';
