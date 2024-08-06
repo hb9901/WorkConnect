@@ -12,7 +12,7 @@ const InviteCardWithOutMember = () => {
   if (!selectedWorkspace) return;
 
   return (
-    <div className="flex flex-col items-center gap-[20px] px-[40px]">
+    <div className="flex flex-col items-center h-[calc(100dvh-72px)] gap-[20px] px-[40px]">
       <HandsIcon className="w-[90px] h-[93px]" />
       <div className="flex flex-col gap-[8px] items-center">
         <Typography variant="Title18px" color="grey700Black" className="flex flex-col items-center">

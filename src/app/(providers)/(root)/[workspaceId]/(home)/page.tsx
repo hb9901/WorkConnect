@@ -3,11 +3,9 @@ import MemberList from '../_components/MemberList';
 
 const Homepage = () => {
   return (
-    <div>
-      <main className="px-[16px] mt-[26px]">
-        <HomeMemberCard />
-        <MemberList />
-      </main>
+    <div className="px-[16px] mt-[26px]">
+      <HomeMemberCard />
+      <MemberList />
     </div>
   );
 };
