@@ -6,11 +6,11 @@ import ContextMenu from '../ContextMenu';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import { useParams } from 'next/navigation';
 
-type ChatFooterProps = {
+type MessageSenderProps = {
   handleOpenUtil: () => void;
 };
 
-const ChatFooter = ({ handleOpenUtil }: ChatFooterProps) => {
+const MessageSender = ({ handleOpenUtil }: MessageSenderProps) => {
   const { id: channelId } = useParams();
   const stringId = Array.isArray(channelId) ? channelId[0] : channelId;
 
@@ -41,4 +41,4 @@ const ChatFooter = ({ handleOpenUtil }: ChatFooterProps) => {
   );
 };
 
-export default ChatFooter;
+export default MessageSender;

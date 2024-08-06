@@ -10,7 +10,7 @@ import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import ChatNotice from '../_components/ChatNotice';
 import { isEmpty } from '@/utils/isEmpty';
 import { useChatHandlers } from '../../(home)/_hooks/useChatHandlers';
-import { ChatMessagesContainer, ChatMessagesWrapper } from '../_components/ChatMessageContainer';
+import { MessagesContainer, ChatMessagesWrapper } from '../_components/MessagesContainer';
 
 type RealtimePayloadMessagesType = GetChatMessageType & {
   channel_id: string;
@@ -64,13 +64,13 @@ const ChatDetailPage = () => {
   if (isPending) return null;
 
   return (
-    <ChatMessagesContainer>
+    <MessagesContainer>
       {isExistLatestNotice && <ChatNotice latestNotice={latestNotice} />}
       <ChatMessagesWrapper ref={containerRef}>
         <ChatMessages data={chatMessages} usersInChannel={usersInChannel} />
         <ChatMessages data={payloadMessages} usersInChannel={usersInChannel} />
       </ChatMessagesWrapper>
-    </ChatMessagesContainer>
+    </MessagesContainer>
   );
 };
 

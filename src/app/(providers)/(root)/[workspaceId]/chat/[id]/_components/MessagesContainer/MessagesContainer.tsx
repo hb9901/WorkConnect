@@ -1,8 +1,8 @@
 import { StrictPropsWithChildren } from '@/types/common';
 import { forwardRef, useState } from 'react';
-import ChatFooter from '../ChatFooter';
+import MessageSender from '../MessageSender';
 
-export const ChatMessagesContainer = ({ children }: StrictPropsWithChildren) => {
+export const MessagesContainer = ({ children }: StrictPropsWithChildren) => {
   const [isOpenUtil, setIsOpenUtil] = useState(false);
 
   const handleOpenUtil = () => {
@@ -16,7 +16,7 @@ export const ChatMessagesContainer = ({ children }: StrictPropsWithChildren) => 
       }`}
     >
       {children}
-      <ChatFooter handleOpenUtil={handleOpenUtil} />
+      <MessageSender handleOpenUtil={handleOpenUtil} />
       {isOpenUtil && <div className="fixed top-0 left-0 w-full h-full z-40" onClick={handleOpenUtil} />}
     </div>
   );
