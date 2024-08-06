@@ -16,18 +16,17 @@ const WeekDate = () => {
           <Typography variant="Title14px" color="grey600">
             {weekNames[index]}
           </Typography>
-          <div>
-            <Typography variant="Body14px" color="grey700Black">
-              <button
-                className={buttonVariants({
-                  isSelected: selectedDate.month() === date.month() && selectedDate.date() === date.date()
-                })}
-                onClick={() => handleClickDate(date)}
-              >
-                {date.date()}
-              </button>
-            </Typography>
-          </div>
+
+          <Typography variant="Body14px" color="grey700Black">
+            <button
+              className={buttonVariants({
+                isSelected: selectedDate.month() === date.month() && selectedDate.date() === date.date()
+              })}
+              onClick={() => handleClickDate(date)}
+            >
+              {date.date()}
+            </button>
+          </Typography>
         </div>
       ))}
     </div>
