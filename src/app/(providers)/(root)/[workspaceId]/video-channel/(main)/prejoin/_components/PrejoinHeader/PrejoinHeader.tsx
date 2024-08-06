@@ -1,3 +1,4 @@
+'use client';
 import Button from '@/components/Button';
 import Typography from '@/components/Typography';
 import ArrowLeftIcon from '@/icons/ArrowLeft.svg';

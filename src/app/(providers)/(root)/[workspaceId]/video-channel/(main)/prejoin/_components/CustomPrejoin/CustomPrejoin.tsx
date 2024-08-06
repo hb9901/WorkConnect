@@ -315,27 +315,26 @@ const CustomPrejoin = ({
   }
 
   return (
-    <div className="bg-white flex flex-col gap-8 justify-center" {...htmlProps}>
-      <div className="flex items-center mt-4 mx-4 lg: w-[80vw]">
+    <div className="flex flex-col gap-8 justify-center items-center bg-white" {...htmlProps}>
+      <div className="flex items-center mt-4 mx-4 w-[80vw]">
         {videoTrack && videoEnabled && (
-          <div className="flex items-center justify-center w-full bg-[#121212] rounded-[10px] top-0  h-[55vh] overflow-hidden">
+          <div className="flex items-center justify-center bg-[#121212] rounded-[10px] h-[55vh] overflow-hidden mx-auto aspect-w-16 aspect-h-9">
             <video
-              className="transform scale-x-[-1]"
+              className="transform scale-x-[-1] w-full h-full object-cover"
               ref={videoEl}
-              width="1280"
-              height="720"
               data-lk-facing-mode={facingMode}
             />
           </div>
         )}
         {(!videoTrack || !videoEnabled) && (
-          <div className="h-[50vh] bg-[#D9D9D9] rounded flex items-center justify-center w-full ">
+          <div className="flex items-center justify-center h-[50vh] bg-[#D9D9D9] min-w-[400px] w-[50rem] max-w-[1000px] rounded-[10px] mx-auto aspect-w-16 aspect-h-9">
             <div className="rounded-full bg-[#BDBDBD] w-[140px] h-[140px] flex items-center justify-center">
               <PersonFilledIcon />
             </div>
           </div>
         )}
       </div>
+
       <div className="flex gap-6 justify-center m-3">
         <TrackToggle
           initialState={audioEnabled}
@@ -344,16 +343,6 @@ const CustomPrejoin = ({
         >
           {micLabel}
         </TrackToggle>
-        {/* 미디어 메뉴 UI */}
-        {/* <div className="lk-button-group-menu">
-          <MediaDeviceMenu
-            initialSelection={audioDeviceId}
-            kind="audioinput"
-            disabled={!audioTrack}
-            tracks={{ audioinput: audioTrack }}
-            onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
-          />
-        </div> */}
         <TrackToggle
           initialState={videoEnabled}
           source={Track.Source.Camera}
@@ -361,9 +350,7 @@ const CustomPrejoin = ({
         >
           {camLabel}
         </TrackToggle>
-        <div>
-          <DeviceMenuButton />
-        </div>
+        <DeviceMenuButton />
       </div>
 
       <form className="flex flex-col items-center gap-3 ">
