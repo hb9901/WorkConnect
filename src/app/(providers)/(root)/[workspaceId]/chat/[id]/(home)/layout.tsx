@@ -35,7 +35,7 @@ const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
       <PageLayout
         title={dmChannelName || channelName || ''}
         showBottomBar={false}
-        TopBarRightIcon1={<MenuButton onClick={handleOpenSidebar} />}
+        TopBarRightIcon1={<MenuButton onClick={handleOpenSidebar} aria-label="사이드바 열기" />}
         contentClassName="h-[calc(100dvh-52px)] overflow-hidden"
       >
         {children}
