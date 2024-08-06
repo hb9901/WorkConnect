@@ -1,6 +1,5 @@
 import useUserStore from '@/store/userStore';
 import { TWorkspaceInfo } from '@/types/workspace';
-import { cva } from 'class-variance-authority';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Typography from '../Typography';
@@ -50,5 +49,3 @@ const TopSelect = ({ workspaceList, isOpen, onClick }: TopSelectProps) => {
 };
 
 export default TopSelect;
-
-const topSelect = cva({});

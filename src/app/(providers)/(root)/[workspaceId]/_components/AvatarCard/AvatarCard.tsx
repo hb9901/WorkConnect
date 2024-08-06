@@ -21,8 +21,9 @@ const AvatarCard = ({ workspaceUser }: AvatarCardProps) => {
               <Image
                 src={workspaceUser.profile_image}
                 alt={workspaceUser.name}
-                className="object-cover size-[40px] rounded-full"
-                fill
+                className="object-cover size-[48px] rounded-full"
+                width="48"
+                height="48"
                 priority
               />
             ) : (

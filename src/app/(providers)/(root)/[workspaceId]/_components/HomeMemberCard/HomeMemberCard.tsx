@@ -25,22 +25,26 @@ const HomeMemberCard = () => {
     <Link href={`${workspaceId}/profile/${workspaceUserId}`} className="flex flex-row gap-[16px] items-center">
       <div className="flex items-center justify-center relative size-[56px] rounded-full bg-[#BDBDBD]">
         {profileImg ? (
-          <Image src={profileImg} alt={name} className="object-cover size-[56px] rounded-full" fill priority />
+          <Image
+            src={profileImg}
+            alt={name}
+            className="object-cover size-[56px] rounded-full"
+            width="56"
+            height="56"
+            priority
+          />
         ) : (
-          <AvatarIcon className="size-[33.6px]" />
+          <AvatarIcon className="w-[33.6px] h-[33.6px]" />
         )}
       </div>
       <div className="flex flex-col gap-[4px]">
-        <div>
-          <Typography variant="Title18px" color="grey700Black">
-            {name}
-          </Typography>
-        </div>
-        <div>
-          <Typography variant="Title14px" color="grey500">
-            {state}
-          </Typography>
-        </div>
+        <Typography variant="Title18px" color="grey700Black">
+          {name}
+        </Typography>
+
+        <Typography variant="Title14px" color="grey500">
+          {state}
+        </Typography>
       </div>
     </Link>
   );
