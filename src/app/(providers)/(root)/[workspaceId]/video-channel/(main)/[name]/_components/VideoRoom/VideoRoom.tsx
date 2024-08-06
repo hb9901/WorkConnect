@@ -9,6 +9,7 @@ import { RoomConnectOptions } from 'livekit-client';
 import { redirect, useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import Loading from '../../../_components/Loading';
+import VideoChannelHeader from '../VideoChannelHeader';
 import CustomVideoConference from '../VideoConference/CustomVideoConference';
 
 type videoRoomProps = {
@@ -49,18 +50,18 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       autoSubscribe: true
     };
   }, []);
-
-  if (token === '') {
-    return <Loading />;
-  }
-  if (typeof token !== 'string') {
+  if (typeof token !== 'string' && token!) {
     return (
       <div className="flex h-[100vh] items-center justify-center">
         <Typography as="h5" variant="Body16px">
-          호스트가 서버를 열지 않았습니다...
+          토근을 가져오는 중 입니다...
         </Typography>
       </div>
     );
+  }
+
+  if (token === '' || token === null) {
+    return <Loading />;
   }
 
   return (
@@ -72,6 +73,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       style={{ height: '100vh' }}
       connectOptions={connectOptions}
     >
+      <VideoChannelHeader />
       <CustomVideoConference />
       <RoomAudioRenderer />
     </LiveKitRoom>
