@@ -10,7 +10,7 @@ import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import ChatNotice from '../_components/ChatNotice';
 import { isEmpty } from '@/utils/isEmpty';
 import { useChatHandlers } from '../../(home)/_hooks/useChatHandlers';
-import { ChatMessagesContainer, ChatMessagesWrapper } from '../_components/ChatMessagesWrapper';
+import { ChatMessagesContainer, ChatMessagesWrapper } from '../_components/ChatMessageContainer';
 
 type RealtimePayloadMessagesType = GetChatMessageType & {
   channel_id: string;

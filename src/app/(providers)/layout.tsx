@@ -11,6 +11,7 @@ const ProvidersLayout = async ({ children }: StrictPropsWithChildren) => {
   const {
     data: { session }
   } = await supabase.auth.getSession();
+
   const accessToken = session?.access_token;
 
   return (
