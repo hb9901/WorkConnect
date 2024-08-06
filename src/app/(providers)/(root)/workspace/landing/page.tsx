@@ -44,7 +44,8 @@ const InviteCodePage = () => {
       const { error: workspaceUserError } = await supabase
         .from('workspace_user')
         .update({ workspace_id: workspaceData.id })
-        .eq('user_id', user.id);
+        .eq('user_id', user.id)
+        .select();
 
       if (workspaceUserError) {
         openSnackBar({ message: '에러가 발생했어요' });
@@ -78,7 +79,7 @@ const InviteCodePage = () => {
         .single();
 
       if (workspaceUserError) {
-        alert(`워크스페이스 유저 조회 에러: ${workspaceUserError.message}`);
+        openSnackBar({ message: '유저 조회 에러' });
         return;
       }
 
