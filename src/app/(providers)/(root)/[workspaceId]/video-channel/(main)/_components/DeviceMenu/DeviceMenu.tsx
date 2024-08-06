@@ -18,7 +18,6 @@ const DeviceMenu = ({ onClose }: DeviceMenueProps) => {
     setAudioOutputDevice(deviceId);
     setSelectedDeviceId(deviceId);
   };
-  console.log(devices);
   return (
     <div className="h-[33vh] ">
       <Typography variant="Title18px" color="grey700Black">
