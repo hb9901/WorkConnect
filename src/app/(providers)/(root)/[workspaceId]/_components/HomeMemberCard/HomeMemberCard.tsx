@@ -1,17 +1,26 @@
+'use client';
 import Typography from '@/components/Typography';
+import useWorkspaceId from '@/hooks/useWorkspaceId';
+import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import AvatarIcon from '@/icons/Avatar.svg';
+import useUserStore from '@/store/userStore';
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface HomeMemberCardProps {
-  profileImg: string | null;
-  name: string;
-  status: string | null;
-  workspaceId: number;
-  workspaceUserId: string | null;
-}
+const HomeMemberCard = () => {
+  const workspaceId = useWorkspaceId();
+  const workspaceUserId = useUserStore((state) => state.workspaceUserId);
 
-const HomeMemberCard = ({ profileImg, name, status, workspaceId, workspaceUserId }: HomeMemberCardProps) => {
+  const { workspaceUser, isPending, isError } = useWorkspaceUser(workspaceUserId);
+
+  if (!workspaceUser || isError) return;
+
+  if (isPending) return;
+
+  const profileImg = workspaceUser.profile_image;
+  const name = workspaceUser.name;
+  const state = workspaceUser.state;
+
   return (
     <Link href={`${workspaceId}/profile/${workspaceUserId}`} className="flex flex-row gap-[16px] items-center">
       <div className="flex items-center justify-center relative size-[56px] rounded-full bg-[#BDBDBD]">
@@ -29,7 +38,7 @@ const HomeMemberCard = ({ profileImg, name, status, workspaceId, workspaceUserId
         </div>
         <div>
           <Typography variant="Title14px" color="grey500">
-            {status}
+            {state}
           </Typography>
         </div>
       </div>
