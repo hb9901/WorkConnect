@@ -15,7 +15,7 @@ type ChatMessagesProps = {
 
 // TODO: video onLoad event 가 있으면 모두 다 로딩된 후에 스크롤을 가장 아래로 내리도록 수정
 
-const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
+const Chats = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
   const { id: channelId } = useParams();
   const workspaceId = useWorkspaceId();
   const workspaceUserId = useWorkspaceUserId();
@@ -47,4 +47,4 @@ const ChatMessages = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => 
   );
 };
 
-export default ChatMessages;
+export default Chats;

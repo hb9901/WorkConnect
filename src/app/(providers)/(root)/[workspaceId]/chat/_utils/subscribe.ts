@@ -40,28 +40,39 @@ type SubscribeToChatProps = {
   userIds: string;
 };
 
-export const subscribeToChat =
-  ({ handleChatUpdates, handleUserUpdates, id, userIds }: SubscribeToChatProps) =>
-  () => {
-    if (!userIds) return;
+export const handleSubscribeToChat = ({ handleChatUpdates, handleUserUpdates, id, userIds }: SubscribeToChatProps) => {
+  return createRealtimeSubscription({
+    channelName: `chat_${id}`,
+    eventHandlers: [
+      {
+        event: '*',
+        schema: 'public',
+        table: 'chat',
+        filter: `channel_id=eq.${id}`,
+        handler: handleChatUpdates
+      },
+      {
+        event: 'UPDATE',
+        schema: 'public',
+        table: 'workspace_user',
+        filter: `id=in.(${userIds})`,
+        handler: handleUserUpdates
+      }
+    ]
+  });
+};
 
-    return createRealtimeSubscription({
-      channelName: `chat_${id}`,
-      eventHandlers: [
-        {
-          event: '*',
-          schema: 'public',
-          table: 'chat',
-          filter: `channel_id=eq.${id}`,
-          handler: handleChatUpdates
-        },
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'workspace_user',
-          filter: `id=in.(${userIds})`,
-          handler: handleUserUpdates
-        }
-      ]
-    });
-  };
+export const handleSubscribeToNotice = ({ handler, id }: { handler: (payload: any) => void; id: string }) => {
+  return createRealtimeSubscription({
+    channelName: `chat_${id}`,
+    eventHandlers: [
+      {
+        event: '*',
+        schema: 'public',
+        table: 'chat',
+        filter: `channel_id=eq.${id}`,
+        handler
+      }
+    ]
+  });
+};
