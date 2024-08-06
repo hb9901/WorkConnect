@@ -47,8 +47,6 @@ const Messages = () => {
     });
   }, [userIds, channelId]);
 
-  if (isPending) return null;
-
   return (
     <MessagesWrapper ref={containerRef}>
       <Chats data={chatMessages} usersInChannel={usersInChannel} />
