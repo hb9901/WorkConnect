@@ -1,19 +1,33 @@
+'use client';
 import ToDoAddButton from '@/app/(providers)/(root)/[workspaceId]/to-do-list/(providers)/_components/ToDoAddButton';
 import TopSelect from '@/components/TopSelect';
 import Typography from '@/components/Typography';
+import useWorkspaceList from '@/hooks/useWorkspaceList';
 import ChevronDownIcon from '@/icons/ChevronDownIcon.svg';
 import ChevronUpIcon from '@/icons/ChevronUpIcon.svg';
-import { TWorkspaceInfo } from '@/types/workspace';
+import useUserStore from '@/store/userStore';
 import { useState } from 'react';
 
 interface SelectHeaderProps {
-  workspaceList: TWorkspaceInfo[];
   workspaceId: number;
   isTodoList?: boolean;
 }
 
-const SelectHeader = ({ workspaceList, workspaceId, isTodoList = false }: SelectHeaderProps) => {
+const SelectHeader = ({ workspaceId, isTodoList = false }: SelectHeaderProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const userId = useUserStore((state) => state.userId);
+  const { workspaceInfo, isPending, isError } = useWorkspaceList(workspaceId, userId);
+
+  if (isError || !workspaceInfo) {
+    return;
+  }
+
+  if (isPending) {
+    return;
+  }
+
+  const workspaceList = workspaceInfo.workspaceListData;
   const selectedWorkspace = workspaceList.filter((workspace) => workspace.id === workspaceId)[0];
 
   const handleClick = () => {

@@ -9,10 +9,10 @@ class WorkspaceUserListAPI {
   constructor(axios: AxiosInstance) {
     this.axios = axios;
   }
-  async getWorkspaceUserList(workspaceId: number): Promise<WorkSpaceType[]> {
+  async getWorkspaceUserList(workspaceId: number, workspaceUserId: string): Promise<WorkSpaceType[]> {
     const path = 'api/workspace-userlist';
     const response = await this.axios.get(path, {
-      params: { workspaceId }
+      params: { workspaceId, workspaceUserId }
     });
 
     return response.data;
