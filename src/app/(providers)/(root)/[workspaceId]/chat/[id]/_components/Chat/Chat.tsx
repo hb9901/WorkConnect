@@ -1,7 +1,6 @@
 import type { ComponentProps } from 'react';
 import Typography from '@/components/Typography';
 import { CHAT_TYPE } from '@/constants/chat';
-import { StrictNextImagePropsType, StrictPropsWithChildren } from '@/types/common';
 import { handleDownloadFile } from '@/utils/file';
 import clsx from 'clsx';
 import ChatImage from '../ChatImage';
@@ -9,45 +8,18 @@ import ChatVideo from '../ChatVideo';
 import { useContextMenu } from '../../_provider/ContextMenuProvider';
 import Link from 'next/link';
 import { FileTextIcon } from '@/icons';
-import Avatar from '@/components/Avatar';
 
 type ClassNameProps = Pick<ComponentProps<'div'>, 'className'>;
 
-export const ChatContainer = ({ className, children }: StrictPropsWithChildren<ClassNameProps>) => {
-  return <div className={clsx('flex flex-col', className)}>{children}</div>;
-};
+type ChatTextProps = ComponentProps<'div'> & ClassNameProps & { className?: string };
 
-export const ChatOtherProfileContainer = ({
-  children,
-  as: Component = 'div',
-  href
-}: StrictPropsWithChildren<{ as?: React.ElementType; href?: string }>) => {
-  return (
-    <Component className="flex items-center gap-2" href={href}>
-      {children}
-    </Component>
-  );
-};
-
-export const ChatOtherProfileName = ({ children }: StrictPropsWithChildren) => {
-  return (
-    <Typography variant="Title16px" color="grey900">
-      {children}
-    </Typography>
-  );
-};
-
-type ChatTextProps = ComponentProps<'div'> & ClassNameProps & { isMe: boolean };
-
-const ChatText = ({ children, className, isMe, ...props }: ChatTextProps) => {
-  const chatTextClass = isMe ? 'rounded-br-none bg-[#EBECFE]' : 'rounded-tl-none bg-grey50 ml-[40px] mt-[6px]';
-
+const ChatText = ({ children, className, ...props }: ChatTextProps) => {
   return (
     <Typography
       variant="Body12px"
       className={clsx(
         `max-w-[280px] px-3 py-2 rounded-[20px] whitespace-pre-wrap break-words selection:bg-transparent break-keep`,
-        chatTextClass
+        className
       )}
       {...props}
       color="grey700Black"
@@ -72,16 +44,11 @@ const ChatFile = ({ fileUrl, fileName, ...props }: ChatFileProps) => {
   );
 };
 
-type ChatNoticeProps = ComponentProps<'div'> & ClassNameProps & { isMe: boolean; noticeUrl: string };
+type ChatNoticeProps = ComponentProps<'div'> & ClassNameProps & { noticeUrl: string; className?: string };
 
-const ChatNotice = ({ children, className, isMe, noticeUrl, ...props }: ChatNoticeProps) => {
-  const chatTextClass = isMe ? 'rounded-br-none' : 'rounded-tl-none ml-[40px] mt-[6px]';
-
+const ChatNotice = ({ children, className, noticeUrl, ...props }: ChatNoticeProps) => {
   return (
-    <div
-      className={clsx(chatTextClass, 'max-w-[280px] rounded-[20px] bg-[#F7F7F7] py-2 px-3 min-w-[188px]')}
-      {...props}
-    >
+    <div className={clsx(className, 'max-w-[280px] rounded-[20px] bg-[#F7F7F7] py-2 px-3 min-w-[188px]')} {...props}>
       <Typography as="span" variant="Body12px" className="border-b border-grey100 pb-[6px] mb-[5px] block">
         공지가 등록되었습니다.
       </Typography>
@@ -161,14 +128,21 @@ export const ChatMessage = ({ content, type, isMe, id, noticeUrl }: ChatMessageP
       );
     case CHAT_TYPE.text:
       return (
-        <ChatText onContextMenu={handleContextMenu} isMe={isMe}>
+        <ChatText
+          onContextMenu={handleContextMenu}
+          className={isMe ? 'rounded-br-none bg-[#EBECFE]' : 'rounded-tl-none bg-grey50 ml-[40px] mt-[6px]'}
+        >
           {content}
         </ChatText>
       );
 
     case CHAT_TYPE.notice:
       return (
-        <ChatNotice onContextMenu={handleContextMenu} isMe={isMe} noticeUrl={noticeUrl}>
+        <ChatNotice
+          onContextMenu={handleContextMenu}
+          noticeUrl={noticeUrl}
+          className={isMe ? 'rounded-br-none' : 'rounded-tl-none ml-[40px] mt-[6px]'}
+        >
           {content}
         </ChatNotice>
       );

@@ -1,5 +1,5 @@
 import type { GetChatMessageType } from '@/types/chat';
-import { ChatContainer, ChatMessage, ChatOtherProfileContainer, ChatOtherProfileName } from '../Chat';
+import { ChatMessage } from '../Chat';
 import type { GetUsersInChannelResponse } from '@/types/channel';
 import Link from 'next/link';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
@@ -7,6 +7,8 @@ import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import { useParams } from 'next/navigation';
 import { isEmpty } from '@/utils/isEmpty';
 import Avatar from '@/components/Avatar';
+import Typography from '@/components/Typography';
+import { memo } from 'react';
 
 type ChatMessagesProps = {
   data: GetChatMessageType[] & { channel_id?: string };
@@ -30,21 +32,36 @@ const Chats = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
       {data.map((chat) => {
         const userInfo = usersInChannel[chat.workspace_user_id];
         const isMe = chat.workspace_user_id === workspaceUserId;
+        const profileUrl = `/${workspaceId}/profile/${chat.workspace_user_id}`;
 
         return (
-          <ChatContainer key={chat.id} className={`flex ${isMe ? 'items-end' : 'items-start'} flex-col`}>
+          <div key={chat.id} className={`flex ${isMe ? 'items-end' : 'items-start'} flex-col`}>
             {!isMe && (
-              <ChatOtherProfileContainer as={Link} href={`/${workspaceId}/profile/${chat.workspace_user_id}`}>
-                <Avatar src={userInfo?.profile_image ?? undefined} size="32px" />
-                <ChatOtherProfileName>{userInfo?.name}</ChatOtherProfileName>
-              </ChatOtherProfileContainer>
+              <OtherProfile profileImage={userInfo?.profile_image} name={userInfo?.name} profileUrl={profileUrl} />
             )}
             <ChatMessage content={chat.content} type={chat.type} id={chat.id} isMe={isMe} noticeUrl={noticeUrl} />
-          </ChatContainer>
+          </div>
         );
       })}
     </>
   );
 };
+
+type OtherProfileProps = {
+  profileImage: string | null;
+  name: string;
+  profileUrl: string;
+};
+
+const OtherProfile = memo(({ profileImage, name, profileUrl }: OtherProfileProps) => {
+  return (
+    <Link href={profileUrl} className="flex items-center gap-2">
+      <Avatar src={profileImage ?? undefined} size="32px" />
+      <Typography variant="Title16px" color="grey900">
+        {name}
+      </Typography>
+    </Link>
+  );
+});
 
 export default Chats;
