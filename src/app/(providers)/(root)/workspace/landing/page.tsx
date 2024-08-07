@@ -21,12 +21,11 @@ const InviteCodePage = () => {
   const route = useRouter();
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
   const { openSnackBar } = useSnackBar();
+  const cookieWorkspaceId = getWorkspaceId();
 
   // TODO : 리팩터링 예정
   const handleSubmit = useMutation({
     mutationFn: async () => {
-      const cookieWorkspaceId = getWorkspaceId();
-
       if (!user) {
         openSnackBar({ message: '로그인이 필요해요' });
         route.push('/');
@@ -122,6 +121,9 @@ const InviteCodePage = () => {
 
   useLayoutEffect(() => {
     const getSession = async () => {
+      if (cookieWorkspaceId) {
+        return;
+      }
       const {
         data: { session }
       } = await supabase.auth.getSession();
