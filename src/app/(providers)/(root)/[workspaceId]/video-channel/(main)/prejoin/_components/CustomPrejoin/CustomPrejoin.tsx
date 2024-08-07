@@ -267,11 +267,6 @@ const CustomPrejoin = ({
     }
   }, [videoTrack]);
 
-  // const audioTrack = React.useMemo(
-  //   () => tracks?.filter((track) => track.kind === Track.Kind.Audio)[0] as LocalAudioTrack,
-  //   [tracks]
-  // );
-
   React.useEffect(() => {
     if (videoEl.current && videoTrack) {
       videoTrack.unmute();
@@ -336,13 +331,6 @@ const CustomPrejoin = ({
           >
             {micLabel}
           </TrackToggle>
-          {/* <MediaDeviceMenuButton
-            initialSelection={audioDeviceId}
-            kind="audioinput"
-            disabled={!audioTrack}
-            tracks={{ audioinput: audioTrack }}
-            onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
-          /> */}
           <MediaDeviceMenu
             style={{ display: 'none' }}
             initialSelection={audioDeviceId}
@@ -379,7 +367,6 @@ const CustomPrejoin = ({
           name="username"
           type="text"
           defaultValue={userLabel}
-          placeholder={userLabel}
           onChange={(inputEl) => setUsername(inputEl.target.value)}
           autoComplete="off"
         />

@@ -5,7 +5,9 @@ import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useStreamSetStore from '@/store/streamSetStore';
 import { LiveKitRoom, RoomAudioRenderer, usePersistentUserChoices } from '@livekit/components-react';
 import { RoomConnectOptions } from 'livekit-client';
-import { redirect, useParams, useSearchParams } from 'next/navigation';
+
+import { redirect, useSearchParams } from 'next/navigation';
+
 import { useEffect, useMemo, useState } from 'react';
 import Loading from '../../../_components/Loading';
 import VideoChannelHeader from '../VideoChannelHeader';
@@ -17,21 +19,24 @@ type videoRoomProps = {
 
 const VideoRoom = ({ name }: videoRoomProps) => {
   const workspaceId = useWorkspaceId();
-  const params = useParams();
   const searchParams = useSearchParams();
+  const username = searchParams.get('username');
   const [token, setToken] = useState('');
 
   const { userChoices } = usePersistentUserChoices();
   const { isSettingOk } = useStreamSetStore();
 
   useEffect(() => {
-    if (!searchParams.get('username') || !isSettingOk) {
+    if (!username || !isSettingOk) {
+      // console.log(`리다이렉트 되는거임. ${username} , ${isSettingOk}`);
       redirect(`/${workspaceId}/video-channel/prejoin?room=${name}`);
       return;
     }
     (async () => {
       try {
-        const room = params.name;
+
+        const room = name;
+
         const resp = await fetch(`/api/get-participant-token?room=${room}&username=${userChoices.username}`);
         const data = await resp.json();
         setToken(data.token);
