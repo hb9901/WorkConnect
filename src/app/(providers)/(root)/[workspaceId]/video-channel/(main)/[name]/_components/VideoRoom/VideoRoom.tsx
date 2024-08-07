@@ -5,7 +5,9 @@ import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useStreamSetStore from '@/store/streamSetStore';
 import { LiveKitRoom, RoomAudioRenderer, usePersistentUserChoices } from '@livekit/components-react';
 import { RoomConnectOptions } from 'livekit-client';
+
 import { redirect, useSearchParams } from 'next/navigation';
+
 import { useEffect, useMemo, useState } from 'react';
 import Loading from '../../../_components/Loading';
 import VideoChannelHeader from '../VideoChannelHeader';
@@ -32,7 +34,9 @@ const VideoRoom = ({ name }: videoRoomProps) => {
     }
     (async () => {
       try {
+
         const room = name;
+
         const resp = await fetch(`/api/get-participant-token?room=${room}&username=${userChoices.username}`);
         const data = await resp.json();
         setToken(data.token);
