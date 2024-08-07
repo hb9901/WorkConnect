@@ -6,11 +6,13 @@ import useWorkspaceList from '@/hooks/useWorkspaceList';
 import ChevronDownIcon from '@/icons/ChevronDownIcon.svg';
 import ChevronUpIcon from '@/icons/ChevronUpIcon.svg';
 import useUserStore from '@/store/userStore';
+import Link from 'next/link';
 import { useState } from 'react';
 
 interface SelectHeaderProps {
   workspaceId: number;
   isTodoList?: boolean;
+  isMainPage?: boolean;
 }
 
 const SelectHeader = ({ workspaceId, isTodoList = false }: SelectHeaderProps) => {
