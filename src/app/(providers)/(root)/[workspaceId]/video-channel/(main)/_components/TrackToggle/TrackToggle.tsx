@@ -36,4 +36,4 @@ const TrackToggle: <T extends ToggleSource>(
   );
 });
 
-export default TrackToggle;
+export default React.memo(TrackToggle);

@@ -1,9 +1,13 @@
 'use client';
 import { defaultUserChoices, log } from '@livekit/components-core';
-import { LocalUserChoices, useMediaDevices, usePersistentUserChoices } from '@livekit/components-react';
+import {
+  LocalUserChoices,
+  MediaDeviceMenu,
+  useMediaDevices,
+  usePersistentUserChoices
+} from '@livekit/components-react';
 
 import Button from '@/components/Button';
-import PersonFilledIcon from '@/icons/PersonFilled.svg';
 import type { CreateLocalTracksOptions, LocalAudioTrack, LocalTrack, LocalVideoTrack } from 'livekit-client';
 import {
   createLocalAudioTrack,
@@ -17,6 +21,7 @@ import {
 import React from 'react';
 import DeviceMenuButton from '../../../_components/DeviceMenuButton';
 import TrackToggle from '../../../_components/TrackToggle';
+import VideoChannel from '../../../_components/VideoChannel';
 
 export interface PreJoinProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSubmit' | 'onError'> {
   /** This function is called with the `LocalUserChoices` if validation is passed. */
@@ -278,6 +283,10 @@ const CustomPrejoin = ({
     };
   }, [videoTrack]);
 
+  const audioTrack = React.useMemo(
+    () => tracks?.filter((track) => track.kind === Track.Kind.Audio)[0] as LocalAudioTrack,
+    [tracks]
+  );
   const [isValid, setIsValid] = React.useState<boolean>();
 
   const handleValidation = React.useCallback(
@@ -315,55 +324,52 @@ const CustomPrejoin = ({
   }
 
   return (
-    <div className="bg-white flex flex-col gap-8 justify-center" {...htmlProps}>
-      <div className="flex items-center mt-4 mx-4 lg: w-[80vw]">
-        {videoTrack && videoEnabled && (
-          <div className="flex items-center justify-center w-full bg-[#121212] rounded-[10px] top-0  h-[55vh] overflow-hidden">
-            <video
-              className="transform scale-x-[-1]"
-              ref={videoEl}
-              width="1280"
-              height="720"
-              data-lk-facing-mode={facingMode}
-            />
-          </div>
-        )}
-        {(!videoTrack || !videoEnabled) && (
-          <div className="h-[50vh] bg-[#D9D9D9] rounded flex items-center justify-center w-full ">
-            <div className="rounded-full bg-[#BDBDBD] w-[140px] h-[140px] flex items-center justify-center">
-              <PersonFilledIcon />
-            </div>
-          </div>
-        )}
-      </div>
+    <div className="flex flex-col gap-8 justify-center items-center bg-white" {...htmlProps}>
+      <VideoChannel tracks={tracks} videoEnabled={videoEnabled} />
+
       <div className="flex gap-6 justify-center m-3">
-        <TrackToggle
-          initialState={audioEnabled}
-          source={Track.Source.Microphone}
-          onChange={(enabled) => setAudioEnabled(enabled)}
-        >
-          {micLabel}
-        </TrackToggle>
-        {/* 미디어 메뉴 UI */}
-        {/* <div className="lk-button-group-menu">
+        <div className="flex items-center">
+          <TrackToggle
+            initialState={audioEnabled}
+            source={Track.Source.Microphone}
+            onChange={(enabled) => setAudioEnabled(enabled)}
+          >
+            {micLabel}
+          </TrackToggle>
+          {/* <MediaDeviceMenuButton
+            initialSelection={audioDeviceId}
+            kind="audioinput"
+            disabled={!audioTrack}
+            tracks={{ audioinput: audioTrack }}
+            onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
+          /> */}
           <MediaDeviceMenu
+            style={{ display: 'none' }}
             initialSelection={audioDeviceId}
             kind="audioinput"
             disabled={!audioTrack}
             tracks={{ audioinput: audioTrack }}
             onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
           />
-        </div> */}
-        <TrackToggle
-          initialState={videoEnabled}
-          source={Track.Source.Camera}
-          onChange={(enabled) => setVideoEnabled(enabled)}
-        >
-          {camLabel}
-        </TrackToggle>
-        <div>
-          <DeviceMenuButton />
         </div>
+        <div className="flex items-center">
+          <TrackToggle
+            initialState={videoEnabled}
+            source={Track.Source.Camera}
+            onChange={(enabled) => setVideoEnabled(enabled)}
+          >
+            {camLabel}
+          </TrackToggle>
+          <MediaDeviceMenu
+            style={{ display: 'none' }}
+            initialSelection={videoDeviceId}
+            kind="videoinput"
+            disabled={!videoTrack}
+            tracks={{ videoinput: videoTrack }}
+            onActiveDeviceChange={(_, id) => setVideoDeviceId(id)}
+          />
+        </div>
+        <DeviceMenuButton />
       </div>
 
       <form className="flex flex-col items-center gap-3 ">
