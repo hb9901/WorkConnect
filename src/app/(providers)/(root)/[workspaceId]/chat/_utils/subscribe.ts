@@ -64,7 +64,7 @@ export const handleSubscribeToChat = ({ handleChatUpdates, handleUserUpdates, id
 
 export const handleSubscribeToNotice = ({ handler, id }: { handler: (payload: any) => void; id: string }) => {
   return createRealtimeSubscription({
-    channelName: `chat_${id}`,
+    channelName: `chat_${id}_for_notice`,
     eventHandlers: [
       {
         event: '*',

@@ -40,8 +40,8 @@ const Messages = () => {
     if (!userIds || !channelId) return;
 
     handleSubscribeToChat({
-      handleChatUpdates: () => handleChatUpdates({ channelId }),
-      handleUserUpdates: () => handleUserUpdates({ channelId }),
+      handleChatUpdates: handleChatUpdates({ channelId }),
+      handleUserUpdates: handleUserUpdates({ channelId }),
       id: channelId,
       userIds
     });

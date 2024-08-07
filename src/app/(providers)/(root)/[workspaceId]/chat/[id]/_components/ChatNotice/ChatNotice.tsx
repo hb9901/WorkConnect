@@ -18,13 +18,13 @@ const ChatNotice = () => {
   const { handleNoticeUpdates: handleUpdates } = useChatHandlers();
 
   useEffect(() => {
-    if (!latestNotice?.id) return;
+    if (!channelId) return;
 
     handleSubscribeToNotice({
-      handler: () => handleUpdates({ latestNoticeId: latestNotice.id, channelId }),
+      handler: handleUpdates({ latestNoticeId: latestNotice?.id, channelId }),
       id: channelId
     });
-  }, [latestNotice]);
+  }, [channelId, latestNotice?.id]);
 
   const isEmptyLatestNotice = isEmpty(latestNotice);
   if (isEmptyLatestNotice) return null;
