@@ -1,7 +1,10 @@
 'use client';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 
+
 import useStreamSetStore from '@/store/streamSetStore';
+
+
 
 import useUserStore from '@/store/userStore';
 import { LocalUserChoices, usePersistentUserChoices } from '@livekit/components-react';
@@ -19,7 +22,9 @@ const PreJoinContent = () => {
   const { workspaceUser } = useWorkspaceUser(workspaceUserId);
   const { userChoices, saveUsername } = usePersistentUserChoices();
 
+
   const { setIsSettingOk } = useStreamSetStore();
+
 
 
   useEffect(() => {
@@ -28,6 +33,7 @@ const PreJoinContent = () => {
     }
   }, []);
   useEffect(() => {
+
 
     setIsSettingOk(true);
 

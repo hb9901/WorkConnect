@@ -6,6 +6,7 @@ import useStreamSetStore from '@/store/streamSetStore';
 import { LiveKitRoom, RoomAudioRenderer, usePersistentUserChoices } from '@livekit/components-react';
 import { RoomConnectOptions } from 'livekit-client';
 
+
 import { redirect, useSearchParams } from 'next/navigation';
 
 import { useEffect, useMemo, useState } from 'react';
@@ -19,22 +20,21 @@ type videoRoomProps = {
 
 const VideoRoom = ({ name }: videoRoomProps) => {
   const workspaceId = useWorkspaceId();
+  const params = useParams();
   const searchParams = useSearchParams();
-  const username = searchParams.get('username');
   const [token, setToken] = useState('');
 
   const { userChoices } = usePersistentUserChoices();
   const { isSettingOk } = useStreamSetStore();
 
   useEffect(() => {
-    if (!username || !isSettingOk) {
-      // console.log(`리다이렉트 되는거임. ${username} , ${isSettingOk}`);
+    if (!searchParams.get('username') || !isSettingOk) {
       redirect(`/${workspaceId}/video-channel/prejoin?room=${name}`);
       return;
     }
     (async () => {
       try {
-        const room = name;
+        const room = params.name;
         const resp = await fetch(`/api/get-participant-token?room=${room}&username=${userChoices.username}`);
         const data = await resp.json();
         setToken(data.token);
