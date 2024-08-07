@@ -8,7 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import { setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
+import { getWorkspaceId, getWorkspaceUserId, setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
 import { TopBar } from '@/components/TopBar';
 
 const getRandomNumbers = (count: number, min: number, max: number) => {
@@ -32,9 +32,13 @@ const NewWorkSpacePage = () => {
   // TODO : 리팩터링 예정
   const handleJoin = useMutation({
     mutationFn: async () => {
+      const cookieWorkspaceUserId = getWorkspaceUserId();
+      const randomNumbers = getRandomNumbers(6, 1, 9);
+      const combinedNumber = Number(randomNumbers.join(''));
+
       if (!user) {
         openSnackBar({ message: '로그인이 필요해요' });
-        route.push('/landing');
+        route.replace('/');
         return;
       }
       if (!orgName) return openSnackBar({ message: '조직 이름을 입력해주세요!' });
@@ -44,9 +48,56 @@ const NewWorkSpacePage = () => {
         return;
       }
 
-      const randomNumbers = getRandomNumbers(6, 1, 9);
-      const combinedNumber = Number(randomNumbers.join(''));
+      //? 로그인 상태일 때, 워크스페이스 생성
+      if (cookieWorkspaceUserId) {
+        //? 새 워크스페이스 생성
+        const { error } = await supabase.from('workspace').insert({
+          name: orgName,
+          invite_code: combinedNumber,
+          admin_user_id: workUserData.id
+        });
 
+        if (error) {
+          openSnackBar({ message: '오류가 발생했어요' });
+          console.log(error);
+          return;
+        }
+
+        //? 워크스페이스 생성 완료 후, workspace_id 가져옴
+        const { data: workspaceData, error: workspaceError } = await supabase
+          .from('workspace')
+          .select('id')
+          .eq('admin_user_id', workUserData.id)
+          .single();
+
+        if (workspaceError) {
+          openSnackBar({ message: '오류가 발생했어요' });
+          return;
+        }
+
+        //? 워크스페이스 생성 완료 후, workspace_user 테이블에 workspace_id 추가
+        const { error: workspaceUserError } = await supabase.from('workspace_user').insert({
+          workspace_id: workspaceData.id,
+          user_id: cookieWorkspaceUserId,
+          name: user.user_metadata.name,
+          email: user.user_metadata.email
+        });
+
+        if (workspaceUserError) {
+          openSnackBar({ message: '오류가 발생했어요' });
+          return;
+        }
+
+        setWorkspaceId(workspaceData.id);
+        setWorkspaceUserId(cookieWorkspaceUserId);
+        setUserData(user.id, workspaceData.id);
+
+        // TODO : 생성 완료 후 페이지 이동처리하기
+        setOrgName('');
+        return route.replace(`/${workspaceData.id}`);
+      }
+
+      //? 로그인 안했을때 (회원가입 후 워크스페이스 생성)
       const { error } = await supabase.from('workspace').insert({
         name: orgName,
         invite_code: combinedNumber,
@@ -62,6 +113,8 @@ const NewWorkSpacePage = () => {
         .from('workspace')
         .select('id')
         .eq('admin_user_id', workUserData.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
         .single();
 
       if (workspaceError) {
@@ -90,7 +143,7 @@ const NewWorkSpacePage = () => {
 
       // TODO : 생성 완료 후 페이지 이동처리하기
       setOrgName('');
-      route.replace('/welcome');
+      return route.replace('/welcome');
     }
   });
 
@@ -103,17 +156,24 @@ const NewWorkSpacePage = () => {
       } = await supabase.auth.getUser();
 
       if (!user) {
+        openSnackBar({ message: '로그인이 필요합니다' });
         return;
       }
 
+      //? limit(1)해도 오류
       const { data: workspaceUserData, error: workspaceUserError } = await supabase
         .from('workspace_user')
         .select('id')
         .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
         .single();
 
+      //? 지금 여기서 오류남 이유는 아직 모름
+      //? 로그인하고 new 페이지 오면 돌아가짐
       if (workspaceUserError) {
-        openSnackBar({ message: '오류가 발생했어요' });
+        console.log(workspaceUserError);
+        openSnackBar({ message: '오류가 발생했어요ㅇㅇㅇ' });
         route.replace('/');
         return;
       }
