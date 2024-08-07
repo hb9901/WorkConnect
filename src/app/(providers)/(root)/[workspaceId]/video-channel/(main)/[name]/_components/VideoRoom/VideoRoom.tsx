@@ -26,7 +26,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
 
   useEffect(() => {
     if (!username || !isSettingOk) {
-      console.log(`리다이렉트 되는거임. ${username} , ${isSettingOk}`);
+      // console.log(`리다이렉트 되는거임. ${username} , ${isSettingOk}`);
       redirect(`/${workspaceId}/video-channel/prejoin?room=${name}`);
       return;
     }
