@@ -3,10 +3,9 @@
 import Typography from '@/components/Typography';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useStreamSetStore from '@/store/streamSetStore';
-import useUserStore from '@/store/userStore';
 import { LiveKitRoom, RoomAudioRenderer, usePersistentUserChoices } from '@livekit/components-react';
 import { RoomConnectOptions } from 'livekit-client';
-import { redirect, useParams, useRouter, useSearchParams } from 'next/navigation';
+import { redirect, useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import Loading from '../../../_components/Loading';
 import VideoChannelHeader from '../VideoChannelHeader';
@@ -18,14 +17,12 @@ type videoRoomProps = {
 
 const VideoRoom = ({ name }: videoRoomProps) => {
   const workspaceId = useWorkspaceId();
-  const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();
   const [token, setToken] = useState('');
 
   const { userChoices } = usePersistentUserChoices();
   const { isSettingOk } = useStreamSetStore();
-  const { workspaceUserId } = useUserStore();
 
   useEffect(() => {
     if (!searchParams.get('username') || !isSettingOk) {
@@ -35,7 +32,6 @@ const VideoRoom = ({ name }: videoRoomProps) => {
     (async () => {
       try {
         const room = params.name;
-        console.log(room, workspaceUserId);
         const resp = await fetch(`/api/get-participant-token?room=${room}&username=${userChoices.username}`);
         const data = await resp.json();
         setToken(data.token);
@@ -72,6 +68,11 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       style={{ height: '100vh' }}
       connectOptions={connectOptions}
+      options={{
+        publishDefaults: {
+          videoCodec: 'vp9'
+        }
+      }}
     >
       <VideoChannelHeader />
       <CustomVideoConference />

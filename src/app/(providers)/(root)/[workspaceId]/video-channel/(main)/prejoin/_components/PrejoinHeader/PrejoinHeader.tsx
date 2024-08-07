@@ -3,6 +3,7 @@ import Button from '@/components/Button';
 import Typography from '@/components/Typography';
 import ArrowLeftIcon from '@/icons/ArrowLeft.svg';
 import { useRouter } from 'next/navigation';
+import React from 'react';
 
 const PrejoinHeader = () => {
   const router = useRouter();
@@ -17,4 +18,4 @@ const PrejoinHeader = () => {
   );
 };
 
-export default PrejoinHeader;
+export default React.memo(PrejoinHeader);
