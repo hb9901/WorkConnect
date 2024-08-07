@@ -20,7 +20,6 @@ type videoRoomProps = {
 
 const VideoRoom = ({ name }: videoRoomProps) => {
   const workspaceId = useWorkspaceId();
-  const params = useParams();
   const searchParams = useSearchParams();
   const [token, setToken] = useState('');
 
@@ -34,7 +33,7 @@ const VideoRoom = ({ name }: videoRoomProps) => {
     }
     (async () => {
       try {
-        const room = params.name;
+        const room = name;
         const resp = await fetch(`/api/get-participant-token?room=${room}&username=${userChoices.username}`);
         const data = await resp.json();
         setToken(data.token);
