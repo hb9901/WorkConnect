@@ -9,6 +9,7 @@ import { isEmpty } from '@/utils/isEmpty';
 import Avatar from '@/components/Avatar';
 import Typography from '@/components/Typography';
 import { memo } from 'react';
+import { useContextMenu } from '../../_provider/ContextMenuProvider';
 
 type ChatMessagesProps = {
   data: GetChatMessageType[] & { channel_id?: string };
@@ -21,6 +22,7 @@ const Chats = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
   const { id: channelId } = useParams();
   const workspaceId = useWorkspaceId();
   const workspaceUserId = useWorkspaceUserId();
+  const { openContextMenu } = useContextMenu();
 
   // TODO: Notice Card 안에서 사용하는 건데, 안에서 만들면 렌더링에 너무 영향이 가지 않을까?
   const noticeUrl = `/${workspaceId}/chat/${channelId}/notice`;
@@ -39,7 +41,14 @@ const Chats = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
             {!isMe && (
               <OtherProfile profileImage={userInfo?.profile_image} name={userInfo?.name} profileUrl={profileUrl} />
             )}
-            <ChatMessage content={chat.content} type={chat.type} id={chat.id} isMe={isMe} noticeUrl={noticeUrl} />
+            <ChatMessage
+              content={chat.content}
+              type={chat.type}
+              id={chat.id}
+              isMe={isMe}
+              noticeUrl={noticeUrl}
+              openContextMenu={openContextMenu}
+            />
           </div>
         );
       })}

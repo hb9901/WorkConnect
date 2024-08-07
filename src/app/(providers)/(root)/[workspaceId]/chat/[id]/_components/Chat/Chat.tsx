@@ -1,11 +1,11 @@
-import type { ComponentProps } from 'react';
+import { memo, type ComponentProps } from 'react';
 import Typography from '@/components/Typography';
 import { CHAT_TYPE } from '@/constants/chat';
 import { handleDownloadFile } from '@/utils/file';
 import clsx from 'clsx';
 import ChatImage from '../ChatImage';
 import ChatVideo from '../ChatVideo';
-import { useContextMenu } from '../../_provider/ContextMenuProvider';
+import type { ContextMenuContextType } from '../../_provider/ContextMenuProvider';
 import Link from 'next/link';
 import { FileTextIcon } from '@/icons';
 
@@ -75,12 +75,15 @@ type ChatMessageProps = {
   isMe: boolean;
   id: number;
   noticeUrl: string;
+  openContextMenu: ContextMenuContextType['openContextMenu'];
 };
 
 const TOP_BAR_HEIGHT = 52;
 
-export const ChatMessage = ({ content, type, isMe, id, noticeUrl }: ChatMessageProps) => {
-  const { openContextMenu } = useContextMenu();
+export const ChatMessage = memo(({ content, type, isMe, id, noticeUrl, openContextMenu }: ChatMessageProps) => {
+  const MARGIN_STYLE = isMe ? '' : 'ml-[40px] mt-[6px]';
+  const ROUNDED_STYLE = isMe ? 'rounded-br-none' : 'rounded-tl-none';
+  const BACKGROUND_STYLE = isMe ? 'bg-[#EBECFE]' : 'bg-grey50';
 
   const handleContextMenu = (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement | HTMLVideoElement>) => {
     event.preventDefault();
@@ -101,7 +104,7 @@ export const ChatMessage = ({ content, type, isMe, id, noticeUrl }: ChatMessageP
       return (
         <ChatImage
           src={content}
-          className={clsx('rounded-lg w-[200px] h-auto', isMe ? '' : 'ml-[40px] mt-[6px]')}
+          className={clsx('rounded-lg w-[200px] h-auto', MARGIN_STYLE)}
           width={300}
           height={300}
           onContextMenu={handleContextMenu}
@@ -113,14 +116,14 @@ export const ChatMessage = ({ content, type, isMe, id, noticeUrl }: ChatMessageP
           fileUrl={content}
           fileName={content.split('/').pop() || ''}
           onContextMenu={handleContextMenu}
-          className={clsx(isMe ? '' : 'ml-[40px] mt-[6px]')}
+          className={MARGIN_STYLE}
         />
       );
     case CHAT_TYPE.video:
       return (
         <ChatVideo
           src={content}
-          className={clsx('rounded-lg', isMe ? '' : 'ml-[40px] mt-[6px]')}
+          className={clsx('rounded-lg', MARGIN_STYLE)}
           width={200}
           onContextMenu={handleContextMenu}
           controls
@@ -128,10 +131,7 @@ export const ChatMessage = ({ content, type, isMe, id, noticeUrl }: ChatMessageP
       );
     case CHAT_TYPE.text:
       return (
-        <ChatText
-          onContextMenu={handleContextMenu}
-          className={isMe ? 'rounded-br-none bg-[#EBECFE]' : 'rounded-tl-none bg-grey50 ml-[40px] mt-[6px]'}
-        >
+        <ChatText onContextMenu={handleContextMenu} className={clsx(BACKGROUND_STYLE, MARGIN_STYLE, ROUNDED_STYLE)}>
           {content}
         </ChatText>
       );
@@ -141,7 +141,7 @@ export const ChatMessage = ({ content, type, isMe, id, noticeUrl }: ChatMessageP
         <ChatNotice
           onContextMenu={handleContextMenu}
           noticeUrl={noticeUrl}
-          className={isMe ? 'rounded-br-none' : 'rounded-tl-none ml-[40px] mt-[6px]'}
+          className={clsx(MARGIN_STYLE, ROUNDED_STYLE)}
         >
           {content}
         </ChatNotice>
@@ -149,4 +149,4 @@ export const ChatMessage = ({ content, type, isMe, id, noticeUrl }: ChatMessageP
     default:
       return null;
   }
-};
+});
