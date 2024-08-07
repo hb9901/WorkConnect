@@ -1,5 +1,11 @@
 'use client';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
+
+
+import useStreamSetStore from '@/store/streamSetStore';
+
+
+
 import useUserStore from '@/store/userStore';
 import { LocalUserChoices, usePersistentUserChoices } from '@livekit/components-react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -16,13 +22,21 @@ const PreJoinContent = () => {
   const { workspaceUser } = useWorkspaceUser(workspaceUserId);
   const { userChoices, saveUsername } = usePersistentUserChoices();
 
+
+  const { setIsSettingOk } = useStreamSetStore();
+
+
+
   useEffect(() => {
     if (workspaceUser) {
       saveUsername(workspaceUser.name);
     }
   }, []);
   useEffect(() => {
-    // console.log('>>>', userChoices.username);
+
+
+    setIsSettingOk(true);
+
   }, [userChoices]);
   const handlePreJoinSubmit = useCallback((values: LocalUserChoices) => {
     router.push(`/${workspaceId}/video-channel/${room}?username=${values.username}`);

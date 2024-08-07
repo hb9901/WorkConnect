@@ -336,13 +336,7 @@ const CustomPrejoin = ({
           >
             {micLabel}
           </TrackToggle>
-          {/* <MediaDeviceMenuButton
-            initialSelection={audioDeviceId}
-            kind="audioinput"
-            disabled={!audioTrack}
-            tracks={{ audioinput: audioTrack }}
-            onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
-          /> */}
+
           <MediaDeviceMenu
             style={{ display: 'none' }}
             initialSelection={audioDeviceId}
