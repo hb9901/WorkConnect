@@ -49,7 +49,7 @@ const DeviceMenu = ({ onClose }: DeviceMenueProps) => {
       </div>
       <div>
         <Button theme="primary" isFullWidth className="mt-3" onClick={onClose}>
-          다음
+          확인
         </Button>
       </div>
     </div>
