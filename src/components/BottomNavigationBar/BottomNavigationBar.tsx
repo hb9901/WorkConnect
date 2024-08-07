@@ -4,7 +4,6 @@ import useWorkspaceId from '@/hooks/useWorkspaceId';
 import CalendarIcon from '@/icons/Calendar.svg';
 import HomeIcon from '@/icons/HomeIcon.svg';
 import MessageCircleIcon from '@/icons/MessageCircle.svg';
-import UserIcon from '@/icons/User.svg';
 import useUserStore from '@/store/userStore';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -51,17 +50,6 @@ const BottomNavigationBar = ({ className }: { className?: string }) => {
               )}
             />
             일정
-          </Link>
-        </Tab>
-        <Tab active={curPath === 'profile'}>
-          <Link href={`/${workspaceId}/profile/${workspaceUserId}`} className="w-full">
-            <UserIcon
-              className={clsx(
-                'stroke-current items-center justify-center mx-auto mb-3',
-                curPath === 'profile' ? 'stroke-primary200Main text-primary200Main' : 'stroke-gray-500 text-gray-500'
-              )}
-            />
-            마이페이지
           </Link>
         </Tab>
       </NavigationBar>
