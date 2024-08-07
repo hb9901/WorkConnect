@@ -11,3 +11,9 @@ export const QUERY_KEYS = {
   CHANNEL_NAME: (id: string) => ['channelName', id],
   LATEST_NOTICE: (id: string) => ['latestNotice', id]
 };
+
+export const REALTIME_CHANNEL_NAME = {
+  CHANNEL_LIST: 'channel_list',
+  CHAT: 'chat',
+  CHAT_FOR_NOTICE: 'chat_for_notice'
+};
