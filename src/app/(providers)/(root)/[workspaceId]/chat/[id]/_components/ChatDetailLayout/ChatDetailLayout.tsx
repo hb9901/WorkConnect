@@ -1,3 +1,5 @@
+'use client';
+
 import { PageLayout } from '@/components/PageLayout';
 import { StrictPropsWithChildren } from '@/types/common';
 import Sidebar from '../Sidebar';
