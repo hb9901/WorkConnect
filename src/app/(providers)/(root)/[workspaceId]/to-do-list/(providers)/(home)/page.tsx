@@ -7,8 +7,9 @@ import WeekDate from '../_components/WeekDate';
 
 const ToDoListPage = () => {
   const workspaceUserId = useUserStore((state) => state.workspaceUserId);
-  const { todoList } = useTodoList(workspaceUserId);
-  if (!todoList) return;
+  const { todoList, isPending, isError } = useTodoList(workspaceUserId);
+  if (!todoList || isError) return;
+  if (isPending) return;
   const beforeTodoList = todoList.filter((todo) => todo.status === '진행 전');
   const progressTodoList = todoList.filter((todo) => todo.status === '진행 중');
   const completedTodoList = todoList.filter((todo) => todo.status === '완료');

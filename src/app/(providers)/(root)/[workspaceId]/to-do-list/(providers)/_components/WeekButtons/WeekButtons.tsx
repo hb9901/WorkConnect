@@ -5,9 +5,17 @@ import ChevronLeftIcon from '@/icons/ChevronLeft.svg';
 import ChevronRightIcon from '@/icons/ChevronRight.svg';
 import useDateStore from '@/store/dateStore';
 import dayjs from 'dayjs';
+import { useShallow } from 'zustand/react/shallow';
 
 const WeekButtons = () => {
-  const { selectedDate, handleClickNextWeek, handleClickPreviousWeek, handleClickDate } = useDateStore();
+  const { selectedDate, handleClickNextWeek, handleClickPreviousWeek, handleClickDate } = useDateStore(
+    useShallow((state) => ({
+      selectedDate: state.selectedDate,
+      handleClickNextWeek: state.handleClickNextWeek,
+      handleClickPreviousWeek: state.handleClickPreviousWeek,
+      handleClickDate: state.handleClickDate
+    }))
+  );
   const date = dayjs(selectedDate).format('YYYY.MM.');
   const today = dayjs();
 

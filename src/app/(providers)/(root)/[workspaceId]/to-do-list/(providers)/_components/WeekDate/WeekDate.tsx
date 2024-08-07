@@ -1,12 +1,12 @@
 'use client';
 import Typography from '@/components/Typography';
 import useDateStore from '@/store/dateStore';
-import { cva } from 'class-variance-authority';
+import DateButton from '../DateButton';
 import { getWeekDates } from './function';
 
 const WeekDate = () => {
   const weekNames = ['일', '월', '화', '수', '목', '금', '토'];
-  const { selectedDate, handleClickDate } = useDateStore();
+  const selectedDate = useDateStore((state) => state.selectedDate);
   const weekDates = getWeekDates(selectedDate);
 
   return (
@@ -16,17 +16,7 @@ const WeekDate = () => {
           <Typography variant="Title14px" color="grey600">
             {weekNames[index]}
           </Typography>
-
-          <Typography variant="Body14px" color="grey700Black">
-            <button
-              className={buttonVariants({
-                isSelected: selectedDate.month() === date.month() && selectedDate.date() === date.date()
-              })}
-              onClick={() => handleClickDate(date)}
-            >
-              {date.date()}
-            </button>
-          </Typography>
+          <DateButton date={date} />
         </div>
       ))}
     </div>
@@ -34,15 +24,3 @@ const WeekDate = () => {
 };
 
 export default WeekDate;
-
-const buttonVariants = cva('w-7 h-7 rounded-full', {
-  variants: {
-    isSelected: {
-      true: 'bg-[#7173FA] text-white',
-      false: ' '
-    }
-  },
-  defaultVariants: {
-    isSelected: false
-  }
-});

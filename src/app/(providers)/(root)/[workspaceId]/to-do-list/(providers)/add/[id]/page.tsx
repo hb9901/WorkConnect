@@ -16,13 +16,16 @@ import MapPinIcon from '@/icons/MapPin.svg';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import useDateStore from '@/store/dateStore';
 import useUserStore from '@/store/userStore';
+import { Tables } from '@/types/supabase';
+import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
-import DateBottom from './_components/DateBottom';
+import DateBottom from './_components/DateBottom/DateBottom';
 import Header from './_components/Header';
 import InputCard from './_components/InputCard';
 import OptionCard from './_components/OptionCard';
+import useBottomTime from './_hooks/useBottomTime';
 import useInput from './_hooks/useInput';
 
 const priorityList = ['high', 'medium', 'low'];
@@ -34,26 +37,27 @@ type ToDoAddPageProps = {
 };
 
 const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
+  const initTime = dayjs().set('hour', 9).set('minute', 0);
+  const queryClient = useQueryClient();
   const { openSnackBar } = useSnackBar();
-
   const { workspaceUserId } = useUserStore();
   const workspaceId = useWorkspaceId();
-  const { todoList, addTodo, updateTodo } = useTodoList(workspaceUserId);
+  const { addTodo, updateTodo } = useTodoList(workspaceUserId);
+  const todoList = queryClient.getQueryData<Tables<'todo'>[]>([`todo${workspaceUserId}`]);
   const selectedTodo = todoList && todoList.filter((todo) => todo.id == params.id)[0];
+  const existTitle = selectedTodo && selectedTodo.title;
+  const existStatus = selectedTodo && selectedTodo.status;
+  const existPriority = selectedTodo && selectedTodo.priority;
+  const initStartTime = selectedTodo ? dayjs(selectedTodo.start_date) : initTime;
+  const initEndTime = selectedTodo ? dayjs(selectedTodo.end_date) : initTime;
   const { selectedDate } = useDateStore();
-  const initTime = dayjs().set('hour', 9).set('minute', 0);
+
   const {
     title,
     selectedPriority,
     selectedStatus,
     isPriorityOpen,
     isStatusOpen,
-    startTime,
-    endTime,
-    isStartTime,
-    isBottomSheetOpen,
-    setStartTime,
-    setEndTime,
     setSelectedStatus,
     setSelectedPriority,
     setTitle,
@@ -61,18 +65,23 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     handleChangePriority,
     handleChangeStatus,
     handlePriorityClick,
-    handleStatusClick,
+    handleStatusClick
+  } = useInput();
+
+  const {
+    startTime,
+    endTime,
+    isStartTime,
+    isBottomSheetOpen,
+    setStartTime,
+    setEndTime,
     handleSetStartTime,
     handleSetEndTime,
     handleTimeClick,
     hanldeBottomSheetClick
-  } = useInput(initTime);
+  } = useBottomTime(initStartTime, initEndTime);
+
   const placeRef = useRef<HTMLInputElement>(null);
-  const existTitle = selectedTodo && selectedTodo.title;
-  const existStatus = selectedTodo && selectedTodo.status;
-  const existPriority = selectedTodo && selectedTodo.priority;
-  const existStartTime = selectedTodo && dayjs(selectedTodo.start_date);
-  const existEndTime = selectedTodo && dayjs(selectedTodo.end_date);
   const place = selectedTodo && selectedTodo.place;
   const date = dayjs(selectedDate).format('YYYY.MM.DD');
   const startTimeFormat = dayjs(startTime).format('a hh:mm');
@@ -80,14 +89,14 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const router = useRouter();
 
   useEffect(() => {
-    existStartTime ? setStartTime(existStartTime) : setStartTime(initTime);
-    existEndTime ? setEndTime(existEndTime) : setEndTime(initTime);
+    const initTime = dayjs().set('hour', 9).set('minute', 0);
+    initStartTime ? setStartTime(initStartTime) : setStartTime(initTime);
+    initEndTime ? setEndTime(initEndTime) : setEndTime(initTime);
     if (!(existPriority && existStatus && existTitle)) return;
-
     setSelectedStatus(existStatus);
     setSelectedPriority(existPriority);
     setTitle(existTitle);
-  }, [existStatus, existPriority, existTitle]);
+  }, [todoList]);
 
   const handleAdd = async () => {
     if (!title || !placeRef.current || !workspaceUserId || !selectedPriority || !selectedStatus) {
