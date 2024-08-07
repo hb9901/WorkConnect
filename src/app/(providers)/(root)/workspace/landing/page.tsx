@@ -8,7 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import { setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
+import { getWorkspaceId, setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
 import WorkConnectLogoIcon from '@/icons/WorkConnectLogo.svg';
 
 type UserType = {
@@ -25,12 +25,68 @@ const InviteCodePage = () => {
   // TODO : 리팩터링 예정
   const handleSubmit = useMutation({
     mutationFn: async () => {
+      const cookieWorkspaceId = getWorkspaceId();
+
       if (!user) {
         openSnackBar({ message: '로그인이 필요해요' });
         route.push('/');
         return;
       }
 
+      //? 로그인 상태일 때, 초대코드 입력 시 워크스페이스 입장
+      if (cookieWorkspaceId) {
+        console.log('쿠키에 저장된 workspaceId:', cookieWorkspaceId);
+        console.log('로그인 돼있다~~~~~~~~~~');
+        //? 초대코드랑 같은 workspace_id를 가져옴
+        const { data: workspaceData, error: workspaceError } = await supabase
+          .from('workspace')
+          .select('id')
+          .eq('invite_code', Number(inviteCode))
+          .single();
+
+        if (workspaceError) return openSnackBar({ message: '존재하지 않는 초대코드에요' });
+
+        //? 초대코드랑 같은 workspace_id를 가져온 유저를 workspace_user 테이블에 추가
+        const { data: existingWorkspaceUser, error: existingWorkspaceUserError } = await supabase
+          .from('workspace_user')
+          .select('id')
+          .eq('workspace_id', workspaceData.id)
+          .eq('user_id', user.id)
+          .single();
+
+        console.log('existingWorkspaceUser:', existingWorkspaceUser);
+
+        if (existingWorkspaceUser) {
+          openSnackBar({ message: '이미 워크스페이스에 가입되어 있습니다.' });
+          return;
+        }
+
+        //? 초대코드랑 같은 workspace_id를 가져온 유저를 workspace_user 테이블에 추가
+        const { error: workspaceUserError } = await supabase
+          .from('workspace_user')
+          .insert({
+            workspace_id: workspaceData.id,
+            user_id: user.id,
+            name: user.user_metadata.name,
+            email: user.user_metadata.email
+          })
+          .select();
+
+        if (workspaceUserError) {
+          openSnackBar({ message: '에러가 발생했어요' });
+          return;
+        }
+
+        setWorkspaceId(workspaceData.id);
+        setWorkspaceUserId(user.id);
+        setUserData(user.id, workspaceData.id);
+
+        // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
+        setInviteCode('');
+        return route.replace(`/${workspaceData.id}`);
+      }
+
+      //? 로그인 안했을때, 초대코드 입력 시 워크스페이스 입장
       if (!inviteCode) return openSnackBar({ message: '초대 코드를 입력해주세요' });
 
       const { data: workspaceData, error: workspaceError } = await supabase
@@ -72,10 +128,13 @@ const InviteCodePage = () => {
 
       if (session?.user.app_metadata.provider !== 'kakao') return;
 
+      //? 최근 생성한 워크스페이스 조회
       const { data: workspaceUser, error: workspaceUserError } = await supabase
         .from('workspace_user')
         .select('workspace_id')
         .eq('user_id', session.user.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
         .single();
 
       if (workspaceUserError) {
@@ -87,7 +146,7 @@ const InviteCodePage = () => {
         setWorkspaceId(workspaceUser.workspace_id);
         setWorkspaceUserId(session.user.id);
         setUserData(session.user.id, workspaceUser.workspace_id);
-        route.replace(`/${workspaceUser.workspace_id}`); // TODO: 홈 화면이동 처리
+        return route.replace(`/${workspaceUser.workspace_id}`); // TODO: 홈 화면이동 처리
       }
       return;
     };
