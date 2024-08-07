@@ -30,13 +30,12 @@ const MemberExistComponent = ({ workspaceUserList }: MemberExistComponentProps) 
           멤버목록
         </Typography>
         <div>
-          {workspaceUserList &&
-            workspaceUserList.map(
-              (workspaceUser) =>
-                workspaceUserId !== workspaceUser.id && (
-                  <AvatarCard key={workspaceUser.id} workspaceUser={workspaceUser} />
-                )
-            )}
+          {workspaceUserList.map(
+            (workspaceUser) =>
+              workspaceUserId !== workspaceUser.id && (
+                <AvatarCard key={workspaceUser.id} workspaceUser={workspaceUser} />
+              )
+          )}
         </div>
       </div>
     </>
