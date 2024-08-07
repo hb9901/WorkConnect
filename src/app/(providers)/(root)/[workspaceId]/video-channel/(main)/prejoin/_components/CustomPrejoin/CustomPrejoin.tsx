@@ -1,6 +1,11 @@
 'use client';
 import { defaultUserChoices, log } from '@livekit/components-core';
-import { LocalUserChoices, useMediaDevices, usePersistentUserChoices } from '@livekit/components-react';
+import {
+  LocalUserChoices,
+  MediaDeviceMenu,
+  useMediaDevices,
+  usePersistentUserChoices
+} from '@livekit/components-react';
 
 import Button from '@/components/Button';
 import type { CreateLocalTracksOptions, LocalAudioTrack, LocalTrack, LocalVideoTrack } from 'livekit-client';
@@ -14,6 +19,8 @@ import {
   VideoPresets
 } from 'livekit-client';
 import React from 'react';
+import DeviceMenuButton from '../../../_components/DeviceMenuButton';
+import TrackToggle from '../../../_components/TrackToggle';
 import VideoChannel from '../../../_components/VideoChannel';
 
 export interface PreJoinProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSubmit' | 'onError'> {
@@ -315,7 +322,7 @@ const CustomPrejoin = ({
     <div className="flex flex-col gap-8 justify-center items-center bg-white" {...htmlProps}>
       <VideoChannel tracks={tracks} videoEnabled={videoEnabled} />
 
-      {/* <div className="flex gap-6 justify-center m-3">
+      <div className="flex gap-6 justify-center m-3">
         <div className="flex items-center">
           <TrackToggle
             initialState={audioEnabled}
@@ -351,7 +358,7 @@ const CustomPrejoin = ({
           />
         </div>
         <DeviceMenuButton />
-      </div> */}
+      </div>
 
       <form className="flex flex-col items-center gap-3 ">
         <input
