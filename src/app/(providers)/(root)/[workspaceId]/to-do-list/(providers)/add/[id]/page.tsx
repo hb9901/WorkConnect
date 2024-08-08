@@ -16,13 +16,17 @@ import MapPinIcon from '@/icons/MapPin.svg';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import useDateStore from '@/store/dateStore';
 import useUserStore from '@/store/userStore';
-import dayjs, { Dayjs } from 'dayjs';
+import { Tables } from '@/types/supabase';
+import { useQueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import DateBottom from './_components/DateBottom';
+import { useEffect, useRef } from 'react';
+import DateBottom from './_components/DateBottom/DateBottom';
 import Header from './_components/Header';
 import InputCard from './_components/InputCard';
 import OptionCard from './_components/OptionCard';
+import useBottomTime from './_hooks/useBottomTime';
+import useInput from './_hooks/useInput';
 
 const priorityList = ['high', 'medium', 'low'];
 const statusList = ['진행 전', '진행 중', '완료'];
@@ -33,28 +37,51 @@ type ToDoAddPageProps = {
 };
 
 const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
+  const initTime = dayjs().set('hour', 9).set('minute', 0);
+  const queryClient = useQueryClient();
   const { openSnackBar } = useSnackBar();
   const { workspaceUserId } = useUserStore();
   const workspaceId = useWorkspaceId();
-  const { todoList, addTodo, updateTodo } = useTodoList(workspaceUserId);
+  const { addTodo, updateTodo } = useTodoList(workspaceUserId);
+  const todoList = queryClient.getQueryData<Tables<'todo'>[]>([`todo${workspaceUserId}`]);
   const selectedTodo = todoList && todoList.filter((todo) => todo.id == params.id)[0];
-  const { selectedDate } = useDateStore();
-  const [title, setTitle] = useState<string>('');
-  const [selectedPriority, setSelectedPriority] = useState<string>('');
-  const [selectedStatus, setSelectedStatus] = useState<string>('');
-  const [isPriorityOpen, setIsPriorityOpen] = useState<boolean>(false);
-  const [isStatusOpen, setIsStatusOpen] = useState<boolean>(false);
-  const [isStartTime, setIsStartTime] = useState<boolean>(true);
-  const initTime = dayjs().set('hour', 9).set('minute', 0);
-  const [startTime, setStartTime] = useState<Dayjs>(initTime);
-  const [endTime, setEndTime] = useState<Dayjs>(initTime);
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
-  const placeRef = useRef<HTMLInputElement>(null);
   const existTitle = selectedTodo && selectedTodo.title;
   const existStatus = selectedTodo && selectedTodo.status;
   const existPriority = selectedTodo && selectedTodo.priority;
-  const existStartTime = selectedTodo && dayjs(selectedTodo.start_date);
-  const existEndTime = selectedTodo && dayjs(selectedTodo.end_date);
+  const initStartTime = selectedTodo ? dayjs(selectedTodo.start_date) : initTime;
+  const initEndTime = selectedTodo ? dayjs(selectedTodo.end_date) : initTime;
+  const { selectedDate } = useDateStore();
+
+  const {
+    title,
+    selectedPriority,
+    selectedStatus,
+    isPriorityOpen,
+    isStatusOpen,
+    setSelectedStatus,
+    setSelectedPriority,
+    setTitle,
+    handleTitleChange,
+    handleChangePriority,
+    handleChangeStatus,
+    handlePriorityClick,
+    handleStatusClick
+  } = useInput();
+
+  const {
+    startTime,
+    endTime,
+    isStartTime,
+    isBottomSheetOpen,
+    setStartTime,
+    setEndTime,
+    handleSetStartTime,
+    handleSetEndTime,
+    handleTimeClick,
+    hanldeBottomSheetClick
+  } = useBottomTime(initStartTime, initEndTime);
+
+  const placeRef = useRef<HTMLInputElement>(null);
   const place = selectedTodo && selectedTodo.place;
   const date = dayjs(selectedDate).format('YYYY.MM.DD');
   const startTimeFormat = dayjs(startTime).format('a hh:mm');
@@ -62,49 +89,14 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const router = useRouter();
 
   useEffect(() => {
-    existStartTime ? setStartTime(existStartTime) : setStartTime(initTime);
-    existEndTime ? setEndTime(existEndTime) : setEndTime(initTime);
+    const initTime = dayjs().set('hour', 9).set('minute', 0);
+    initStartTime ? setStartTime(initStartTime) : setStartTime(initTime);
+    initEndTime ? setEndTime(initEndTime) : setEndTime(initTime);
     if (!(existPriority && existStatus && existTitle)) return;
-
     setSelectedStatus(existStatus);
     setSelectedPriority(existPriority);
     setTitle(existTitle);
-  }, [existStatus, existPriority, existTitle]);
-
-  const handleChangePriority = (priority: string) => {
-    setSelectedPriority(priority);
-  };
-
-  const handleChangeStatus = (status: string) => {
-    setSelectedStatus(status);
-  };
-
-  const handlePriorityClick = () => {
-    setIsPriorityOpen((prev) => !prev);
-  };
-  const handleStatusClick = () => {
-    setIsStatusOpen((prev) => !prev);
-  };
-
-  const handleSetStartTime = (startTime: Dayjs) => {
-    setStartTime(startTime);
-  };
-  const handleSetEndTime = (endTime: Dayjs) => {
-    setEndTime(endTime);
-  };
-
-  const handleTimeClick = (isStart: boolean) => {
-    setIsStartTime(isStart);
-    isStart ? setStartTime(dayjs(startTime)) : setEndTime(dayjs(endTime));
-    setIsBottomSheetOpen((prev) => !prev);
-  };
-
-  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
-  const hanldeBottomSheetClick = () => {
-    setIsBottomSheetOpen((prev) => !prev);
-  };
+  }, [todoList]);
 
   const handleAdd = async () => {
     if (!title || !placeRef.current || !workspaceUserId || !selectedPriority || !selectedStatus) {
