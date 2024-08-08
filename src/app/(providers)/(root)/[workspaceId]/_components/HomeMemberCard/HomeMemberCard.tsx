@@ -23,7 +23,7 @@ const HomeMemberCard = () => {
 
   return (
     <Link href={`${workspaceId}/profile/${workspaceUserId}`} className="flex flex-row gap-[16px] items-center">
-      <div className="flex items-center justify-center relative size-[56px] rounded-full bg-[#BDBDBD]">
+      <div className="flex items-center justify-center relative size-[56px] rounded-full bg-[#dbadad]">
         {profileImg ? (
           <Image
             src={profileImg}
@@ -37,7 +37,7 @@ const HomeMemberCard = () => {
           <AvatarIcon className="w-[33.6px] h-[33.6px]" />
         )}
       </div>
-      <div className="flex flex-col gap-[4px]">
+      <div className="flex flex-col gap-[4px] w-full sm:flex-row sm:justify-between">
         <Typography variant="Title18px" color="grey700Black">
           {name}
         </Typography>
