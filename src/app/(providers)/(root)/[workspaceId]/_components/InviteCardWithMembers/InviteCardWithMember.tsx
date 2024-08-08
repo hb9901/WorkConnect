@@ -17,27 +17,35 @@ const inviteCardWithMember = ({ handleCardClose }: InviteCardWithOutMemberProps)
   if (!selectedWorkspace) return;
 
   return (
-    <div className="relative flex flex-col p-[28px] gap-[20px] bg-[#EBECFE]">
+    <div className="relative flex flex-col p-[28px] gap-[20px] bg-[#EBECFE] sm:px-[38px] sm:py-[54px] sm:gap-0 sm:justify-between sm:h-[317px]">
       <div className="flex flex-row justify-between items-start">
-        <div className="flex flex-col gap-[8px]">
-          <Typography variant="Title18px" color="grey700Black">
+        <div className="flex flex-col gap-[8px] sm:gap-[16px]">
+          {/*moblile 글씨*/}
+          <Typography variant="Title18px" color="grey700Black" className="sm:hidden">
             <div>동료들과 함께</div>
-            <div>{selectedWorkspace.name}을 시작해보세요 !</div>
+            <div>{selectedWorkspace.name}을 시작하세요 !</div>
+            <Typography variant="Body14px" color="grey500" className="sm:hidden">
+              <div>함께 일하는 동료들을 초대해보세요.</div>
+            </Typography>
           </Typography>
-          <Typography variant="Body14px" color="grey500">
+          {/*pc 글씨*/}
+          <Typography variant="Title36px" color="grey700Black" className="hidden z-10 sm:flex sm:flex-row">
+            동료들과 함께 {selectedWorkspace.name}을 시작하세요 !
+          </Typography>
+          <Typography variant="Body26px" color="grey500" className="hidden z-10 sm:flex sm:flex-row">
             <div>함께 일하는 동료들을 초대해보세요.</div>
           </Typography>
         </div>
         <div>
           <button onClick={handleCardClose}>
-            <XIcon className="w-[24px] h-[24px]" />
+            <XIcon className="w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
           </button>
         </div>
       </div>
       <div>
         <InviteCodeButton workspaceId={selectedWorkspace.invite_code} isFullWidth={false} />
       </div>
-      <HandsIcon className="absolute right-[23px] bottom-[0px] w-[90px] h-[93px]" />
+      <HandsIcon className="absolute right-[23px] bottom-[0px] w-[90px] h-[93px] sm:w-[254px] sm:h-[261px] sm:right-[118px]" />
     </div>
   );
 };
