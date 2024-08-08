@@ -234,6 +234,7 @@ const CustomPrejoin = ({
     saveVideoInputEnabled(videoEnabled);
   }, [videoEnabled, saveVideoInputEnabled]);
   React.useEffect(() => {
+    console.log(audioDeviceId);
     saveAudioInputDeviceId(audioDeviceId);
   }, [audioDeviceId, saveAudioInputDeviceId]);
   React.useEffect(() => {
@@ -242,6 +243,11 @@ const CustomPrejoin = ({
   React.useEffect(() => {
     saveUsername(username);
   }, [username, saveUsername]);
+
+  // 긴급 패치
+  React.useEffect(() => {
+    saveUsername(userLabel);
+  }, [audioDeviceId]);
 
   const tracks = usePreviewTracks(
     {
@@ -266,11 +272,6 @@ const CustomPrejoin = ({
       return 'undefined';
     }
   }, [videoTrack]);
-
-  // const audioTrack = React.useMemo(
-  //   () => tracks?.filter((track) => track.kind === Track.Kind.Audio)[0] as LocalAudioTrack,
-  //   [tracks]
-  // );
 
   React.useEffect(() => {
     if (videoEl.current && videoTrack) {
@@ -398,4 +399,4 @@ const CustomPrejoin = ({
   );
 };
 
-export default CustomPrejoin;
+export default React.memo(CustomPrejoin);

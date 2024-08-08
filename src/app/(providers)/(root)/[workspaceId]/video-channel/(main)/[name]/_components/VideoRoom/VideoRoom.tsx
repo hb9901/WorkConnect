@@ -6,7 +6,6 @@ import useStreamSetStore from '@/store/streamSetStore';
 import { LiveKitRoom, RoomAudioRenderer, usePersistentUserChoices } from '@livekit/components-react';
 import { RoomConnectOptions } from 'livekit-client';
 
-
 import { redirect, useSearchParams } from 'next/navigation';
 
 import { useEffect, useMemo, useState } from 'react';
@@ -21,13 +20,16 @@ type videoRoomProps = {
 const VideoRoom = ({ name }: videoRoomProps) => {
   const workspaceId = useWorkspaceId();
   const searchParams = useSearchParams();
+  const username = searchParams.get('username');
   const [token, setToken] = useState('');
 
   const { userChoices } = usePersistentUserChoices();
   const { isSettingOk } = useStreamSetStore();
 
   useEffect(() => {
-    if (!searchParams.get('username') || !isSettingOk) {
+    if (!username || !isSettingOk) {
+      console.log(`라다이렉트 되는거임 username : ${username}  isSettingOk : ${isSettingOk}`);
+
       redirect(`/${workspaceId}/video-channel/prejoin?room=${name}`);
       return;
     }

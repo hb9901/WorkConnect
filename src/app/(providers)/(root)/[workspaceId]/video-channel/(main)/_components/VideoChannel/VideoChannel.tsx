@@ -47,7 +47,7 @@ const VideoChannel = ({ tracks, videoEnabled }: VideoChannelProps) => {
           />
         </div>
       ) : (
-        <div className="flex items-center justify-center h-[50vh] bg-[#D9D9D9] min-w-[400px] w-[50rem] max-w-[1000px] rounded-[10px] mx-auto aspect-w-16 aspect-h-9">
+        <div className="flex items-center justify-center h-[50vh] bg-[#D9D9D9] min-w-[383px] max-w-[1000px] rounded-[10px] mx-auto aspect-w-16 aspect-h-9">
           <div className="rounded-full bg-[#BDBDBD] w-[140px] h-[140px] flex items-center justify-center">
             <PersonFilledIcon />
           </div>
