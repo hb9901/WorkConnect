@@ -12,7 +12,7 @@ interface ToDoListProps {
 }
 
 const ToDoList = ({ todoList, title }: ToDoListProps) => {
-  const { selectedDate } = useDateStore();
+  const selectedDate = useDateStore((state) => state.selectedDate);
   const selectedTodoList =
     todoList && todoList.filter((todo) => isDateSelected(todo.start_date, todo.end_date, selectedDate));
 

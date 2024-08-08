@@ -56,40 +56,37 @@ const CustomVideoConference = () => {
   };
 
   return (
-    <>
-      {/*TODO: focus Track이 있어야 할때 와 없어야 할때 구분 가능해야함 */}
-      <div className="flex flex-col items-center gap-2 h-[80vh] p-3">
-        <div className="flex p-4 h-full items-center">
-          <div className={`overflow-hidden mr-5 ${focusedTrack ? 'sm:w-[full] m-5' : 'none'} `}>
-            <FocusLayoutContainer
-              style={{
-                height: '80vh',
-                width: '80rem',
-                display: `${focusedTrack ? 'flex' : 'none'}`,
-                justifyItems: 'center',
-                alignItems: 'center',
-                padding: '5px'
-              }}
-            >
-              {focusedTrack && <FocusLayout trackRef={focusedTrack} />}
-            </FocusLayoutContainer>
-          </div>
-          <div className={`${focusedTrack ? 'hidden md:block w-[300px]' : 'w-full'} h-full`}>
-            <CarouselLayout
-              orientation="vertical"
-              tracks={tracks}
-              style={{
-                height: 'calc(100vh - var(--lk-control-bar-height))',
-                gap: `${focusedTrack ? '5px' : 'none'}`
-              }}
-            >
-              <ParticipantTile onParticipantClick={clickFocus} />
-            </CarouselLayout>
-          </div>
+    <div className="flex flex-col items-center gap-2 h-[80vh] p-3">
+      <div className="flex p-4 h-full items-center">
+        <div className={`overflow-hidden mr-5 ${focusedTrack ? 'sm:w-[full] m-5' : 'none'} `}>
+          <FocusLayoutContainer
+            style={{
+              height: '80vh',
+              width: '80rem',
+              display: `${focusedTrack ? 'flex' : 'none'}`,
+              justifyItems: 'center',
+              alignItems: 'center',
+              padding: '5px'
+            }}
+          >
+            {focusedTrack && <FocusLayout trackRef={focusedTrack} />}
+          </FocusLayoutContainer>
         </div>
-        <BottomControlBar controls={{ microphone: true, camera: true, screenShare: true }} variation="verbose" />
+        <div className={`${focusedTrack ? 'hidden md:block w-[300px]' : 'w-full'} h-full`}>
+          <CarouselLayout
+            orientation="vertical"
+            tracks={tracks}
+            style={{
+              height: 'calc(100vh - var(--lk-control-bar-height))',
+              gap: `${focusedTrack ? '5px' : 'none'}`
+            }}
+          >
+            <ParticipantTile onParticipantClick={clickFocus} />
+          </CarouselLayout>
+        </div>
       </div>
-    </>
+      <BottomControlBar controls={{ microphone: true, camera: true, screenShare: true }} variation="verbose" />
+    </div>
   );
 };
 
