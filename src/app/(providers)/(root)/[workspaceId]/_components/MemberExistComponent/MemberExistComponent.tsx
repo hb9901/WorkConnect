@@ -26,7 +26,12 @@ const MemberExistComponent = ({ workspaceUserList }: MemberExistComponentProps) 
         </div>
       )}
       <div className="mt-[42px] mb-[24px]">
-        <Typography variant="Title18px" color="grey700Black">
+        {/*모바일*/}
+        <Typography variant="Title18px" color="grey700Black" className="sm:hidden">
+          멤버목록
+        </Typography>
+        {/*pc */}
+        <Typography variant="Title22px" color="grey700Black" className="hidden sm:flex">
           멤버목록
         </Typography>
         <div>

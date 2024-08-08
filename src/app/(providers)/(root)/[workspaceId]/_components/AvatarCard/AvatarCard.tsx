@@ -16,28 +16,37 @@ const AvatarCard = ({ workspaceUser }: AvatarCardProps) => {
     <Link href={`/${workspaceId}/profile/${workspaceUser.id}`}>
       <div className="flex flex-row items-center justify-between py-[16px]">
         <div className="flex flex-row items-center gap-[12px]">
-          <div className="flex items-center justify-center size-[48px] rounded-full bg-[#BDBDBD] relative">
+          <div className="flex items-center justify-center size-[48px] rounded-full bg-[#BDBDBD] relative sm:size-[67px]">
             {workspaceUser.profile_image ? (
               <Image
                 src={workspaceUser.profile_image}
                 alt={workspaceUser.name}
-                className="object-cover size-[48px] rounded-full"
-                width="48"
-                height="48"
+                className="object-cover size-[48px] rounded-full sm:size-[67px]"
+                fill
                 priority
               />
             ) : (
-              <AvatarIcon className="size-[28.8px]" />
+              <AvatarIcon className="size-[28.8px] sm:size-[40.3px]" />
             )}
           </div>
           <div>
-            <Typography variant="Title18px" color="grey700Black">
+            {/*모바일*/}
+            <Typography variant="Title18px" color="grey700Black" className="sm:hidden">
+              {workspaceUser.name}
+            </Typography>
+            {/*pc*/}
+            <Typography variant="Title20px" color="grey700Black" className="hidden sm:flex">
               {workspaceUser.name}
             </Typography>
           </div>
         </div>
         <div>
-          <Typography variant="Title14px" color="grey500">
+          {/*모바일*/}
+          <Typography variant="Title14px" color="grey700Black" className="sm:hidden">
+            {workspaceUser.state}
+          </Typography>
+          {/*pc*/}
+          <Typography variant="Title16px" color="grey700Black" className="hidden sm:flex">
             {workspaceUser.state}
           </Typography>
         </div>

@@ -29,10 +29,10 @@ const inviteCardWithMember = ({ handleCardClose }: InviteCardWithOutMemberProps)
             </Typography>
           </Typography>
           {/*pc 글씨*/}
-          <Typography variant="Title36px" color="grey700Black" className="hidden z-10 sm:flex sm:flex-row">
+          <Typography variant="Title36px" color="grey700Black" className="hidden z-[5] sm:flex sm:flex-row">
             동료들과 함께 {selectedWorkspace.name}을 시작하세요 !
           </Typography>
-          <Typography variant="Body26px" color="grey500" className="hidden z-10 sm:flex sm:flex-row">
+          <Typography variant="Body26px" color="grey500" className="hidden z-[5] sm:flex sm:flex-row">
             <div>함께 일하는 동료들을 초대해보세요.</div>
           </Typography>
         </div>
