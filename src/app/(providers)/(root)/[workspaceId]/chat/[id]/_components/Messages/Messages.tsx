@@ -5,7 +5,7 @@ import { useGetChatMessages, useGetUsersInChannel } from '../../../_hooks/useQue
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import { handleSubscribeToChat } from '../../../_utils/subscribe';
 import { MessagesWrapper } from '../MessagesContainer';
-import { useChatHandlers } from '../../../(home)/_hooks/useChatHandlers';
+import { useChatHandlers } from '../../_hook/useChatHandlers';
 
 const Messages = () => {
   const { id } = useParams();

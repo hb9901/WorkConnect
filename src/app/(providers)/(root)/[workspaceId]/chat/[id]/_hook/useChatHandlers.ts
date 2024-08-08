@@ -2,7 +2,7 @@ import { GetChatMessageType } from '@/types/chat';
 import { QUERY_KEYS } from '../../_constants/constants';
 import { RealtimeSubscribeProps } from '@/utils/createRealtimeSubscription';
 import { useQueryClient } from '@tanstack/react-query';
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 type RealtimePayloadMessagesType = GetChatMessageType & {
   channel_id: string;
