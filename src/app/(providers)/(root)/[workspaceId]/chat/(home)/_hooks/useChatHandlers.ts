@@ -24,7 +24,7 @@ export const useChatHandlers = () => {
   const queryClient = useQueryClient();
   const [payloadMessages, setPayloadMessages] = useState<RealtimePayloadMessagesType[]>([]);
 
-  const handleChatUpdates = useCallback(({ channelId }: HandleChatUpdatesProps) => {
+  const handleMessagesUpdates = useCallback(({ channelId }: HandleChatUpdatesProps) => {
     return (payload: RealtimeChatPayloadType) => {
       const { eventType, new: newPayload } = payload;
 
@@ -59,5 +59,5 @@ export const useChatHandlers = () => {
     };
   }, []);
 
-  return { handleNoticeUpdates, handleChatUpdates, payloadMessages, handleUserUpdates };
+  return { handleNoticeUpdates, handleMessagesUpdates, payloadMessages, handleUserUpdates };
 };

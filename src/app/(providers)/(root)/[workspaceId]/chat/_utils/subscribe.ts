@@ -35,13 +35,18 @@ export const subscribeToChannels =
   };
 
 type SubscribeToChatProps = {
-  handleChatUpdates: (payload: any) => void;
+  handleMessagesUpdates: (payload: any) => void;
   handleUserUpdates: () => void;
   id: string;
   userIds: string;
 };
 
-export const handleSubscribeToChat = ({ handleChatUpdates, handleUserUpdates, id, userIds }: SubscribeToChatProps) => {
+export const handleSubscribeToChat = ({
+  handleMessagesUpdates,
+  handleUserUpdates,
+  id,
+  userIds
+}: SubscribeToChatProps) => {
   return createRealtimeSubscription({
     channelName: REALTIME_CHANNEL_NAME.CHAT,
     eventHandlers: [
@@ -50,7 +55,7 @@ export const handleSubscribeToChat = ({ handleChatUpdates, handleUserUpdates, id
         schema: 'public',
         table: 'chat',
         filter: `channel_id=eq.${id}`,
-        handler: handleChatUpdates
+        handler: handleMessagesUpdates
       },
       {
         event: 'UPDATE',

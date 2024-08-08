@@ -17,7 +17,7 @@ const Messages = () => {
     channel_id: Number(channelId)
   });
 
-  const { payloadMessages, handleChatUpdates, handleUserUpdates } = useChatHandlers();
+  const { payloadMessages, handleMessagesUpdates, handleUserUpdates } = useChatHandlers();
 
   const { data: usersInChannel = {}, isPending: isPendingUsersInChannel } = useGetUsersInChannel({
     channel_id: Number(channelId),
@@ -40,7 +40,7 @@ const Messages = () => {
     if (!userIds || !channelId) return;
 
     handleSubscribeToChat({
-      handleChatUpdates: handleChatUpdates({ channelId }),
+      handleMessagesUpdates: handleMessagesUpdates({ channelId }),
       handleUserUpdates: handleUserUpdates({ channelId }),
       id: channelId,
       userIds

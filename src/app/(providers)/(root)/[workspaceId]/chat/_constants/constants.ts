@@ -1,5 +1,10 @@
+type ChatChannelsProps = {
+  workspace_id: number | null;
+  workspace_user_id: string | null;
+};
+
 export const QUERY_KEYS = {
-  CHAT_CHANNELS: (workspace_id: number | null, workspace_user_id: string | null) => [
+  CHAT_CHANNELS: ({ workspace_id, workspace_user_id }: ChatChannelsProps) => [
     'chatChannels',
     workspace_id,
     workspace_user_id
