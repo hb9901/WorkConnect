@@ -8,7 +8,7 @@ const useWorkspaceUserList = (workspaceId: number, workspaceUserId: string | nul
     isPending,
     isError
   } = useQuery<Tables<'workspace_user'>[] | undefined>({
-    queryKey: ['workspaceUserList' + workspaceId + workspaceUserId],
+    queryKey: ['workspaceUserList', workspaceId],
     queryFn: () => {
       if (!workspaceUserId) return;
       return api.workspaceUserList.getWorkspaceUserList(workspaceId, workspaceUserId);
