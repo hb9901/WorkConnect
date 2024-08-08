@@ -50,6 +50,7 @@ const ChatListPage = () => {
           <ChannelItem
             {...item}
             href={href}
+            key={item.channel_id}
             name={item.user_name ?? item.channel_name}
             user_count={item.is_dm ? undefined : item.user_count}
             user_thumbnail={item.user_thumbnail ?? undefined}
