@@ -42,8 +42,8 @@ const inviteCardWithMember = ({ handleCardClose }: InviteCardWithOutMemberProps)
           </button>
         </div>
       </div>
-      <div>
-        <InviteCodeButton workspaceId={selectedWorkspace.invite_code} isFullWidth={false} />
+      <div className="w-[114px] h-[36px] sm:w-[262px] sm:h-[52px]">
+        <InviteCodeButton workspaceId={selectedWorkspace.invite_code} isFullWidth={true} />
       </div>
       <HandsIcon className="absolute right-[23px] bottom-[0px] w-[90px] h-[93px] sm:w-[254px] sm:h-[261px] sm:right-[118px]" />
     </div>

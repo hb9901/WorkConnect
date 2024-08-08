@@ -25,7 +25,6 @@ const InviteCodeButton = ({ workspaceId, isFullWidth }: InviteCodeButtonProps) =
       onClick={() => {
         handleClick(workspaceId);
       }}
-      className="sm:w-[262px] sm:h-[52px]"
     >
       초대 코드 복사
     </Button>
