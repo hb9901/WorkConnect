@@ -37,12 +37,22 @@ const HomeMemberCard = () => {
         )}
       </div>
       <div className="flex flex-col gap-[4px] w-full sm:flex-row sm:justify-between">
-        <Typography variant="Title18px" color="grey700Black">
-          {name}
+        {/*모바일*/}
+        <Typography variant="Title18px" color="grey700Black" className="sm:hidden">
+          {workspaceUser.name}
+        </Typography>
+        {/*pc*/}
+        <Typography variant="Title20px" color="grey700Black" className="hidden sm:flex">
+          {workspaceUser.name}
         </Typography>
 
-        <Typography variant="Title14px" color="grey500">
-          {state}
+        {/*모바일*/}
+        <Typography variant="Title14px" color="grey700Black" className="sm:hidden">
+          {workspaceUser.state}
+        </Typography>
+        {/*pc*/}
+        <Typography variant="Title16px" color="grey700Black" className="hidden sm:flex">
+          {workspaceUser.state}
         </Typography>
       </div>
     </Link>
