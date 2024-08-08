@@ -25,7 +25,7 @@ const ChatListPage = () => {
 
   const handleChatInserts = ({ new: payload }: { new: ChatSubscribePayloadProps }) => {
     queryClient.setQueryData(
-      QUERY_KEYS.CHAT_CHANNELS(workspaceId, workspaceUserId),
+      QUERY_KEYS.CHAT_CHANNELS({ workspaceId, workspaceUserId }),
       (prev: GetChatChannelsResponse[]) => {
         return updateChatChannels(prev, payload);
       }
@@ -33,7 +33,9 @@ const ChatListPage = () => {
   };
 
   const handleChannelUserInserts = () => {
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CHAT_CHANNELS(workspaceId, workspaceUserId) });
+    queryClient.invalidateQueries({
+      queryKey: QUERY_KEYS.CHAT_CHANNELS({ workspaceId, workspaceUserId })
+    });
   };
 
   const channelIds = useMemo(() => {
