@@ -26,17 +26,17 @@ const TopSelect = ({ workspaceList, isOpen, onClick }: TopSelectProps) => {
     <div className={`fixed top-[50px] z-10 inset-0 ${isOpen ? 'h-full' : 'h-0'}`}>
       {isOpen && (
         <>
-          <div className="fixed top-[52px] inset-0 bg-black opacity-40 sm:opacity-0" onClick={onClick} />{' '}
+          <div className="fixed top-[52px] inset-0 bg-black opacity-40 lg:opacity-0" onClick={onClick} />{' '}
           <div
             className={`fixed flex flex-col top-[52px] left-0 right-0 bg-white scrollbar-hide max-h-calc(100vh - 200px) 
-          rounded-b-[6px] overflow-y-scroll snap-none gap-[16px] px-[16px] py-[16px] sm:px-[16px] sm:py-[6px] sm:max-w-[343px] sm:translate-x-[56px] sm:shadow-lg`}
+          rounded-b-[6px] overflow-y-scroll snap-none gap-[16px] px-[16px] py-[16px] lg:px-[16px] lg:py-[6px] lg:max-w-[343px] lg:translate-x-[56px] lg:shadow-lg`}
           >
             {workspaceList.map((workspace) => (
               <Link
                 key={workspace.id}
                 href={setUrl(workspace.id)}
                 onClick={() => handleClick(workspace.workspace_user_id)}
-                className="flex flex-row justify-between px-[8px] sm:py-[8px]"
+                className="flex flex-row justify-between px-[8px] lg:py-[8px]"
               >
                 <Typography
                   variant="Subtitle16px"
@@ -49,7 +49,7 @@ const TopSelect = ({ workspaceList, isOpen, onClick }: TopSelectProps) => {
             ))}
             <Link
               href="/workspace/landing"
-              className="px-[8px] pt-[22px] pb-[6px] sm:pt-[22px] sm:pb-[8px] block border-t border-[#C9CCD4]"
+              className="px-[8px] pt-[22px] pb-[6px] lg:pt-[22px] lg:pb-[8px] block border-t border-[#C9CCD4]"
             >
               <Typography variant="Subtitle16px" color="primary200Main">
                 + 다른 워크스페이스 로그인
