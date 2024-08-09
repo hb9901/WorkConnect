@@ -32,7 +32,7 @@ const useCreateChannel = () => {
     setIsLoading(true);
     if (isLoading) return;
 
-    const { id: channelId } = await createChannel({ name: channelName || '', type, thumbnail });
+    const { id: channelId } = await createChannel({ name: channelName || null, type, thumbnail });
     await createChannelUsers({ channel_id: channelId, workspaceUserIds: userIds });
 
     if (type === CHANNEL_TYPE.chat) {

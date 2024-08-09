@@ -8,13 +8,14 @@ export const useGetChannelName = () => {
   const workspaceUserId = useWorkspaceUserId();
   const stringId = Array.isArray(id) ? id[0] : id;
 
-  const { data: groupChannelName } = useGetGroupChannelName({ id: stringId });
+  const { data: groupChannelName, isPending: isPendingGroupChannelName } = useGetGroupChannelName({ id: stringId });
 
-  const { data: usersInChannel = {} } = useGetUsersInChannel({
+  const { data: usersInChannel = {}, isPending: isPendingUsersInChannel } = useGetUsersInChannel({
     channel_id: Number(stringId),
     workspace_user_id: workspaceUserId
   });
 
+  if (isPendingGroupChannelName || isPendingUsersInChannel) return '';
   const dmChannelName = getDmChannelName(usersInChannel);
 
   return dmChannelName ?? groupChannelName ?? '';
