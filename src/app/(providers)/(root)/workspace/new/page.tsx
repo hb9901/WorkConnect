@@ -137,8 +137,8 @@ const NewWorkSpacePage = () => {
         return;
       }
 
-      setWorkspaceId(workspaceData.id);
-      setWorkspaceUserId(user.id);
+      setWorkspaceIdCookie(workspaceData.id);
+      setWorkspaceUserIdCookie(user.id);
       setUserData(user.id, workspaceData.id);
 
       // TODO : 생성 완료 후 페이지 이동처리하기

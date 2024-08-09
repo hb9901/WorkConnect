@@ -1,4 +1,5 @@
 'use client';
+
 import useShallowSelector from '@/hooks/useShallowSelector';
 import { useAuthStore } from '@/providers/AuthStoreProvider';
 import { AuthStoreTypes } from '@/store/authStore';
@@ -6,7 +7,7 @@ import useUserStore from '@/store/userStore';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { getWorkspaceIdCookie, setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/workspaceCookie';
 import WorkConnectLogoIcon from '@/icons/WorkConnectLogo.svg';
@@ -119,7 +120,7 @@ const InviteCodePage = () => {
 
   const { mutate: handleSubmitMutate } = handleSubmit;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const getSession = async () => {
       if (cookieWorkspaceId) {
         return;
