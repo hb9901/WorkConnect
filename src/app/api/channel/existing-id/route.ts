@@ -18,18 +18,18 @@ export const GET = async (req: NextRequest) => {
   const other_workspace_user_id = searchParams.get('other_workspace_user_id');
 
   if (!workspace_user_id || !other_workspace_user_id) {
-    return NextResponse.json(CHANNEL_EXISTING_ID_RESPONSE_INVALID_REQUEST);
+    return NextResponse.json(CHANNEL_EXISTING_ID_RESPONSE_INVALID_REQUEST, { status: 400 });
   }
 
   try {
     const { data, error } = await getExistingChannelId({ workspace_user_id, other_workspace_user_id });
 
     if (error) {
-      return NextResponse.json(Object.assign(CHANNEL_EXISTING_ID_RESPONSE_FAILED, { error }));
+      return NextResponse.json(Object.assign(CHANNEL_EXISTING_ID_RESPONSE_FAILED, { error }), { status: 500 });
     }
 
     return NextResponse.json(Object.assign(CHANNEL_EXISTING_ID_RESPONSE_SUCCESS, { data }));
   } catch (error) {
-    return NextResponse.json(CHANNEL_EXISTING_ID_RESPONSE_FAILED);
+    return NextResponse.json(CHANNEL_EXISTING_ID_RESPONSE_FAILED, { status: 500 });
   }
 };

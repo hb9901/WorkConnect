@@ -19,7 +19,7 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
   const { id: workspace_id } = params;
 
   if (!workspace_user_id) {
-    return NextResponse.json(WORKSPACE_USER_SEARCH_RESPONSE_INVALID_REQUEST);
+    return NextResponse.json(WORKSPACE_USER_SEARCH_RESPONSE_INVALID_REQUEST, { status: 400 });
   }
 
   try {
@@ -30,11 +30,11 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
     });
 
     if (error) {
-      return NextResponse.json(Object.assign(WORKSPACE_USER_SEARCH_RESPONSE_FAILED, { error }));
+      return NextResponse.json(Object.assign(WORKSPACE_USER_SEARCH_RESPONSE_FAILED, { error }), { status: 500 });
     }
 
     return NextResponse.json(Object.assign(WORKSPACE_USER_SEARCH_RESPONSE_SUCCESS, { data }));
   } catch (error) {
-    return NextResponse.json(WORKSPACE_USER_SEARCH_RESPONSE_FAILED);
+    return NextResponse.json(WORKSPACE_USER_SEARCH_RESPONSE_FAILED, { status: 400 });
   }
 };

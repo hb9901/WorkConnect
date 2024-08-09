@@ -20,12 +20,12 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
     const { data, error } = await getChatMessages({ channel_id: Number(channel_id) });
 
     if (error) {
-      return NextResponse.json(Object.assign(CHAT_RESPONSE_GET_FAILED, { error }));
+      return NextResponse.json(Object.assign(CHAT_RESPONSE_GET_FAILED, { error }), { status: 500 });
     }
 
     return NextResponse.json(Object.assign(CHAT_RESPONSE_SUCCESS, { data }));
   } catch (error) {
-    return NextResponse.json(CHAT_RESPONSE_GET_FAILED);
+    return NextResponse.json(CHAT_RESPONSE_GET_FAILED, { status: 400 });
   }
 };
 
@@ -39,7 +39,7 @@ export const POST = async (req: NextRequest, { params }: { params: { id: string 
   const { content, workspace_user_id, type } = await req.json();
 
   if (!content || !workspace_user_id) {
-    return NextResponse.json(CHAT_RESPONSE_POST_INVALID_REQUEST);
+    return NextResponse.json(CHAT_RESPONSE_POST_INVALID_REQUEST, { status: 400 });
   }
 
   try {
@@ -51,11 +51,11 @@ export const POST = async (req: NextRequest, { params }: { params: { id: string 
     });
 
     if (error) {
-      return NextResponse.json(Object.assign(CHAT_RESPONSE_POST_FAILED, { error }));
+      return NextResponse.json(Object.assign(CHAT_RESPONSE_POST_FAILED, { error }), { status: 500 });
     }
 
     return NextResponse.json(CHAT_RESPONSE_POST_SUCCESS);
   } catch (error) {
-    return NextResponse.json(CHAT_RESPONSE_POST_FAILED);
+    return NextResponse.json(CHAT_RESPONSE_POST_FAILED, { status: 400 });
   }
 };

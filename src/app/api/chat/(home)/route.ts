@@ -14,7 +14,7 @@ export const GET = async (req: NextRequest) => {
   const workspace_user_id = searchParams.get('workspace_user_id');
 
   if (!workspace_id || !workspace_user_id) {
-    return NextResponse.json(CHAT_LIST_RESPONSE_INVALID_REQUEST);
+    return NextResponse.json(CHAT_LIST_RESPONSE_INVALID_REQUEST, { status: 400 });
   }
 
   try {
@@ -24,11 +24,11 @@ export const GET = async (req: NextRequest) => {
     });
 
     if (error) {
-      return NextResponse.json(Object.assign(CHAT_LIST_RESPONSE_FAILED, { error }));
+      return NextResponse.json(Object.assign(CHAT_LIST_RESPONSE_FAILED, { error }), { status: 500 });
     }
 
     return NextResponse.json(Object.assign(CHAT_LIST_RESPONSE_SUCCESS, { data }));
   } catch (error) {
-    return NextResponse.json(CHAT_LIST_RESPONSE_FAILED);
+    return NextResponse.json(CHAT_LIST_RESPONSE_FAILED, { status: 500 });
   }
 };

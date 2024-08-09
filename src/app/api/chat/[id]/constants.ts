@@ -6,7 +6,6 @@ export const CHAT_RESPONSE = {
 };
 
 export const CHAT_RESPONSE_SUCCESS = {
-  statusCode: 200,
   status: true,
   data: [],
   message: ''
@@ -14,7 +13,6 @@ export const CHAT_RESPONSE_SUCCESS = {
 
 export const CHAT_RESPONSE_GET_FAILED = {
   ...CHAT_RESPONSE_SUCCESS,
-  statusCode: 500,
   status: false,
   message: CHAT_RESPONSE.FAILED_TO_GET
 };
@@ -26,14 +24,12 @@ export const CHAT_RESPONSE_POST_SUCCESS = {
 
 export const CHAT_RESPONSE_POST_INVALID_REQUEST = {
   ...CHAT_RESPONSE_SUCCESS,
-  statusCode: 400,
   status: false,
   message: CHAT_RESPONSE.POST_INVALID_REQUEST
 };
 
 export const CHAT_RESPONSE_POST_FAILED = {
   ...CHAT_RESPONSE_SUCCESS,
-  statusCode: 500,
   status: false,
   message: CHAT_RESPONSE.FAILED_TO_POST
 };
