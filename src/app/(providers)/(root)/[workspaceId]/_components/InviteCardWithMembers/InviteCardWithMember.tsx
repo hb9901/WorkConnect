@@ -17,9 +17,9 @@ const inviteCardWithMember = ({ handleCardClose }: InviteCardWithOutMemberProps)
   if (!selectedWorkspace) return;
 
   return (
-    <div className="relative flex flex-col p-[28px] gap-[20px] bg-[#EBECFE] lg:px-[38px] lg:py-[54px] lg:gap-0 lg:justify-between lg:h-[317px]">
+    <div className="relative flex flex-col px-[28px] pt-[28px] pb-[17px] gap-[20px] bg-[#EBECFE] lg:px-[38px] lg:py-[54px] lg:gap-0 lg:justify-between lg:h-[317px]">
       <div className="flex flex-row justify-between items-start">
-        <div className="flex flex-col gap-[8px] lg:gap-[16px]">
+        <div className="flex flex-col gap-[8px] z-[5] break-keep lg:gap-[16px]">
           {/*moblile 글씨*/}
           <Typography variant="Title18px" color="grey700Black" className="lg:hidden">
             <div>동료들과 함께</div>
@@ -29,10 +29,10 @@ const inviteCardWithMember = ({ handleCardClose }: InviteCardWithOutMemberProps)
             </Typography>
           </Typography>
           {/*pc 글씨*/}
-          <Typography variant="Title36px" color="grey700Black" className="hidden z-[5] lg:flex lg:flex-row">
+          <Typography variant="Title36px" color="grey700Black" className="hidden lg:flex lg:flex-row">
             동료들과 함께 {selectedWorkspace.name}을 시작하세요 !
           </Typography>
-          <Typography variant="Body26px" color="grey500" className="hidden z-[5] lg:flex lg:flex-row">
+          <Typography variant="Body26px" color="grey500" className="hidden lg:flex lg:flex-row">
             <div>함께 일하는 동료들을 초대해보세요.</div>
           </Typography>
         </div>
@@ -42,7 +42,7 @@ const inviteCardWithMember = ({ handleCardClose }: InviteCardWithOutMemberProps)
           </button>
         </div>
       </div>
-      <div className="w-[114px] h-[36px] lg:w-[262px] lg:h-[52px] z-[5]">
+      <div className="w-[116px] lg:w-[262px] lg:h-[52px] z-[5]">
         <InviteCodeButton workspaceId={selectedWorkspace.invite_code} isFullWidth={true} />
       </div>
       <HandsIcon className="absolute right-[23px] bottom-[0px] w-[90px] h-[93px] lg:w-[254px] lg:h-[261px] lg:right-[118px]" />
