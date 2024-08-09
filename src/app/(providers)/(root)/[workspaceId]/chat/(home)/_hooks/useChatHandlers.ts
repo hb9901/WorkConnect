@@ -2,7 +2,7 @@ import { GetChatMessageType } from '@/types/chat';
 import { QUERY_KEYS } from '../../_constants/constants';
 import { RealtimeSubscribeProps } from '@/utils/createRealtimeSubscription';
 import { useQueryClient } from '@tanstack/react-query';
-import { Dispatch, SetStateAction, useCallback } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 
 type RealtimePayloadMessagesType = GetChatMessageType & {
   channel_id: string;
@@ -14,61 +14,50 @@ type RealtimeChatPayloadType = {
   eventType: RealtimeSubscribeProps['eventHandlers'][0]['event'];
 };
 
-export const useChatHandlers = ({
-  stringId,
-  latestNotice,
-  channelId,
-  setPayloadMessages
-}: {
-  stringId: string;
-  latestNotice: GetChatMessageType | undefined;
+type HandleNoticeUpdatesProps = { latestNoticeId: number | undefined; channelId: string };
+
+type HandleChatUpdatesProps = {
   channelId: string;
-  setPayloadMessages: Dispatch<SetStateAction<RealtimePayloadMessagesType[]>>;
-}) => {
+};
+
+export const useChatHandlers = () => {
   const queryClient = useQueryClient();
+  const [payloadMessages, setPayloadMessages] = useState<RealtimePayloadMessagesType[]>([]);
 
-  const handleNoticeUpdates = useCallback(() => {
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LATEST_NOTICE(stringId) });
-  }, [queryClient, stringId]);
-
-  const handleChatDelete = useCallback(() => {
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CHAT_MESSAGES(Number(channelId)) });
-    setPayloadMessages([]);
-  }, [queryClient, channelId, setPayloadMessages]);
-
-  const handleUserUpdates = useCallback(() => {
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USERS_IN_CHANNEL(Number(channelId)) });
-  }, [queryClient, channelId]);
-
-  const handleChatInsert = useCallback(
-    (newPayload: RealtimePayloadMessagesType) => {
-      setPayloadMessages((prev) => [...prev, newPayload]);
-    },
-    [setPayloadMessages]
-  );
-
-  const handleChatUpdates = useCallback(
-    (payload: RealtimeChatPayloadType) => {
-      const { eventType, new: newPayload, old } = payload;
-
-      const isNoticeDeleted = eventType === 'DELETE' && latestNotice?.id === old.id;
-      const isNoticeUpdated = newPayload.type === 'notice';
-
-      if (isNoticeDeleted || isNoticeUpdated) {
-        handleNoticeUpdates();
-      }
+  const handleMessagesUpdates = useCallback(({ channelId }: HandleChatUpdatesProps) => {
+    return (payload: RealtimeChatPayloadType) => {
+      const { eventType, new: newPayload } = payload;
 
       switch (eventType) {
         case 'INSERT':
-          handleChatInsert(newPayload);
+          setPayloadMessages((prev) => [...prev, newPayload]);
           break;
         case 'DELETE':
-          handleChatDelete();
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CHAT_MESSAGES(Number(channelId)) });
+          setPayloadMessages([]);
           break;
       }
-    },
-    [handleNoticeUpdates, handleChatInsert, handleChatDelete, latestNotice]
-  );
+    };
+  }, []);
 
-  return { handleChatUpdates, handleUserUpdates };
+  const handleNoticeUpdates = useCallback(({ latestNoticeId, channelId }: HandleNoticeUpdatesProps) => {
+    return (payload: RealtimeChatPayloadType) => {
+      const { eventType, new: newPayload, old } = payload;
+
+      const isNoticeDeleted = eventType === 'DELETE' && latestNoticeId === old.id;
+      const isNoticeUpdated = newPayload.type === 'notice';
+
+      if (isNoticeDeleted || isNoticeUpdated) {
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LATEST_NOTICE(channelId) });
+      }
+    };
+  }, []);
+
+  const handleUserUpdates = useCallback(({ channelId }: HandleChatUpdatesProps) => {
+    return () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USERS_IN_CHANNEL(Number(channelId)) });
+    };
+  }, []);
+
+  return { handleNoticeUpdates, handleMessagesUpdates, payloadMessages, handleUserUpdates };
 };
