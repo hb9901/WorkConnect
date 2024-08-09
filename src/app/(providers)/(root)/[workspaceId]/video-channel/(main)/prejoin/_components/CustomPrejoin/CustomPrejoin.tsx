@@ -8,6 +8,7 @@ import {
 } from '@livekit/components-react';
 
 import Button from '@/components/Button';
+import Typography from '@/components/Typography';
 import type { CreateLocalTracksOptions, LocalAudioTrack, LocalTrack, LocalVideoTrack } from 'livekit-client';
 import {
   createLocalAudioTrack,
@@ -325,51 +326,11 @@ const CustomPrejoin = ({
   }
 
   return (
-    <div className="flex flex-col gap-8 justify-center items-center bg-white" {...htmlProps}>
-      <VideoChannel tracks={tracks} videoEnabled={videoEnabled} />
-
-      <div className="flex gap-6 justify-center m-3">
-        <div className="flex items-center">
-          <TrackToggle
-            initialState={audioEnabled}
-            source={Track.Source.Microphone}
-            onChange={(enabled) => setAudioEnabled(enabled)}
-          >
-            {micLabel}
-          </TrackToggle>
-
-          <MediaDeviceMenu
-            style={{ display: 'none' }}
-            initialSelection={audioDeviceId}
-            kind="audioinput"
-            disabled={!audioTrack}
-            tracks={{ audioinput: audioTrack }}
-            onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
-          />
-        </div>
-        <div className="flex items-center">
-          <TrackToggle
-            initialState={videoEnabled}
-            source={Track.Source.Camera}
-            onChange={(enabled) => setVideoEnabled(enabled)}
-          >
-            {camLabel}
-          </TrackToggle>
-          <MediaDeviceMenu
-            style={{ display: 'none' }}
-            initialSelection={videoDeviceId}
-            kind="videoinput"
-            disabled={!videoTrack}
-            tracks={{ videoinput: videoTrack }}
-            onActiveDeviceChange={(_, id) => setVideoDeviceId(id)}
-          />
-        </div>
-        <DeviceMenuButton />
-      </div>
-
-      <form className="flex flex-col items-center gap-3 ">
+    <div className="flex flex-col gap-7 justify-center items-center mx-4 bg-white" {...htmlProps}>
+      <VideoChannel tracks={tracks} videoEnable={videoEnabled} />
+      <div className="w-full md:w-[73vw] flex flex-col items-center ">
         <input
-          className="p-3 border rounded w-[343px]"
+          className="p-3 border rounded w-full"
           id="username"
           name="username"
           type="text"
@@ -378,10 +339,53 @@ const CustomPrejoin = ({
           onChange={(inputEl) => setUsername(inputEl.target.value)}
           autoComplete="off"
         />
-        <Button theme="primary" className=" w-[343px] mx-4 " type="submit" onClick={handleSubmit}>
+        <div className="flex gap-[48px] justify-center items-center m-1 py-2 w-[72vw]">
+          <div className="flex items-center">
+            <TrackToggle
+              initialState={videoEnabled}
+              source={Track.Source.Camera}
+              onChange={(enabled) => setVideoEnabled(enabled)}
+            >
+              {camLabel}
+            </TrackToggle>
+            <MediaDeviceMenu
+              style={{ display: 'none' }}
+              initialSelection={videoDeviceId}
+              kind="videoinput"
+              disabled={!videoTrack}
+              tracks={{ videoinput: videoTrack }}
+              onActiveDeviceChange={(_, id) => setVideoDeviceId(id)}
+            />
+          </div>
+          <div>
+            <TrackToggle
+              initialState={audioEnabled}
+              source={Track.Source.Microphone}
+              onChange={(enabled) => setAudioEnabled(enabled)}
+            >
+              {micLabel}
+            </TrackToggle>
+
+            <MediaDeviceMenu
+              style={{ display: 'none' }}
+              initialSelection={audioDeviceId}
+              kind="audioinput"
+              disabled={!audioTrack}
+              tracks={{ audioinput: audioTrack }}
+              onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
+            />
+          </div>
+
+          <DeviceMenuButton />
+        </div>
+
+        <Button isFullWidth theme="primary" className=" mx-4 mt-5  " type="submit" onClick={handleSubmit}>
           {joinLabel}
         </Button>
-      </form>
+      </div>
+      <Typography variant="Body14px" color="grey700Black">
+        개인정보처리방침
+      </Typography>
 
       {debug && (
         <>
