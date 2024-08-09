@@ -40,7 +40,7 @@ export const getLatestNotice = async ({ channel_id }: GetLatestNoticeProps) => {
     .eq('type', 'notice')
     .order('created_at', { ascending: false })
     .limit(1)
-    .single();
+    .maybeSingle();
 
   return response;
 };
