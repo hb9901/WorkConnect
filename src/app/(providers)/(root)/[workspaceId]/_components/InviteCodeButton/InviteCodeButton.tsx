@@ -1,4 +1,5 @@
 import Button from '@/components/Button';
+import Typography from '@/components/Typography';
 import { useSnackBar } from '@/providers/SnackBarContext';
 
 interface InviteCodeButtonProps {
@@ -19,15 +20,35 @@ const InviteCodeButton = ({ workspaceId, isFullWidth }: InviteCodeButtonProps) =
   };
 
   return (
-    <Button
-      theme="primary"
-      isFullWidth={isFullWidth}
-      onClick={() => {
-        handleClick(workspaceId);
-      }}
-    >
-      초대 코드 복사
-    </Button>
+    <>
+      {/*모바일*/}
+      <Button
+        theme="primary"
+        isFullWidth={isFullWidth}
+        onClick={() => {
+          handleClick(workspaceId);
+        }}
+        isSmall
+        className="flex lg:hidden"
+      >
+        <Typography variant="Subtitle12px" color="white">
+          초대 코드 복사
+        </Typography>
+      </Button>
+      {/*PC*/}
+      <Button
+        theme="primary"
+        isFullWidth={isFullWidth}
+        onClick={() => {
+          handleClick(workspaceId);
+        }}
+        className="hidden lg:flex"
+      >
+        <Typography variant="Subtitle16px" color="white">
+          초대 코드 복사
+        </Typography>
+      </Button>
+    </>
   );
 };
 

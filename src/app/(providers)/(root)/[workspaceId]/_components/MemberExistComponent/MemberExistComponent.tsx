@@ -1,17 +1,15 @@
 'use client';
-import Typography from '@/components/Typography';
-import useUserStore from '@/store/userStore';
+import ResponsiveTypography from '@/components/ResponsiveTypography';
 import { Tables } from '@/types/supabase';
 import { useState } from 'react';
-import AvatarCard from '../AvatarCard';
 import InviteCardWithMembers from '../InviteCardWithMembers';
+import MemberCard from '../MemberCard';
 
 interface MemberExistComponentProps {
   workspaceUserList: Tables<'workspace_user'>[];
 }
 
 const MemberExistComponent = ({ workspaceUserList }: MemberExistComponentProps) => {
-  const workspaceUserId = useUserStore((state) => state.workspaceUserId);
   const [isCardExist, setIsCardExist] = useState<Boolean>(true);
 
   const handleCardClose = () => {
@@ -26,21 +24,13 @@ const MemberExistComponent = ({ workspaceUserList }: MemberExistComponentProps) 
         </div>
       )}
       <div className="mt-[42px] mb-[24px]">
-        {/*모바일*/}
-        <Typography variant="Title18px" color="grey700Black" className="lg:hidden">
+        <ResponsiveTypography mobileVariant="Title18px" pcVariant="Title22px" color="grey700Black">
           멤버목록
-        </Typography>
-        {/*pc */}
-        <Typography variant="Title22px" color="grey700Black" className="hidden lg:flex">
-          멤버목록
-        </Typography>
+        </ResponsiveTypography>
         <div>
-          {workspaceUserList.map(
-            (workspaceUser) =>
-              workspaceUserId !== workspaceUser.id && (
-                <AvatarCard key={workspaceUser.id} workspaceUser={workspaceUser} />
-              )
-          )}
+          {workspaceUserList.map((workspaceUser) => (
+            <MemberCard key={workspaceUser.id} workspaceUser={workspaceUser} />
+          ))}
         </div>
       </div>
     </>
