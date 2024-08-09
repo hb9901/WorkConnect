@@ -50,6 +50,7 @@ const typographyClass = cva('tracking-[-2%]', {
       grey200: 'text-grey200',
       grey100: 'text-grey100',
       grey50: 'text-grey50',
+      white: 'text-white',
       primary900: 'text-primary900',
       primary800: 'text-primary800',
       primary700: 'text-primary700',
