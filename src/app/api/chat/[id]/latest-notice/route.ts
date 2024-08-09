@@ -14,11 +14,11 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
     const { data, error } = await getLatestNotice({ channel_id: Number(channel_id) });
 
     if (error) {
-      return NextResponse.json(Object.assign(CHAT_LATEST_NOTICE_RESPONSE_FAILED, { error }));
+      return NextResponse.json(Object.assign(CHAT_LATEST_NOTICE_RESPONSE_FAILED, { error }), { status: 500 });
     }
 
     return NextResponse.json(Object.assign(CHAT_LATEST_NOTICE_RESPONSE_SUCCESS, { data }));
   } catch (error) {
-    return NextResponse.json(CHAT_LATEST_NOTICE_RESPONSE_FAILED);
+    return NextResponse.json(CHAT_LATEST_NOTICE_RESPONSE_FAILED, { status: 400 });
   }
 };

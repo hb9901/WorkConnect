@@ -3,7 +3,6 @@ export const CHAT_LATEST_NOTICE_RESPONSE = {
 };
 
 export const CHAT_LATEST_NOTICE_RESPONSE_SUCCESS = {
-  statusCode: 200,
   status: true,
   data: {},
   message: ''
@@ -11,7 +10,6 @@ export const CHAT_LATEST_NOTICE_RESPONSE_SUCCESS = {
 
 export const CHAT_LATEST_NOTICE_RESPONSE_FAILED = {
   ...CHAT_LATEST_NOTICE_RESPONSE_SUCCESS,
-  statusCode: 500,
   status: false,
   message: CHAT_LATEST_NOTICE_RESPONSE.FAILED_TO_GET
 };

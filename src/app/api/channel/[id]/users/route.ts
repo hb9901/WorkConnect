@@ -18,7 +18,7 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
   const workspace_user_id = searchParams.get('workspace_user_id');
 
   if (!workspace_user_id) {
-    return NextResponse.json(CHANNEL_USERS_RESPONSE_INVALID_REQUEST);
+    return NextResponse.json(CHANNEL_USERS_RESPONSE_INVALID_REQUEST, { status: 400 });
   }
 
   try {
@@ -28,11 +28,11 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
     });
 
     if (error) {
-      return NextResponse.json(Object.assign(CHANNEL_USERS_RESPONSE_FAILED, { error }));
+      return NextResponse.json(Object.assign(CHANNEL_USERS_RESPONSE_FAILED, { error }), { status: 500 });
     }
 
     return NextResponse.json(Object.assign(CHANNEL_USERS_RESPONSE_SUCCESS, { data }));
   } catch (error) {
-    return NextResponse.json(CHANNEL_USERS_RESPONSE_FAILED);
+    return NextResponse.json(CHANNEL_USERS_RESPONSE_FAILED, { status: 500 });
   }
 };

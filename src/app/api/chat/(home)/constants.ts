@@ -4,7 +4,6 @@ export const CHAT_LIST_RESPONSE = {
 };
 
 export const CHAT_LIST_RESPONSE_SUCCESS = {
-  statusCode: 200,
   status: true,
   data: [],
   message: ''
@@ -12,14 +11,12 @@ export const CHAT_LIST_RESPONSE_SUCCESS = {
 
 export const CHAT_LIST_RESPONSE_FAILED = {
   ...CHAT_LIST_RESPONSE_SUCCESS,
-  statusCode: 500,
   status: false,
   message: CHAT_LIST_RESPONSE.FAILED_TO_GET
 };
 
 export const CHAT_LIST_RESPONSE_INVALID_REQUEST = {
   ...CHAT_LIST_RESPONSE_SUCCESS,
-  statusCode: 400,
   status: false,
   message: CHAT_LIST_RESPONSE.INVALID_REQUEST
 };
