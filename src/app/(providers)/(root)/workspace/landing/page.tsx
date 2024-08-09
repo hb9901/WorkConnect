@@ -77,8 +77,8 @@ const InviteCodePage = () => {
           return;
         }
 
-        setWorkspaceId(workspaceData.id);
-        setWorkspaceUserId(user.id);
+        setWorkspaceIdCookie(workspaceData.id);
+        setWorkspaceUserIdCookie(user.id);
         setUserData(user.id, workspaceData.id);
 
         // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
@@ -108,8 +108,8 @@ const InviteCodePage = () => {
         return;
       }
 
-      setWorkspaceId(workspaceData.id);
-      setWorkspaceUserId(user.id);
+      setWorkspaceIdCookie(workspaceData.id);
+      setWorkspaceUserIdCookie(user.id);
       setUserData(user.id, workspaceData.id);
 
       // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
