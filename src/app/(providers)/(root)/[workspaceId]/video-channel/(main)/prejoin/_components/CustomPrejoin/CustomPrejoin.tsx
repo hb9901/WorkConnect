@@ -326,9 +326,11 @@ const CustomPrejoin = ({
   }
 
   return (
-    <div className="flex flex-col gap-7 justify-center items-center mx-4 bg-white" {...htmlProps}>
-      <VideoChannel tracks={tracks} videoEnable={videoEnabled} />
-      <div className="w-full md:w-[73vw] flex flex-col items-center ">
+    <div className="flex flex-col gap-7 justify-center items-center mx-4 bg-white aspect-video-" {...htmlProps}>
+      <div className="md:w-[63vw] lg:w-[43vw] ">
+        <VideoChannel tracks={tracks} videoEnable={videoEnabled} />
+      </div>
+      <div className="w-full md:w-[63vw] lg:w-[43vw] flex flex-col items-center ">
         <input
           className="p-3 border rounded w-full"
           id="username"
@@ -339,7 +341,7 @@ const CustomPrejoin = ({
           onChange={(inputEl) => setUsername(inputEl.target.value)}
           autoComplete="off"
         />
-        <div className="flex gap-[48px] justify-center items-center m-1 py-2 w-[72vw]">
+        <div className="flex gap-[48px] justify-center items-center m-1 py-3 w-[72vw]">
           <div className="flex items-center">
             <TrackToggle
               initialState={videoEnabled}
@@ -357,7 +359,7 @@ const CustomPrejoin = ({
               onActiveDeviceChange={(_, id) => setVideoDeviceId(id)}
             />
           </div>
-          <div>
+          <div className="flex items-center">
             <TrackToggle
               initialState={audioEnabled}
               source={Track.Source.Microphone}

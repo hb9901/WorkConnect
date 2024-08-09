@@ -2,6 +2,7 @@ import Typography from '@/components/Typography';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useStreamSetStore from '@/store/streamSetStore';
 import { useParams, useRouter } from 'next/navigation';
+import { useCallback } from 'react';
 import DeviceMenuButton from '../../../_components/DeviceMenuButton';
 import DisconnectButton from '../../../_components/DisconnectButton';
 const VideoChannelHeader = () => {
@@ -10,10 +11,12 @@ const VideoChannelHeader = () => {
   const name = decodeURIComponent(params.name as string);
   const workspaceId = useWorkspaceId();
   const { setIsSettingOk } = useStreamSetStore();
-  const handleDisconnect = () => {
+
+  const handleDisconnect = useCallback(() => {
     setIsSettingOk(false);
+    console.log('handleDisconnect : ', workspaceId);
     router.push(`/${workspaceId}/chat`);
-  };
+  }, [workspaceId]);
 
   return (
     <div className="flex items-center justify-between px-4 py-3 mt-[2px]">
