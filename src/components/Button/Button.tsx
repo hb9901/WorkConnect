@@ -42,7 +42,7 @@ const Button = ({
     <button
       className={clsx(
         'rounded-md',
-        'px-[22px] box-sizing-border flex items-center justify-center gap-[12px] z-10',
+        'px-[22px] box-sizing-border flex items-center justify-center gap-[12px]',
         styles[theme],
         isDisabled && disabledStyle,
         isFullWidth ? 'w-full' : '',
