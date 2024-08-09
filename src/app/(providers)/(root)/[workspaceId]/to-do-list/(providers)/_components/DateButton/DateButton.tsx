@@ -3,21 +3,20 @@ import Typography from '@/components/Typography';
 import useDateStore from '@/store/dateStore';
 import { cva } from 'class-variance-authority';
 import { Dayjs } from 'dayjs';
-import { useShallow } from 'zustand/react/shallow';
 
-const DateButton = ({ date }: { date: Dayjs }) => {
-  const { selectedDate, handleClickDate } = useDateStore(
-    useShallow((state) => ({
-      selectedDate: state.selectedDate,
-      handleClickDate: state.handleClickDate
-    }))
-  );
+interface DateButtonProps {
+  date: Dayjs;
+  isSelected: boolean;
+}
+
+const DateButton = ({ date, isSelected }: DateButtonProps) => {
+  const handleClickDate = useDateStore((state) => state.handleClickDate);
 
   return (
     <Typography variant="Body14px" color="grey700Black">
       <button
         className={buttonVariants({
-          isSelected: selectedDate.month() === date.month() && selectedDate.date() === date.date()
+          isSelected: isSelected
         })}
         onClick={() => handleClickDate(date)}
       >

@@ -1,7 +1,7 @@
 'use client';
-import Typography from '@/components/Typography';
 import useDateStore from '@/store/dateStore';
-import DateButton from '../DateButton';
+import MobileDate from '../MobileDate';
+import PcDate from '../PcDate';
 import { getWeekDates } from './function';
 
 const WeekDate = () => {
@@ -10,14 +10,20 @@ const WeekDate = () => {
   const weekDates = getWeekDates(selectedDate);
 
   return (
-    <div className="flex flex-row justify-between items-center mt-[30px] mb-8px">
+    <div className="flex flex-row justify-between items-center mt-[30px] mb-8px lg:flex-col lg:mt-0">
       {weekDates.map((date, index) => (
-        <div className="flex flex-col gap-[16px] items-center" key={date.date()}>
-          <Typography variant="Title14px" color="grey600">
-            {weekNames[index]}
-          </Typography>
-          <DateButton date={date} />
-        </div>
+        <>
+          <MobileDate
+            weekName={weekNames[index]}
+            date={date}
+            isSelected={selectedDate.month() === date.month() && selectedDate.date() === date.date()}
+          />
+          <PcDate
+            weekName={weekNames[index]}
+            date={date}
+            isSelected={selectedDate.month() === date.month() && selectedDate.date() === date.date()}
+          />
+        </>
       ))}
     </div>
   );

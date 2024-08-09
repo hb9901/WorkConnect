@@ -16,12 +16,16 @@ const ToDoListPage = () => {
 
   return (
     <>
-      <main className="px-[16px]">
-        <WeekButtons />
-        <WeekDate />
-        <ToDoList title="진행 전" todoList={beforeTodoList} />
-        <ToDoList title="진행 중" todoList={progressTodoList} />
-        <ToDoList title="완료" todoList={completedTodoList} />
+      <main className="flex flex-col px-[16px] lg:inline-flex lg:flex-row lg:px-0 lg:h-full">
+        <div className="lg:w-[297px] lg:bg-[#F4F4F6]">
+          <WeekButtons />
+          <WeekDate />
+        </div>
+        <div className="flex flex-col lg:flex-row">
+          <ToDoList title="진행 전" todoList={beforeTodoList} />
+          <ToDoList title="진행 중" todoList={progressTodoList} />
+          <ToDoList title="완료" todoList={completedTodoList} />
+        </div>
       </main>
     </>
   );
