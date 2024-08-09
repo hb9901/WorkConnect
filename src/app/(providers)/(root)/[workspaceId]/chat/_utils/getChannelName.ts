@@ -5,5 +5,5 @@ export const getDmChannelName = (usersInChannel: GetUsersInChannelResponse) => {
     return usersInChannel[key].name;
   });
 
-  return result.length > 1 ? '' : result[0];
+  return result.length > 1 ? null : result[0];
 };
