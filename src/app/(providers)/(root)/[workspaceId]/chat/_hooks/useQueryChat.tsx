@@ -7,7 +7,7 @@ import type { GetChatChannelsProps, GetUsersInChannelRequestProps } from '@/type
 
 export const useGetChatChannels = ({ workspace_id, workspace_user_id }: GetChatChannelsProps) => {
   return useQuery({
-    queryKey: QUERY_KEYS.CHAT_CHANNELS(workspace_id, workspace_user_id),
+    queryKey: QUERY_KEYS.CHAT_CHANNELS({ workspaceId: workspace_id, workspaceUserId: workspace_user_id }),
     queryFn: () => api.channel.getChatChannels({ workspace_id, workspace_user_id }),
     refetchOnWindowFocus: false
   });
@@ -37,7 +37,7 @@ export const useGetUsersInChannel = ({ channel_id, workspace_user_id }: GetUsers
   });
 };
 
-export const useGetChannelName = ({ id }: { id: string }) => {
+export const useGetGroupChannelName = ({ id }: { id: string }) => {
   return useQuery({
     queryKey: QUERY_KEYS.CHANNEL_NAME(id),
     queryFn: () => api.chat.getChannelName({ id }),

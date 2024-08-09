@@ -39,7 +39,7 @@ export const TopBar = ({
       {...props}
     >
       <div className="flex items-center gap-x-4 w-[62px] flex-shrink-0">
-        {TopBarLeftIcon1 || <BackButton />}
+        {TopBarLeftIcon1 || <BackButton aria-label="뒤로가기" />}
         {TopBarLeftIcon2}
       </div>
       <Typography
