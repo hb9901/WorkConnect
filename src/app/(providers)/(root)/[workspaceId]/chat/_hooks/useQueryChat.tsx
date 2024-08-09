@@ -37,7 +37,7 @@ export const useGetUsersInChannel = ({ channel_id, workspace_user_id }: GetUsers
   });
 };
 
-export const useGetChannelName = ({ id }: { id: string }) => {
+export const useGetGroupChannelName = ({ id }: { id: string }) => {
   return useQuery({
     queryKey: QUERY_KEYS.CHANNEL_NAME(id),
     queryFn: () => api.chat.getChannelName({ id }),

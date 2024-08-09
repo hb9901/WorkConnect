@@ -24,7 +24,6 @@ const Chats = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
   const workspaceUserId = useWorkspaceUserId();
   const { openContextMenu } = useContextMenu();
 
-  // TODO: Notice Card 안에서 사용하는 건데, 안에서 만들면 렌더링에 너무 영향이 가지 않을까?
   const noticeUrl = `/${workspaceId}/chat/${channelId}/notice`;
 
   if (isEmpty(usersInChannel)) return null;

@@ -3,7 +3,7 @@ import { BellIcon, ChevronDownIcon } from '@/icons';
 import Typography from '@/components/Typography';
 import Link from 'next/link';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
-import { useChatHandlers } from '../../../(home)/_hooks/useChatHandlers';
+import { useChatHandlers } from '../../_hook/useChatHandlers';
 import { useGetLatestNotice } from '../../../_hooks/useQueryChat';
 import { isEmpty } from '@/utils/isEmpty';
 import { useEffect } from 'react';

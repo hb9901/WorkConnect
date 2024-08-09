@@ -1,34 +1,33 @@
 import { useEffect, useMemo, useRef } from 'react';
 import Chats from '../Chats';
 import { useParams } from 'next/navigation';
-import { useGetChatMessages, useGetUsersInChannel } from '../../../_hooks/useQueryChat';
-import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
+import { useGetChatMessages } from '../../../_hooks/useQueryChat';
 import { handleSubscribeToChat } from '../../../_utils/subscribe';
 import { MessagesWrapper } from '../MessagesContainer';
-import { useChatHandlers } from '../../../(home)/_hooks/useChatHandlers';
+import { useChatHandlers } from '../../_hook/useChatHandlers';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEYS } from '../../../_constants/constants';
+import { GetUsersInChannelResponse } from '@/types/channel';
 
 const Messages = () => {
   const { id } = useParams();
+  const queryClient = useQueryClient();
+
   const channelId = Array.isArray(id) ? id[0] : id;
-  const workspaceUserId = useWorkspaceUserId();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const { data: chatMessages = [], isPending: isPendingChatMessages } = useGetChatMessages({
+  const { data: chatMessages = [], isPending } = useGetChatMessages({
     channel_id: Number(channelId)
   });
 
   const { payloadMessages, handleMessagesUpdates, handleUserUpdates } = useChatHandlers();
 
-  const { data: usersInChannel = {}, isPending: isPendingUsersInChannel } = useGetUsersInChannel({
-    channel_id: Number(channelId),
-    workspace_user_id: workspaceUserId
-  });
+  const usersInChannel =
+    queryClient.getQueryData<GetUsersInChannelResponse>(QUERY_KEYS.USERS_IN_CHANNEL(Number(channelId))) || {};
 
   const userIds = useMemo(() => {
     return Object.keys(usersInChannel).join(',');
   }, [usersInChannel]);
-
-  const isPending = isPendingChatMessages || isPendingUsersInChannel;
 
   useEffect(() => {
     if (!containerRef.current) return;
