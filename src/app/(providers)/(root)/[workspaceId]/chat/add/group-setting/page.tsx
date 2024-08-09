@@ -3,22 +3,21 @@
 import { useRef, useState } from 'react';
 import { useSearchUsers } from '../_provider/SearchUsersProvider';
 import useCreateChannel from '../_hooks/useCreateChannel';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import type { ChannelType } from '@/types/channel';
-import { PageLayout } from '@/components/PageLayout';
-import { AvatarIcon, CameraIcon, Check1Icon, XIcon } from '@/icons';
+import { AvatarIcon, CameraIcon } from '@/icons';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import FileInput from '../../[id]/_components/FileInput';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { mbToBytes } from '@/utils/file';
 import Image from 'next/image';
+import AddChatLayout from '../_components/AddChatLayout';
 
 const MAX_FILE_SIZE = mbToBytes(3);
 
 const RESOURCE_URL = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/`;
 
 const GroupSettingPage = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const type = searchParams.get('type') as ChannelType['type'];
   const ref = useRef<HTMLInputElement>(null);
@@ -39,10 +38,6 @@ const GroupSettingPage = () => {
     }
 
     const userIds = getSelectedUserIds();
-
-    if (userIds.length < 2) {
-      return;
-    }
 
     handleCreateChannelAndUsers({ channelName: ref.current.value, userIds, type, thumbnail });
   };
@@ -66,16 +61,7 @@ const GroupSettingPage = () => {
   };
 
   return (
-    <PageLayout
-      title="그룹대화방 설정"
-      showBottomBar={false}
-      TopBarLeftIcon1={<XIcon onClick={() => router.back()} />}
-      TopBarRightIcon1={
-        <button onClick={handleSubmit}>
-          <Check1Icon />
-        </button>
-      }
-    >
+    <AddChatLayout title="그룹대화방 설정" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-4 p-4 h-[300px] w-[300px] items-center justify-center mx-auto">
         <div className="relative">
           <div
@@ -100,7 +86,7 @@ const GroupSettingPage = () => {
         />
       </div>
       <FileInput name="thumbnail" accept="image/*" ref={fileRef} onChange={onChange} />
-    </PageLayout>
+    </AddChatLayout>
   );
 };
 

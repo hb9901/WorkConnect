@@ -2,8 +2,6 @@
 
 import type { StrictPropsWithChildren } from '@/types/common';
 import { useSearchUsers } from '../_provider/SearchUsersProvider';
-import { PageLayout } from '@/components/PageLayout';
-import { Check1Icon, XIcon } from '@/icons';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useCreateChannel from '../_hooks/useCreateChannel';
 import { CHANNEL_TYPE } from '@/constants/channel';
@@ -11,6 +9,7 @@ import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { getExistingChannelId } from '../_utils/getExistingChannelId';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import { isEmpty } from '@/utils/isEmpty';
+import AddChatLayout from '../_components/AddChatLayout';
 
 const AddChatHomeLayout = ({ children }: StrictPropsWithChildren) => {
   const workspaceId = useWorkspaceId();
@@ -22,11 +21,12 @@ const AddChatHomeLayout = ({ children }: StrictPropsWithChildren) => {
   const { handleCreateChannelAndUsers } = useCreateChannel();
   const router = useRouter();
 
-  const handleAddChat = async () => {
+  const handleSubmit = async () => {
     const userIds = getSelectedUserIds();
     if (isEmpty(userIds)) return;
+    const isGroupChat = userIds.length > 2 || type === CHANNEL_TYPE.video;
 
-    if (userIds.length > 2 || type === CHANNEL_TYPE.video) {
+    if (isGroupChat) {
       router.push(`/${workspaceId}/chat/add/group-setting?type=${type}`);
       return;
     }
@@ -44,18 +44,9 @@ const AddChatHomeLayout = ({ children }: StrictPropsWithChildren) => {
   };
 
   return (
-    <PageLayout
-      title="대화상대 선택"
-      showBottomBar={false}
-      TopBarLeftIcon1={<XIcon onClick={() => router.back()} />}
-      TopBarRightIcon1={
-        <button onClick={handleAddChat}>
-          <Check1Icon />
-        </button>
-      }
-    >
+    <AddChatLayout title="대화상대 선택" onSubmit={handleSubmit}>
       {children}
-    </PageLayout>
+    </AddChatLayout>
   );
 };
 

@@ -20,6 +20,7 @@ const MessageTextarea = forwardRef<HTMLTextAreaElement, MessageTextareaProps>(({
       <button
         type="button"
         onClick={handleOpenUtil}
+        aria-label="파일 추가"
         className="w-6 h-6 rounded-full bg-primary200Main flex justify-center items-center shrink-0"
       >
         <PlusIcon className="w-5 h-5 text-white stroke-current" />
@@ -32,11 +33,11 @@ const MessageTextarea = forwardRef<HTMLTextAreaElement, MessageTextareaProps>(({
           placeholder="메시지를 입력하세요"
           className="rounded w-full px-2 py-[12px] bg-[#fafafa] text-[12px] leading-[130%] tracking-[-0.24px] pr-9 resize-none h-[40px] max-h-[86px] block"
         />
-        <button type="button" className="absolute right-2 bottom-[10px] z-10">
+        <button type="button" className="absolute right-2 bottom-[10px] z-10" aria-label="이모지 선택">
           <SmileIcon className="w-5 h-5 text-grey400" />
         </button>
       </div>
-      <button type="submit">
+      <button type="submit" aria-label="전송">
         <SendIcon className="w-5 h-5 text-grey700Black" />
       </button>
     </div>

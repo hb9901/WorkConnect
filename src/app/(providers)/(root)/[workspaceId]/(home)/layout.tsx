@@ -13,7 +13,7 @@ const HomeLayout = ({ children, params }: StrictPropsWithChildren<HomeLayoutProp
 
   return (
     <PageLayout title="" showTopBar={false}>
-      <SelectHeader workspaceId={workspaceId} />
+      <SelectHeader workspaceId={workspaceId} isFull />
       {children}
     </PageLayout>
   );

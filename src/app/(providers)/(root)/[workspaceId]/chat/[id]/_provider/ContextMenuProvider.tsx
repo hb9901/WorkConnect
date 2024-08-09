@@ -12,7 +12,7 @@ export type OpenContextMenuProps = {
   isMe: boolean;
 };
 
-type ContextMenuContextType = {
+export type ContextMenuContextType = {
   openContextMenu: (props: Omit<OpenContextMenuProps, 'isOpen'>) => void;
   closeContextMenu: () => void;
   contextMenuState: OpenContextMenuProps;

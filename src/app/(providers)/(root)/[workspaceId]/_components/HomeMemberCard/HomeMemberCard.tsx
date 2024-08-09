@@ -23,27 +23,36 @@ const HomeMemberCard = () => {
 
   return (
     <Link href={`${workspaceId}/profile/${workspaceUserId}`} className="flex flex-row gap-[16px] items-center">
-      <div className="flex items-center justify-center relative size-[56px] rounded-full bg-[#BDBDBD]">
+      <div className="flex items-center justify-center relative w-[56px] h-[56px] min-w-[56px] rounded-full bg-[#BDBDBD] sm:size-[67px] sm:min-w-[67px] ">
         {profileImg ? (
           <Image
             src={profileImg}
             alt={name}
-            className="object-cover size-[56px] rounded-full"
-            width="56"
-            height="56"
+            className="object-cover min-w-[56px] size-[56px] rounded-full sm:min-x-[67px] sm:size-[67px] "
+            fill
             priority
           />
         ) : (
-          <AvatarIcon className="w-[33.6px] h-[33.6px]" />
+          <AvatarIcon className="w-[33.6px] h-[33.6px] min-w-[33.6px] sm:w-[40.3px] sm:h-[40.3px]" />
         )}
       </div>
-      <div className="flex flex-col gap-[4px]">
-        <Typography variant="Title18px" color="grey700Black">
-          {name}
+      <div className="flex flex-col gap-[4px] w-full sm:flex-row sm:justify-between">
+        {/*모바일*/}
+        <Typography variant="Title18px" color="grey700Black" className="sm:hidden">
+          {workspaceUser.name}
+        </Typography>
+        {/*pc*/}
+        <Typography variant="Title20px" color="grey700Black" className="hidden sm:flex">
+          {workspaceUser.name}
         </Typography>
 
-        <Typography variant="Title14px" color="grey500">
-          {state}
+        {/*모바일*/}
+        <Typography variant="Title14px" color="grey700Black" className="sm:hidden">
+          {workspaceUser.state}
+        </Typography>
+        {/*pc*/}
+        <Typography variant="Title16px" color="grey700Black" className="hidden sm:flex">
+          {workspaceUser.state}
         </Typography>
       </div>
     </Link>

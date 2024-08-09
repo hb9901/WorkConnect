@@ -17,7 +17,7 @@ type SidebarProps = {
   handleOpenSidebar: () => void;
   channelName: string;
 };
-// TODO 유저목록에 나를 포함해야됨;
+
 const Sidebar = ({ isOpenSidebar, handleOpenSidebar, channelName }: SidebarProps) => {
   const workspaceId = useWorkspaceId();
   const { id } = useParams();

@@ -4,17 +4,20 @@ import MessageTextarea from '../MessageTextarea';
 import UtilsMenu from '../UtilsMenu';
 import ContextMenu from '../ContextMenu';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
+import { useParams } from 'next/navigation';
 
-type ChatFooterProps = {
-  id: string;
+type MessageSenderProps = {
   handleOpenUtil: () => void;
 };
 
-const ChatFooter = ({ id, handleOpenUtil }: ChatFooterProps) => {
+const MessageSender = ({ handleOpenUtil }: MessageSenderProps) => {
+  const { id: channelId } = useParams();
+  const stringId = Array.isArray(channelId) ? channelId[0] : channelId;
+
   const workspaceUserId = useWorkspaceUserId();
   const ref = useRef<HTMLTextAreaElement>(null);
   const { mutate: mutateChatMessage } = useMutationChatMessage({
-    channel_id: Number(id),
+    channel_id: Number(stringId),
     workspace_user_id: workspaceUserId
   });
 
@@ -38,4 +41,4 @@ const ChatFooter = ({ id, handleOpenUtil }: ChatFooterProps) => {
   );
 };
 
-export default ChatFooter;
+export default MessageSender;

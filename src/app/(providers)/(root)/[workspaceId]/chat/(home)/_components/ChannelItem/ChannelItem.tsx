@@ -1,5 +1,4 @@
 import type { GetChatChannelsResponse } from '@/types/channel';
-import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { CHANNEL_TYPE } from '@/constants/channel';
 import ChatCard from '@/components/ChatCard/ChatCard';
 import Link from 'next/link';
@@ -12,31 +11,36 @@ type ChannelListImageProps = Pick<ComponentProps<'img'>, 'src'> & {
   type: keyof typeof CHANNEL_TYPE;
 };
 
+type ChannelItemProps = {
+  href: string;
+  user_count: number | undefined;
+  user_thumbnail: string | undefined;
+  name: string;
+  user_state: GetChatChannelsResponse['user_state'];
+  message: GetChatChannelsResponse['message'];
+  type: GetChatChannelsResponse['type'];
+  created_at: GetChatChannelsResponse['created_at'];
+};
+
 const ChannelItem = ({
-  channel_name,
   message,
   user_state,
-  user_name,
   user_thumbnail,
-  user_count,
-  is_dm,
-  channel_id,
+  href,
   type,
-  created_at
-}: GetChatChannelsResponse) => {
-  const workspaceId = useWorkspaceId();
-  const href =
-    type === CHANNEL_TYPE.chat ? `/${workspaceId}/chat/${channel_id}` : `/${workspaceId}/video-channel/${channel_name}`;
-
+  created_at,
+  name,
+  user_count
+}: ChannelItemProps) => {
   return (
     <Link href={href}>
       <ChatCard
         date={dayjs(created_at).format('YYYY-MM-DD')}
-        icon={<ChannelImage type={type} src={user_thumbnail ?? undefined} />}
+        icon={<ChannelImage type={type} src={user_thumbnail} />}
         message={message}
-        name={user_name ?? channel_name}
+        name={name}
         status={user_state}
-        userCount={is_dm ? undefined : user_count}
+        userCount={user_count}
       />
     </Link>
   );
