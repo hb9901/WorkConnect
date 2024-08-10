@@ -29,8 +29,26 @@ class ChatAPI {
     return data;
   };
 
-  getLatestNotice = async (chatId: string): Promise<GetChatMessageType> => {
-    const { data } = await this.axios.get(`/api/chat/${chatId}/latest-notice`);
+  getLatestNotice = async (channelId: number): Promise<GetChatMessageType> => {
+    const { data } = await this.axios.get(`/api/chat/${channelId}/latest-notice`);
+
+    return data.data;
+  };
+
+  getChannelDocuments = async (channelId: number): Promise<GetChatMessageType[]> => {
+    const { data } = await this.axios.get(`/api/channel/${channelId}/resource/documents`);
+
+    return data.data;
+  };
+
+  getChannelMedia = async (channelId: number): Promise<GetChatMessageType[]> => {
+    const { data } = await this.axios.get(`/api/channel/${channelId}/resource/media`);
+
+    return data.data;
+  };
+
+  getChannelNotices = async (channelId: number): Promise<GetChatMessageType[]> => {
+    const { data } = await this.axios.get(`/api/channel/${channelId}/resource/notices`);
 
     return data.data;
   };

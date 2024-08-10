@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { CHANNEL_USERS_RESPONSE_FAILED, CHANNEL_USERS_RESPONSE_SUCCESS } from './constants';
 import { getUsersInChannel } from '@/services/channel';
-import { getServerCookie } from '@/utils/cookie/serverUtils';
 
 /**
  * Users in Channel GET 요청 핸들러

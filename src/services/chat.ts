@@ -46,3 +46,42 @@ export const getLatestNotice = async ({ channel_id }: GetLatestNoticeProps) => {
 
   return response;
 };
+
+export const getChannelDocuments = async ({ channel_id }: { channel_id: number }) => {
+  const supabase = createClient();
+
+  const response = await supabase
+    .from('chat')
+    .select('*')
+    .eq('channel_id', channel_id)
+    .eq('type', CHAT_TYPE.document)
+    .order('created_at', { ascending: false });
+
+  return response;
+};
+
+export const getChannelNotices = async ({ channel_id }: { channel_id: number }) => {
+  const supabase = createClient();
+
+  const response = await supabase
+    .from('chat')
+    .select('*')
+    .eq('channel_id', channel_id)
+    .eq('type', CHAT_TYPE.notice)
+    .order('created_at', { ascending: false });
+
+  return response;
+};
+
+export const getChannelMedia = async ({ channel_id }: { channel_id: number }) => {
+  const supabase = createClient();
+
+  const response = await supabase
+    .from('chat')
+    .select('*')
+    .eq('channel_id', channel_id)
+    .in('type', [CHAT_TYPE.video, CHAT_TYPE.image])
+    .order('created_at', { ascending: false });
+
+  return response;
+};

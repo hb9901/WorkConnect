@@ -15,7 +15,7 @@ export const useGetChatMessages = ({ channel_id }: GetChatMessagesProps) => {
 export const useGetLatestNotice = ({ id }: { id: string }) => {
   return useQuery({
     queryKey: QUERY_KEYS.LATEST_NOTICE(id),
-    queryFn: () => api.chat.getLatestNotice(id),
+    queryFn: () => api.chat.getLatestNotice(Number(id)),
     refetchOnWindowFocus: false
   });
 };
@@ -26,4 +26,28 @@ export const useGetUsersInChannel = (channelId: number) => {
 
 export const useGetChannelName = ({ id }: { id: number }) => {
   return useQuery(getChannelNameOptions(id));
+};
+
+export const useGetChannelDocuments = (channelId: number) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.CHANNEL_DOCUMENTS(channelId),
+    queryFn: () => api.chat.getChannelDocuments(channelId),
+    refetchOnWindowFocus: false
+  });
+};
+
+export const useGetChannelMedia = (channelId: number) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.CHANNEL_MEDIA(channelId),
+    queryFn: () => api.chat.getChannelMedia(channelId),
+    refetchOnWindowFocus: false
+  });
+};
+
+export const useGetChannelNotices = (channelId: number) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.CHANNEL_NOTICES(channelId),
+    queryFn: () => api.chat.getChannelNotices(channelId),
+    refetchOnWindowFocus: false
+  });
 };

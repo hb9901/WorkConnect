@@ -1,33 +1,18 @@
 'use client';
 
-import { supabase } from '@/utils/supabase/supabaseClient';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { CHAT_TYPE } from '@/constants/chat';
 import ChatVideo from '../../_components/ChatVideo';
 import ChatImage from '../../_components/ChatImage';
+import { useGetChannelMedia } from '../../../_hook/useChatQuery';
 
 const MediaListPage = () => {
   const { id } = useParams();
-  const [mediaList, setMediaList] = useState<any[]>([]);
-
-  useEffect(() => {
-    const getMediaList = async () => {
-      const res = await supabase
-        .from('chat')
-        .select('*')
-        .eq('channel_id', id)
-        .in('type', [CHAT_TYPE.video, CHAT_TYPE.image])
-        .order('created_at', { ascending: false });
-      setMediaList(res.data || []);
-    };
-
-    getMediaList();
-  }, []);
+  const { data: media = [] } = useGetChannelMedia(Number(id));
 
   return (
     <ul className="grid grid-cols-3 gap-x-2 gap-y-3 py-[22px] px-4">
-      {mediaList.map((media) => {
+      {media.map((media) => {
         if (!media.content) return null;
 
         return (
