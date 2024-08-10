@@ -1,16 +1,15 @@
+'use client';
+
 import { SearchWorkspaceUserType } from '@/types/workspaceUser';
-import { useSearchUsers } from '../_provider/SearchUsersProvider';
+import { useSearchUsers } from '../../_provider/SearchUsersProvider';
 import MemberCard from '@/components/MemberCard';
 import { isEmpty } from '@/utils/isEmpty';
 import Avatar from '@/components/Avatar';
+import { useSearch } from '../../_hooks/useSearch';
 
-type SearchResultsProps = {
-  searchUsers: SearchWorkspaceUserType[];
-  selectedUsers: SearchWorkspaceUserType[];
-};
-
-const SearchResults = ({ searchUsers, selectedUsers }: SearchResultsProps) => {
-  const { handleSelectUser } = useSearchUsers();
+const SearchResults = () => {
+  const { handleSelectUser, selectedUsers } = useSearchUsers();
+  const { searchUsers } = useSearch();
 
   if (isEmpty(searchUsers)) {
     return <div className="text-gray-500 text-center">검색 결과가 없습니다.</div>;
@@ -18,7 +17,7 @@ const SearchResults = ({ searchUsers, selectedUsers }: SearchResultsProps) => {
 
   return (
     <>
-      {searchUsers.map((result) => (
+      {searchUsers?.map((result) => (
         <MemberCard
           key={result.id}
           name={result.name}

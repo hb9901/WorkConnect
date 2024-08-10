@@ -1,43 +1,51 @@
 'use client';
 
-import { useState } from 'react';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
+import Search from '../_components/Search';
+import { useSearchParams } from 'next/navigation';
 import { useSearchUsers } from '../_provider/SearchUsersProvider';
-import SelectedUsers from '../_components/SelectedUsers';
-import SearchResults from '../_components/SearchResults';
-import { useGetSearchWorkspaceUsers } from '../../_hooks/useChannelQuery';
+import useCreateChannel from '../_hooks/useCreateChannel';
+import { useRouter } from 'next/navigation';
+import { isEmpty } from '@/utils/isEmpty';
+import { CHANNEL_TYPE } from '@/constants/channel';
+import { fetchExistingChannelId } from '../_utils/fetchExistingChannelId';
+import AddChannelLayout from '../_components/AddChannelLayout';
 
 const AddChatPage = () => {
   const workspaceId = useWorkspaceId();
+  const searchParams = useSearchParams();
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const { selectedUsers } = useSearchUsers();
+  const type = searchParams.get('type');
+  const { getSelectedUserIds } = useSearchUsers();
+  const { handleCreateChannelAndUsers } = useCreateChannel();
+  const router = useRouter();
 
-  const { data: searchUsers = [], refetch: refetchSearchUsers } = useGetSearchWorkspaceUsers({
-    workspace_id: workspaceId,
-    term: searchTerm
-  });
+  const handleSubmit = async () => {
+    const userIds = getSelectedUserIds();
+    if (isEmpty(userIds)) return;
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const term = event.target.value;
-    setSearchTerm(term);
-    refetchSearchUsers();
+    const isGroupChat = userIds.length > 2 || type === CHANNEL_TYPE.video;
+
+    if (isGroupChat) {
+      router.push(`/${workspaceId}/channel/add/group-setting?type=${type}`);
+      return;
+    }
+    const existingChannelId = await fetchExistingChannelId({
+      other_workspace_user_id: userIds[0]
+    });
+
+    if (existingChannelId) {
+      router.push(`/${workspaceId}/chat/${existingChannelId}`);
+      return;
+    }
+
+    handleCreateChannelAndUsers({ userIds });
   };
 
   return (
-    <>
-      <div className="mx-4">
-        <input
-          type="text"
-          placeholder="검색..."
-          value={searchTerm}
-          onChange={handleSearch}
-          className="border rounded px-3 mb-2 w-full bg-grey50 h-[45px]"
-        />
-      </div>
-      <SelectedUsers users={selectedUsers} />
-      <SearchResults searchUsers={searchUsers} selectedUsers={selectedUsers} />
-    </>
+    <AddChannelLayout title="대화상대 선택" onSubmit={handleSubmit}>
+      <Search />
+    </AddChannelLayout>
   );
 };
 

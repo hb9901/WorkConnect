@@ -1,18 +1,16 @@
-import { SearchWorkspaceUserType } from '@/types/workspaceUser';
-import { useSearchUsers } from '../_provider/SearchUsersProvider';
+'use client';
+
 import { XIcon } from '@/icons';
 import Avatar from '@/components/Avatar';
+import { useSearchUsers } from '../../_provider/SearchUsersProvider';
+import { memo } from 'react';
 
-type SelectedUsersProps = {
-  users: SearchWorkspaceUserType[];
-};
-
-const SelectedUsers = ({ users }: SelectedUsersProps) => {
-  const { handleRemoveUser } = useSearchUsers();
+const SelectedUsers = () => {
+  const { handleRemoveUser, selectedUsers } = useSearchUsers();
 
   return (
     <div className="flex flex-wrap gap-x-[10px] px-4 mb-[2px]">
-      {users.map((user) => (
+      {selectedUsers.map((user) => (
         <div key={user.id} className="flex items-center ml-[-6px] relative p-[6px]">
           <Avatar size="48px" src={user.profile_image ?? undefined} />
           <button
@@ -28,4 +26,6 @@ const SelectedUsers = ({ users }: SelectedUsersProps) => {
   );
 };
 
-export default SelectedUsers;
+const MemoizedSelectedUsers = memo(SelectedUsers);
+
+export default MemoizedSelectedUsers;

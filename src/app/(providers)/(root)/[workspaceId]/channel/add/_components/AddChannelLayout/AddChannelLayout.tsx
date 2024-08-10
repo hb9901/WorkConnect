@@ -1,14 +1,16 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 import { PageLayout } from '@/components/PageLayout';
 import { Check1Icon, XIcon } from '@/icons';
 import { StrictPropsWithChildren } from '@/types/common';
 
-type AddChatLayoutProps = {
+type AddChannelLayoutProps = {
   title: string;
   onSubmit: () => Promise<void>;
 };
 
-const AddChatLayout = ({ title, children, onSubmit }: StrictPropsWithChildren<AddChatLayoutProps>) => {
+const AddChannelLayout = ({ title, children, onSubmit }: StrictPropsWithChildren<AddChannelLayoutProps>) => {
   const router = useRouter();
 
   return (
@@ -27,4 +29,4 @@ const AddChatLayout = ({ title, children, onSubmit }: StrictPropsWithChildren<Ad
   );
 };
 
-export default AddChatLayout;
+export default AddChannelLayout;

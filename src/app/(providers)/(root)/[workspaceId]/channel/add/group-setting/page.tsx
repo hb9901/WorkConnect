@@ -10,8 +10,8 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { mbToBytes } from '@/utils/file';
 import Image from 'next/image';
-import AddChatLayout from '../_components/AddChatLayout';
 import FileInput from '@/components/FileInput';
+import AddChannelLayout from '../_components/AddChannelLayout';
 
 const MAX_FILE_SIZE = mbToBytes(3);
 
@@ -61,7 +61,7 @@ const GroupSettingPage = () => {
   };
 
   return (
-    <AddChatLayout title="그룹대화방 설정" onSubmit={handleSubmit}>
+    <AddChannelLayout title="그룹대화방 설정" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-4 p-4 h-[300px] w-[300px] items-center justify-center mx-auto">
         <div className="relative">
           <div
@@ -86,7 +86,7 @@ const GroupSettingPage = () => {
         />
       </div>
       <FileInput name="thumbnail" accept="image/*" ref={fileRef} onChange={onChange} />
-    </AddChatLayout>
+    </AddChannelLayout>
   );
 };
 
