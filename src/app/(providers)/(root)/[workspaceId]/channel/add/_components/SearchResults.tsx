@@ -20,6 +20,7 @@ const SearchResults = ({ searchUsers, selectedUsers }: SearchResultsProps) => {
     <>
       {searchUsers.map((result) => (
         <MemberCard
+          key={result.id}
           name={result.name}
           icon={<Avatar size="48px" src={result.profile_image ?? undefined} />}
           onToggle={() => handleSelectUser(result)}

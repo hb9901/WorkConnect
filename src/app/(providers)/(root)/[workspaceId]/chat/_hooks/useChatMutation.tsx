@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 type UseChatMessageProps = Pick<CreateChatMessageProps, 'channel_id'> & {
   onSuccess?: () => void;
 };
+
 type UseChatMessageMutationProps = Omit<CreateChatMessageProps, 'channel_id'>;
 
 export const useMutationChatMessage = ({ channel_id, ...props }: UseChatMessageProps) => {
