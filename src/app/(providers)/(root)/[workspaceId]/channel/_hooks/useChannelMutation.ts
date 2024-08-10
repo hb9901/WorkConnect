@@ -1,6 +1,7 @@
 import api from '@/api';
 import { ChannelInsertType } from '@/types/channel';
 import { CreateChannelUsersProps } from '@/types/channelUser';
+import { PostUploadFileProps } from '@/types/storage';
 import { useMutation } from '@tanstack/react-query';
 
 export const useMutationCreateChannelUsers = () => {
@@ -23,5 +24,17 @@ export const useMutationCreateChannel = ({ workspace_id }: UseCreateChannelProps
         workspace_id,
         thumbnail
       })
+  });
+};
+
+export const useMutationUploadThumbnail = ({ ...options }) => {
+  return useMutation({
+    mutationFn: ({ formData, storagePath, maxFileSize = 3 }: PostUploadFileProps) =>
+      api.storage.postUploadFile({
+        formData,
+        storagePath,
+        maxFileSize
+      }),
+    ...options
   });
 };

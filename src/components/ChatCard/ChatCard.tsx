@@ -38,7 +38,9 @@ const ChatCard = ({ icon, name, status, date, message, unreadCount, pin, userCou
                   {userCount}
                 </Typography>
               )}
-              <span>{status && `- ${status}`}</span>
+              <span className="flex-shrink-0 overflow-hidden text-ellipsis whitespace-nowrap">
+                {status && `- ${status}`}
+              </span>
               {pin ? <PinIcon /> : ''}
             </Typography>
           </div>
