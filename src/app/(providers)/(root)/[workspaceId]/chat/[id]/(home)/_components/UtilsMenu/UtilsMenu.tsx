@@ -3,11 +3,11 @@ import PaperClipIcon from '@/icons/paperclip.svg';
 import VideoIcon from '@/icons/video.svg';
 import { mbToBytes } from '@/utils/file';
 import FileButton from '../FileButton';
-import { useMutationChatMessage } from '../../../_hooks/useChatMutation';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { ChatType } from '@/types/chat';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { useParams } from 'next/navigation';
+import { useMutationChatMessage } from '../../../../_hook/useChatMutation';
 
 const MAX_FILE_SIZE = mbToBytes(3);
 const RESOURCE_URL = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/`;

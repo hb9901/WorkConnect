@@ -3,10 +3,10 @@
 import { useEffect, useRef } from 'react';
 import Chats from '../Chats';
 import { useParams } from 'next/navigation';
-import { useGetChatMessages, useGetUsersInChannel } from '../../../_hooks/useChatQuery';
-import { handleSubscribeToChat } from '../../../_utils/subscribe';
 import { MessagesWrapper } from '../MessagesContainer';
+import { useGetChatMessages, useGetUsersInChannel } from '../../../../_hook/useChatQuery';
 import { useChatHandlers } from '../../_hook/useChatHandlers';
+import { handleSubscribeToChat } from '../../_utils/subscribe';
 
 const Messages = () => {
   const { id } = useParams();

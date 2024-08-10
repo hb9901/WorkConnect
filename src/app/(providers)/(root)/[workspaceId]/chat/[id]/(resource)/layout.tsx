@@ -3,7 +3,6 @@
 import { Tabs, Tab } from '@/components/Tabs';
 import type { StrictPropsWithChildren } from '@/types/common';
 import { usePathname, useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { PageLayout } from '@/components/PageLayout';
 import { XIcon } from '@/icons';
 

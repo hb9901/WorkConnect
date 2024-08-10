@@ -5,7 +5,7 @@ import SmileIcon from '@/icons/Smile.svg';
 import SendIcon from '@/icons/Send.svg';
 import { useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { useMutationChatMessage } from '../../../_hooks/useChatMutation';
+import { useMutationChatMessage } from '../../../../_hook/useChatMutation';
 
 type MessageTextareaProps = {
   handleOpenUtil: () => void;

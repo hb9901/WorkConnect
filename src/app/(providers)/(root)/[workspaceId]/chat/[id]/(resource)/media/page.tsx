@@ -3,9 +3,9 @@
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import ChatImage from '../../_components/ChatImage';
-import ChatVideo from '../../_components/ChatVideo';
 import { CHAT_TYPE } from '@/constants/chat';
+import ChatVideo from '../../_components/ChatVideo';
+import ChatImage from '../../_components/ChatImage';
 
 const MediaListPage = () => {
   const { id } = useParams();

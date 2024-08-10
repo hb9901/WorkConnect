@@ -5,7 +5,6 @@ import { CHAT_TYPE } from '@/constants/chat';
 import FolderIcon from '@/icons/Folder.svg';
 import { handleDownloadFile } from '@/utils/file';
 import { supabase } from '@/utils/supabase/supabaseClient';
-import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 

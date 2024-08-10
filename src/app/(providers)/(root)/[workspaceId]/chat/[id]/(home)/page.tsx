@@ -1,9 +1,9 @@
-import ChatNotice from '../_components/ChatNotice';
-import MessagesContainer from '../_components/MessagesContainer';
-import Messages from '../_components/Messages';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import ChatDetailLayout from '../_components/ChatDetailLayout';
 import { getChannelNameOptions } from '../../_utils/getQueryOptions';
+import ChatDetailLayout from './_components/ChatDetailLayout';
+import MessagesContainer from './_components/MessagesContainer';
+import ChatNotice from './_components/ChatNotice';
+import Messages from './_components/Messages';
 
 const queryClient = new QueryClient();
 

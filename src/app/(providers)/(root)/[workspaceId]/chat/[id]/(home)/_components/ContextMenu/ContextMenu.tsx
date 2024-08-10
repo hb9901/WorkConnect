@@ -7,8 +7,8 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { CHAT_TYPE } from '@/constants/chat';
 import clsx from 'clsx';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import { useMutationChatMessage } from '../../../_hooks/useChatMutation';
 import { useParams } from 'next/navigation';
+import { useMutationChatMessage } from '../../../../_hook/useChatMutation';
 
 const ContextMenu = () => {
   const { id } = useParams();

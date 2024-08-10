@@ -3,11 +3,11 @@ import Typography from '@/components/Typography';
 import { CHAT_TYPE } from '@/constants/chat';
 import { handleDownloadFile } from '@/utils/file';
 import clsx from 'clsx';
-import ChatImage from '../ChatImage';
-import ChatVideo from '../ChatVideo';
 import type { ContextMenuContextType } from '../../_provider/ContextMenuProvider';
 import Link from 'next/link';
 import { FileTextIcon } from '@/icons';
+import ChatImage from '../../../_components/ChatImage';
+import ChatVideo from '../../../_components/ChatVideo';
 
 type ClassNameProps = Pick<ComponentProps<'div'>, 'className'>;
 

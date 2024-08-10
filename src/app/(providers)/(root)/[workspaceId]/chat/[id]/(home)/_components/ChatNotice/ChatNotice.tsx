@@ -6,10 +6,10 @@ import Typography from '@/components/Typography';
 import Link from 'next/link';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { useChatHandlers } from '../../_hook/useChatHandlers';
-import { useGetLatestNotice } from '../../../_hooks/useChatQuery';
 import { isEmpty } from '@/utils/isEmpty';
 import { useEffect } from 'react';
-import { handleSubscribeToNotice } from '../../../_utils/subscribe';
+import { useGetLatestNotice } from '../../../../_hook/useChatQuery';
+import { handleSubscribeToNotice } from '../../_utils/subscribe';
 
 const ChatNotice = () => {
   const { id } = useParams();

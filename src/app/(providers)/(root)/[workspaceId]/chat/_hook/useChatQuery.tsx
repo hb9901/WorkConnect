@@ -1,8 +1,8 @@
 import api from '@/api';
 import type { GetChatMessagesProps } from '@/types/chat';
 import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '../_constants/constants';
 import { getChannelNameOptions, getUsersInChannelOptions } from '../_utils/getQueryOptions';
+import { QUERY_KEYS } from '../_constants/constants';
 
 export const useGetChatMessages = ({ channel_id }: GetChatMessagesProps) => {
   return useQuery({
