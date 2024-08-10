@@ -2,6 +2,7 @@ import type {
   ChannelInsertType,
   ChannelType,
   GetChannelsProps,
+  GetUsersInChannelRequestProps,
   GetUsersInChannelResponse,
   GetUsersInChannelResponseItem
 } from '@/types/channel';
@@ -36,17 +37,11 @@ export const getChannels = async ({ workspace_id, workspace_user_id }: GetChanne
   return response;
 };
 
-type GetUsersInChannelRequestProps = {
-  channel_id: ChannelType['id'];
-  workspaceUserId: WorkspaceUserType['id'];
-};
-
-export const getUsersInChannel = async ({ channel_id, workspaceUserId }: GetUsersInChannelRequestProps) => {
+export const getUsersInChannel = async ({ channel_id }: GetUsersInChannelRequestProps) => {
   const supabase = createClient();
 
-  const response = await supabase.rpc('get_users_in_channel', {
-    cid: channel_id,
-    wuid: workspaceUserId
+  const response = await supabase.rpc('get_users_in_channel_new', {
+    cid: channel_id
   });
 
   if (!response.data) {

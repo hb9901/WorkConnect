@@ -1,30 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  CHANNEL_USERS_RESPONSE_FAILED,
-  CHANNEL_USERS_RESPONSE_INVALID_REQUEST,
-  CHANNEL_USERS_RESPONSE_SUCCESS
-} from './constants';
+import { CHANNEL_USERS_RESPONSE_FAILED, CHANNEL_USERS_RESPONSE_SUCCESS } from './constants';
 import { getUsersInChannel } from '@/services/channel';
 import { getServerCookie } from '@/utils/cookie/serverUtils';
 
 /**
  * Users in Channel GET 요청 핸들러
- * @description 채널 아이디와 워크스페이스 유저 아이디를 받아서 채널에 속한 유저 목록을 조회합니다.
- * @throws {Error} - channel_id, workspace_user_id가 없는 경우
+ * @description 채널 아이디를 받아서 채널에 속한 유저 목록을 조회합니다.
  */
 export const GET = async (req: NextRequest, { params }: { params: { id: string } }) => {
   const { id: channel_id } = params;
 
-  const workspaceUserId = getServerCookie('workspaceUserId');
-
-  if (!workspaceUserId) {
-    return NextResponse.json(CHANNEL_USERS_RESPONSE_INVALID_REQUEST, { status: 400 });
-  }
-
   try {
     const { data, error } = await getUsersInChannel({
-      channel_id: parseInt(channel_id),
-      workspaceUserId
+      channel_id: parseInt(channel_id)
     });
 
     if (error) {
