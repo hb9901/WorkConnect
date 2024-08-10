@@ -19,7 +19,7 @@ const Todo = ({ id, title, startDate, endDate, place, priority }: TodoProps) => 
     <Link
       href={`to-do-list/add/${id}`}
       className="flex flex-row justify-between items-center rounded-[8px] bg-[#FAFAFA] px-[16px] py-[12px] shadow-sm shadow-slate-200 hover:brightness-90 active:brightness-75
-      lg:w-full lg:py-[24px] lg:shadow-md"
+      lg:w-full lg:py-[24px] lg:shadow-md "
     >
       <div className="flex flex-col gap-[6px]">
         <Typography variant="Title16px" color="grey700Black">
