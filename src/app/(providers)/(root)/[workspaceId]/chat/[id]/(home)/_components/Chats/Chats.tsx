@@ -10,6 +10,8 @@ import Avatar from '@/components/Avatar';
 import Typography from '@/components/Typography';
 import { memo } from 'react';
 import { useContextMenu } from '../../_provider/ContextMenuProvider';
+import { formatDate } from '@/utils/time';
+import { StrictPropsWithChildren } from '@/types/common';
 
 type ChatMessagesProps = {
   data: GetChatMessageType[] & { channel_id?: string };
@@ -36,10 +38,11 @@ const Chats = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
         const profileUrl = `/${workspaceId}/profile/${chat.workspace_user_id}`;
 
         return (
-          <div key={chat.id} className={`flex ${isMe ? 'items-end' : 'items-start'} flex-col`}>
+          <div key={chat.id} className={`flex items-end gap-2 justify-end ${isMe ? '' : 'flex-wrap flex-row-reverse'}`}>
             {!isMe && (
               <OtherProfile profileImage={userInfo?.profile_image} name={userInfo?.name} profileUrl={profileUrl} />
             )}
+            <Time>{formatDate(chat.created_at, 'A h:mm').toKor()}</Time>
             <ChatMessage
               content={chat.content}
               type={chat.type}
@@ -55,6 +58,10 @@ const Chats = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
   );
 };
 
+const Time = ({ children }: StrictPropsWithChildren) => {
+  return <span className="text-grey300 text-[10px] leading-[130%]">{children}</span>;
+};
+
 type OtherProfileProps = {
   profileImage: string | null;
   name: string;
@@ -63,7 +70,7 @@ type OtherProfileProps = {
 
 const OtherProfile = memo(({ profileImage, name, profileUrl }: OtherProfileProps) => {
   return (
-    <Link href={profileUrl} className="flex items-center gap-2">
+    <Link href={profileUrl} className="flex items-center gap-2 w-full">
       <Avatar src={profileImage ?? undefined} size="32px" />
       <Typography variant="Title16px" color="grey900">
         {name}
