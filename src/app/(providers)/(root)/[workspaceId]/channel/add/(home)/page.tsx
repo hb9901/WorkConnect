@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { useSearchUsers } from '../_provider/SearchUsersProvider';
-import { useGetSearchWorkspaceUsers } from '../../_hooks/useQueryChat';
 import SelectedUsers from '../_components/SelectedUsers';
 import SearchResults from '../_components/SearchResults';
+import { useGetSearchWorkspaceUsers } from '../../_hooks/useChannelQuery';
 
 const AddChatPage = () => {
   const workspaceId = useWorkspaceId();

@@ -25,7 +25,7 @@ const AddChatHomeLayout = ({ children }: StrictPropsWithChildren) => {
     const isGroupChat = userIds.length > 2 || type === CHANNEL_TYPE.video;
 
     if (isGroupChat) {
-      router.push(`/${workspaceId}/chat/add/group-setting?type=${type}`);
+      router.push(`/${workspaceId}/channel/add/group-setting?type=${type}`);
       return;
     }
     const existingChannelId = await getExistingChannelId({

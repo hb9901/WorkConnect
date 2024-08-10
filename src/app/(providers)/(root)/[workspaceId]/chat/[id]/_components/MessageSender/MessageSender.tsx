@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useMutationChatMessage } from '../../../_hooks/useMutationChat';
+import { useMutationChatMessage } from '../../../_hooks/useChatMutation';
 import MessageTextarea from '../MessageTextarea';
 import UtilsMenu from '../UtilsMenu';
 import ContextMenu from '../ContextMenu';

@@ -1,11 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useMutationCreateChannel, useMutationCreateChannelUsers } from '../../_hooks/useMutationChat';
 import { ChannelType } from '@/types/channel';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { CHANNEL_TYPE } from '@/constants/channel';
 import { useState } from 'react';
+import { useMutationCreateChannel, useMutationCreateChannelUsers } from '../../_hooks/useChannelMutation';
 
 type CreateChannelAndUsersParams = {
   channelName?: string;

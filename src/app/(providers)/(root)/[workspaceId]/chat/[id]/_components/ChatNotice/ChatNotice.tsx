@@ -6,7 +6,7 @@ import Typography from '@/components/Typography';
 import Link from 'next/link';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { useChatHandlers } from '../../_hook/useChatHandlers';
-import { useGetLatestNotice } from '../../../_hooks/useQueryChat';
+import { useGetLatestNotice } from '../../../_hooks/useChatQuery';
 import { isEmpty } from '@/utils/isEmpty';
 import { useEffect } from 'react';
 import { handleSubscribeToNotice } from '../../../_utils/subscribe';

@@ -4,7 +4,6 @@ import useWorkspaceId from '@/hooks/useWorkspaceId';
 import CalendarIcon from '@/icons/Calendar.svg';
 import HomeIcon from '@/icons/HomeIcon.svg';
 import MessageCircleIcon from '@/icons/MessageCircle.svg';
-import useUserStore from '@/store/userStore';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -14,7 +13,6 @@ const BottomNavigationBar = ({ className }: { className?: string }) => {
   const pathName = usePathname();
   const curPath = pathName.split('/')[2];
   const workspaceId = useWorkspaceId();
-  const workspaceUserId = useUserStore((state) => state.workspaceUserId);
 
   return (
     <div className={className}>
@@ -31,7 +29,7 @@ const BottomNavigationBar = ({ className }: { className?: string }) => {
           </Link>
         </Tab>
         <Tab active={curPath === 'chat'}>
-          <Link href={`/${workspaceId}/chat`} className="w-full">
+          <Link href={`/${workspaceId}/channel`} className="w-full">
             <MessageCircleIcon
               className={clsx(
                 'stroke-current items-center justify-center mx-auto mb-3',

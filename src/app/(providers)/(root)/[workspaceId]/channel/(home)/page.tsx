@@ -1,16 +1,16 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { useGetChannels } from '../_hooks/useQueryChat';
 import ChannelItem from './_components/ChannelItem';
-import { handleSubscribeToChannels } from '../_utils/subscribe';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import { isEmpty } from '@/utils/isEmpty';
 import { useChannelHandlers } from './_hooks/useChannelHandlers';
 import { CHANNEL_TYPE } from '@/constants/channel';
+import { handleSubscribeToChannels } from './_utils/subscribe';
+import { useGetChannels } from '../_hooks/useChannelQuery';
 
-const ChatListPage = () => {
+const ChannelListPage = () => {
   const workspaceId = useWorkspaceId();
   const workspaceUserId = useWorkspaceUserId();
 
@@ -58,4 +58,4 @@ const ChatListPage = () => {
   );
 };
 
-export default ChatListPage;
+export default ChannelListPage;

@@ -1,4 +1,4 @@
-import { useGetChannelName } from '../../_hooks/useQueryChat';
+import { useGetChannelName } from '../../_hooks/useChatQuery';
 import { getChannelId } from '../../_utils/getChannelId';
 
 export const useFetchChannelName = () => {

@@ -7,11 +7,11 @@ import { useSearchParams } from 'next/navigation';
 import type { ChannelType } from '@/types/channel';
 import { AvatarIcon, CameraIcon } from '@/icons';
 import { supabase } from '@/utils/supabase/supabaseClient';
-import FileInput from '../../[id]/_components/FileInput';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { mbToBytes } from '@/utils/file';
 import Image from 'next/image';
 import AddChatLayout from '../_components/AddChatLayout';
+import FileInput from '@/components/FileInput';
 
 const MAX_FILE_SIZE = mbToBytes(3);
 
