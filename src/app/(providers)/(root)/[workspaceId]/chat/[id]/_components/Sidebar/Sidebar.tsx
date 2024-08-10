@@ -54,7 +54,12 @@ const Sidebar = ({ isOpenSidebar, handleOpenSidebar, channelName }: SidebarProps
         )}
       >
         <div className="flex flex-col">
-          <Typography variant="Title20px" color="grey700Black" as="strong" className="py-[14px]">
+          <Typography
+            variant="Title20px"
+            color="grey700Black"
+            as="strong"
+            className="py-[14px] whitespace-nowrap overflow-hidden overflow-ellipsis"
+          >
             {channelName}
           </Typography>
           <div className="flex items-center gap-2 mt-4">
