@@ -1,4 +1,5 @@
 'use client';
+
 import useShallowSelector from '@/hooks/useShallowSelector';
 import { useAuthStore } from '@/providers/AuthStoreProvider';
 import { AuthStoreTypes } from '@/store/authStore';
@@ -8,7 +9,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import { getWorkspaceUserIdCookie, setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/workspaceCookie';
+import { getWorkspaceUserIdCookie, setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/cookie/workspace';
 import { TopBar } from '@/components/TopBar';
 
 const getRandomNumbers = (count: number, min: number, max: number) => {

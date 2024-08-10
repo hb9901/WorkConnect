@@ -9,7 +9,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import { getWorkspaceIdCookie, setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/workspaceCookie';
+import { getWorkspaceIdCookie, setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/cookie/workspace';
 import WorkConnectLogoIcon from '@/icons/WorkConnectLogo.svg';
 
 type UserType = {

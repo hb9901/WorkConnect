@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from './cookieUtils';
+import { getCookie, setCookie } from './clientUtils';
 
 export const getWorkspaceUserIdCookie = () => {
   return getCookie('workspaceUserId');
