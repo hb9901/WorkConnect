@@ -1,10 +1,11 @@
 import type {
   ChannelInsertType,
+  ChannelType,
   GetExistingChannelIdRequestProps,
-  GetUsersInChannelRequestProps,
   GetUsersInChannelResponse,
   GetUsersInChannelResponseItem
 } from '@/types/channel';
+import { WorkspaceUserType } from '@/types/workspaceUser';
 import { createClient } from '@/utils/supabase/supabaseServer';
 
 export const createChannel = async ({ name, type, workspace_id, thumbnail }: ChannelInsertType) => {
@@ -24,12 +25,17 @@ export const createChannel = async ({ name, type, workspace_id, thumbnail }: Cha
   return response;
 };
 
-export const getUsersInChannel = async ({ channel_id, workspace_user_id }: GetUsersInChannelRequestProps) => {
+type GetUsersInChannelRequestProps = {
+  channel_id: ChannelType['id'];
+  workspaceUserId: WorkspaceUserType['id'];
+};
+
+export const getUsersInChannel = async ({ channel_id, workspaceUserId }: GetUsersInChannelRequestProps) => {
   const supabase = createClient();
 
   const response = await supabase.rpc('get_users_in_channel', {
     cid: channel_id,
-    wuid: workspace_user_id
+    wuid: workspaceUserId
   });
 
   if (!response.data) {
@@ -58,10 +64,13 @@ export const getExistingChannelId = async ({
   return response;
 };
 
-export const getChannelName = async ({ id }: { id: string }) => {
+export const getChannelName = async ({ id, wuid }: { id: number; wuid: string }) => {
   const supabase = createClient();
 
-  const response = await supabase.from('channel').select('name').eq('id', id).single();
+  const response = await supabase.rpc('get_channel_name', {
+    cid: id,
+    wuid: wuid
+  });
 
   return response;
 };

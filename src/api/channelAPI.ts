@@ -56,11 +56,8 @@ class ChannelAPI {
     return data.data;
   };
 
-  getUsersInChannel = async ({
-    channel_id,
-    workspace_user_id
-  }: GetUsersInChannelRequestProps): Promise<GetUsersInChannelResponse> => {
-    const { data } = await this.axios.get(`${this.path}/${channel_id}/users?workspace_user_id=${workspace_user_id}`);
+  getUsersInChannel = async (channelId: number): Promise<GetUsersInChannelResponse> => {
+    const { data } = await this.axios.get(`${this.path}/${channelId}/users`);
 
     return data.data;
   };

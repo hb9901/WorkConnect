@@ -42,7 +42,6 @@ export type GetChatChannelsResponse = {
 
 export type GetUsersInChannelRequestProps = {
   channel_id: ChannelType['id'];
-  workspace_user_id: WorkspaceUserType['id'];
 };
 
 export type GetUsersInChannelResponseItem = {

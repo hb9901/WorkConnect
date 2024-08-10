@@ -5,11 +5,11 @@ import { StrictPropsWithChildren } from '@/types/common';
 import Sidebar from '../Sidebar';
 import { useState } from 'react';
 import { MenuIcon } from '@/icons';
-import { useGetChannelName } from '../../_hook/useGetChannelName';
+import { useFetchChannelName } from '../../_hook/useFetchChannelName';
 
 const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
-  const channelName = useGetChannelName();
+  const channelName = useFetchChannelName();
 
   const handleOpenSidebar = () => {
     setIsOpenSidebar((prev) => !prev);
