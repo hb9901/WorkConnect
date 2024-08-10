@@ -3,11 +3,10 @@ import PaperClipIcon from '@/icons/paperclip.svg';
 import VideoIcon from '@/icons/video.svg';
 import { mbToBytes } from '@/utils/file';
 import FileButton from '../FileButton';
-import { useMutationChatMessage } from '../../../_hooks/useMutationChat';
+import { useMutationChatMessage } from '../../../_hooks/useChatMutation';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { ChatType } from '@/types/chat';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import { useParams } from 'next/navigation';
 
 const MAX_FILE_SIZE = mbToBytes(3);
@@ -33,16 +32,15 @@ const CHAT_TYPE: Record<string, ChatType['type']> = {
 
 const UtilsMenu = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
   const { id } = useParams();
+
   const onFinish = () => {
     handleOpenUtil();
   };
 
   const { openSnackBar } = useSnackBar();
-  const workspaceUserId = useWorkspaceUserId();
 
   const { mutate: mutateChatMessage } = useMutationChatMessage({
     channel_id: Number(id),
-    workspace_user_id: workspaceUserId,
     onSuccess: onFinish
   });
 

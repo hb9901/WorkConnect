@@ -5,8 +5,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import { setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/workspaceCookie';
 import { TopBar } from '@/components/TopBar';
+import { setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/cookie/workspace';
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');

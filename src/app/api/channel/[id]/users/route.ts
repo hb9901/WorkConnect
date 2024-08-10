@@ -5,6 +5,7 @@ import {
   CHANNEL_USERS_RESPONSE_SUCCESS
 } from './constants';
 import { getUsersInChannel } from '@/services/channel';
+import { getServerCookie } from '@/utils/cookie/serverUtils';
 
 /**
  * Users in Channel GET 요청 핸들러
@@ -12,19 +13,18 @@ import { getUsersInChannel } from '@/services/channel';
  * @throws {Error} - channel_id, workspace_user_id가 없는 경우
  */
 export const GET = async (req: NextRequest, { params }: { params: { id: string } }) => {
-  const { searchParams } = new URL(req.url);
   const { id: channel_id } = params;
 
-  const workspace_user_id = searchParams.get('workspace_user_id');
+  const workspaceUserId = getServerCookie('workspaceUserId');
 
-  if (!workspace_user_id) {
+  if (!workspaceUserId) {
     return NextResponse.json(CHANNEL_USERS_RESPONSE_INVALID_REQUEST, { status: 400 });
   }
 
   try {
     const { data, error } = await getUsersInChannel({
       channel_id: parseInt(channel_id),
-      workspace_user_id
+      workspaceUserId
     });
 
     if (error) {

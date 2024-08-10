@@ -1,13 +1,8 @@
 import { StrictPropsWithChildren } from '@/types/common';
 import { ContextMenuProvider } from '../_provider/ContextMenuProvider';
-import ChatDetailLayout from '../_components/ChatDetailLayout';
 
 const ChatDetailHomeLayout = ({ children }: StrictPropsWithChildren) => {
-  return (
-    <ContextMenuProvider>
-      <ChatDetailLayout>{children}</ChatDetailLayout>
-    </ContextMenuProvider>
-  );
+  return <ContextMenuProvider>{children}</ContextMenuProvider>;
 };
 
 export default ChatDetailHomeLayout;

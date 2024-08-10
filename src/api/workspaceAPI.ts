@@ -10,12 +10,9 @@ class WorkspaceAPI {
 
   getSearchWorkspaceUsers = async ({
     workspace_id,
-    term,
-    workspace_user_id
+    term
   }: GetSearchWorkspaceUsersProps): Promise<GetSearchWorkspaceUsersResponse> => {
-    const { data } = await this.axios.get(
-      `/api/workspace/${workspace_id}/users/search?term=${term}&workspace_user_id=${workspace_user_id}`
-    );
+    const { data } = await this.axios.get(`/api/workspace/${workspace_id}/users/search?term=${term}`);
 
     return data.data;
   };

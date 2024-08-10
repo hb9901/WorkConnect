@@ -3,7 +3,7 @@ import { TWorkspaceInfo } from '@/types/workspace';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Typography from '../Typography';
-import { setWorkspaceIdCookie } from '@/utils/workspaceCookie';
+import { setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/cookie/workspace';
 
 interface TopSelectProps {
   workspaceList: TWorkspaceInfo[];
@@ -23,6 +23,7 @@ const TopSelect = ({ workspaceList, isOpen, onClick }: TopSelectProps) => {
 
   const handleClick = ({ id, workspace_user_id }: { id: number; workspace_user_id: string }) => {
     setWorkspaceIdCookie(id);
+    setWorkspaceUserIdCookie(workspace_user_id);
     setWorkspaceUserIdData(workspace_user_id);
   };
 

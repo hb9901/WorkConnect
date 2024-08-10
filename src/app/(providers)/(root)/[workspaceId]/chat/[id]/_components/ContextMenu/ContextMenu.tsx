@@ -7,20 +7,17 @@ import { supabase } from '@/utils/supabase/supabaseClient';
 import { CHAT_TYPE } from '@/constants/chat';
 import clsx from 'clsx';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import { useMutationChatMessage } from '../../../_hooks/useMutationChat';
+import { useMutationChatMessage } from '../../../_hooks/useChatMutation';
 import { useParams } from 'next/navigation';
-import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 
 const ContextMenu = () => {
   const { id } = useParams();
-  const workspaceUserId = useWorkspaceUserId();
 
   const { contextMenuState, closeContextMenu } = useContextMenu();
   const { openSnackBar } = useSnackBar();
 
   const { mutate: mutateChatMessage } = useMutationChatMessage({
-    channel_id: Number(id),
-    workspace_user_id: workspaceUserId
+    channel_id: Number(id)
   });
 
   const deleteChat = async () => {

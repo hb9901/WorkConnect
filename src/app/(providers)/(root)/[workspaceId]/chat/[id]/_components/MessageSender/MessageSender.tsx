@@ -1,9 +1,8 @@
 import { useRef } from 'react';
-import { useMutationChatMessage } from '../../../_hooks/useMutationChat';
+import { useMutationChatMessage } from '../../../_hooks/useChatMutation';
 import MessageTextarea from '../MessageTextarea';
 import UtilsMenu from '../UtilsMenu';
 import ContextMenu from '../ContextMenu';
-import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import { useParams } from 'next/navigation';
 
 type MessageSenderProps = {
@@ -13,12 +12,10 @@ type MessageSenderProps = {
 const MessageSender = ({ handleOpenUtil }: MessageSenderProps) => {
   const { id: channelId } = useParams();
   const stringId = Array.isArray(channelId) ? channelId[0] : channelId;
-
-  const workspaceUserId = useWorkspaceUserId();
   const ref = useRef<HTMLTextAreaElement>(null);
+
   const { mutate: mutateChatMessage } = useMutationChatMessage({
-    channel_id: Number(stringId),
-    workspace_user_id: workspaceUserId
+    channel_id: Number(stringId)
   });
 
   const handleSendMessage = (event: React.FormEvent<HTMLFormElement>) => {

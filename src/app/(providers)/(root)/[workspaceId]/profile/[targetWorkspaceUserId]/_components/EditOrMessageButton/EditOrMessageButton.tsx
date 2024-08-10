@@ -18,7 +18,7 @@ const EditOrMessageButton = ({
   workspaceUserId,
   workspaceId
 }: EditOrMessageButtonProps) => {
-  const { createChannel } = useChannel({ type: 'chat', workspace_id: workspaceId });
+  const { createChannel } = useChannel();
   const router = useRouter();
 
   const handleEditClick = async () => {
@@ -29,8 +29,7 @@ const EditOrMessageButton = ({
     if (!(workspaceUserId && targetWorkspaceUserId)) return;
 
     const existChannel = await api.channel.getExistingChannelId({
-      other_workspace_user_id: targetWorkspaceUserId,
-      workspace_user_id: workspaceUserId
+      other_workspace_user_id: targetWorkspaceUserId
     });
 
     if (existChannel) {

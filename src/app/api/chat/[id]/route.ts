@@ -7,6 +7,7 @@ import {
   CHAT_RESPONSE_POST_SUCCESS,
   CHAT_RESPONSE_SUCCESS
 } from './constants';
+import { getServerCookie } from '@/utils/cookie/serverUtils';
 
 /**
  * Chat[id] GET 요청 핸들러
@@ -36,9 +37,11 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
  */
 export const POST = async (req: NextRequest, { params }: { params: { id: string } }) => {
   const { id: channel_id } = params;
-  const { content, workspace_user_id, type } = await req.json();
+  const { content, type } = await req.json();
 
-  if (!content || !workspace_user_id) {
+  const workspaceUserId = getServerCookie('workspaceUserId');
+
+  if (!content || !workspaceUserId) {
     return NextResponse.json(CHAT_RESPONSE_POST_INVALID_REQUEST, { status: 400 });
   }
 
@@ -46,7 +49,7 @@ export const POST = async (req: NextRequest, { params }: { params: { id: string 
     const { error } = await createChatMessage({
       channel_id: Number(channel_id),
       content,
-      workspace_user_id,
+      workspace_user_id: workspaceUserId,
       type
     });
 

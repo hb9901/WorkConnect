@@ -1,4 +1,5 @@
 'use client';
+
 import { CheckCircleIcon } from '@/icons';
 import useUserStore from '@/store/userStore';
 import { useRouter } from 'next/navigation';
