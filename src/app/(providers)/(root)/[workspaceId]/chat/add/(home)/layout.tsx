@@ -7,13 +7,11 @@ import useCreateChannel from '../_hooks/useCreateChannel';
 import { CHANNEL_TYPE } from '@/constants/channel';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { getExistingChannelId } from '../_utils/getExistingChannelId';
-import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import { isEmpty } from '@/utils/isEmpty';
 import AddChatLayout from '../_components/AddChatLayout';
 
 const AddChatHomeLayout = ({ children }: StrictPropsWithChildren) => {
   const workspaceId = useWorkspaceId();
-  const workspaceUserId = useWorkspaceUserId();
   const searchParams = useSearchParams();
 
   const type = searchParams.get('type');
@@ -31,7 +29,6 @@ const AddChatHomeLayout = ({ children }: StrictPropsWithChildren) => {
       return;
     }
     const existingChannelId = await getExistingChannelId({
-      workspace_user_id: workspaceUserId,
       other_workspace_user_id: userIds[0]
     });
 

@@ -1,4 +1,3 @@
-import type { GetChatChannelsResponse } from '@/types/channel';
 import { CHANNEL_TYPE } from '@/constants/channel';
 import ChatCard from '@/components/ChatCard/ChatCard';
 import Link from 'next/link';
@@ -6,6 +5,7 @@ import { ComponentProps } from 'react';
 import { AirPlayIcon } from '@/icons';
 import dayjs from 'dayjs';
 import Avatar from '@/components/Avatar';
+import { GetChannelsResponse } from '@/types/channel';
 
 type ChannelListImageProps = Pick<ComponentProps<'img'>, 'src'> & {
   type: keyof typeof CHANNEL_TYPE;
@@ -16,10 +16,10 @@ type ChannelItemProps = {
   user_count: number | undefined;
   user_thumbnail: string | undefined;
   name: string;
-  user_state: GetChatChannelsResponse['user_state'];
-  message: GetChatChannelsResponse['message'];
-  type: GetChatChannelsResponse['type'];
-  created_at: GetChatChannelsResponse['created_at'];
+  user_state: GetChannelsResponse['user_state'];
+  message: GetChannelsResponse['message'];
+  type: GetChannelsResponse['type'];
+  created_at: GetChannelsResponse['created_at'];
 };
 
 const ChannelItem = ({

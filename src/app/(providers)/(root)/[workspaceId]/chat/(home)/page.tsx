@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { useGetChatChannels } from '../_hooks/useQueryChat';
+import { useGetChannels } from '../_hooks/useQueryChat';
 import ChannelItem from './_components/ChannelItem';
 import { handleSubscribeToChannels } from '../_utils/subscribe';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
@@ -16,10 +16,7 @@ const ChatListPage = () => {
 
   const { handleChatInserts, handleChannelUserUpdates } = useChannelHandlers();
 
-  const { data: channels = [] } = useGetChatChannels({
-    workspace_id: workspaceId,
-    workspace_user_id: workspaceUserId
-  });
+  const { data: channels = [] } = useGetChannels(workspaceId);
 
   const channelIds = useMemo(() => {
     return channels.map((channel) => channel.channel_id).join(',');
@@ -31,8 +28,8 @@ const ChatListPage = () => {
     handleSubscribeToChannels({
       channelIds,
       workspaceUserId,
-      handleChatInserts: handleChatInserts({ workspaceId, workspaceUserId }),
-      handleChannelUserUpdates: handleChannelUserUpdates({ workspaceId, workspaceUserId })
+      handleChatInserts: handleChatInserts({ workspaceId }),
+      handleChannelUserUpdates: handleChannelUserUpdates({ workspaceId })
     });
   }, [channelIds]);
 

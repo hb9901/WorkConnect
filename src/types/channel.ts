@@ -23,9 +23,7 @@ export type ChannelUpdateType = {
   workspace_id?: number | null;
 };
 
-export type GetChatChannelsProps = Pick<ChannelType, 'workspace_id'> & Pick<ChatType, 'workspace_user_id'>;
-
-export type GetChatChannelsResponse = {
+export type GetChannelsResponse = {
   channel_id: ChannelType['id'];
   channel_name: ChannelType['name'];
   message_created_at: ChatType['created_at'];
@@ -38,6 +36,10 @@ export type GetChatChannelsResponse = {
   user_count: number;
   type: ChannelType['type'];
   created_at: string;
+};
+
+export type GetChannelsProps = Pick<ChannelType, 'workspace_id'> & {
+  workspace_user_id: WorkspaceUserType['id'];
 };
 
 export type GetUsersInChannelRequestProps = {
@@ -53,6 +55,5 @@ export type GetUsersInChannelResponseItem = {
 export type GetUsersInChannelResponse = Record<WorkspaceUserType['id'], GetUsersInChannelResponseItem>;
 
 export type GetExistingChannelIdRequestProps = {
-  workspace_user_id: WorkspaceUserType['id'];
   other_workspace_user_id: WorkspaceUserType['id'];
 };

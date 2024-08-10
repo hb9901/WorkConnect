@@ -1,10 +1,7 @@
 import type {
   ChannelInsertType,
-  ChannelType,
-  GetChatChannelsProps,
-  GetChatChannelsResponse,
+  GetChannelsResponse,
   GetExistingChannelIdRequestProps,
-  GetUsersInChannelRequestProps,
   GetUsersInChannelResponse
 } from '@/types/channel';
 import { AxiosInstance } from 'axios';
@@ -18,15 +15,6 @@ class ChannelAPI {
     this.path = '/api/channel';
   }
 
-  async getChannelList({ type, workspace_id }: Pick<ChannelType, 'type' | 'workspace_id'>): Promise<ChannelType[]> {
-    const response = await this.axios.get(this.path, {
-      params: {
-        type,
-        workspace_id
-      }
-    });
-    return response.data;
-  }
   async postChannel(channel: ChannelInsertType) {
     const response = await this.axios.post(this.path, channel);
     return response.data;
@@ -45,29 +33,30 @@ class ChannelAPI {
     return response.data;
   }
 
-  getChatChannels = async ({
-    workspace_id,
-    workspace_user_id
-  }: GetChatChannelsProps): Promise<GetChatChannelsResponse[]> => {
-    const { data } = await this.axios.get(
-      `/api/chat?workspace_id=${workspace_id}&workspace_user_id=${workspace_user_id}`
-    );
+  getChannels = async (): Promise<GetChannelsResponse[]> => {
+    const { data } = await this.axios.get('/api/channel');
 
     return data.data;
   };
 
   getUsersInChannel = async (channelId: number): Promise<GetUsersInChannelResponse> => {
-    const { data } = await this.axios.get(`${this.path}/${channelId}/users`);
+    const { data } = await this.axios.get(`/api/channel/${channelId}/users`);
 
     return data.data;
   };
 
-  getExistingChannelId = async ({ workspace_user_id, other_workspace_user_id }: GetExistingChannelIdRequestProps) => {
+  getExistingChannelId = async ({ other_workspace_user_id }: GetExistingChannelIdRequestProps) => {
     const { data } = await this.axios.get(
-      `${this.path}/existing-id?workspace_user_id=${workspace_user_id}&other_workspace_user_id=${other_workspace_user_id}`
+      `/api/channel/existing-id?other_workspace_user_id=${other_workspace_user_id}`
     );
 
     return data.data;
+  };
+
+  getChannelName = async (channelId: number): Promise<string> => {
+    const { data } = await this.axios.get(`/api/channel/${channelId}/name`);
+
+    return data.data || '';
   };
 }
 export default ChannelAPI;

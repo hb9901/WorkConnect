@@ -6,19 +6,16 @@ import { useSearchUsers } from '../_provider/SearchUsersProvider';
 import { useGetSearchWorkspaceUsers } from '../../_hooks/useQueryChat';
 import SelectedUsers from '../_components/SelectedUsers';
 import SearchResults from '../_components/SearchResults';
-import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 
 const AddChatPage = () => {
   const workspaceId = useWorkspaceId();
-  const workspaceUserId = useWorkspaceUserId();
 
   const [searchTerm, setSearchTerm] = useState('');
   const { selectedUsers } = useSearchUsers();
 
   const { data: searchUsers = [], refetch: refetchSearchUsers } = useGetSearchWorkspaceUsers({
     workspace_id: workspaceId,
-    term: searchTerm,
-    workspace_user_id: workspaceUserId
+    term: searchTerm
   });
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {

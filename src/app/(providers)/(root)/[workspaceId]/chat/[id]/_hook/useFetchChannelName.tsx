@@ -4,9 +4,9 @@ import { getChannelId } from '../../_utils/getChannelId';
 export const useFetchChannelName = () => {
   const channelId = getChannelId();
 
-  const { data: groupChannelName, isPending: isPendingGroupChannelName } = useGetChannelName({ id: channelId });
+  const { data, isPending } = useGetChannelName({ id: channelId });
 
-  if (isPendingGroupChannelName) return '';
+  if (isPending) return '';
 
-  return groupChannelName ?? '';
+  return data ?? '';
 };

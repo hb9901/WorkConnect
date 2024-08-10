@@ -1,7 +1,7 @@
 import type {
   ChannelInsertType,
   ChannelType,
-  GetExistingChannelIdRequestProps,
+  GetChannelsProps,
   GetUsersInChannelResponse,
   GetUsersInChannelResponseItem
 } from '@/types/channel';
@@ -21,6 +21,17 @@ export const createChannel = async ({ name, type, workspace_id, thumbnail }: Cha
     })
     .select('id')
     .single();
+
+  return response;
+};
+
+export const getChannels = async ({ workspace_id, workspace_user_id }: GetChannelsProps) => {
+  const supabase = createClient();
+
+  const response = await supabase.rpc('get_chat_channels', {
+    wid: workspace_id,
+    wuid: workspace_user_id
+  });
 
   return response;
 };
@@ -50,6 +61,11 @@ export const getUsersInChannel = async ({ channel_id, workspaceUserId }: GetUser
   return { ...response, data: usersMap };
 };
 
+type GetExistingChannelIdRequestProps = {
+  workspace_user_id: WorkspaceUserType['id'];
+  other_workspace_user_id: WorkspaceUserType['id'];
+};
+
 export const getExistingChannelId = async ({
   workspace_user_id,
   other_workspace_user_id
@@ -64,7 +80,12 @@ export const getExistingChannelId = async ({
   return response;
 };
 
-export const getChannelName = async ({ id, wuid }: { id: number; wuid: string }) => {
+type GetChannelNameRequestProps = {
+  id: ChannelType['id'];
+  wuid: WorkspaceUserType['id'];
+};
+
+export const getChannelName = async ({ id, wuid }: GetChannelNameRequestProps) => {
   const supabase = createClient();
 
   const response = await supabase.rpc('get_channel_name', {

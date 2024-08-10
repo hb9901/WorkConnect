@@ -2,32 +2,28 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { QUERY_KEYS } from '../../_constants/constants';
 import { updateChatChannels } from '../_utils/updateChatChannels';
-import { GetChatChannelsResponse } from '@/types/channel';
 import { ChatSubscribePayloadProps } from '@/types/chat';
+import { GetChannelsResponse } from '@/types/channel';
 
 type WorkspaceInfoProps = {
   workspaceId: number;
-  workspaceUserId: string;
 };
 
 export const useChannelHandlers = () => {
   const queryClient = useQueryClient();
 
-  const handleChatInserts = useCallback(({ workspaceId, workspaceUserId }: WorkspaceInfoProps) => {
+  const handleChatInserts = useCallback(({ workspaceId }: WorkspaceInfoProps) => {
     return ({ new: payload }: { new: ChatSubscribePayloadProps }) => {
-      queryClient.setQueryData(
-        QUERY_KEYS.CHAT_CHANNELS({ workspaceId, workspaceUserId }),
-        (prev: GetChatChannelsResponse[]) => {
-          return updateChatChannels(prev, payload);
-        }
-      );
+      queryClient.setQueryData(QUERY_KEYS.CHANNELS({ workspaceId }), (prev: GetChannelsResponse[]) => {
+        return updateChatChannels(prev, payload);
+      });
     };
   }, []);
 
-  const handleChannelUserUpdates = useCallback(({ workspaceId, workspaceUserId }: WorkspaceInfoProps) => {
+  const handleChannelUserUpdates = useCallback(({ workspaceId }: WorkspaceInfoProps) => {
     return () => {
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.CHAT_CHANNELS({ workspaceId, workspaceUserId })
+        queryKey: QUERY_KEYS.CHANNELS({ workspaceId })
       });
     };
   }, []);
