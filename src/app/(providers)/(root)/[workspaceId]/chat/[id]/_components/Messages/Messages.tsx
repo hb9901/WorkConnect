@@ -20,13 +20,17 @@ const Messages = () => {
 
   const { payloadMessages, handleMessagesUpdates, handleUserUpdates } = useChatHandlers();
 
-  const { data: usersInChannel = {}, isPending: isPendingUsersInChannel } = useGetUsersInChannel(Number(channelId));
+  const {
+    data: usersInChannel = {},
+    isLoading,
+    isPending: isPendingUsersInChannel
+  } = useGetUsersInChannel(Number(channelId));
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     containerRef.current.scrollIntoView({ block: 'end' });
-  }, [isPending, payloadMessages]);
+  }, [isPending, payloadMessages, isLoading]);
 
   useEffect(() => {
     if (!channelId || isPendingUsersInChannel) return;
