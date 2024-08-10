@@ -32,7 +32,7 @@ const Avatar = ({ src, size = '48px', variant, className, ...props }: AvatarProp
   );
 };
 
-const AvatarVariants = cva('object-cover flex items-center justify-center bg-[#BDBDBD]', {
+const AvatarVariants = cva('object-cover flex items-center justify-center flex-shrink-0 bg-[#BDBDBD]', {
   variants: {
     size: {
       '48px': 'w-[48px] h-[48px]',
