@@ -20,3 +20,12 @@ export const useMutationChatMessage = ({ channel_id, ...props }: UseChatMessageP
     ...props
   });
 };
+
+export const useMutationDeleteChatMessage = ({ channel_id, ...props }: UseChatMessageProps) => {
+  return useMutation({
+    mutationFn: (id: number) => {
+      return api.chat.deleteChatMessage({ channel_id, id });
+    },
+    ...props
+  });
+};

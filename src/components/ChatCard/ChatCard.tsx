@@ -45,7 +45,7 @@ const ChatCard = ({ icon, name, status, date, message, unreadCount, pin, userCou
             </Typography>
           </div>
           <Typography variant="Subtitle16px" color="grey400" className="overflow-hidden text-ellipsis">
-            {message}
+            <span className="text-ellipsis overflow-hidden whitespace-nowrap">{message}</span>
           </Typography>
         </div>
         <div className="flex ml-auto flex-shrink-0">

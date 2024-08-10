@@ -85,3 +85,11 @@ export const getChannelMedia = async ({ channel_id }: { channel_id: number }) =>
 
   return response;
 };
+
+export const deleteChatMessage = async (id: number) => {
+  const supabase = createClient();
+
+  const response = await supabase.from('chat').delete().eq('id', id);
+
+  return response;
+};

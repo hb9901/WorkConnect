@@ -52,6 +52,12 @@ class ChatAPI {
 
     return data.data;
   };
+
+  deleteChatMessage = async ({ channel_id, id }: { channel_id: number; id: number }): Promise<APIResponse<[]>> => {
+    const { data } = await this.axios.delete(`/api/chat/${channel_id}?id=${id}`);
+
+    return data;
+  };
 }
 
 export default ChatAPI;

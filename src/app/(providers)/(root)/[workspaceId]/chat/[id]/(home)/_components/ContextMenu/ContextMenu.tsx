@@ -3,12 +3,11 @@ import { useContextMenu } from '../../_provider/ContextMenuProvider';
 import CopyIcon from '@/icons/Copy.svg';
 import HashIcon from '@/icons/Hash.svg';
 import TrashIcon from '@/icons/Trash.svg';
-import { supabase } from '@/utils/supabase/supabaseClient';
 import { CHAT_TYPE } from '@/constants/chat';
 import clsx from 'clsx';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { useParams } from 'next/navigation';
-import { useMutationChatMessage } from '../../../../_hook/useChatMutation';
+import { useMutationChatMessage, useMutationDeleteChatMessage } from '../../../../_hook/useChatMutation';
 
 const ContextMenu = () => {
   const { id } = useParams();
@@ -20,10 +19,14 @@ const ContextMenu = () => {
     channel_id: Number(id)
   });
 
+  const { mutateAsync: mutateDeleteChatMessage } = useMutationDeleteChatMessage({
+    channel_id: Number(id)
+  });
+
   const deleteChat = async () => {
     if (!contextMenuState.id) return;
 
-    await supabase.from('chat').delete().eq('id', contextMenuState.id);
+    await mutateDeleteChatMessage(contextMenuState.id);
 
     openSnackBar({ message: '삭제가 완료되었어요' });
 
