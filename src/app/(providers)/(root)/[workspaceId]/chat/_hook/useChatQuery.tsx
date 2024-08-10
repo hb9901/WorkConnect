@@ -32,7 +32,8 @@ export const useGetChannelDocuments = (channelId: number) => {
   return useQuery({
     queryKey: QUERY_KEYS.CHANNEL_DOCUMENTS(channelId),
     queryFn: () => api.chat.getChannelDocuments(channelId),
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    staleTime: 0
   });
 };
 
@@ -40,7 +41,8 @@ export const useGetChannelMedia = (channelId: number) => {
   return useQuery({
     queryKey: QUERY_KEYS.CHANNEL_MEDIA(channelId),
     queryFn: () => api.chat.getChannelMedia(channelId),
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    staleTime: 0
   });
 };
 
@@ -48,6 +50,7 @@ export const useGetChannelNotices = (channelId: number) => {
   return useQuery({
     queryKey: QUERY_KEYS.CHANNEL_NOTICES(channelId),
     queryFn: () => api.chat.getChannelNotices(channelId),
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    staleTime: 0
   });
 };
