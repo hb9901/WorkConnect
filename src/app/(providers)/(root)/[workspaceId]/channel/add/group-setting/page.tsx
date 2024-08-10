@@ -12,6 +12,7 @@ import AddChannelLayout from '../_components/AddChannelLayout';
 import ThumbnailInput from './_components/ThumbnailInput';
 import GroupNameInput from './_components/GroupNameInput';
 import { useMutationUploadThumbnail } from '../../_hooks/useChannelMutation';
+import VideoChatAvatar from '@/components/VideoChatAvatar';
 
 const MAX_FILE_SIZE = 3;
 
@@ -32,7 +33,7 @@ const GroupSettingPage = () => {
     }
   });
 
-  const handleClick = () => {
+  const handleFileClick = () => {
     fileRef.current?.click();
   };
 
@@ -65,10 +66,17 @@ const GroupSettingPage = () => {
     setThumbnail(data);
   };
 
+  const isVideo = type === 'video';
+  const title = isVideo ? '화상대화방 설정' : '그룹대화방 설정';
+
   return (
-    <AddChannelLayout title="그룹대화방 설정" onSubmit={handleSubmit}>
+    <AddChannelLayout title={title} onSubmit={handleSubmit}>
       <div className="flex flex-col gap-4 p-4 h-[300px] w-[300px] items-center justify-center mx-auto">
-        <ThumbnailInput thumbnail={thumbnail} handleClick={handleClick} />
+        {isVideo ? (
+          <VideoChatAvatar size="140px" />
+        ) : (
+          <ThumbnailInput thumbnail={thumbnail} handleClick={handleFileClick} />
+        )}
         <GroupNameInput ref={ref} />
       </div>
       <FileInput name="thumbnail" accept="image/*" ref={fileRef} onChange={onChange} />
