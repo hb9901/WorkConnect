@@ -1,27 +1,22 @@
+'use client';
+
 import ImageIcon from '@/icons/image.svg';
 import PaperClipIcon from '@/icons/paperclip.svg';
 import VideoIcon from '@/icons/video.svg';
 import { mbToBytes } from '@/utils/file';
 import FileButton from '../FileButton';
-import { supabase } from '@/utils/supabase/supabaseClient';
 import { ChatType } from '@/types/chat';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { useParams } from 'next/navigation';
-import { useMutationChatMessage } from '../../../../_hook/useChatMutation';
+import { useMutationChatMessage, useMutationUploadFile } from '../../../../_hook/useChatMutation';
+import { STORAGE_BUCKET_NAME } from '../../../../_constants/constants';
 
-const MAX_FILE_SIZE = mbToBytes(3);
-const RESOURCE_URL = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/`;
+const MAX_FILE_SIZE = 3;
 
 type UploadFileProps = {
-  blob: Blob;
+  formData: FormData;
   bucketName: string;
   fileType: ChatType['type'];
-};
-
-const STORAGE_BUCKET_NAME: Record<string, string> = {
-  imageFile: 'photos',
-  videoFile: 'videos',
-  documentFile: 'documents'
 };
 
 const CHAT_TYPE: Record<string, ChatType['type']> = {
@@ -44,29 +39,36 @@ const UtilsMenu = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
     onSuccess: onFinish
   });
 
-  const uploadFile = async ({ blob, bucketName, fileType }: UploadFileProps) => {
-    const { data, error } = await supabase.storage.from(bucketName).upload(`${Date.now()}`, blob);
-    if (error) {
+  const { mutateAsync: mutateUploadFile } = useMutationUploadFile({
+    onSuccess: onFinish
+  });
+
+  const uploadFile = async ({ formData, bucketName, fileType }: UploadFileProps) => {
+    const { data } = await mutateUploadFile({ formData, storagePath: bucketName, maxFileSize: MAX_FILE_SIZE });
+    if (!data) {
       openSnackBar({ message: '파일을 업로드하지 못했어요' });
       onFinish();
       return null;
     }
 
-    mutateChatMessage({ content: `${RESOURCE_URL}${data.fullPath}`, type: fileType });
+    mutateChatMessage({ content: data, type: fileType });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = event.target;
     if (!files) return;
 
-    if (files[0]?.size >= MAX_FILE_SIZE) {
-      openSnackBar({ message: '3MB가 넘는 파일은 업로드할 수 없어요' });
+    if (files[0]?.size >= mbToBytes(MAX_FILE_SIZE)) {
+      openSnackBar({ message: `${MAX_FILE_SIZE}MB가 넘는 파일은 업로드할 수 없어요` });
       onFinish();
       return;
     }
 
+    const formData = new FormData();
+    formData.append('file', files[0]);
+
     uploadFile({
-      blob: files[0],
+      formData,
       bucketName: STORAGE_BUCKET_NAME[name],
       fileType: CHAT_TYPE[name]
     });

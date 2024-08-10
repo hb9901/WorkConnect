@@ -7,3 +7,9 @@ export const QUERY_KEYS = {
   CHANNEL_MEDIA: (id: number) => ['channelMedia', id],
   CHANNEL_NOTICES: (id: number) => ['channelNotices', id]
 };
+
+export const STORAGE_BUCKET_NAME: Record<string, string> = {
+  imageFile: 'photos',
+  videoFile: 'videos',
+  documentFile: 'documents'
+};

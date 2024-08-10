@@ -1,5 +1,6 @@
 import api from '@/api';
 import type { CreateChatMessageProps } from '@/types/chat';
+import { PostUploadFileProps } from '@/types/storage';
 import { useMutation } from '@tanstack/react-query';
 
 type UseChatMessageProps = Pick<CreateChatMessageProps, 'channel_id'> & {
@@ -27,5 +28,17 @@ export const useMutationDeleteChatMessage = ({ channel_id, ...props }: UseChatMe
       return api.chat.deleteChatMessage({ channel_id, id });
     },
     ...props
+  });
+};
+
+export const useMutationUploadFile = ({ ...options }) => {
+  return useMutation({
+    mutationFn: ({ formData, storagePath, maxFileSize = 3 }: PostUploadFileProps) =>
+      api.storage.postUploadFile({
+        formData,
+        storagePath,
+        maxFileSize
+      }),
+    ...options
   });
 };
