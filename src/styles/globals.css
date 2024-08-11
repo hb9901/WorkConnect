@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer utilities {
+  .prevent-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 }
 
 .focus\:outline-none:focus {
