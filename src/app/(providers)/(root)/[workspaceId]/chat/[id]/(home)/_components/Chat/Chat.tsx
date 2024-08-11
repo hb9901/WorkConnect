@@ -1,4 +1,4 @@
-import { memo, type ComponentProps } from 'react';
+import { memo, useMemo, type ComponentProps } from 'react';
 import Typography from '@/components/Typography';
 import { CHAT_TYPE } from '@/constants/chat';
 import { handleDownloadFile } from '@/utils/file';
@@ -78,27 +78,26 @@ type ChatMessageProps = {
   openContextMenu: ContextMenuContextType['openContextMenu'];
 };
 
-const TOP_BAR_HEIGHT = 52;
+const getStyles = (isMe: boolean) => ({
+  margin: isMe ? '' : 'ml-[40px] mt-[6px]',
+  rounded: isMe ? 'rounded-br-none' : 'rounded-tl-none',
+  background: isMe ? 'bg-[#EBECFE]' : 'bg-grey50'
+});
+
+type HandleContextMenuEventProps = React.MouseEvent<HTMLDivElement | HTMLButtonElement | HTMLVideoElement>;
+
+const DATA_TARGET = 'message';
 
 export const ChatMessage = memo(({ content, type, isMe, id, noticeUrl, openContextMenu }: ChatMessageProps) => {
-  const MARGIN_STYLE = isMe ? '' : 'ml-[40px] mt-[6px]';
-  const ROUNDED_STYLE = isMe ? 'rounded-br-none' : 'rounded-tl-none';
-  const BACKGROUND_STYLE = isMe ? 'bg-[#EBECFE]' : 'bg-grey50';
-  const dataTarget = 'message';
+  const { margin, rounded, background } = useMemo(() => getStyles(isMe), [isMe]);
 
-  const handleContextMenu = (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement | HTMLVideoElement>) => {
+  const handleContextMenu = (event: HandleContextMenuEventProps) => {
     event.preventDefault();
 
     const targetElement = (event.target as HTMLElement)?.closest('[data-target="message"]')?.getBoundingClientRect();
     if (!targetElement) return;
 
-    const adjustedBottom = targetElement.bottom - TOP_BAR_HEIGHT;
-    const adjustedTop = targetElement.top - TOP_BAR_HEIGHT;
-    const isAtTop = window.innerHeight - adjustedBottom >= 150;
-
-    const position = isAtTop ? adjustedBottom + 10 : adjustedTop - 10;
-
-    openContextMenu({ position: { y: position, isAtTop }, id, type, text: content, isMe });
+    openContextMenu({ targetElement, id, type, text: content, isMe });
   };
 
   switch (type) {
@@ -106,11 +105,11 @@ export const ChatMessage = memo(({ content, type, isMe, id, noticeUrl, openConte
       return (
         <ChatImage
           src={content}
-          className={clsx('rounded-lg w-[200px] h-auto', MARGIN_STYLE)}
+          className={clsx('rounded-lg w-[200px] h-auto', margin)}
           width={300}
           height={300}
+          data-target={DATA_TARGET}
           onContextMenu={handleContextMenu}
-          data-target={dataTarget}
         />
       );
     case CHAT_TYPE.document:
@@ -118,28 +117,28 @@ export const ChatMessage = memo(({ content, type, isMe, id, noticeUrl, openConte
         <ChatFile
           fileUrl={content}
           fileName={content.split('/').pop() || ''}
+          className={margin}
+          data-target={DATA_TARGET}
           onContextMenu={handleContextMenu}
-          className={MARGIN_STYLE}
-          data-target={dataTarget}
         />
       );
     case CHAT_TYPE.video:
       return (
         <ChatVideo
           src={content}
-          className={clsx('rounded-lg', MARGIN_STYLE)}
+          className={clsx('rounded-lg', margin)}
           width={200}
-          onContextMenu={handleContextMenu}
-          data-target={dataTarget}
           controls
+          data-target={DATA_TARGET}
+          onContextMenu={handleContextMenu}
         />
       );
     case CHAT_TYPE.text:
       return (
         <ChatText
+          className={clsx(background, margin, rounded)}
+          data-target={DATA_TARGET}
           onContextMenu={handleContextMenu}
-          className={clsx(BACKGROUND_STYLE, MARGIN_STYLE, ROUNDED_STYLE)}
-          data-target={dataTarget}
         >
           {content}
         </ChatText>
@@ -148,10 +147,10 @@ export const ChatMessage = memo(({ content, type, isMe, id, noticeUrl, openConte
     case CHAT_TYPE.notice:
       return (
         <ChatNotice
-          onContextMenu={handleContextMenu}
           noticeUrl={noticeUrl}
-          className={clsx(MARGIN_STYLE, ROUNDED_STYLE)}
-          data-target={dataTarget}
+          className={clsx(margin, rounded)}
+          data-target={DATA_TARGET}
+          onContextMenu={handleContextMenu}
         >
           {content}
         </ChatNotice>
