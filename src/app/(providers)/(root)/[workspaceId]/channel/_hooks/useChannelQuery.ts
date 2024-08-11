@@ -13,7 +13,7 @@ export const useGetChannels = (workspaceId: number) => {
 
 export const useGetSearchWorkspaceUsers = ({ workspace_id, term }: GetSearchWorkspaceUsersProps) => {
   return useQuery({
-    queryKey: QUERY_KEYS.SEARCH_WORKSPACE_USERS(workspace_id, term),
+    queryKey: QUERY_KEYS.SEARCH_WORKSPACE_USERS,
     queryFn: () => api.workspace.getSearchWorkspaceUsers({ workspace_id, term }),
     refetchOnWindowFocus: false
   });

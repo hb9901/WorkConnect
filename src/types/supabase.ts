@@ -356,6 +356,16 @@ export type Database = {
           workspace_user_id: string
         }[]
       }
+      get_users_in_channel_new: {
+        Args: {
+          cid: number
+        }
+        Returns: {
+          name: string
+          profile_image: string
+          workspace_user_id: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

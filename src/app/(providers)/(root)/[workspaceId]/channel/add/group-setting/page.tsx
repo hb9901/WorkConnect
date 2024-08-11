@@ -5,17 +5,16 @@ import { useSearchUsers } from '../_provider/SearchUsersProvider';
 import useCreateChannel from '../_hooks/useCreateChannel';
 import { useSearchParams } from 'next/navigation';
 import type { ChannelType } from '@/types/channel';
-import { AvatarIcon, CameraIcon } from '@/icons';
-import { supabase } from '@/utils/supabase/supabaseClient';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { mbToBytes } from '@/utils/file';
-import Image from 'next/image';
-import AddChatLayout from '../_components/AddChatLayout';
 import FileInput from '@/components/FileInput';
+import AddChannelLayout from '../_components/AddChannelLayout';
+import ThumbnailInput from './_components/ThumbnailInput';
+import GroupNameInput from './_components/GroupNameInput';
+import { useMutationUploadThumbnail } from '../../_hooks/useChannelMutation';
+import VideoChatAvatar from '@/components/VideoChatAvatar';
 
-const MAX_FILE_SIZE = mbToBytes(3);
-
-const RESOURCE_URL = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/`;
+const MAX_FILE_SIZE = 3;
 
 const GroupSettingPage = () => {
   const searchParams = useSearchParams();
@@ -27,7 +26,14 @@ const GroupSettingPage = () => {
   const { openSnackBar } = useSnackBar();
   const [thumbnail, setThumbnail] = useState<string>('');
 
-  const handleClick = () => {
+  const { mutateAsync: uploadThumbnail } = useMutationUploadThumbnail({
+    onError: () => {
+      openSnackBar({ message: '파일을 업로드하지 못했어요' });
+      return;
+    }
+  });
+
+  const handleFileClick = () => {
     fileRef.current?.click();
   };
 
@@ -46,47 +52,35 @@ const GroupSettingPage = () => {
     const { files } = event.target;
     if (!files) return;
 
-    if (files[0]?.size >= MAX_FILE_SIZE) {
-      openSnackBar({ message: '3MB가 넘는 파일은 업로드할 수 없어요' });
+    if (files[0]?.size >= mbToBytes(MAX_FILE_SIZE)) {
+      openSnackBar({ message: `${MAX_FILE_SIZE}MB가 넘는 파일은 업로드할 수 없어요` });
       return;
     }
 
-    const { data, error } = await supabase.storage.from('channels').upload(`${Date.now()}`, files[0]);
-    if (error) {
-      openSnackBar({ message: '파일을 업로드하지 못했어요' });
-      return;
-    }
+    const formData = new FormData();
+    formData.append('file', files[0]);
 
-    setThumbnail(`${RESOURCE_URL}${data.fullPath}`);
+    const { data } = await uploadThumbnail({ formData, storagePath: 'channels' });
+    if (!data) return;
+
+    setThumbnail(data);
   };
 
+  const isVideo = type === 'video';
+  const title = isVideo ? '화상대화방 설정' : '그룹대화방 설정';
+
   return (
-    <AddChatLayout title="그룹대화방 설정" onSubmit={handleSubmit}>
+    <AddChannelLayout title={title} onSubmit={handleSubmit}>
       <div className="flex flex-col gap-4 p-4 h-[300px] w-[300px] items-center justify-center mx-auto">
-        <div className="relative">
-          <div
-            className="w-[140px] h-[140px] bg-[#BDBDBD] rounded-full flex flex-col items-center justify-center overflow-hidden"
-            onClick={handleClick}
-          >
-            {thumbnail ? (
-              <Image src={thumbnail} alt="" className="w-[140px] h-[140px] object-cover" width={140} height={140} />
-            ) : (
-              <AvatarIcon className="w-[84px] h-[84px] bg-[#BDBDBD]" />
-            )}
-          </div>
-          <div className="absolute bottom-0 right-0 z-10 flex items-center justify-center w-[46px] h-[46px] rounded-full bg-[#FAFAFA] pointer-events-none">
-            <CameraIcon className="w-[24px] h-[24px]" />
-          </div>
-        </div>
-        <input
-          ref={ref}
-          type="text"
-          className="text-black border-b border-gray-300 w-full h-[45px]"
-          placeholder="그룹대화방 이름"
-        />
+        {isVideo ? (
+          <VideoChatAvatar size="140px" />
+        ) : (
+          <ThumbnailInput thumbnail={thumbnail} handleClick={handleFileClick} />
+        )}
+        <GroupNameInput ref={ref} />
       </div>
       <FileInput name="thumbnail" accept="image/*" ref={fileRef} onChange={onChange} />
-    </AddChatLayout>
+    </AddChannelLayout>
   );
 };
 

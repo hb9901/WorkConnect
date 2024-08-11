@@ -9,6 +9,7 @@ import WorkspaceAPI from './workspaceAPI';
 import WorkspaceListAPI from './workspaceListAPI';
 import WorkspaceUserAPI from './workspaceUserAPI';
 import WorkspaceUserListAPI from './workspaceUserListAPI';
+import StorageAPI from './storageAPI';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -23,6 +24,7 @@ class API {
   chat;
   workspace;
   workspaceList;
+  storage;
 
   constructor() {
     this.axios = axios.create({ baseURL: BASE_URL });
@@ -36,6 +38,7 @@ class API {
     this.chat = new ChatAPI(this.axios);
     this.workspace = new WorkspaceAPI(this.axios);
     this.workspaceList = new WorkspaceListAPI(this.axios);
+    this.storage = new StorageAPI(this.axios);
   }
 }
 

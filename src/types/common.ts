@@ -15,7 +15,6 @@ export type StrictNextImagePropsType = Omit<ImagePropsType, 'src' | 'width' | 'h
 
 export type APIResponse<T> = {
   data: T;
-  statusCode: number;
   status: boolean;
   message: string;
   error?: any;

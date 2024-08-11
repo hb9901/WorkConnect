@@ -6,6 +6,7 @@ import { AirPlayIcon } from '@/icons';
 import dayjs from 'dayjs';
 import Avatar from '@/components/Avatar';
 import { GetChannelsResponse } from '@/types/channel';
+import VideoChatAvatar from '@/components/VideoChatAvatar';
 
 type ChannelListImageProps = Pick<ComponentProps<'img'>, 'src'> & {
   type: keyof typeof CHANNEL_TYPE;
@@ -48,11 +49,7 @@ const ChannelItem = ({
 
 const ChannelImage = ({ src = '', type }: ChannelListImageProps) => {
   if (type === CHANNEL_TYPE.video) {
-    return (
-      <div className="w-[40px] h-[40px] flex items-center justify-center bg-primary200Main rounded-full">
-        <AirPlayIcon className="w-[20px] h-[20px] text-white stroke-current" />
-      </div>
-    );
+    return <VideoChatAvatar size="40px" />;
   }
 
   return <Avatar src={src} size="40px" />;
