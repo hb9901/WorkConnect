@@ -18,7 +18,7 @@ const BottomNavigationBar = ({ className }: { className?: string }) => {
 
   return (
     <div className={className}>
-      <NavigationBar>
+      <NavigationBar className="flex lg:flex-col">
         <Tab active={!curPath}>
           <Link href={`/${workspaceId}`} className="w-full">
             <HomeIcon

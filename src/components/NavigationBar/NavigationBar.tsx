@@ -37,7 +37,7 @@ export const Tab = ({
   return (
     <Component
       onClick={onClick}
-      className={`bg-white flex-1 flex text-center items-center justify-center border-t-4 text-[12px] pt-[14px] pb-[6px] cursor-pointer transition-colors duration-300 whitespace-nowrap ${
+      className={`bg-white flex-1 flex text-center items-center justify-center text-[12px] pt-[14px] pb-[6px] cursor-pointer transition-colors duration-300 whitespace-nowrap border-t-4 lg:border-r-4 ${
         active ? 'border-primary200Main text-primary200Main' : 'border-transparent text-grey500'
       }`}
       {...props}
