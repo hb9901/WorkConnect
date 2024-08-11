@@ -10,7 +10,7 @@ import { signInWithKakao } from './auth/_utils/kakaoLogin';
 import KakaoIcon from '@/icons/Kakao.svg';
 import Typography from '@/components/Typography';
 import { useState } from 'react';
-import { setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
+import { setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/cookie/workspace';
 import useUserStore from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 import { useSnackBar } from '@/providers/SnackBarContext';
@@ -57,8 +57,8 @@ const LandingPage = () => {
         return;
       }
 
-      setWorkspaceId(workspaceUserData.workspace_id);
-      setWorkspaceUserId(session.user.id);
+      setWorkspaceIdCookie(workspaceUserData.workspace_id);
+      setWorkspaceUserIdCookie(session.user.id);
       setUserData(session.user.id, workspaceUserData.workspace_id);
       route.replace(`/${workspaceUserData.workspace_id}`); // TODO : 메인 홈 으로 이동
     }
