@@ -36,8 +36,12 @@ export async function updateSession(request: NextRequest) {
 
   const target = getCurrentRoute({ routes: redirectRoutes, path });
 
-  if (user && target?.isGuestOnly) {
+  if (user && target?.isGuestOnly && workspaceId) {
     return NextResponse.redirect(new URL(`/${workspaceId}`, request.url));
+  }
+
+  if (user && target?.isWorkspaceUserOnly && !workspaceId) {
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   if (!user && target?.isAuthOnly) {
