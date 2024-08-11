@@ -7,7 +7,7 @@ export type OpenContextMenuProps = {
   isOpen: boolean;
   id: number | null;
   type: string | null;
-  position: number;
+  position: { y: number; isAtTop: boolean };
   text: string | null;
   isMe: boolean;
 };
@@ -22,7 +22,7 @@ const defaultContextMenuState = {
   isOpen: false,
   id: null,
   type: null,
-  position: 0,
+  position: { y: 0, isAtTop: false },
   text: null,
   isMe: false
 };

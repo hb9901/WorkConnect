@@ -84,19 +84,21 @@ export const ChatMessage = memo(({ content, type, isMe, id, noticeUrl, openConte
   const MARGIN_STYLE = isMe ? '' : 'ml-[40px] mt-[6px]';
   const ROUNDED_STYLE = isMe ? 'rounded-br-none' : 'rounded-tl-none';
   const BACKGROUND_STYLE = isMe ? 'bg-[#EBECFE]' : 'bg-grey50';
+  const dataTarget = 'message';
 
   const handleContextMenu = (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement | HTMLVideoElement>) => {
     event.preventDefault();
 
-    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    const targetElement = (event.target as HTMLElement)?.closest('[data-target="message"]')?.getBoundingClientRect();
+    if (!targetElement) return;
 
-    const screenHeight = window.innerHeight;
-    const elementOffsetTop = rect.top + window.scrollY;
+    const adjustedBottom = targetElement.bottom - TOP_BAR_HEIGHT;
+    const adjustedTop = targetElement.top - TOP_BAR_HEIGHT;
+    const isAtTop = window.innerHeight - adjustedBottom >= 150;
 
-    const pos = screenHeight - elementOffsetTop - TOP_BAR_HEIGHT - rect.height;
-    const dynamicPos = pos >= 150 ? pos : pos + rect.height;
+    const position = isAtTop ? adjustedBottom + 10 : adjustedTop - 10;
 
-    openContextMenu({ position: dynamicPos, id, type, text: content, isMe });
+    openContextMenu({ position: { y: position, isAtTop }, id, type, text: content, isMe });
   };
 
   switch (type) {
@@ -108,6 +110,7 @@ export const ChatMessage = memo(({ content, type, isMe, id, noticeUrl, openConte
           width={300}
           height={300}
           onContextMenu={handleContextMenu}
+          data-target={dataTarget}
         />
       );
     case CHAT_TYPE.document:
@@ -117,6 +120,7 @@ export const ChatMessage = memo(({ content, type, isMe, id, noticeUrl, openConte
           fileName={content.split('/').pop() || ''}
           onContextMenu={handleContextMenu}
           className={MARGIN_STYLE}
+          data-target={dataTarget}
         />
       );
     case CHAT_TYPE.video:
@@ -126,12 +130,17 @@ export const ChatMessage = memo(({ content, type, isMe, id, noticeUrl, openConte
           className={clsx('rounded-lg', MARGIN_STYLE)}
           width={200}
           onContextMenu={handleContextMenu}
+          data-target={dataTarget}
           controls
         />
       );
     case CHAT_TYPE.text:
       return (
-        <ChatText onContextMenu={handleContextMenu} className={clsx(BACKGROUND_STYLE, MARGIN_STYLE, ROUNDED_STYLE)}>
+        <ChatText
+          onContextMenu={handleContextMenu}
+          className={clsx(BACKGROUND_STYLE, MARGIN_STYLE, ROUNDED_STYLE)}
+          data-target={dataTarget}
+        >
           {content}
         </ChatText>
       );
@@ -142,6 +151,7 @@ export const ChatMessage = memo(({ content, type, isMe, id, noticeUrl, openConte
           onContextMenu={handleContextMenu}
           noticeUrl={noticeUrl}
           className={clsx(MARGIN_STYLE, ROUNDED_STYLE)}
+          data-target={dataTarget}
         >
           {content}
         </ChatNotice>

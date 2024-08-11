@@ -13,16 +13,15 @@ const ContextMenu = () => {
   const { contextMenuState, closeContextMenu, copyText, deleteChat, handleNotice } = useContextMenuActions();
 
   if (!contextMenuState.isOpen) return null;
-  const position = contextMenuState.isMe ? contextMenuState.position : contextMenuState.position + 40;
 
   return (
     <>
       <div
-        style={{ bottom: position }}
+        style={{ top: contextMenuState.position.y }}
         className={clsx(
           'fixed rounded-[6px] bg-bgBackground1 shadow-[0px_1px_8px_0px_rgba(0,0,0,0.15)] z-50 w-[154px] flex p-4 gap-[20px] flex-col',
-          contextMenuState.position >= 150 ? '' : 'translate-y-[-100%]',
-          contextMenuState.isMe ? 'right-[16px]' : 'left-[56px]'
+          contextMenuState.isMe ? 'right-[16px]' : 'left-[56px]',
+          contextMenuState.position.isAtTop ? '' : 'translate-y-[-100%]'
         )}
       >
         {contextMenuState.type === CHAT_TYPE.text && (
