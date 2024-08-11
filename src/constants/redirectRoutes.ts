@@ -4,6 +4,7 @@ export type RedirectRoutesProps = {
   isGuestOnly: boolean;
   isAuthOnly: boolean;
   regex?: boolean;
+  isWorkspaceUserOnly?: boolean;
 };
 
 /**
@@ -12,9 +13,9 @@ export type RedirectRoutesProps = {
  * 3. exact: 정확히 일치하는 경우만 접근 가능한 페이지
  */
 export const redirectRoutes: RedirectRoutesProps[] = [
-  { path: '/', exact: true, isGuestOnly: true, isAuthOnly: false },
-  { path: '/auth', exact: false, isGuestOnly: true, isAuthOnly: false },
-  { path: '/workspace', exact: false, isGuestOnly: false, isAuthOnly: true },
-  { path: '/welcome', exact: false, isGuestOnly: false, isAuthOnly: true },
-  { path: '^/\\d+.*$', exact: false, isGuestOnly: false, isAuthOnly: true, regex: true }
+  { path: '/', exact: true, isGuestOnly: true, isAuthOnly: false, isWorkspaceUserOnly: false },
+  { path: '/auth', exact: false, isGuestOnly: true, isAuthOnly: false, isWorkspaceUserOnly: false },
+  { path: '/workspace', exact: false, isGuestOnly: false, isAuthOnly: true, isWorkspaceUserOnly: false },
+  { path: '/welcome', exact: false, isGuestOnly: false, isAuthOnly: true, isWorkspaceUserOnly: false },
+  { path: '^/\\d+.*$', exact: false, isGuestOnly: false, isAuthOnly: true, regex: true, isWorkspaceUserOnly: true }
 ];
