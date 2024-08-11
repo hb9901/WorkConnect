@@ -11,6 +11,7 @@ import { validatePassword } from './verify/_utils/validatePassword';
 import Typography from '@/components/Typography';
 import WorkConnectWebTextLogo from '@/icons/WorkConnetWebText.svg';
 import WorkConnectLogo from '@/icons/WorkConnectLogo.svg';
+import Modal from '@/components/Modal';
 
 const SignUpPage = () => {
   const [name, setName] = useState<string>('');
@@ -85,7 +86,7 @@ const SignUpPage = () => {
       <div className="w-full hidden lg:flex justify-center items-center bg-[#FAFAFF] gap-[18px]">
         <WorkConnectLogo /> <WorkConnectWebTextLogo />
       </div>
-      <div className="flex flex-col px-4 w-full">
+      <div className="flex flex-col mx-4 w-full lg:mx-[151px]">
         <TopBar title="" style={{ padding: '0px' }} />
         <form
           onSubmit={(e) => {
