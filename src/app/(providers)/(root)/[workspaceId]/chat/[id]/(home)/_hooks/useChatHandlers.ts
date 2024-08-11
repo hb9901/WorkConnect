@@ -14,10 +14,10 @@ type RealtimeChatPayloadType = {
   eventType: RealtimeSubscribeProps['eventHandlers'][0]['event'];
 };
 
-type HandleNoticeUpdatesProps = { latestNoticeId: number | undefined; channelId: string };
+type HandleNoticeUpdatesProps = { latestNoticeId: number | undefined; channelId: number };
 
 type HandleChatUpdatesProps = {
-  channelId: string;
+  channelId: number;
 };
 
 export const useChatHandlers = () => {

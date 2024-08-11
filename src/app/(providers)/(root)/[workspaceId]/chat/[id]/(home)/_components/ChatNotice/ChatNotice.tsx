@@ -1,6 +1,5 @@
 'use client';
 
-import { useParams } from 'next/navigation';
 import { BellIcon, ChevronDownIcon } from '@/icons';
 import Typography from '@/components/Typography';
 import Link from 'next/link';
@@ -10,11 +9,11 @@ import { isEmpty } from '@/utils/isEmpty';
 import { useEffect } from 'react';
 import { useGetLatestNotice } from '../../../../_hook/useChatQuery';
 import { handleSubscribeToNotice } from '../../_utils/subscribe';
+import useGetChannelId from '../../../../_hook/useGetChannelId';
 
 const ChatNotice = () => {
-  const { id } = useParams();
+  const channelId = useGetChannelId();
   const workspaceId = useWorkspaceId();
-  const channelId = Array.isArray(id) ? id[0] : id;
 
   const { data: latestNotice } = useGetLatestNotice({ id: channelId });
   const { handleNoticeUpdates: handleUpdates } = useChatHandlers();

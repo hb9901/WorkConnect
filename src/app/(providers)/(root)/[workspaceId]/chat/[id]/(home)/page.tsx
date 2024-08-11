@@ -4,6 +4,7 @@ import ChatDetailLayout from './_components/ChatDetailLayout';
 import MessagesContainer from './_components/MessagesContainer';
 import ChatNotice from './_components/ChatNotice';
 import Messages from './_components/Messages';
+import UpdateChannelReadAt from './_components/UpdateChannelReadAt';
 
 const queryClient = new QueryClient();
 
@@ -11,14 +12,17 @@ const ChatDetailPage = async ({ params: { id } }: { params: { id: string } }) =>
   await queryClient.prefetchQuery(getChannelNameOptions(Number(id)));
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <ChatDetailLayout>
-        <MessagesContainer>
-          <ChatNotice />
-          <Messages />
-        </MessagesContainer>
-      </ChatDetailLayout>
-    </HydrationBoundary>
+    <>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <ChatDetailLayout>
+          <MessagesContainer>
+            <ChatNotice />
+            <Messages />
+          </MessagesContainer>
+        </ChatDetailLayout>
+      </HydrationBoundary>
+      <UpdateChannelReadAt />
+    </>
   );
 };
 

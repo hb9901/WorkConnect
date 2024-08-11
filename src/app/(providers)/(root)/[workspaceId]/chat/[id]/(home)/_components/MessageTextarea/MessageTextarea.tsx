@@ -4,8 +4,8 @@ import PlusIcon from '@/icons/Plus.svg';
 import SmileIcon from '@/icons/Smile.svg';
 import SendIcon from '@/icons/Send.svg';
 import { useRef, useState } from 'react';
-import { useParams } from 'next/navigation';
 import { useMutationChatMessage } from '../../../../_hook/useChatMutation';
+import useGetChannelId from '../../../../_hook/useGetChannelId';
 
 type MessageTextareaProps = {
   handleOpenUtil: () => void;
@@ -19,15 +19,13 @@ const handleResizeHeight = (textArea: HTMLTextAreaElement | null) => {
 
 const MessageTextarea = ({ handleOpenUtil }: MessageTextareaProps) => {
   const [isComposing, setIsComposing] = useState(false);
-
-  const { id: channelId } = useParams();
-  const stringId = Array.isArray(channelId) ? channelId[0] : channelId;
+  const channelId = useGetChannelId();
 
   const ref = useRef<HTMLTextAreaElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const { mutate: mutateChatMessage } = useMutationChatMessage({
-    channel_id: Number(stringId)
+    channel_id: channelId
   });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

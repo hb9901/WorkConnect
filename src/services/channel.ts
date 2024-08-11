@@ -40,7 +40,7 @@ export const getChannels = async ({ workspace_id, workspace_user_id }: GetChanne
 export const getUsersInChannel = async ({ channel_id }: GetUsersInChannelRequestProps) => {
   const supabase = createClient();
 
-  const response = await supabase.rpc('get_users_in_channel_new', {
+  const response = await supabase.rpc('get_users_in_channel', {
     cid: channel_id
   });
 
