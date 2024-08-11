@@ -7,6 +7,7 @@ import {
   CHAT_RESPONSE_POST_SUCCESS,
   CHAT_RESPONSE_SUCCESS
 } from './constants';
+import { getServerCookie } from '@/utils/cookie/serverUtils';
 
 /**
  * Chat[id] GET 요청 핸들러
@@ -20,12 +21,12 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
     const { data, error } = await getChatMessages({ channel_id: Number(channel_id) });
 
     if (error) {
-      return NextResponse.json(Object.assign(CHAT_RESPONSE_GET_FAILED, { error }));
+      return NextResponse.json(Object.assign(CHAT_RESPONSE_GET_FAILED, { error }), { status: 500 });
     }
 
     return NextResponse.json(Object.assign(CHAT_RESPONSE_SUCCESS, { data }));
   } catch (error) {
-    return NextResponse.json(CHAT_RESPONSE_GET_FAILED);
+    return NextResponse.json(CHAT_RESPONSE_GET_FAILED, { status: 400 });
   }
 };
 
@@ -36,26 +37,28 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
  */
 export const POST = async (req: NextRequest, { params }: { params: { id: string } }) => {
   const { id: channel_id } = params;
-  const { content, workspace_user_id, type } = await req.json();
+  const { content, type } = await req.json();
 
-  if (!content || !workspace_user_id) {
-    return NextResponse.json(CHAT_RESPONSE_POST_INVALID_REQUEST);
+  const workspaceUserId = getServerCookie('workspaceUserId');
+
+  if (!content || !workspaceUserId) {
+    return NextResponse.json(CHAT_RESPONSE_POST_INVALID_REQUEST, { status: 400 });
   }
 
   try {
     const { error } = await createChatMessage({
       channel_id: Number(channel_id),
       content,
-      workspace_user_id,
+      workspace_user_id: workspaceUserId,
       type
     });
 
     if (error) {
-      return NextResponse.json(Object.assign(CHAT_RESPONSE_POST_FAILED, { error }));
+      return NextResponse.json(Object.assign(CHAT_RESPONSE_POST_FAILED, { error }), { status: 500 });
     }
 
     return NextResponse.json(CHAT_RESPONSE_POST_SUCCESS);
   } catch (error) {
-    return NextResponse.json(CHAT_RESPONSE_POST_FAILED);
+    return NextResponse.json(CHAT_RESPONSE_POST_FAILED, { status: 400 });
   }
 };

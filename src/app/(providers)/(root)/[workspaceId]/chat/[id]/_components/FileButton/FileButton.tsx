@@ -1,7 +1,7 @@
 import { StrictPropsWithChildren } from '@/types/common';
 import { useRef } from 'react';
-import FileInput from '../FileInput';
 import Typography from '@/components/Typography';
+import FileInput from '@/components/FileInput';
 
 const FileButton = ({
   children,

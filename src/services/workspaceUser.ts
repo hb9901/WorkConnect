@@ -1,5 +1,10 @@
-import type { GetSearchWorkspaceUsersProps } from '@/types/workspaceUser';
+import { WorkspaceUserType } from '@/types/workspaceUser';
 import { createClient } from '@/utils/supabase/supabaseServer';
+
+type GetSearchWorkspaceUsersProps = Pick<WorkspaceUserType, 'workspace_id'> & {
+  term: string;
+  workspace_user_id: WorkspaceUserType['id'];
+};
 
 export const getSearchWorkspaceUsers = async ({
   workspace_id,

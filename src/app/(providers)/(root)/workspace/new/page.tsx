@@ -1,4 +1,5 @@
 'use client';
+
 import useShallowSelector from '@/hooks/useShallowSelector';
 import { useAuthStore } from '@/providers/AuthStoreProvider';
 import { AuthStoreTypes } from '@/store/authStore';
@@ -8,7 +9,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import { getWorkspaceId, getWorkspaceUserId, setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
+import { getWorkspaceUserIdCookie, setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/cookie/workspace';
 import { TopBar } from '@/components/TopBar';
 
 const getRandomNumbers = (count: number, min: number, max: number) => {
@@ -32,7 +33,7 @@ const NewWorkSpacePage = () => {
   // TODO : 리팩터링 예정
   const handleJoin = useMutation({
     mutationFn: async () => {
-      const cookieWorkspaceUserId = getWorkspaceUserId();
+      const cookieWorkspaceUserId = getWorkspaceUserIdCookie();
       const randomNumbers = getRandomNumbers(6, 1, 9);
       const combinedNumber = Number(randomNumbers.join(''));
 
@@ -88,8 +89,8 @@ const NewWorkSpacePage = () => {
           return;
         }
 
-        setWorkspaceId(workspaceData.id);
-        setWorkspaceUserId(cookieWorkspaceUserId);
+        setWorkspaceIdCookie(workspaceData.id);
+        setWorkspaceUserIdCookie(cookieWorkspaceUserId);
         setUserData(user.id, workspaceData.id);
 
         // TODO : 생성 완료 후 페이지 이동처리하기
@@ -137,8 +138,8 @@ const NewWorkSpacePage = () => {
         return;
       }
 
-      setWorkspaceId(workspaceData.id);
-      setWorkspaceUserId(user.id);
+      setWorkspaceIdCookie(workspaceData.id);
+      setWorkspaceUserIdCookie(user.id);
       setUserData(user.id, workspaceData.id);
 
       // TODO : 생성 완료 후 페이지 이동처리하기

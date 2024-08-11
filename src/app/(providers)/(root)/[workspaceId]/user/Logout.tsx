@@ -1,6 +1,6 @@
 'use client';
 import useUserStore from '@/store/userStore';
-import { deleteAllCookies } from '@/utils/cookieUtils';
+import { deleteAllCookies } from '@/utils/cookie/clientUtils';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { useRouter } from 'next/navigation';
 
