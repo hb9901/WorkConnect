@@ -3,74 +3,22 @@
 import ImageIcon from '@/icons/image.svg';
 import PaperClipIcon from '@/icons/paperclip.svg';
 import VideoIcon from '@/icons/video.svg';
-import { mbToBytes } from '@/utils/file';
 import FileButton from '../FileButton';
-import { ChatType } from '@/types/chat';
-import { useSnackBar } from '@/providers/SnackBarContext';
-import { useParams } from 'next/navigation';
-import { useMutationChatMessage, useMutationUploadFile } from '../../../../_hook/useChatMutation';
 import { STORAGE_BUCKET_NAME } from '../../../../_constants/constants';
+import useFileUpload from '../../_hooks/useFileUpload';
 
-const MAX_FILE_SIZE = 3;
-
-type UploadFileProps = {
-  formData: FormData;
-  bucketName: string;
-  fileType: ChatType['type'];
-};
-
-const CHAT_TYPE: Record<string, ChatType['type']> = {
-  imageFile: 'image',
-  videoFile: 'video',
-  documentFile: 'document'
-};
+type StorageBucketNameKeys = keyof typeof STORAGE_BUCKET_NAME;
 
 const UtilsMenu = ({ handleOpenUtil }: { handleOpenUtil: () => void }) => {
-  const { id } = useParams();
-
-  const onFinish = () => {
-    handleOpenUtil();
-  };
-
-  const { openSnackBar } = useSnackBar();
-
-  const { mutate: mutateChatMessage } = useMutationChatMessage({
-    channel_id: Number(id),
-    onSuccess: onFinish
-  });
-
-  const { mutateAsync: mutateUploadFile } = useMutationUploadFile({
-    onSuccess: onFinish
-  });
-
-  const uploadFile = async ({ formData, bucketName, fileType }: UploadFileProps) => {
-    const { data } = await mutateUploadFile({ formData, storagePath: bucketName, maxFileSize: MAX_FILE_SIZE });
-    if (!data) {
-      openSnackBar({ message: '파일을 업로드하지 못했어요' });
-      onFinish();
-      return null;
-    }
-
-    mutateChatMessage({ content: data, type: fileType });
-  };
+  const { handleFileUpload } = useFileUpload(handleOpenUtil);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = event.target;
     if (!files) return;
 
-    if (files[0]?.size >= mbToBytes(MAX_FILE_SIZE)) {
-      openSnackBar({ message: `${MAX_FILE_SIZE}MB가 넘는 파일은 업로드할 수 없어요` });
-      onFinish();
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', files[0]);
-
-    uploadFile({
-      formData,
-      bucketName: STORAGE_BUCKET_NAME[name],
-      fileType: CHAT_TYPE[name]
+    handleFileUpload({
+      blob: files[0],
+      name: name as StorageBucketNameKeys
     });
   };
 

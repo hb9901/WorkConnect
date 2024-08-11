@@ -8,8 +8,8 @@ export const QUERY_KEYS = {
   CHANNEL_NOTICES: (id: number) => ['channelNotices', id]
 };
 
-export const STORAGE_BUCKET_NAME: Record<string, string> = {
+export const STORAGE_BUCKET_NAME = {
   imageFile: 'photos',
   videoFile: 'videos',
   documentFile: 'documents'
-};
+} as const;

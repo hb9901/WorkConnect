@@ -5,7 +5,7 @@ import Chats from '../Chats';
 import { useParams } from 'next/navigation';
 import { MessagesWrapper } from '../MessagesContainer';
 import { useGetChatMessages, useGetUsersInChannel } from '../../../../_hook/useChatQuery';
-import { useChatHandlers } from '../../_hook/useChatHandlers';
+import { useChatHandlers } from '../../_hooks/useChatHandlers';
 import { handleSubscribeToChat } from '../../_utils/subscribe';
 
 const Messages = () => {
