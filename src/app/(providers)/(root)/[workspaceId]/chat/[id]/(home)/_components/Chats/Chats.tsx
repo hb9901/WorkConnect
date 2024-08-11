@@ -1,17 +1,15 @@
+'use client';
+
 import type { GetChatMessageType } from '@/types/chat';
 import { ChatMessage } from '../Chat';
 import type { GetUsersInChannelResponse } from '@/types/channel';
-import Link from 'next/link';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import { useParams } from 'next/navigation';
 import { isEmpty } from '@/utils/isEmpty';
-import Avatar from '@/components/Avatar';
-import Typography from '@/components/Typography';
-import { memo } from 'react';
 import { useContextMenu } from '../../_provider/ContextMenuProvider';
 import { formatDate } from '@/utils/time';
-import { StrictPropsWithChildren } from '@/types/common';
+import { OtherProfile, Time } from './Components';
 
 type ChatMessagesProps = {
   data: GetChatMessageType[] & { channel_id?: string };
@@ -57,26 +55,5 @@ const Chats = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
     </>
   );
 };
-
-const Time = ({ children }: StrictPropsWithChildren) => {
-  return <span className="text-grey300 text-[10px] leading-[130%]">{children}</span>;
-};
-
-type OtherProfileProps = {
-  profileImage: string | null;
-  name: string;
-  profileUrl: string;
-};
-
-const OtherProfile = memo(({ profileImage, name, profileUrl }: OtherProfileProps) => {
-  return (
-    <Link href={profileUrl} className="flex items-center gap-2 w-full">
-      <Avatar src={profileImage ?? undefined} size="32px" />
-      <Typography variant="Title16px" color="grey900">
-        {name}
-      </Typography>
-    </Link>
-  );
-});
 
 export default Chats;
