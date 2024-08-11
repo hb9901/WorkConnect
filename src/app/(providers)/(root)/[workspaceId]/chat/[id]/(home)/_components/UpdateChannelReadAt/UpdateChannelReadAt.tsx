@@ -10,6 +10,8 @@ const UpdateChannelReadAt = () => {
   const { mutate: updateChannelActiveAt } = useMutationUpdateChannelActiveAt();
 
   useEffect(() => {
+    if (!channelId) return;
+
     updateChannelActiveAt(channelId);
   }, [channelId]);
 
