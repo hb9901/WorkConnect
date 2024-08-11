@@ -5,7 +5,7 @@ import { Tab, Tabs } from '@/components/Tabs';
 import { XIcon } from '@/icons';
 import { StrictPropsWithChildren } from '@/types/common';
 import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const ResourceLayout = ({ children }: StrictPropsWithChildren) => {
   const router = useRouter();
