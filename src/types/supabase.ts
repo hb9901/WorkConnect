@@ -53,7 +53,6 @@ export type Database = {
           created_at: string
           id: number
           last_read_chat_id: number | null
-          user_id: string | null
           workspace_user_id: string
         }
         Insert: {
@@ -61,7 +60,6 @@ export type Database = {
           created_at?: string
           id?: number
           last_read_chat_id?: number | null
-          user_id?: string | null
           workspace_user_id: string
         }
         Update: {
@@ -69,7 +67,6 @@ export type Database = {
           created_at?: string
           id?: number
           last_read_chat_id?: number | null
-          user_id?: string | null
           workspace_user_id?: string
         }
         Relationships: [
@@ -116,7 +113,7 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "chat_room_id_fkey"
+            foreignKeyName: "chat_channel_id_fkey"
             columns: ["channel_id"]
             isOneToOne: false
             referencedRelation: "channel"
@@ -130,50 +127,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      file: {
-        Row: {
-          chat_id: number
-          created_at: string
-          id: number
-          type: string
-          url: string
-        }
-        Insert: {
-          chat_id: number
-          created_at?: string
-          id?: number
-          type: string
-          url: string
-        }
-        Update: {
-          chat_id?: number
-          created_at?: string
-          id?: number
-          type?: string
-          url?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "file_chat_id_fkey"
-            columns: ["chat_id"]
-            isOneToOne: false
-            referencedRelation: "chat"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      result: {
-        Row: {
-          channel_id: number | null
-        }
-        Insert: {
-          channel_id?: number | null
-        }
-        Update: {
-          channel_id?: number | null
-        }
-        Relationships: []
       }
       todo: {
         Row: {
@@ -222,21 +175,18 @@ export type Database = {
           email: string | null
           id: string
           name: string | null
-          sns_type: string | null
         }
         Insert: {
           created_at?: string
           email?: string | null
           id: string
           name?: string | null
-          sns_type?: string | null
         }
         Update: {
           created_at?: string
           email?: string | null
           id?: string
           name?: string | null
-          sns_type?: string | null
         }
         Relationships: [
           {
@@ -255,6 +205,7 @@ export type Database = {
           id: number
           invite_code: number
           name: string
+          notice_channel_id: number | null
         }
         Insert: {
           admin_user_id?: string | null
@@ -262,6 +213,7 @@ export type Database = {
           id?: number
           invite_code: number
           name: string
+          notice_channel_id?: number | null
         }
         Update: {
           admin_user_id?: string | null
@@ -269,6 +221,7 @@ export type Database = {
           id?: number
           invite_code?: number
           name?: string
+          notice_channel_id?: number | null
         }
         Relationships: [
           {
@@ -276,6 +229,13 @@ export type Database = {
             columns: ["admin_user_id"]
             isOneToOne: false
             referencedRelation: "workspace_user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workspace_notice_channel_id_fkey"
+            columns: ["notice_channel_id"]
+            isOneToOne: false
+            referencedRelation: "channel"
             referencedColumns: ["id"]
           },
         ]
@@ -339,6 +299,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_channel_name: {
+        Args: {
+          cid: number
+          wuid: string
+        }
+        Returns: string
+      }
       get_chat_channels: {
         Args: {
           wid: number
@@ -382,6 +349,16 @@ export type Database = {
         Args: {
           cid: number
           wuid: string
+        }
+        Returns: {
+          name: string
+          profile_image: string
+          workspace_user_id: string
+        }[]
+      }
+      get_users_in_channel_new: {
+        Args: {
+          cid: number
         }
         Returns: {
           name: string

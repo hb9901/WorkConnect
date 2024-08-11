@@ -12,7 +12,7 @@ const VideoChannelHeader = () => {
   const { setIsSettingOk } = useStreamSetStore();
   const handleDisconnect = () => {
     setIsSettingOk(false);
-    router.push(`/${workspaceId}/chat`);
+    router.push(`/${workspaceId}/channel`);
   };
 
   return (

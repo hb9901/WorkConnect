@@ -4,7 +4,6 @@ export const WORKSPACE_USER_SEARCH_RESPONSE = {
 };
 
 export const WORKSPACE_USER_SEARCH_RESPONSE_SUCCESS = {
-  statusCode: 200,
   status: true,
   data: [],
   message: ''
@@ -12,14 +11,12 @@ export const WORKSPACE_USER_SEARCH_RESPONSE_SUCCESS = {
 
 export const WORKSPACE_USER_SEARCH_RESPONSE_FAILED = {
   ...WORKSPACE_USER_SEARCH_RESPONSE_SUCCESS,
-  statusCode: 500,
   status: false,
   message: WORKSPACE_USER_SEARCH_RESPONSE.FAILED_TO_GET
 };
 
 export const WORKSPACE_USER_SEARCH_RESPONSE_INVALID_REQUEST = {
   ...WORKSPACE_USER_SEARCH_RESPONSE_SUCCESS,
-  statusCode: 400,
   status: false,
   message: WORKSPACE_USER_SEARCH_RESPONSE.INVALID_REQUEST
 };

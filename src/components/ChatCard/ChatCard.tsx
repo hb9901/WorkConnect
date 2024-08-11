@@ -19,9 +19,13 @@ const ChatCard = ({ icon, name, status, date, message, unreadCount, pin, userCou
     <div className="flex items-start justify-between p-4 border-b border-white bg-transparent w-full" {...props}>
       <div className="flex flex-row w-full gap-x-3">
         <div className="flex items-center justify-center flex-shrink-0">{icon}</div>
-        <div className="flex flex-col whitespace-nowrap justify-between overflow-hidden text-ellipsis h-[59px]">
-          <div className="flex flex-row mb-[8px]">
-            <Typography variant="Title18px" color="grey700Black" className="mr-2">
+        <div className="flex flex-col justify-between h-[59px] overflow-hidden">
+          <div className="flex flex-row mb-[8px] overflow-hidden">
+            <Typography
+              variant="Title18px"
+              color="grey700Black"
+              className="mr-2 overflow-hidden text-ellipsis whitespace-nowrap"
+            >
               {name}
             </Typography>
             <Typography
@@ -34,12 +38,14 @@ const ChatCard = ({ icon, name, status, date, message, unreadCount, pin, userCou
                   {userCount}
                 </Typography>
               )}
-              <span>{status && `- ${status}`}</span>
+              <span className="flex-shrink-0 overflow-hidden text-ellipsis whitespace-nowrap">
+                {status && `- ${status}`}
+              </span>
               {pin ? <PinIcon /> : ''}
             </Typography>
           </div>
           <Typography variant="Subtitle16px" color="grey400" className="overflow-hidden text-ellipsis">
-            {message}
+            <span className="text-ellipsis overflow-hidden whitespace-nowrap">{message}</span>
           </Typography>
         </div>
         <div className="flex ml-auto flex-shrink-0">
