@@ -15,7 +15,7 @@ const MemberImg = ({ profileImage, name }: MemberImgProps) => {
           alt={name}
           className="object-cover size-[48px] rounded-full lg:size-[67px]"
           fill
-          priority
+          sizes="(max-width:1024px) 48px, 67px"
         />
       ) : (
         <AvatarIcon className="size-[28.8px] lg:size-[40.3px]" />

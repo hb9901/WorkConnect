@@ -1,6 +1,5 @@
 'use client';
 import { StrictPropsWithChildren } from '@/types/common';
-import { usePathname } from 'next/navigation';
 
 interface ProfileParallelLayoutProps {
   home: React.ReactNode;
@@ -10,15 +9,6 @@ interface ProfileParallelLayoutProps {
 }
 
 const ProfileParallelLayout = ({ children, home, params }: StrictPropsWithChildren<ProfileParallelLayoutProps>) => {
-  const paths = usePathname().split('/');
-
-  if (paths.length <= 2 || paths[2] !== 'profile')
-    return (
-      <>
-        <div className="">{home}</div>
-      </>
-    );
-
   return (
     <>
       <div className="flex lg:flex-row">

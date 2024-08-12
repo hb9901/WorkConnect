@@ -34,6 +34,7 @@ const HomeMemberCard = () => {
             alt={name}
             className="object-cover min-w-[56px] size-[56px] rounded-full lg:size-[67px] "
             fill
+            sizes="(max-width:1024px) 48px, 67px"
             priority
           />
         ) : (
