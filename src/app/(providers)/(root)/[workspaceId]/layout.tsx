@@ -46,7 +46,7 @@ const HomeParallelLayout = ({ children, profile }: StrictPropsWithChildren<HomeP
       <>
         <PageLayout title="" showTopBar={false}>
           <SelectHeader workspaceId={workspaceId} isTodoList />
-          <div className="">{children}</div>
+          <div className="lg:pl-[78px]">{children}</div>
         </PageLayout>
       </>
     );
@@ -55,7 +55,7 @@ const HomeParallelLayout = ({ children, profile }: StrictPropsWithChildren<HomeP
     <>
       <PageLayout title="" showTopBar={false}>
         <SelectHeader workspaceId={workspaceId} isFull />
-        <div className="">{children}</div>
+        <div className="lg:pl-[78px]">{children}</div>
       </PageLayout>
     </>
   );
