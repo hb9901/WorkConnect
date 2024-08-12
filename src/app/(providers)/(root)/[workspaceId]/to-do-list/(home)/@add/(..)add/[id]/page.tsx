@@ -21,8 +21,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import WeekButtons from '../../../_components/DateButtons';
-import MonthDate from '../../../_components/MonthDate';
+
+import DateButtons from '../../../../_components/DateButtons';
+import MonthDate from '../../../../_components/MonthDate';
 import DateBottom from './_components/DateBottom/DateBottom';
 import Header from './_components/Header';
 import InputCard from './_components/InputCard';
@@ -271,7 +272,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
         />
       </BottomSheet>
       <BottomSheet isOpen={isDateBottomSheetOpen} onClose={handleClickCalendar}>
-        <WeekButtons />
+        <DateButtons />
         <MonthDate />
       </BottomSheet>
     </div>
