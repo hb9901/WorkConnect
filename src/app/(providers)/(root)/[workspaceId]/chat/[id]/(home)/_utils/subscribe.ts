@@ -4,7 +4,7 @@ import createRealtimeSubscription from '@/utils/createRealtimeSubscription';
 type SubscribeToChatProps = {
   handleMessagesUpdates: (payload: any) => void;
   handleUserUpdates: () => void;
-  id: string;
+  id: number;
   userIds: string;
 };
 
@@ -35,7 +35,7 @@ export const handleSubscribeToChat = ({
   });
 };
 
-export const handleSubscribeToNotice = ({ handler, id }: { handler: (payload: any) => void; id: string }) => {
+export const handleSubscribeToNotice = ({ handler, id }: { handler: (payload: any) => void; id: number }) => {
   return createRealtimeSubscription({
     channelName: REALTIME_CHANNEL_NAME.CHAT_FOR_NOTICE,
     eventHandlers: [

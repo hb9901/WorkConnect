@@ -52,21 +52,21 @@ export type Database = {
           channel_id: number
           created_at: string
           id: number
-          last_read_chat_id: number | null
+          last_active_at: string | null
           workspace_user_id: string
         }
         Insert: {
           channel_id: number
           created_at?: string
           id?: number
-          last_read_chat_id?: number | null
+          last_active_at?: string | null
           workspace_user_id: string
         }
         Update: {
           channel_id?: number
           created_at?: string
           id?: number
-          last_read_chat_id?: number | null
+          last_active_at?: string | null
           workspace_user_id?: string
         }
         Relationships: [
@@ -348,22 +348,12 @@ export type Database = {
       get_users_in_channel: {
         Args: {
           cid: number
-          wuid: string
         }
         Returns: {
           name: string
           profile_image: string
           workspace_user_id: string
-        }[]
-      }
-      get_users_in_channel_new: {
-        Args: {
-          cid: number
-        }
-        Returns: {
-          name: string
-          profile_image: string
-          workspace_user_id: string
+          last_active_at: string
         }[]
       }
     }

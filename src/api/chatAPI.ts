@@ -1,9 +1,4 @@
-import type {
-  CreateChatMessageProps,
-  GetChatMessagesProps,
-  GetChatMessagesResponse,
-  GetChatMessageType
-} from '@/types/chat';
+import type { CreateChatMessageProps, GetChatMessagesResponse, GetChatMessageType } from '@/types/chat';
 import type { APIResponse } from '@/types/common';
 import { AxiosInstance } from 'axios';
 
