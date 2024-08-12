@@ -1,9 +1,9 @@
 import { StoryFn } from '@storybook/react';
-import CountBottomLineTextField, { CountBottomLineTextFieldProps } from './CountBottomLineTextField';
+import BottomLineTextFieldCount, { BottomLineTextFieldCountProps } from './BottomLineTextFieldCount';
 
 export default {
-  title: 'Components/CountBottomLineTextField',
-  component: CountBottomLineTextField,
+  title: 'Components/BottomLineTextFieldCount',
+  component: BottomLineTextFieldCount,
   parameters: {
     layout: 'centered'
   },
@@ -25,7 +25,7 @@ export default {
   }
 };
 
-const Template: StoryFn<CountBottomLineTextFieldProps> = (args) => <CountBottomLineTextField {...args} />;
+const Template: StoryFn<BottomLineTextFieldCountProps> = (args) => <BottomLineTextFieldCount {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {

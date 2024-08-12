@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { ChangeEvent, useId, useState } from 'react';
 import Label from '../Label';
 import Typography from '../Typography';
-export interface CountBottomLineTextFieldProps {
+export interface BottomLineTextFieldCountProps {
   className?: string;
   id?: string;
   label?: string;
@@ -16,7 +16,7 @@ export interface CountBottomLineTextFieldProps {
   placeholder?: string;
 }
 
-const CountBottomLineTextField = ({
+const BottomLineTextFieldCount = ({
   id,
   label,
   labelClassName,
@@ -27,7 +27,7 @@ const CountBottomLineTextField = ({
   defaultValue,
   placeholder,
   ...props
-}: CountBottomLineTextFieldProps) => {
+}: BottomLineTextFieldCountProps) => {
   const initlength = defaultValue ? defaultValue.length : 0;
   const [textCount, setTextCount] = useState<number>(initlength);
   const [inputValue, setInputValue] = useState<string>(defaultValue || '');
@@ -67,4 +67,4 @@ const CountBottomLineTextField = ({
   );
 };
 
-export default CountBottomLineTextField;
+export default BottomLineTextFieldCount;
