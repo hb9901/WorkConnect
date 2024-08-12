@@ -58,5 +58,11 @@ class ChannelAPI {
 
     return data.data || '';
   };
+
+  updateChannelActiveAt = async (channelId: number): Promise<void> => {
+    const { data } = await this.axios.get(`/api/channel/${channelId}/update-active-at`);
+
+    return data.data;
+  };
 }
 export default ChannelAPI;

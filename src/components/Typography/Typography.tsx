@@ -2,6 +2,8 @@ import { cva, VariantProps } from 'class-variance-authority';
 import clsx from 'clsx';
 import { ElementType, PropsWithChildren } from 'react';
 
+export type TypographyVariant = VariantProps<typeof typographyClass>;
+
 type TypographyProps = {
   as?: ElementType;
   className?: string;

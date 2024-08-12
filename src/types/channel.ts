@@ -2,6 +2,7 @@ import { CHANNEL_TYPE } from '@/constants/channel';
 import type { ChatType } from './chat';
 import type { WorkspaceUserType } from './workspaceUser';
 import type { Tables, TablesInsert } from './supabase';
+import { ChannelUserType } from './channelUser';
 
 // `channel` 테이블의 Row 타입
 export type ChannelType = {
@@ -50,6 +51,7 @@ export type GetUsersInChannelResponseItem = {
   workspace_user_id: WorkspaceUserType['id'];
   name: WorkspaceUserType['name'];
   profile_image: WorkspaceUserType['profile_image'];
+  last_active_at: ChannelUserType['last_active_at'];
 };
 
 export type GetUsersInChannelResponse = Record<WorkspaceUserType['id'], GetUsersInChannelResponseItem>;

@@ -8,6 +8,10 @@ import { useSnackBar } from '@/providers/SnackBarContext';
 import AgreeBottomSheet from './_components/AgreeBottomSheet';
 import { TopBar } from '@/components/TopBar';
 import { validatePassword } from './verify/_utils/validatePassword';
+import Typography from '@/components/Typography';
+import WorkConnectWebTextLogo from '@/icons/WorkConnetWebText.svg';
+import WorkConnectLogo from '@/icons/WorkConnectLogo.svg';
+import Modal from '@/components/Modal';
 
 const SignUpPage = () => {
   const [name, setName] = useState<string>('');
@@ -78,8 +82,11 @@ const SignUpPage = () => {
   const { mutate: handleEmailCheck } = emailCheckMutation;
 
   return (
-    <main className="flex justify-center items-center">
-      <div className="flex flex-col w-[375px] h-dvh px-4">
+    <main className="flex h-dvh">
+      <div className="w-full hidden lg:flex justify-center items-center bg-[#FAFAFF] gap-[18px]">
+        <WorkConnectLogo /> <WorkConnectWebTextLogo />
+      </div>
+      <div className="flex flex-col mx-4 w-full lg:mx-[151px]">
         <TopBar title="" style={{ padding: '0px' }} />
         <form
           onSubmit={(e) => {
@@ -88,16 +95,19 @@ const SignUpPage = () => {
           }}
         >
           <div className="flex-grow">
-            <h1 className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] pb-[28px] flex items-center">
-              정보 입력
+            <h1 className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] mb-[18px] flex items-center">
+              회원 가입
             </h1>
+            <Typography variant="Subtitle18px" color="grey500" className="hidden lg:block mb-[42px]">
+              Work Connect를 활용하여 업무의 효율을 높이세요
+            </Typography>
             <div className="flex flex-col gap-[24px]">
               <div className="flex flex-col">
                 <label className="text-[14px] text-[#2F323C] pl-[6px] mb-2" htmlFor="name">
                   이름
                 </label>
                 <input
-                  className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
+                  className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-[0_1px_5px_0_rgba(0,0,0,0.12)] focus:outline-none"
                   type="text"
                   id="name"
                   placeholder="홍길동"
@@ -112,7 +122,7 @@ const SignUpPage = () => {
                 </label>
                 <div className="flex gap-[12px]">
                   <input
-                    className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
+                    className="w-[70%] py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
                     type="email"
                     id="email"
                     placeholder="asdf123@gmail.com"
@@ -124,7 +134,7 @@ const SignUpPage = () => {
                     type="button"
                     onClick={() => handleEmailCheck(email)}
                     disabled={emailCheckMutation.isPending ? true : false}
-                    className="w-full text-sm py-[12px] bg-[#7173FA] text-white rounded-lg shadow-md"
+                    className="w-full text-sm py-[12px] bg-[#7173FA] text-white rounded-lg shadow-md flex-1"
                   >
                     {emailCheckMutation.isPending ? '확인중...' : '중복확인'}
                   </button>

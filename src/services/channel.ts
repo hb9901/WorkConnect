@@ -2,6 +2,7 @@ import type {
   ChannelInsertType,
   ChannelType,
   GetChannelsProps,
+  GetUsersInChannelRequestProps,
   GetUsersInChannelResponse,
   GetUsersInChannelResponseItem
 } from '@/types/channel';
@@ -36,17 +37,11 @@ export const getChannels = async ({ workspace_id, workspace_user_id }: GetChanne
   return response;
 };
 
-type GetUsersInChannelRequestProps = {
-  channel_id: ChannelType['id'];
-  workspaceUserId: WorkspaceUserType['id'];
-};
-
-export const getUsersInChannel = async ({ channel_id, workspaceUserId }: GetUsersInChannelRequestProps) => {
+export const getUsersInChannel = async ({ channel_id }: GetUsersInChannelRequestProps) => {
   const supabase = createClient();
 
   const response = await supabase.rpc('get_users_in_channel', {
-    cid: channel_id,
-    wuid: workspaceUserId
+    cid: channel_id
   });
 
   if (!response.data) {
@@ -94,4 +89,19 @@ export const getChannelName = async ({ id, wuid }: GetChannelNameRequestProps) =
   });
 
   return response;
+};
+
+type UpdateChannelActiveAtRequestProps = {
+  channelId: ChannelType['id'];
+  workspaceUserId: WorkspaceUserType['id'];
+};
+
+export const updateChannelActiveAt = async ({ channelId, workspaceUserId }: UpdateChannelActiveAtRequestProps) => {
+  const supabase = createClient();
+
+  return await supabase
+    .from('channel_user')
+    .update({ last_active_at: new Date().toISOString() })
+    .eq('workspace_user_id', workspaceUserId)
+    .eq('channel_id', channelId);
 };

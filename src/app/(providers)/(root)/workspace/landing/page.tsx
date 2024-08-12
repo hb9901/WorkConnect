@@ -11,6 +11,9 @@ import { useEffect, useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { getWorkspaceIdCookie, setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/cookie/workspace';
 import WorkConnectLogoIcon from '@/icons/WorkConnectLogo.svg';
+import Typography from '@/components/Typography';
+import Input from '@/components/Input';
+import Button from '@/components/Button';
 
 type UserType = {
   user: AuthStoreTypes['user'];
@@ -95,7 +98,7 @@ const InviteCodePage = () => {
         .eq('invite_code', Number(inviteCode))
         .single();
 
-      if (workspaceError) return openSnackBar({ message: '존재하지 않는 초대코드에요' });
+      if (workspaceError) return openSnackBar({ message: '초대코드가 일치하지 않습니다' });
 
       const { error: workspaceUserError } = await supabase
         .from('workspace_user')
@@ -158,42 +161,58 @@ const InviteCodePage = () => {
   }, []);
 
   return (
-    <main className="flex justify-center items-center">
-      <div className="flex flex-col w-[375px] h-dvh px-4">
+    <main className="flex justify-center items-center w-full h-dvh">
+      <div className="flex flex-col w-[375px] lg:w-[590px] h-dvh px-4">
         <div className="flex flex-col items-center mt-[109px]">
-          <div className="w-[166px] h-[166px]">
+          <div className="w-[105px] h-[55px] lg:w-[95px] lg:h-[50px] lg:mb-9">
             <WorkConnectLogoIcon className="w-full h-full" />
           </div>
+        </div>
+
+        <div className="lg:border lg:px-[42px] lg:py-[72px] lg:rounded-lg">
           <div className="mt-8 mb-7 flex flex-col items-center gap-3">
-            <strong className="text-[20px] text-[#2E2E2E]">협업의 새로운 연결, 워크커넥트</strong>
-            <p className="text-[14px] text-[rgb(46,46,46)] opacity-60">전달 받은 초대 코드를 입력해주세요</p>
+            <Typography variant="Title20px" className="lg:text-[36px]" color="grey700Black">
+              협업의 새로운 연결, 워크커넥트
+            </Typography>
+            <Typography variant="Subtitle14px" className="lg:text-[18px]" color="grey500">
+              전달 받은 초대 코드를 입력해주세요
+            </Typography>
           </div>
-        </div>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col">
-            <input
-              className="py-[12px] px-[16px] rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
-              type="text"
-              placeholder="초대 코드를 입력해주세요"
-              value={inviteCode}
-              onChange={(e) => setInviteCode(e.target.value)}
-              maxLength={6}
-            />
+          <div className="lg:px-[55px]">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col">
+                <Input
+                  value={inviteCode}
+                  onChange={(e) => setInviteCode(e.target.value)}
+                  placeholder="초대 코드를 입력해주세요"
+                />
+              </div>
+            </div>
+            <div className="flex justify-center mt-4 mb-[167px]">
+              <Button
+                theme="primary"
+                onClick={() => handleSubmitMutate()}
+                isDisabled={handleSubmit.isPending}
+                isFullWidth={true}
+              >
+                {handleSubmit.isPending ? '초대코드 확인 중...' : '확인'}
+              </Button>
+            </div>
           </div>
-        </div>
-        <div className="flex justify-center mt-4 mb-[167px]">
-          <button
-            onClick={() => handleSubmitMutate()}
-            className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
-            disabled={handleSubmit.isPending}
-          >
-            {handleSubmit.isPending ? '초대코드 확인 중...' : '확인'}
-          </button>
-        </div>
-        <div className="flex justify-center items-center py-3 px-[6px] gap-[10px] text-[#2F323C] text-[14px]">
-          <button>도움말</button>
-          <span className="text-[12px]">|</span>
-          <button onClick={() => route.push('/workspace/new')}>워크스페이스 만들기</button>
+
+          <div className="flex justify-center items-center py-3 px-[6px] gap-[10px]">
+            <button>
+              <Typography variant="Body14px" color="grey700Black">
+                도움말
+              </Typography>
+            </button>
+            <span className="text-[12px]">|</span>
+            <button onClick={() => route.push('/workspace/new')}>
+              <Typography variant="Body14px" color="grey700Black">
+                워크스페이스 만들기
+              </Typography>
+            </button>
+          </div>
         </div>
       </div>
     </main>

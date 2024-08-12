@@ -1,0 +1,22 @@
+export const CHANNEL_UPDATE_ACTIVE_AT_RESPONSE = {
+  FAILED_TO_GET: '채널 접속 활성화 시간 업데이트에 실패했습니다.',
+  INVALID_REQUEST: 'workspaceUserId가 없습니다.'
+};
+
+export const CHANNEL_UPDATE_ACTIVE_AT_RESPONSE_SUCCESS = {
+  status: true,
+  data: [],
+  message: ''
+};
+
+export const CHANNEL_UPDATE_ACTIVE_AT_RESPONSE_INVALID_REQUEST = {
+  ...CHANNEL_UPDATE_ACTIVE_AT_RESPONSE_SUCCESS,
+  status: false,
+  message: CHANNEL_UPDATE_ACTIVE_AT_RESPONSE.INVALID_REQUEST
+};
+
+export const CHANNEL_UPDATE_ACTIVE_AT_RESPONSE_FAILED = {
+  ...CHANNEL_UPDATE_ACTIVE_AT_RESPONSE_SUCCESS,
+  status: false,
+  message: CHANNEL_UPDATE_ACTIVE_AT_RESPONSE.FAILED_TO_GET
+};

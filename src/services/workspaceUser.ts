@@ -18,7 +18,8 @@ export const getSearchWorkspaceUsers = async ({
     .select('profile_image, name, id')
     .ilike('name', `%${term}%`)
     .eq('workspace_id', workspace_id!)
-    .neq('id', workspace_user_id);
+    .neq('id', workspace_user_id)
+    .order('name', { ascending: true });
 
   return response;
 };

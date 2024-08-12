@@ -23,11 +23,13 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
     const { data, error } = await getChannelName({ id: Number(id), wuid: workspaceUserId });
 
     if (error) {
-      return NextResponse.json(Object.assign(CHANNEL_NAME_RESPONSE_FAILED, { error }));
+      return NextResponse.json(Object.assign(CHANNEL_NAME_RESPONSE_FAILED, { error }), {
+        status: 500
+      });
     }
 
     return NextResponse.json(Object.assign(CHANNEL_NAME_RESPONSE_SUCCESS, { data }));
   } catch (error) {
-    return NextResponse.json(CHANNEL_NAME_RESPONSE_FAILED);
+    return NextResponse.json(CHANNEL_NAME_RESPONSE_FAILED, { status: 500 });
   }
 };
