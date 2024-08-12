@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import useDeviceType from '../../../../_hooks/useDeviceType';
 import BottomControlBar from '../BottomControlBar';
 import MobileLayout from '../MobileLayout';
+import WebLayout from '../WebLayout';
 
 const CustomVideoConference = () => {
   const [focusedTrack, setFocusedTrack] = useState<TrackReferenceOrPlaceholder | null>();
@@ -57,21 +58,7 @@ const CustomVideoConference = () => {
 
   return (
     <div className="flex flex-col items-center gap-2 h-[80vh] p-3">
-      {/* <div className={`overflow-hidden mr-5 ${focusedTrack ? 'sm:w-[full] m-5' : 'none'} `}>
-          <FocusLayoutContainer
-            style={{
-              height: '80vh',
-              width: '80rem',
-              display: `${focusedTrack ? 'flex' : 'none'}`,
-              justifyItems: 'center',
-              alignItems: 'center',d
-              padding: '5px'
-            }}
-          >
-            {focusedTrack && <FocusLayout trackRef={focusedTrack} />}
-          </FocusLayoutContainer>
-        </div> */}
-      {devcieType === 'mobile' ? <MobileLayout tracks={tracks} /> : null}
+      {devcieType === 'mobile' ? <MobileLayout tracks={tracks} /> : <WebLayout tracks={tracks} />}
 
       <BottomControlBar controls={{ microphone: true, camera: true, screenShare: true }} variation="verbose" />
     </div>

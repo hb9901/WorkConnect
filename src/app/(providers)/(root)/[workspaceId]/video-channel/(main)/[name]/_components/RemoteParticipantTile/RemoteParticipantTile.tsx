@@ -4,11 +4,7 @@ const RemoteParticipantTile = ({ trackRef }: ParticipantTileProps) => {
   // livekit - hook
   const remote = useEnsureTrackRef(trackRef);
 
-  return (
-    <li>
-      <ParticipantTile className={``} />
-    </li>
-  );
+  return <ParticipantTile className={``} />;
 };
 
 export default RemoteParticipantTile;

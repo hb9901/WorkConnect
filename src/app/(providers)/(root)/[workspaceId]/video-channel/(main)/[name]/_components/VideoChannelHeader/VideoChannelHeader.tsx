@@ -19,13 +19,15 @@ const VideoChannelHeader = () => {
   }, [workspaceId]);
 
   return (
-    <div className="flex items-center justify-between px-4 py-3 mt-[2px]">
-      <DeviceMenuButton />
-      <Typography color="grey700Black" variant="Title20px" as="h2">
-        {name}
-      </Typography>
-      <DisconnectButton onClick={handleDisconnect}>{'종료'}</DisconnectButton>
-    </div>
+    <header className="fixed top-0 left-0 right-0 bg-white z-10 shadow-md">
+      <div className="flex items-center justify-between px-4 py-3">
+        <DeviceMenuButton />
+        <Typography color="grey700Black" variant="Title20px" as="h2">
+          {name}
+        </Typography>
+        <DisconnectButton onClick={handleDisconnect}>{'종료'}</DisconnectButton>
+      </div>
+    </header>
   );
 };
 

@@ -89,8 +89,13 @@ const BottomControlBar = ({ variation, controls, saveUserChoices = true, ...prop
   );
 
   return (
-    <div className="border-t-2 mx-4 py-4 px-6 fixed bottom-0 bg-white w-[100vw]  ">
-      <div className="flex items-center justify-center gap-[1rem] px-4">
+    <div className="mx-4 py-4 px-6 fixed bottom-0 bg-white w-[100vw]">
+      <div className="flex items-center justify-center gap-[4rem] px-4">
+        {visibleControls.camera && (
+          <div className="">
+            <TrackToggle source={Track.Source.Camera} showIcon={showIcon} onChange={cameraOnChange}></TrackToggle>
+          </div>
+        )}
         {visibleControls.microphone && (
           <div className="">
             <TrackToggle
@@ -100,11 +105,7 @@ const BottomControlBar = ({ variation, controls, saveUserChoices = true, ...prop
             ></TrackToggle>
           </div>
         )}
-        {visibleControls.camera && (
-          <div className="">
-            <TrackToggle source={Track.Source.Camera} showIcon={showIcon} onChange={cameraOnChange}></TrackToggle>
-          </div>
-        )}
+
         {visibleControls.screenShare && browserSupportsScreenSharing && (
           <TrackToggle
             source={Track.Source.ScreenShare}

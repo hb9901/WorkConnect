@@ -1,42 +1,35 @@
 import {
-  TrackReferenceOrPlaceholder,
+  FocusLayout,
+  FocusLayoutContainer,
+  isTrackReference,
   useLocalParticipant,
-  usePersistentUserChoices,
-  usePreviewTracks
+  VideoTrack
 } from '@livekit/components-react';
-import VideoChannel from '../../../_components/VideoChannel';
+import { useEffect } from 'react';
+import useFocosedTrack from '../../_store/useFocusTrack';
+import { VideoConferenceProps } from '../../_types/VideoConforenceProps';
 import RemoteParticipant from '../RemoteParticipant';
 
-type MobileLayoutProps = {
-  tracks: TrackReferenceOrPlaceholder[];
-};
-
-const MobileLayout = ({ tracks }: MobileLayoutProps) => {
+const MobileLayout = ({ tracks }: VideoConferenceProps) => {
   const { localParticipant } = useLocalParticipant();
-  const { userChoices } = usePersistentUserChoices();
 
-  const filteredTracks = tracks.filter((track) => track.participant.sid === localParticipant.sid);
-  const localTracks = usePreviewTracks({
-    audio: userChoices.audioEnabled ? { deviceId: userChoices.audioDeviceId } : false,
-    video: userChoices.videoEnabled ? { deviceId: userChoices.videoDeviceId } : false
-  });
+  const { focusedTrack, setFocusedTrack } = useFocosedTrack();
 
-  //   <div className="flex items-center justify-center bg-[#121212] rounded-[10px] h-[55vh] overflow-hidden mx-auto aspect-w-16 aspect-h-9">
-  //   <video
-  //     className="transform scale-x-[-1] w-full h-full object-cover"
-  //     ref={videoEl}
-  //     data-lk-facing-mode={facingMode}
-  //   />
-  // </div>
+  useEffect(() => {
+    const filteredTrack = tracks.filter((track) => track.participant.sid === localParticipant.sid)[0];
+    setFocusedTrack(filteredTrack);
+  }, []);
+
   return (
-    <div className={`relative h-full w-full `}>
-      <VideoChannel
-        tracks={localTracks}
-        username={userChoices.username}
-        videoEnabled={userChoices.videoEnabled}
-        audioEnabled={userChoices.audioEnabled}
-      />
-      <div className=" absolute top-0 w-[33vw] h-[100px]  right-0">
+    <div className={`relative h-full w-screen `}>
+      {focusedTrack && (
+        <FocusLayoutContainer className="h-full w-full flex justify-center my-1">
+          <FocusLayout trackRef={focusedTrack} className="w-screen min-h-screen -z-10">
+            {isTrackReference(focusedTrack) && <VideoTrack trackRef={focusedTrack} />}
+          </FocusLayout>
+        </FocusLayoutContainer>
+      )}
+      <div className=" absolute top-0 w-[33vw] h-screen mt-1 right-0 ">
         <RemoteParticipant />
       </div>
     </div>

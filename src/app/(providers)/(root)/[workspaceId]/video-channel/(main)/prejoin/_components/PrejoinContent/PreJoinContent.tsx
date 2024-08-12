@@ -42,15 +42,17 @@ const PreJoinContent = () => {
   return (
     <div className="h-[100vh] bg-[#fff] flex flex-col mt-0">
       <PrejoinHeader />
-      <CustomPrejoin
-        joinLabel={'지금 참가'}
-        userLabel={userChoices!.username}
-        defaults={userChoices}
-        onSubmit={handlePreJoinSubmit}
-        onValidate={(values) => {
-          return true;
-        }}
-      />
+      <main className="flex-glow pt-[84px] md:pt-[144px]">
+        <CustomPrejoin
+          joinLabel={'지금 참가'}
+          userLabel={userChoices!.username}
+          defaults={userChoices}
+          onSubmit={handlePreJoinSubmit}
+          onValidate={(values) => {
+            return true;
+          }}
+        />
+      </main>
     </div>
   );
 };
