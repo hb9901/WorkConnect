@@ -5,32 +5,41 @@ import {
   useLocalParticipant,
   VideoTrack
 } from '@livekit/components-react';
+import { Track } from 'livekit-client';
 import { useEffect } from 'react';
+import useDeviceType from '../../../../_hooks/useDeviceType';
 import useFocosedTrack from '../../_store/useFocusTrack';
 import { VideoConferenceProps } from '../../_types/VideoConforenceProps';
-import RemoteParticipant from '../RemoteParticipant';
+import ParticipantListLayout from '../RemoteParticipant';
 
 const MobileLayout = ({ tracks }: VideoConferenceProps) => {
   const { localParticipant } = useLocalParticipant();
-
+  const { isMobile } = useDeviceType();
   const { focusedTrack, setFocusedTrack } = useFocosedTrack();
 
+  const remoteTrackRefs = tracks.filter((track) => track.participant.sid !== localParticipant.sid);
+
   useEffect(() => {
-    const filteredTrack = tracks.filter((track) => track.participant.sid === localParticipant.sid)[0];
+    const filteredTrack = tracks.filter(
+      (track) => track.participant.sid === localParticipant.sid && track.source === Track.Source.Camera
+    )[0];
     setFocusedTrack(filteredTrack);
-  }, []);
+  }, [localParticipant]);
 
   return (
-    <div className={`relative h-full w-screen `}>
+    <div className={`relative h-full w-screen items-center justify-center `}>
       {focusedTrack && (
-        <FocusLayoutContainer className="h-full w-full flex justify-center my-1">
-          <FocusLayout trackRef={focusedTrack} className="w-screen min-h-screen -z-10">
+        <FocusLayoutContainer className={`${isMobile ? 'h-[80vh]' : 'h-full'} w-full flex justify-center my-1`}>
+          <FocusLayout
+            trackRef={focusedTrack}
+            className="w-screen h-screen flex items-center justify-center overflow-hidden"
+          >
             {isTrackReference(focusedTrack) && <VideoTrack trackRef={focusedTrack} />}
           </FocusLayout>
         </FocusLayoutContainer>
       )}
-      <div className=" absolute top-0 w-[33vw] h-screen mt-1 right-0 ">
-        <RemoteParticipant />
+      <div className=" absolute h-screen mt-1 right-0 top-0 ">
+        <ParticipantListLayout />
       </div>
     </div>
   );

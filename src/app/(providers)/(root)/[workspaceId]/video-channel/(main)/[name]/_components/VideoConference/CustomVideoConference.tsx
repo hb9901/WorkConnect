@@ -24,7 +24,7 @@ const CustomVideoConference = () => {
     { onlySubscribed: true }
   );
   const { localParticipant } = useLocalParticipant();
-  const devcieType = useDeviceType();
+  const { isMobile } = useDeviceType();
   const speakerTrackRef = tracks.find((track) => track.participant.isSpeaking);
   const screenShareTrackRef = useTracks([Track.Source.ScreenShare])[0];
   const localTracks = tracks.filter((track) => track.participant.sid === localParticipant.sid);
@@ -57,8 +57,8 @@ const CustomVideoConference = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-2 h-[80vh] p-3">
-      {devcieType === 'mobile' ? <MobileLayout tracks={tracks} /> : <WebLayout tracks={tracks} />}
+    <div className="flex flex-col items-center h-[full] bg-[#D9D9D9]">
+      {isMobile ? <MobileLayout tracks={tracks} /> : <WebLayout tracks={tracks} />}
 
       <BottomControlBar controls={{ microphone: true, camera: true, screenShare: true }} variation="verbose" />
     </div>

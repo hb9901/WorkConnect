@@ -5,17 +5,29 @@ const MOBILE_BREAKPOINT = 768; // 768px 이하일 경우 모바일로 간주
 
 type DeviceType = 'mobile' | 'desktop';
 
-const useDeviceType = (): DeviceType => {
+interface DeviceInfo {
+  device: DeviceType;
+  isMobile: boolean;
+}
+
+const useDeviceType = (): DeviceInfo => {
   const { width } = useWindowSize();
-  const [deviceType, setDeviceType] = useState<DeviceType>('desktop');
+  const [deviceInfo, setDeviceInfo] = useState<DeviceInfo>({
+    device: 'desktop',
+    isMobile: false
+  });
 
   useEffect(() => {
     if (width !== undefined) {
-      setDeviceType(width <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop');
+      const isMobile = width <= MOBILE_BREAKPOINT;
+      setDeviceInfo({
+        device: isMobile ? 'mobile' : 'desktop',
+        isMobile: isMobile
+      });
     }
   }, [width]);
 
-  return deviceType;
+  return deviceInfo;
 };
 
 export default useDeviceType;

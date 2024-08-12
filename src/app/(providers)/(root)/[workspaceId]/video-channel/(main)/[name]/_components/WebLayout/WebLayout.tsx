@@ -1,9 +1,7 @@
 import {
   FocusLayout,
   FocusLayoutContainer,
-  GridLayout,
   isTrackReference,
-  ParticipantClickEvent,
   useLocalParticipant,
   useTracks,
   VideoTrack
@@ -12,7 +10,7 @@ import { Track } from 'livekit-client';
 import { useEffect } from 'react';
 import useFocosedTrack from '../../_store/useFocusTrack';
 import { VideoConferenceProps } from '../../_types/VideoConforenceProps';
-import RemoteParticipant from '../RemoteParticipant';
+import ParticipantListLayout from '../RemoteParticipant/RemoteParticipant';
 
 const WebLayout = ({ tracks }: VideoConferenceProps) => {
   const { focusedTrack, setFocusedTrack } = useFocosedTrack();
@@ -42,27 +40,22 @@ const WebLayout = ({ tracks }: VideoConferenceProps) => {
     setFocusedTrack(localTracks);
   }, [localTracks]);
 
-  const clickFocus = (e: ParticipantClickEvent) => {
-    if (e.participant.identity === focusedTrack?.participant.identity) {
-      setFocusedTrack(undefined);
-      return;
-    }
-    setFocusedTrack({
-      participant: e.participant,
-      publication: e.participant.getTrackPublication(e.track!.source),
-      source: e.track!.source
-    });
-  };
   return (
-    <FocusLayoutContainer className={`${focusedTrack ? 'block' : 'none'} relative w-screen`}>
+    <FocusLayoutContainer
+      className={`${focusedTrack ? 'block' : 'none'} relative w-screen h-[81vh] m-0 overflow-hidden`}
+    >
       {focusedTrack && (
-        <FocusLayout trackRef={focusedTrack} className="h-screen w-[80vw] mx-1 -z-10">
-          {isTrackReference(focusedTrack) && <VideoTrack trackRef={focusedTrack} />}
+        <FocusLayout trackRef={focusedTrack} className="h-full md:w-[65vw] lg:w-[70vw] xl:w-[75vw] mx-1">
+          {isTrackReference(focusedTrack) && (
+            <div className="flex justify-center items-center m-0 w-full h-full">
+              <VideoTrack trackRef={focusedTrack} />
+            </div>
+          )}
         </FocusLayout>
       )}
-      <GridLayout tracks={tracks} className="flex w-[50px] max-h-5 justify-center items-center">
-        <RemoteParticipant onParticipantClick={clickFocus} />
-      </GridLayout>
+      <div className={`${focusedTrack ? 'flex items-start my-auto mx-auto' : 'none'}`}>
+        <ParticipantListLayout />
+      </div>
     </FocusLayoutContainer>
   );
 };
