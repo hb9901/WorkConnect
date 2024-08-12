@@ -20,7 +20,9 @@ import { Tables } from '@/types/supabase';
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import WeekButtons from '../../../_components/DateButtons';
+import MonthDate from '../../../_components/MonthDate';
 import DateBottom from './_components/DateBottom/DateBottom';
 import Header from './_components/Header';
 import InputCard from './_components/InputCard';
@@ -51,6 +53,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const initStartTime = selectedTodo ? dayjs(selectedTodo.start_date) : initTime;
   const initEndTime = selectedTodo ? dayjs(selectedTodo.end_date) : initTime;
   const { selectedDate } = useDateStore();
+  const [isDateBottomSheetOpen, setIsDateBottomSheetOpen] = useState<boolean>(false);
 
   const {
     title,
@@ -72,7 +75,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     startTime,
     endTime,
     isStartTime,
-    isBottomSheetOpen,
+    isTimeBottomSheetOpen,
     setStartTime,
     setEndTime,
     handleSetStartTime,
@@ -139,6 +142,10 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     router.push(`/${workspaceId}/to-do-list`);
   };
 
+  const handleClickCalendar = () => {
+    setIsDateBottomSheetOpen((prev) => !prev);
+  };
+
   return (
     <div className="bg-white">
       <header>
@@ -159,10 +166,12 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
             기본 설정
           </Typography>
           <InputCard>
-            <CalendarIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
-            <Typography variant="Subtitle16px" color="grey700Black">
-              {date}
-            </Typography>
+            <button className="flex flex-row w-full gap-[12px]" onClick={handleClickCalendar}>
+              <CalendarIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
+              <Typography variant="Subtitle16px" color="grey700Black">
+                {date}
+              </Typography>
+            </button>
           </InputCard>
           <InputCard>
             <ClockIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
@@ -251,7 +260,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
         </Button>
       </div>
 
-      <BottomSheet isOpen={isBottomSheetOpen} onClose={hanldeBottomSheetClick}>
+      <BottomSheet isOpen={isTimeBottomSheetOpen} onClose={hanldeBottomSheetClick}>
         <DateBottom
           isStartTime={isStartTime}
           handleClose={hanldeBottomSheetClick}
@@ -260,6 +269,10 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
           handleSetStartTime={handleSetStartTime}
           handleSetEndTime={handleSetEndTime}
         />
+      </BottomSheet>
+      <BottomSheet isOpen={isDateBottomSheetOpen} onClose={handleClickCalendar}>
+        <WeekButtons />
+        <MonthDate />
       </BottomSheet>
     </div>
   );
