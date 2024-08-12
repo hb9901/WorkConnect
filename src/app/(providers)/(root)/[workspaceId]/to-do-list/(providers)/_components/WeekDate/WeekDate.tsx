@@ -1,7 +1,7 @@
 'use client';
 import useDateStore from '@/store/dateStore';
-import MobileDate from '../MobileDate';
-import PcDate from '../PcDate';
+import MobileDate from '../MobileWeekDate';
+import PcDate from '../PcWeekDate';
 import { getWeekDates } from './function';
 
 const WeekDate = () => {
