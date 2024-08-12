@@ -5,7 +5,6 @@ export const CHANNEL_EXISTING_ID_RESPONSE = {
 };
 
 export const CHANNEL_EXISTING_ID_RESPONSE_SUCCESS = {
-  statusCode: 200,
   status: true,
   data: [],
   message: ''
@@ -13,14 +12,12 @@ export const CHANNEL_EXISTING_ID_RESPONSE_SUCCESS = {
 
 export const CHANNEL_EXISTING_ID_RESPONSE_FAILED = {
   ...CHANNEL_EXISTING_ID_RESPONSE_SUCCESS,
-  statusCode: 500,
   status: false,
   message: CHANNEL_EXISTING_ID_RESPONSE.FAILED_TO_GET
 };
 
 export const CHANNEL_EXISTING_ID_RESPONSE_INVALID_REQUEST = {
   ...CHANNEL_EXISTING_ID_RESPONSE_SUCCESS,
-  statusCode: 400,
   status: false,
   message: CHANNEL_EXISTING_ID_RESPONSE.INVALID_REQUEST
 };

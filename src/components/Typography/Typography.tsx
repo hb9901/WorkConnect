@@ -26,6 +26,7 @@ const Typography = ({
 const typographyClass = cva('tracking-[-2%]', {
   variants: {
     variant: {
+      Title36px: 'text-[36px] font-medium leading-[130%]',
       Title22px: 'text-[22px] font-medium leading-[130%]',
       Title20px: 'text-[20px] font-medium leading-[130%]',
       Title18px: 'text-[18px] font-medium leading-[150%]',
@@ -35,6 +36,7 @@ const typographyClass = cva('tracking-[-2%]', {
       Subtitle16px: 'text-[16px] font-normal leading-[150%]',
       Subtitle14px: 'text-[14px] font-normal leading-[150%]',
       Subtitle12px: 'text-[12px] font-normal leading-[150%]',
+      Body26px: 'text-[26px] font-normal leading-[150%]',
       Body16px: 'text-[16px] font-normal leading-[150%]',
       Body14px: 'text-[14px] font-normal leading-[150%]',
       Body12px: 'text-[12px] font-normal leading-[150%]'
@@ -50,6 +52,7 @@ const typographyClass = cva('tracking-[-2%]', {
       grey200: 'text-grey200',
       grey100: 'text-grey100',
       grey50: 'text-grey50',
+      white: 'text-white',
       primary900: 'text-primary900',
       primary800: 'text-primary800',
       primary700: 'text-primary700',

@@ -14,7 +14,6 @@ const VideoChannelHeader = () => {
 
   const handleDisconnect = useCallback(() => {
     setIsSettingOk(false);
-    console.log('handleDisconnect : ', workspaceId);
     router.push(`/${workspaceId}/chat`);
   }, [workspaceId]);
 

@@ -4,7 +4,6 @@ export const CHANNEL_USERS_RESPONSE = {
 };
 
 export const CHANNEL_USERS_RESPONSE_SUCCESS = {
-  statusCode: 200,
   status: true,
   data: [],
   message: ''
@@ -12,14 +11,6 @@ export const CHANNEL_USERS_RESPONSE_SUCCESS = {
 
 export const CHANNEL_USERS_RESPONSE_FAILED = {
   ...CHANNEL_USERS_RESPONSE_SUCCESS,
-  statusCode: 500,
   status: false,
   message: CHANNEL_USERS_RESPONSE.FAILED_TO_GET
-};
-
-export const CHANNEL_USERS_RESPONSE_INVALID_REQUEST = {
-  ...CHANNEL_USERS_RESPONSE_SUCCESS,
-  statusCode: 400,
-  status: false,
-  message: CHANNEL_USERS_RESPONSE.INVALID_REQUEST
 };

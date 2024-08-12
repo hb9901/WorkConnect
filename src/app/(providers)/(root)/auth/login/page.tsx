@@ -5,9 +5,10 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import { setWorkspaceId, setWorkspaceUserId } from '@/utils/workspaceCookie';
 import { TopBar } from '@/components/TopBar';
+import { setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/cookie/workspace';
 
+// ! 로그인 페이지 삭제하기!
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -45,8 +46,8 @@ const LoginPage = () => {
         return;
       }
 
-      setWorkspaceId(workspaceUserData.workspace_id);
-      setWorkspaceUserId(session.user.id);
+      setWorkspaceIdCookie(workspaceUserData.workspace_id);
+      setWorkspaceUserIdCookie(session.user.id);
       setUserData(session.user.id, workspaceUserData.workspace_id);
       route.replace(`/${workspaceUserData.workspace_id}`); // TODO : 메인 홈 으로 이동
     }
@@ -58,9 +59,7 @@ const LoginPage = () => {
     <main className="flex justify-center items-center">
       <div className="flex flex-col w-[375px] h-dvh px-4">
         <TopBar title="" style={{ padding: '0px' }} />
-        <h1 className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] pb-[28px] flex items-center">
-          이메일로 로그인
-        </h1>
+        <h1 className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] pb-[28px] flex items-center">로그인</h1>
         <form
           onSubmit={(e) => {
             e.preventDefault();
