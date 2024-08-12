@@ -27,14 +27,17 @@ const BottomLineTextFieldCount = ({
 }: BottomLineTextFieldCountProps) => {
   const initlength = defaultValue ? defaultValue.length : 0;
   const [textCount, setTextCount] = useState<number>(initlength);
+  const [inputValue, setInputValue] = useState<string>(defaultValue || '');
   const inputId = useId();
   const customId = id || inputId;
 
   const handelInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newLength = e.target.value.length;
-    if (newLength > 20) return;
-    setTextCount(newLength);
-    onChange(e);
+    const newValue = e.target.value;
+    if (newValue.length <= 20) {
+      setInputValue(newValue);
+      setTextCount(newValue.length);
+      onChange(e);
+    }
   };
 
   return (
@@ -48,7 +51,7 @@ const BottomLineTextFieldCount = ({
       <input
         className="px-[8px] py-[12px] w-full border-[#7173FA] border-b-[1px] focus:outline-none"
         id={customId}
-        defaultValue={defaultValue}
+        value={inputValue}
         type={type}
         onChange={handelInputChange}
         placeholder={label}
