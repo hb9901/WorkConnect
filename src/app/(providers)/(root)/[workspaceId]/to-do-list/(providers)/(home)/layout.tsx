@@ -1,9 +1,8 @@
 'use client';
-import { PageLayout } from '@/components/PageLayout';
-import SelectHeader from '@/components/SelectHeader';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useUserStore from '@/store/userStore';
 import { useShallow } from 'zustand/react/shallow';
+import PcHeader from '../_components/PcHeader';
 
 function TodoListHomeLayout({ children }: { children: React.ReactNode }) {
   const workspaceId = useWorkspaceId();
@@ -13,18 +12,13 @@ function TodoListHomeLayout({ children }: { children: React.ReactNode }) {
     }))
   );
 
-  if (!(workspaceId && workspaceList))
-    return (
-      <PageLayout title="" showTopBar={false}>
-        <></>
-      </PageLayout>
-    );
+  if (!(workspaceId && workspaceList)) return <></>;
 
   return (
-    <PageLayout title="" showTopBar={false}>
-      <SelectHeader workspaceId={workspaceId} isTodoList />
+    <>
+      <PcHeader />
       {children}
-    </PageLayout>
+    </>
   );
 }
 

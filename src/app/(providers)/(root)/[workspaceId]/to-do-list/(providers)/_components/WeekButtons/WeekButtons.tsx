@@ -20,14 +20,17 @@ const WeekButtons = () => {
   const today = dayjs();
 
   return (
-    <div className="flex flex-row justify-between">
-      <div className="flex flex-row items-center gap-[16px]">
+    <div className="flex flex-row justify-between lg:px-[12px] lg:py-[14px]">
+      <div className="flex flex-row items-center gap-[16px] lg:gap-[12px]">
         <Typography variant="Title22px" color="grey900">
           {date}
         </Typography>
         <div className="flex flex-row gap-[8px]">
-          <button onClick={handleClickPreviousWeek}>
-            <div className="flex items-center justify-center w-[20px] h-[20px] rounded-full border-[1px] border-[#737B91]">
+          <button
+            onClick={handleClickPreviousWeek}
+            className="flex items-center justify-center w-[20px] h-[20px] rounded-full border-[1px] border-[#737B91]"
+          >
+            <div>
               <ChevronLeftIcon className="w-[10px] h-[10px]" />
             </div>
           </button>
