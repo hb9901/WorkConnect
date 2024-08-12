@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from '@storybook/react';
-import BottomLineTextFieldCount, { BottomLineTextFieldCountProps } from './BottomLineTextFieldCount';
+import BottomLineTextFieldCount, { CountBottomLineTextFieldProps } from './CountBottomLineTextField';
 
 export default {
   title: 'Components/BottomLineTextFieldCount',
@@ -25,7 +25,7 @@ export default {
   }
 } as Meta;
 
-const Template: StoryFn<BottomLineTextFieldCountProps> = (args) => <BottomLineTextFieldCount {...args} />;
+const Template: StoryFn<CountBottomLineTextFieldProps> = (args) => <BottomLineTextFieldCount {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {

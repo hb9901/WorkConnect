@@ -1,7 +1,7 @@
 import { ChangeEvent, useId, useState } from 'react';
 import Typography from '../Typography';
 
-export interface BottomLineTextFieldCountProps {
+export interface CountBottomLineTextFieldProps {
   className?: string;
   id?: string;
   label: string;
@@ -14,7 +14,7 @@ export interface BottomLineTextFieldCountProps {
   onClick?: () => void;
 }
 
-const BottomLineTextFieldCount = ({
+const CountBottomLineTextField = ({
   id,
   label,
   labelClassName,
@@ -24,7 +24,7 @@ const BottomLineTextFieldCount = ({
   type,
   defaultValue,
   ...props
-}: BottomLineTextFieldCountProps) => {
+}: CountBottomLineTextFieldProps) => {
   const initlength = defaultValue ? defaultValue.length : 0;
   const [textCount, setTextCount] = useState<number>(initlength);
   const [inputValue, setInputValue] = useState<string>(defaultValue || '');
@@ -64,4 +64,4 @@ const BottomLineTextFieldCount = ({
   );
 };
 
-export default BottomLineTextFieldCount;
+export default CountBottomLineTextField;
