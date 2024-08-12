@@ -42,3 +42,9 @@ export const useMutationUploadFile = ({ ...options }) => {
     ...options
   });
 };
+
+export const useMutationUpdateChannelActiveAt = () => {
+  return useMutation({
+    mutationFn: (channelId: number) => api.channel.updateChannelActiveAt(channelId)
+  });
+};

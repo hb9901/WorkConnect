@@ -12,10 +12,10 @@ export const useGetChatMessages = ({ channel_id }: GetChatMessagesProps) => {
   });
 };
 
-export const useGetLatestNotice = ({ id }: { id: string }) => {
+export const useGetLatestNotice = ({ id }: { id: number }) => {
   return useQuery({
     queryKey: QUERY_KEYS.LATEST_NOTICE(id),
-    queryFn: () => api.chat.getLatestNotice(Number(id)),
+    queryFn: () => api.chat.getLatestNotice(id),
     refetchOnWindowFocus: false
   });
 };

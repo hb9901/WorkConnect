@@ -2,16 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 import Chats from '../Chats';
-import { useParams } from 'next/navigation';
 import { MessagesWrapper } from '../MessagesContainer';
 import { useGetChatMessages, useGetUsersInChannel } from '../../../../_hook/useChatQuery';
 import { useChatHandlers } from '../../_hooks/useChatHandlers';
 import { handleSubscribeToChat } from '../../_utils/subscribe';
+import useGetChannelId from '../../../../_hook/useGetChannelId';
 
 const Messages = () => {
-  const { id } = useParams();
-
-  const channelId = Array.isArray(id) ? id[0] : id;
+  const channelId = useGetChannelId();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { data: chatMessages = [], isPending } = useGetChatMessages({
