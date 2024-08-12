@@ -11,8 +11,8 @@ const DotLottiePlayer = dynamic(() => import('@lottiefiles/dotlottie-react').the
   ssr: false
 });
 
-const LoadingSpinner = ({ className }: LoadingSpinnerProps) => {
-  return <DotLottiePlayer src="/lotties/Loading.lottie" loop autoplay className={clsx('w-72 h-72 pl-6', className)} />;
+const ButtonLoadingSpinner = ({ className }: LoadingSpinnerProps) => {
+  return <DotLottiePlayer src="/lotties/ButtonLoading.lottie" loop autoplay className={clsx('w-36 h-36', className)} />;
 };
 
-export default LoadingSpinner;
+export default ButtonLoadingSpinner;

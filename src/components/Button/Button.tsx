@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
+import ButtonLoadingSpinner from '../ButtonLoadingSpinner';
 
 type ButtonTheme = 'primary' | 'grey' | 'text' | 'underlineText' | 'outline';
 
@@ -56,7 +57,7 @@ const Button = ({
       style={boxShadowStyle}
       {...props}
     >
-      {children}
+      {isLoading ? <ButtonLoadingSpinner /> : children}
     </button>
   );
 };
