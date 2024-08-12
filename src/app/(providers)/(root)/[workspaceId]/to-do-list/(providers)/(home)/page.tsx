@@ -2,9 +2,9 @@
 import useTodoList from '@/hooks/useTodo';
 import useDateStore from '@/store/dateStore';
 import useUserStore from '@/store/userStore';
+import DateButtons from '../_components/DateButtons';
 import MonthDate from '../_components/MonthDate';
 import ToDoList from '../_components/ToDoList';
-import WeekButtons from '../_components/WeekButtons';
 import WeekDate from '../_components/WeekDate';
 
 const ToDoListPage = () => {
@@ -21,7 +21,7 @@ const ToDoListPage = () => {
     <>
       <main className="flex flex-col px-[16px] lg:inline-flex lg:flex-row lg:px-0 lg:h-full lg:w-full">
         <div className="lg:flex lg:flex-col lg:flex-shrink-0 lg:w-[297px] lg:bg-[#F4F4F6]">
-          <WeekButtons />
+          <DateButtons />
           {isWeekly ? <WeekDate /> : <MonthDate />}
         </div>
         <div className="flex flex-col lg:inline-grid lg:grid-cols-3 lg:ml-[16px] lg:mr-[17px] lg:mt-[24px] lg:gap-[12px] lg:w-full">

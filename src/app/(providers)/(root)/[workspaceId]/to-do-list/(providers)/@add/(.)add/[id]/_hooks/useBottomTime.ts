@@ -7,7 +7,7 @@ const useBottomTime = (initStartTime: Dayjs, initEndTime: Dayjs) => {
   const [startTime, setStartTime] = useState<Dayjs>(initStartTime);
   const [endTime, setEndTime] = useState<Dayjs>(initEndTime);
   const [isStartTime, setIsStartTime] = useState<boolean>(true);
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
+  const [isTimeBottomSheetOpen, setIsTimeBottomSheetOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setStartTime(memoizedInitStartTime);
@@ -24,18 +24,18 @@ const useBottomTime = (initStartTime: Dayjs, initEndTime: Dayjs) => {
   const handleTimeClick = useCallback((isStart: boolean) => {
     setIsStartTime(isStart);
     isStart ? setStartTime(dayjs(startTime)) : setEndTime(dayjs(endTime));
-    setIsBottomSheetOpen((prev) => !prev);
+    setIsTimeBottomSheetOpen((prev) => !prev);
   }, []);
 
   const hanldeBottomSheetClick = useCallback(() => {
-    setIsBottomSheetOpen((prev) => !prev);
+    setIsTimeBottomSheetOpen((prev) => !prev);
   }, []);
 
   return {
     startTime,
     endTime,
     isStartTime,
-    isBottomSheetOpen,
+    isTimeBottomSheetOpen,
     setStartTime,
     setEndTime,
     handleSetStartTime,

@@ -7,7 +7,7 @@ import useDateStore from '@/store/dateStore';
 import dayjs, { Dayjs } from 'dayjs';
 import { useShallow } from 'zustand/react/shallow';
 
-const WeekButtons = () => {
+const DateButtons = () => {
   const { selectedDate, isWeekly, changeIsWeekly, handleClickNext, handleClickPrevious, handleClickDate } =
     useDateStore(
       useShallow((state) => ({
@@ -61,4 +61,4 @@ const WeekButtons = () => {
   );
 };
 
-export default WeekButtons;
+export default DateButtons;
