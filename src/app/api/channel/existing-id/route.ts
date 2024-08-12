@@ -5,6 +5,7 @@ import {
   CHANNEL_EXISTING_ID_RESPONSE_SUCCESS
 } from './constants';
 import { getExistingChannelId } from '@/services/channel';
+import { getServerCookie } from '@/utils/cookie/serverUtils';
 
 /**
  * Channel existing-id GET 요청 핸들러
@@ -13,23 +14,26 @@ import { getExistingChannelId } from '@/services/channel';
  */
 export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
-
-  const workspace_user_id = searchParams.get('workspace_user_id');
   const other_workspace_user_id = searchParams.get('other_workspace_user_id');
 
-  if (!workspace_user_id || !other_workspace_user_id) {
-    return NextResponse.json(CHANNEL_EXISTING_ID_RESPONSE_INVALID_REQUEST);
+  const workspaceUserId = getServerCookie('workspaceUserId');
+
+  if (!workspaceUserId || !other_workspace_user_id) {
+    return NextResponse.json(CHANNEL_EXISTING_ID_RESPONSE_INVALID_REQUEST, { status: 400 });
   }
 
   try {
-    const { data, error } = await getExistingChannelId({ workspace_user_id, other_workspace_user_id });
+    const { data, error } = await getExistingChannelId({
+      workspace_user_id: workspaceUserId,
+      other_workspace_user_id: other_workspace_user_id
+    });
 
     if (error) {
-      return NextResponse.json(Object.assign(CHANNEL_EXISTING_ID_RESPONSE_FAILED, { error }));
+      return NextResponse.json(Object.assign(CHANNEL_EXISTING_ID_RESPONSE_FAILED, { error }), { status: 500 });
     }
 
     return NextResponse.json(Object.assign(CHANNEL_EXISTING_ID_RESPONSE_SUCCESS, { data }));
   } catch (error) {
-    return NextResponse.json(CHANNEL_EXISTING_ID_RESPONSE_FAILED);
+    return NextResponse.json(CHANNEL_EXISTING_ID_RESPONSE_FAILED, { status: 500 });
   }
 };

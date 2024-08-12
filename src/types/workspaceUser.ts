@@ -7,7 +7,6 @@ export type WorkspaceUserType = Omit<Tables<'workspace_user'>, 'state'> & {
 
 export type GetSearchWorkspaceUsersProps = Pick<WorkspaceUserType, 'workspace_id'> & {
   term: string;
-  workspace_user_id: WorkspaceUserType['id'];
 };
 
 export type SearchWorkspaceUserType = Pick<WorkspaceUserType, 'id' | 'name' | 'profile_image'>;

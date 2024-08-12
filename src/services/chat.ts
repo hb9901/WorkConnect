@@ -1,5 +1,5 @@
 import { CHAT_TYPE } from '@/constants/chat';
-import type { CreateChatMessageProps, GetChatMessagesProps, GetLatestNoticeProps } from '@/types/chat';
+import type { ChatType, GetChatMessagesProps, GetLatestNoticeProps } from '@/types/chat';
 import { createClient } from '@/utils/supabase/supabaseServer';
 
 export const getChatMessages = async ({ channel_id }: GetChatMessagesProps) => {
@@ -11,6 +11,8 @@ export const getChatMessages = async ({ channel_id }: GetChatMessagesProps) => {
 
   return response;
 };
+
+type CreateChatMessageProps = Pick<ChatType, 'channel_id' | 'content' | 'type' | 'workspace_user_id'>;
 
 export const createChatMessage = async ({
   channel_id,
@@ -40,7 +42,54 @@ export const getLatestNotice = async ({ channel_id }: GetLatestNoticeProps) => {
     .eq('type', 'notice')
     .order('created_at', { ascending: false })
     .limit(1)
-    .single();
+    .maybeSingle();
+
+  return response;
+};
+
+export const getChannelDocuments = async ({ channel_id }: { channel_id: number }) => {
+  const supabase = createClient();
+
+  const response = await supabase
+    .from('chat')
+    .select('*')
+    .eq('channel_id', channel_id)
+    .eq('type', CHAT_TYPE.document)
+    .order('created_at', { ascending: false });
+
+  return response;
+};
+
+export const getChannelNotices = async ({ channel_id }: { channel_id: number }) => {
+  const supabase = createClient();
+
+  const response = await supabase
+    .from('chat')
+    .select('*')
+    .eq('channel_id', channel_id)
+    .eq('type', CHAT_TYPE.notice)
+    .order('created_at', { ascending: false });
+
+  return response;
+};
+
+export const getChannelMedia = async ({ channel_id }: { channel_id: number }) => {
+  const supabase = createClient();
+
+  const response = await supabase
+    .from('chat')
+    .select('*')
+    .eq('channel_id', channel_id)
+    .in('type', [CHAT_TYPE.video, CHAT_TYPE.image])
+    .order('created_at', { ascending: false });
+
+  return response;
+};
+
+export const deleteChatMessage = async (id: number) => {
+  const supabase = createClient();
+
+  const response = await supabase.from('chat').delete().eq('id', id);
 
   return response;
 };

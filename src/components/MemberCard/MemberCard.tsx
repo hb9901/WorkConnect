@@ -16,10 +16,14 @@ export const MemberCard = ({ name, position, status, icon, checked, onToggle }: 
       className="flex items-center justify-between p-4 border-b border-white bg-transparent w-full"
       onClick={onToggle}
     >
-      <div className="flex items-center">
-        <div className="flex items-center justify-center mr-4">{icon}</div>
-        <div>
-          <Typography variant="Title18px" color="grey700Black">
+      <div className="flex items-center overflow-hidden">
+        <div className="flex items-center justify-center mr-4 flex-shrink-0">{icon}</div>
+        <div className="overflow-hidden">
+          <Typography
+            variant="Title18px"
+            color="grey700Black"
+            className="whitespace-nowrap overflow-hidden overflow-ellipsis"
+          >
             {name}
           </Typography>
           <Typography variant="Subtitle12px" color="grey300">
@@ -27,7 +31,7 @@ export const MemberCard = ({ name, position, status, icon, checked, onToggle }: 
           </Typography>
         </div>
       </div>
-      <Typography variant="Title14px" color="grey500" className="flex flex-row gap-1">
+      <Typography variant="Title14px" color="grey500" className="flex flex-row gap-1 flex-shrink-0">
         {status}
         {checked ? (
           <svg

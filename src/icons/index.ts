@@ -16,3 +16,8 @@ export { default as ChevronDownIcon } from '@/icons/ChevronDownIcon.svg';
 export { default as PersonFilledIcon } from '@/icons/PersonFilled.svg';
 export { default as WorkConnectLogoIcon } from '@/icons/WorkConnectLogo.svg';
 export { default as Check1Icon } from '@/icons/Check1.svg';
+export { default as UserIcon } from '@/icons/User.svg';
+export { default as HashIcon } from '@/icons/Hash.svg';
+export { default as ImageIcon } from '@/icons/image.svg';
+export { default as PaperclipIcon } from '@/icons/paperclip.svg';
+export { default as ChevronRightIcon } from '@/icons/ChevronRight.svg';
