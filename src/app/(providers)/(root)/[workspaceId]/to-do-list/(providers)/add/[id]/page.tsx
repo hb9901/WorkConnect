@@ -140,7 +140,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   };
 
   return (
-    <>
+    <div className="bg-white">
       <header>
         <Header />
       </header>
@@ -261,7 +261,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
           handleSetEndTime={handleSetEndTime}
         />
       </BottomSheet>
-    </>
+    </div>
   );
 };
 
