@@ -11,7 +11,9 @@ import Todo from '../Todo/Todo';
 import { isDateSelected } from './function';
 
 type ToDoListProps = {
+type ToDoListProps = {
   todoList: Tables<'todo'>[] | undefined;
+} & VariantProps<typeof todoListClass>;
 } & VariantProps<typeof todoListClass>;
 
 const ToDoList = ({ todoList, title }: ToDoListProps) => {
