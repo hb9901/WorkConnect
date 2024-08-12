@@ -1,17 +1,16 @@
 'use client';
+import useWorkspaceId from '@/hooks/useWorkspaceId';
 import ArrowLeftIcon from '@/icons/ArrowLeft.svg';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const BackButton = () => {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.back();
-  };
+  const workspaceId = useWorkspaceId();
 
   return (
-    <button className="flex items-center justify-start w-[24px] h-[24px]" onClick={handleClick}>
-      <ArrowLeftIcon className="" />
+    <button>
+      <Link href={`/${workspaceId}`} className="flex items-center justify-start w-[24px] h-[24px]" scroll={false}>
+        <ArrowLeftIcon className="" />
+      </Link>
     </button>
   );
 };

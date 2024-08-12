@@ -13,7 +13,7 @@ const MemberCard = ({ workspaceUser }: MemberCardProps) => {
   const workspaceId = useWorkspaceId();
 
   return (
-    <Link href={`/${workspaceId}/profile/${workspaceUser.id}`}>
+    <Link href={`/${workspaceId}/profile/${workspaceUser.id}`} scroll={false}>
       <div className="flex flex-row items-center justify-between py-[16px]">
         <div className="flex flex-row items-center gap-[12px]">
           <MemberImg profileImage={workspaceUser.profile_image} name={workspaceUser.name} />

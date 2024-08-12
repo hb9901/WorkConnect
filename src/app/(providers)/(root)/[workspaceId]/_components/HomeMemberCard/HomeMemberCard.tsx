@@ -22,7 +22,11 @@ const HomeMemberCard = () => {
   const state = workspaceUser.state;
 
   return (
-    <Link href={`${workspaceId}/profile/${workspaceUserId}`} className="flex flex-row gap-[16px] items-center">
+    <Link
+      href={`/${workspaceId}/profile/${workspaceUserId}`}
+      scroll={false}
+      className="flex flex-row gap-[16px] items-center"
+    >
       <div className="flex flex-shrink-0 items-center justify-center relative w-[56px] h-[56px] rounded-full bg-[#BDBDBD] lg:size-[67px] lg:w-[67px] ">
         {profileImg ? (
           <Image
