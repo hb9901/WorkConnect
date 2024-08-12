@@ -26,7 +26,7 @@ const HomeParallelLayout = ({ children, profile }: StrictPropsWithChildren<HomeP
   return (
     <>
       <PageLayout title="" showTopBar={false}>
-        <SelectHeader workspaceId={workspaceId} isFull />
+        <SelectHeader workspaceId={workspaceId} isFull isHidden={paths[2] === 'profile'} />
         <div className="flex lg:flex-row">
           <div className="hidden lg:flex">{children}</div>
           <div className="w-full lg:min-w-[374px] lg:max-w-[374px]"></div>

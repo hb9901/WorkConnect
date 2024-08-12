@@ -105,7 +105,7 @@ const ProfileEditPage = () => {
 
   return (
     <div>
-      <Header title="프로필 편집" type="edit" />
+      <Header title="내 프로필 편집" type="edit" />
       <main>
         <div className="flex flex-col w-full items-center px-5 relative">
           <div className={AvatarVariants({ isImageExist: imageURL ? true : false })}>
@@ -121,8 +121,8 @@ const ProfileEditPage = () => {
             ) : (
               <AvatarIcon className="w-[84px] h-[84px] bg-[#BDBDBD]" />
             )}
-            <button className="absolute bottom-0 right-0">
-              <label htmlFor="profile">
+            <button className="absolute bottom-0 right-0 ">
+              <label htmlFor="profile" className="hover:cursor-pointer">
                 <div className="flex items-center justify-center w-[46px] h-[46px] rounded-full bg-[#FAFAFA]">
                   <CameraIcon className="w-[24px] h-[24px]" />
                 </div>
