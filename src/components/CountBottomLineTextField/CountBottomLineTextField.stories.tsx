@@ -1,9 +1,9 @@
-import { Meta, StoryFn } from '@storybook/react';
-import BottomLineTextFieldCount, { CountBottomLineTextFieldProps } from './CountBottomLineTextField';
+import { StoryFn } from '@storybook/react';
+import CountBottomLineTextField, { CountBottomLineTextFieldProps } from './CountBottomLineTextField';
 
 export default {
-  title: 'Components/BottomLineTextFieldCount',
-  component: BottomLineTextFieldCount,
+  title: 'Components/CountBottomLineTextField',
+  component: CountBottomLineTextField,
   parameters: {
     layout: 'centered'
   },
@@ -23,14 +23,14 @@ export default {
       }
     }
   }
-} as Meta;
+};
 
-const Template: StoryFn<CountBottomLineTextFieldProps> = (args) => <BottomLineTextFieldCount {...args} />;
+const Template: StoryFn<CountBottomLineTextFieldProps> = (args) => <CountBottomLineTextField {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   label: '이메일',
-  labelClassName: 'text-sm',
+  placeholder: '이메일을 입력해주세요.',
   onChange: () => {},
   LabelColor: 'grey700Black',
   defaultValue: ''
