@@ -11,6 +11,10 @@ import { useEffect, useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { getWorkspaceUserIdCookie, setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/cookie/workspace';
 import { TopBar } from '@/components/TopBar';
+import Button from '@/components/Button';
+import Input from '@/components/Input';
+import Typography from '@/components/Typography';
+import WorkConnectLogoIcon from '@/icons/WorkConnectLogo.svg';
 
 const getRandomNumbers = (count: number, min: number, max: number) => {
   const range = Array.from({ length: max - min + 1 }, (_, i) => i + min);
@@ -191,39 +195,52 @@ const NewWorkSpacePage = () => {
     getWorkspaceUser();
   }, []);
 
+  // TODO:
   return (
-    <main className="flex justify-center items-center">
-      <div className="flex flex-col w-[375px] h-dvh px-4">
-        <TopBar title="워크스페이스 만들기" style={{ padding: '0px' }} />
-        <strong className="text-[20px] text-[#2E2E2E] font-semibold mt-[42px] mb-[28px] flex items-center">
-          계정 정보 입력
-        </strong>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleJoinMutate();
-          }}
-        >
-          <div className="flex flex-col">
-            <label className="text-[14px] text-[#333] opacity-60 pl-[6px]" htmlFor="email">
-              조직이름
-            </label>
-            <input
-              className="py-[12px] px-[16px] mt-2 mb-4 rounded-lg border border-[#C7C7C7] shadow-md focus:outline-none"
-              type="text"
-              placeholder="회사, 단체, 조직 이름을 입력해 주세요"
-              value={orgName}
-              onChange={(e) => setOrgName(e.target.value)}
-              maxLength={20}
-              required={true}
-            />
+    <main className="flex justify-center items-center w-full h-dvh">
+      <div className="flex flex-col w-[375px] lg:w-[590px] h-dvh px-4">
+        <div className="flex flex-col items-center mt-[109px]">
+          <div className="w-[105px] h-[55px] lg:w-[95px] lg:h-[50px] lg:mb-9">
+            <WorkConnectLogoIcon className="w-full h-full" />
           </div>
-          <div className="flex justify-center">
-            <button className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md">
-              {handleJoin.isPending ? '가입중입니다...' : '가입하기'}
-            </button>
+        </div>
+
+        <div className="lg:border lg:px-[42px] lg:py-[72px] lg:rounded-lg">
+          <div className="mt-8 mb-7 flex flex-col items-center gap-3">
+            <Typography variant="Title20px" className="lg:text-[36px]" color="grey700Black">
+              협업의 새로운 연결, 워크커넥트
+            </Typography>
+            <Typography variant="Subtitle14px" className="lg:text-[18px]" color="grey500">
+              새 워크스페이스를 만들려면 계정 정보가 필요해요
+            </Typography>
           </div>
-        </form>
+          <div className="lg:px-[55px]">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col">
+                <Typography variant="Body14px" color="grey700Black" className="mb-2">
+                  조직 이름
+                </Typography>
+                <Input
+                  value={orgName}
+                  onChange={(e) => setOrgName(e.target.value)}
+                  placeholder="회사, 단체, 조직 이름을 입력해주세요"
+                />
+              </div>
+            </div>
+            <div className="flex justify-center mt-4">
+              <Button
+                theme="primary"
+                onClick={() => handleJoinMutate()}
+                isDisabled={handleJoin.isPending}
+                isFullWidth={true}
+              >
+                <Typography variant="Subtitle18px" className="text-white">
+                  {handleJoin.isPending ? '초대코드 확인 중...' : '가입하기'}
+                </Typography>
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   );
