@@ -43,15 +43,10 @@ const HomeMemberCard = () => {
       </div>
       <div className="flex flex-col gap-[4px] w-full lg:flex-row lg:justify-between">
         <ResponsiveTypography mobileVariant="Title18px" pcVariant="Title20px" color="grey700Black">
-      <div className="flex flex-col gap-[4px] w-full lg:flex-row lg:justify-between">
-        <ResponsiveTypography mobileVariant="Title18px" pcVariant="Title20px" color="grey700Black">
           {workspaceUser.name}
         </ResponsiveTypography>
         <ResponsiveTypography mobileVariant="Title14px" pcVariant="Title16px" color="grey700Black">
-        </ResponsiveTypography>
-        <ResponsiveTypography mobileVariant="Title14px" pcVariant="Title16px" color="grey700Black">
           {workspaceUser.state}
-        </ResponsiveTypography>
         </ResponsiveTypography>
       </div>
     </Link>

@@ -11,7 +11,6 @@ const WeekDate = () => {
 
   return (
     <div className="flex flex-row justify-between items-center mt-[30px] mb-8px lg:flex-col lg:mt-0">
-    <div className="flex flex-row justify-between items-center mt-[30px] mb-8px lg:flex-col lg:mt-0">
       {weekDates.map((date, index) => (
         <div className="w-full" key={date.date()}>
           <MobileDate
