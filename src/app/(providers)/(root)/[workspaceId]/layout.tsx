@@ -14,7 +14,7 @@ const HomeParallelLayout = ({ children, profile }: StrictPropsWithChildren<HomeP
   const paths = usePathname().split('/');
 
   //프로필 페이지 이외의 헤더
-  if (paths.length > 2 && paths[2] !== 'profile')
+  if (paths.length > 2 && paths[2] !== 'profile' && paths[2] !== 'to-do-list')
     return (
       <>
         <PageLayout title="" showTopBar={false}>
@@ -28,7 +28,7 @@ const HomeParallelLayout = ({ children, profile }: StrictPropsWithChildren<HomeP
     return (
       <>
         <PageLayout title="" showTopBar={false}>
-          <SelectHeader workspaceId={workspaceId} isFull isHidden={paths[2] === 'profile'} />
+          <SelectHeader workspaceId={workspaceId} isFull isHidden />
           <div className="flex lg:flex-row">
             <div className="hidden lg:flex">{children}</div>
             <div className="w-full lg:min-w-[374px] lg:max-w-[374px]"></div>
@@ -40,12 +40,22 @@ const HomeParallelLayout = ({ children, profile }: StrictPropsWithChildren<HomeP
       </>
     );
 
+  //todolist 페이지 헤더
+  if (paths.length > 2 && paths[2] === 'to-do-list')
+    return (
+      <>
+        <PageLayout title="" showTopBar={false}>
+          <SelectHeader workspaceId={workspaceId} isTodoList />
+          <div className="">{children}</div>
+        </PageLayout>
+      </>
+    );
   //홈 페이지 헤더
   return (
     <>
       <PageLayout title="" showTopBar={false}>
-        <SelectHeader workspaceId={workspaceId} isFull isHidden={paths[2] === 'profile'} />
-        <div className="hidden lg:flex">{children}</div>
+        <SelectHeader workspaceId={workspaceId} isFull />
+        <div className="">{children}</div>
       </PageLayout>
     </>
   );

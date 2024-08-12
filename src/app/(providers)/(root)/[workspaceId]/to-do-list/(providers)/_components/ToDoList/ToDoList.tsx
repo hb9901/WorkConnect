@@ -22,7 +22,7 @@ const ToDoList = ({ todoList, title }: ToDoListProps) => {
   if (!selectedTodoList) return;
   return (
     <div className={todoListClass({ title })}>
-      <div className={todoListBackdropClass({ title })} />
+      {/* <div className={todoListBackdropClass({ title })} /> */}
       <div className="mb-[12px] lg:flex lg:flex-row lg:items-center lg:gap-[12px]">
         {title === '진행 전' ? (
           <MinusCircleIcon className="hidden lg:flex w-[20px] h-[20px] stroke-[#737B91]" />

@@ -12,7 +12,7 @@ const WeekDate = () => {
   return (
     <div className="flex flex-row justify-between items-center mt-[30px] mb-8px lg:flex-col lg:mt-0">
       {weekDates.map((date, index) => (
-        <>
+        <div className="w-full" key={date.date()}>
           <MobileDate
             weekName={weekNames[index]}
             date={date}
@@ -23,7 +23,7 @@ const WeekDate = () => {
             date={date}
             isSelected={selectedDate.month() === date.month() && selectedDate.date() === date.date()}
           />
-        </>
+        </div>
       ))}
     </div>
   );
