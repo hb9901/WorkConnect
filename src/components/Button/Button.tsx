@@ -12,6 +12,7 @@ interface ButtonProps {
   isFullWidth?: boolean;
   isSmall?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  isLoading?: boolean;
 }
 
 const styles = {
@@ -32,6 +33,7 @@ const Button = ({
   isFullWidth = false,
   isSmall = false,
   type = 'button',
+  isLoading = false,
   ...props
 }: ButtonProps) => {
   const disabledStyle = theme === 'primary' ? styles.primaryDisabled : styles.greyDisabled;

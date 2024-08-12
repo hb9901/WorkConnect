@@ -1,6 +1,6 @@
 import LoadingSpinner from '@/components/LoadingSpinner';
 
-const page = () => {
+const loading = () => {
   return (
     <div className="flex items-center justify-center my-auto min-h-screen">
       <LoadingSpinner />
@@ -8,4 +8,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default loading;

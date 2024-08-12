@@ -12,7 +12,7 @@ const DotLottiePlayer = dynamic(() => import('@lottiefiles/dotlottie-react').the
 });
 
 const LoadingSpinner = ({ className }: LoadingSpinnerProps) => {
-  return <DotLottiePlayer src="/lotties/Loading.lottie" loop autoplay className={clsx('w-60 h-60', className)} />;
+  return <DotLottiePlayer src="/lotties/Loading.lottie" loop autoplay className={clsx('w-72 h-72', className)} />;
 };
 
 export default LoadingSpinner;
