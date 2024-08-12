@@ -4,20 +4,28 @@ import Typography from '@/components/Typography';
 import ChevronLeftIcon from '@/icons/ChevronLeft.svg';
 import ChevronRightIcon from '@/icons/ChevronRight.svg';
 import useDateStore from '@/store/dateStore';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useShallow } from 'zustand/react/shallow';
 
 const WeekButtons = () => {
-  const { selectedDate, handleClickNextWeek, handleClickPreviousWeek, handleClickDate } = useDateStore(
-    useShallow((state) => ({
-      selectedDate: state.selectedDate,
-      handleClickNextWeek: state.handleClickNextWeek,
-      handleClickPreviousWeek: state.handleClickPreviousWeek,
-      handleClickDate: state.handleClickDate
-    }))
-  );
+  const { selectedDate, isWeekly, changeIsWeekly, handleClickNext, handleClickPrevious, handleClickDate } =
+    useDateStore(
+      useShallow((state) => ({
+        selectedDate: state.selectedDate,
+        isWeekly: state.isWeekly,
+        changeIsWeekly: state.changeIsWeekly,
+        handleClickNext: state.handleClickNext,
+        handleClickPrevious: state.handleClickPrevious,
+        handleClickDate: state.handleClickDate
+      }))
+    );
   const date = dayjs(selectedDate).format('YYYY.MM.');
   const today = dayjs();
+
+  const handleClickWeekOrMonth = (today: Dayjs) => {
+    changeIsWeekly();
+    handleClickDate(today);
+  };
 
   return (
     <div className="flex flex-row justify-between lg:px-[12px] lg:py-[14px]">
@@ -27,23 +35,26 @@ const WeekButtons = () => {
         </Typography>
         <div className="flex flex-row gap-[8px]">
           <button
-            onClick={handleClickPreviousWeek}
+            onClick={handleClickPrevious}
             className="flex items-center justify-center w-[20px] h-[20px] rounded-full border-[1px] border-[#737B91]"
           >
             <div>
               <ChevronLeftIcon className="w-[10px] h-[10px]" />
             </div>
           </button>
-          <button onClick={handleClickNextWeek}>
+          <button onClick={handleClickNext}>
             <div className="flex items-center justify-center w-[20px] h-[20px] rounded-full border-[1px] border-[#737B91]">
               <ChevronRightIcon className="w-[10px] h-[10px]" />
             </div>
           </button>
         </div>
       </div>
-      <button onClick={() => handleClickDate(today)}>
-        <Typography variant="Subtitle16px" color="grey500">
-          오늘
+      <button
+        onClick={() => handleClickWeekOrMonth(today)}
+        className="flex flex-shrink-0 w-[50px] px-[2px] justify-center items-center rounded-[14px] bg-[#F7F7F7] lg:bg-[#E5E7EB]"
+      >
+        <Typography variant="Subtitle16px" color="grey700Black">
+          {isWeekly ? '월' : '주'}
         </Typography>
       </button>
     </div>
