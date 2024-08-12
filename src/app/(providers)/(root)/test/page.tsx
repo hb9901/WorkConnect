@@ -1,9 +1,9 @@
-import Loading from '@/components/Loading';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const page = () => {
   return (
     <div>
-      <Loading />
+      <LoadingSpinner />
     </div>
   );
 };
