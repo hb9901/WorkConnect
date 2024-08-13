@@ -1,7 +1,5 @@
-'use client';
 import { PageLayout } from '@/components/PageLayout';
 import SelectHeader from '@/components/SelectHeader';
-import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { StrictPropsWithChildren } from '@/types/common';
 import PcHeader from '../../_components/PcHeader';
 
@@ -13,7 +11,7 @@ interface ProfileParallelLayoutProps {
 }
 
 const ProfileParallelLayout = ({ children, todolist, params }: StrictPropsWithChildren<ProfileParallelLayoutProps>) => {
-  const workspaceId = useWorkspaceId();
+  const workspaceId = Number(params.workspaceId);
 
   return (
     <>
@@ -23,9 +21,7 @@ const ProfileParallelLayout = ({ children, todolist, params }: StrictPropsWithCh
           <PcHeader />
           {todolist}
         </div>
-        <div className="w-full lg:max-w-[calc((100dvw-297px)/3)] lg:absolute lg:top-[84px] lg:right-0 lg:transition-all lg:duration-200">
-          {children}
-        </div>
+        <div className="w-full">{children}</div>
       </div>
       {/*PC 레이아웃 */}
       <div className="hidden lg:grid">
@@ -35,8 +31,10 @@ const ProfileParallelLayout = ({ children, todolist, params }: StrictPropsWithCh
             <PcHeader />
             {todolist}
           </div>
-          <div className="w-full lg:max-w-[calc((100dvw-297px)/3)] lg:absolute lg:top-[84px] lg:right-0 lg:transition-all lg:duration-200">
-            {children}
+          <div className="hidden lg:absolute lg:inline-grid lg:grid-cols-3 lg:gap-[12px] lg:bottom-0 lg:left-[400px] lg:top-[108px] lg:right-[17px] lg:rounded-[6px]">
+            <div />
+            <div />
+            <div className="lg:h-full lg:w-full lg:bg-white"> {children}</div>
           </div>
         </PageLayout>
       </div>
