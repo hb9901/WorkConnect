@@ -24,9 +24,15 @@ export const PageLayout = ({
       {showBottomBar && (
         <>
           <div className="h-[78px] lg:hidden" />
-          <BottomNavigationBar className="fixed bottom-0 left-0 z-30 xs:w-full w-full lg:top-[84px] lg:w-[87px] lg:h-[vh100%] lg:bg-[#F4F4F6] lg:border-r-[1px] lg:border-grey50" />
+          <BottomBar />
         </>
       )}
     </>
+  );
+};
+
+export const BottomBar = () => {
+  return (
+    <BottomNavigationBar className="fixed bottom-0 left-0 z-30 xs:w-full w-full lg:top-[84px] lg:w-[87px] lg:h-[vh100%] lg:bg-[#F4F4F6] lg:border-r-[1px] lg:border-grey50" />
   );
 };
