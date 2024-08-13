@@ -3,14 +3,14 @@ import SelectHeader from '@/components/SelectHeader';
 import { StrictPropsWithChildren } from '@/types/common';
 import PcHeader from '../../_components/PcHeader';
 
-interface ProfileParallelLayoutProps {
+interface TodoAddLayoutProps {
   todolist: React.ReactNode;
   params: {
     workspaceId: string;
   };
 }
 
-const ProfileParallelLayout = ({ children, todolist, params }: StrictPropsWithChildren<ProfileParallelLayoutProps>) => {
+const TodoAddLayout = ({ children, todolist, params }: StrictPropsWithChildren<TodoAddLayoutProps>) => {
   const workspaceId = Number(params.workspaceId);
 
   return (
@@ -42,4 +42,4 @@ const ProfileParallelLayout = ({ children, todolist, params }: StrictPropsWithCh
   );
 };
 
-export default ProfileParallelLayout;
+export default TodoAddLayout;

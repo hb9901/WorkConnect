@@ -140,11 +140,11 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white px-[16px]">
       <header>
         <Header />
       </header>
-      <div className="flex flex-col gap-[20px] mt-[24px] px-[16px]">
+      <div className="flex flex-col gap-[20px] mt-[24px]">
         <TextField
           id="1"
           label="일정 이름"
