@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
+import ButtonLoadingSpinner from '../ButtonLoadingSpinner';
 
 type ButtonTheme = 'primary' | 'grey' | 'text' | 'underlineText' | 'outline';
 
@@ -12,6 +13,7 @@ interface ButtonProps {
   isFullWidth?: boolean;
   isSmall?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  isLoading?: boolean;
 }
 
 const styles = {
@@ -32,6 +34,7 @@ const Button = ({
   isFullWidth = false,
   isSmall = false,
   type = 'button',
+  isLoading = false,
   ...props
 }: ButtonProps) => {
   const disabledStyle = theme === 'primary' ? styles.primaryDisabled : styles.greyDisabled;
@@ -54,7 +57,7 @@ const Button = ({
       style={boxShadowStyle}
       {...props}
     >
-      {children}
+      {isLoading ? <ButtonLoadingSpinner /> : children}
     </button>
   );
 };

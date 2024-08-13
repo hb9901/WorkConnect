@@ -1,10 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import Typography from '../Typography';
 import { ArrowLeftIcon } from '@/icons';
-import type { ComponentProps, ReactNode } from 'react';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
+import type { ComponentProps, ReactNode } from 'react';
+import Typography from '../Typography';
 
 export const BackButton = () => {
   const router = useRouter();

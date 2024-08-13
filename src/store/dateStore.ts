@@ -1,30 +1,40 @@
-import dayjs, { Dayjs } from "dayjs";
-import { create } from "zustand";
+import dayjs, { Dayjs } from 'dayjs';
+import { create } from 'zustand';
 
 interface TDateState {
+  isWeekly: boolean;
   selectedDate: Dayjs;
-  handleClickNextWeek: () => void;
-  handleClickPreviousWeek: () => void;
+  changeIsWeekly: () => void;
+  handleClickNext: () => void;
+  handleClickPrevious: () => void;
   handleClickDate: (newDate: Dayjs) => void;
 }
 
 const useDateStore = create<TDateState>((set, get) => ({
+  isWeekly: true,
   selectedDate: dayjs(),
-  handleClickNextWeek: () => {
+  changeIsWeekly: () => {
+    const prevIsWeekly = get().isWeekly;
+
+    set({ isWeekly: !prevIsWeekly });
+  },
+  handleClickNext: () => {
     const selectedDate = get().selectedDate;
-    const newDate = selectedDate.add(1, "week");
+    const isWeekly = get().isWeekly;
+    const newDate = isWeekly ? selectedDate.add(1, 'week') : selectedDate.add(1, 'month');
 
     set({ selectedDate: newDate });
   },
-  handleClickPreviousWeek: () => {
+  handleClickPrevious: () => {
     const selectedDate = get().selectedDate;
-    const newDate = selectedDate.add(-1, "week");
+    const isWeekly = get().isWeekly;
+    const newDate = isWeekly ? selectedDate.add(-1, 'week') : selectedDate.add(-1, 'month');
 
     set({ selectedDate: newDate });
   },
   handleClickDate: (newDate: Dayjs) => {
     set({ selectedDate: newDate });
-  },
+  }
 }));
 
 export default useDateStore;

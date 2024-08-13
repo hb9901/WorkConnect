@@ -3,6 +3,7 @@ import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 
 import useStreamSetStore from '@/store/streamSetStore';
 
+import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useUserStore from '@/store/userStore';
 import { LocalUserChoices, usePersistentUserChoices } from '@livekit/components-react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -15,7 +16,8 @@ const PreJoinContent = () => {
   const room = searchParams.get('room');
 
   const router = useRouter();
-  const { workspaceUserId, workspaceId } = useUserStore();
+  const workspaceId = useWorkspaceId();
+  const { workspaceUserId } = useUserStore();
   const { workspaceUser } = useWorkspaceUser(workspaceUserId);
   const { userChoices, saveUsername } = usePersistentUserChoices();
   const { setIsSettingOk } = useStreamSetStore();
@@ -40,15 +42,17 @@ const PreJoinContent = () => {
   return (
     <div className="h-[100vh] bg-[#fff] flex flex-col mt-0">
       <PrejoinHeader />
-      <CustomPrejoin
-        joinLabel={'입장하기'}
-        userLabel={userChoices!.username}
-        defaults={userChoices}
-        onSubmit={handlePreJoinSubmit}
-        onValidate={(values) => {
-          return true;
-        }}
-      />
+      <main className="flex-glow pt-[84px] md:pt-[144px]">
+        <CustomPrejoin
+          joinLabel={'지금 참가'}
+          userLabel={userChoices!.username}
+          defaults={userChoices}
+          onSubmit={handlePreJoinSubmit}
+          onValidate={(values) => {
+            return true;
+          }}
+        />
+      </main>
     </div>
   );
 };

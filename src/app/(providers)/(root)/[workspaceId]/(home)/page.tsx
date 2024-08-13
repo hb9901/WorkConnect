@@ -3,7 +3,7 @@ import MemberList from '../_components/MemberList';
 
 const Homepage = () => {
   return (
-    <div className="px-[16px] mt-[26px] sm:mt-[22px] sm:pl-[42px] sm:pr-[16px] sm:gap-[42px]">
+    <div className="px-[16px] mt-[26px] lg:mt-[22px] lg:pl-[42px] lg:pr-[16px] lg:gap-[42px]">
       <HomeMemberCard />
       <MemberList />
     </div>

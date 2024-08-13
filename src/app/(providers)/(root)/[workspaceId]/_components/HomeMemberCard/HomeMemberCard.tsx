@@ -1,5 +1,5 @@
 'use client';
-import Typography from '@/components/Typography';
+import ResponsiveTypography from '@/components/ResponsiveTypography';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import AvatarIcon from '@/icons/Avatar.svg';
@@ -22,38 +22,32 @@ const HomeMemberCard = () => {
   const state = workspaceUser.state;
 
   return (
-    <Link href={`${workspaceId}/profile/${workspaceUserId}`} className="flex flex-row gap-[16px] items-center">
-      <div className="flex items-center justify-center relative w-[56px] h-[56px] min-w-[56px] rounded-full bg-[#BDBDBD] sm:size-[67px] sm:min-w-[67px] ">
+    <Link
+      href={`/${workspaceId}/profile/${workspaceUserId}`}
+      scroll={false}
+      className="flex flex-row gap-[16px] items-center"
+    >
+      <div className="flex flex-shrink-0 items-center justify-center relative w-[56px] h-[56px] rounded-full bg-[#BDBDBD] lg:size-[67px] lg:w-[67px] ">
         {profileImg ? (
           <Image
             src={profileImg}
             alt={name}
-            className="object-cover min-w-[56px] size-[56px] rounded-full sm:min-x-[67px] sm:size-[67px] "
+            className="object-cover min-w-[56px] size-[56px] rounded-full lg:size-[67px] "
             fill
+            sizes="(max-width:1024px) 48px, 67px"
             priority
           />
         ) : (
-          <AvatarIcon className="w-[33.6px] h-[33.6px] min-w-[33.6px] sm:w-[40.3px] sm:h-[40.3px]" />
+          <AvatarIcon className="w-[33.6px] h-[33.6px] lg:w-[40.3px] lg:h-[40.3px]" />
         )}
       </div>
-      <div className="flex flex-col gap-[4px] w-full sm:flex-row sm:justify-between">
-        {/*모바일*/}
-        <Typography variant="Title18px" color="grey700Black" className="sm:hidden">
+      <div className="flex flex-col gap-[4px] w-full lg:flex-row lg:justify-between">
+        <ResponsiveTypography mobileVariant="Title18px" pcVariant="Title20px" color="grey700Black">
           {workspaceUser.name}
-        </Typography>
-        {/*pc*/}
-        <Typography variant="Title20px" color="grey700Black" className="hidden sm:flex">
-          {workspaceUser.name}
-        </Typography>
-
-        {/*모바일*/}
-        <Typography variant="Title14px" color="grey700Black" className="sm:hidden">
+        </ResponsiveTypography>
+        <ResponsiveTypography mobileVariant="Title14px" pcVariant="Title16px" color="grey700Black">
           {workspaceUser.state}
-        </Typography>
-        {/*pc*/}
-        <Typography variant="Title16px" color="grey700Black" className="hidden sm:flex">
-          {workspaceUser.state}
-        </Typography>
+        </ResponsiveTypography>
       </div>
     </Link>
   );
