@@ -2,17 +2,27 @@
 
 import { useEffect, useState } from 'react';
 import ChatList from '../_components/ChatList';
+import { ResponseList } from '../../_components/ResponseLayout';
+import ChatLayout from '../_components/ChatLayout';
+import { BottomBar } from '@/components/PageLayout';
+import clsx from 'clsx';
+import useIsPC from '@/hooks/useIsPc';
 
 const ChatSlot = () => {
-  const [isPC, setIsPC] = useState<boolean | null>(null);
+  const isPC = useIsPC();
 
-  useEffect(() => {
-    setIsPC(window.innerWidth >= 1024);
-  }, []);
-
-  if (!isPC) return null;
-
-  return <ChatList className="sm:hidden lg:block" />;
+  return (
+    <>
+      {!isPC && <BottomBar />}
+      <ResponseList className={clsx('hidden', isPC ? 'lg:block' : '')}>
+        {isPC && (
+          <ChatLayout>
+            <ChatList />
+          </ChatLayout>
+        )}
+      </ResponseList>
+    </>
+  );
 };
 
 export default ChatSlot;

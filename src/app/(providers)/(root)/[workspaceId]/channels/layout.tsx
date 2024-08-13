@@ -1,13 +1,17 @@
+'use client';
+
 import { StrictPropsWithChildren } from '@/types/common';
+import { ResponseContainer, ResponseContent } from './_components/ResponseLayout';
+import useIsPC from '@/hooks/useIsPc';
 
 const ChannelListLayout = ({ list, children }: StrictPropsWithChildren<{ list: React.ReactNode }>) => {
+  const isPC = useIsPC();
+
   return (
-    <div className="lg:pl-[87px] lg:flex">
-      <div className="w-full lg:max-w-[300px] lg:max-h-dvh lg:overflow-y-scroll lg:flex-shrink-0 scroll-container">
-        {list}
-      </div>
-      <div className="lg:w-[calc(100%-300px)]">{children}</div>
-    </div>
+    <ResponseContainer>
+      {list}
+      <ResponseContent isFullWidth={!isPC}>{children}</ResponseContent>
+    </ResponseContainer>
   );
 };
 

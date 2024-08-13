@@ -33,7 +33,7 @@ const ChannelItem = ({
   user_count
 }: ChannelItemProps) => {
   return (
-    <Link href={href}>
+    <Link href={href} className="block lg:hover:bg-primary25">
       <ChatCard
         date={dayjs(created_at).format('YYYY-MM-DD')}
         icon={<ChannelImage type={type} src={user_thumbnail} />}
