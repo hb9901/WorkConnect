@@ -33,7 +33,7 @@ const ChatNotice = () => {
   return (
     <>
       <Link
-        href={`/${workspaceId}/chat/${channelId}/notice`}
+        href={`/${workspaceId}/channels/${channelId}/notice`}
         className="fixed top-0 left-0 right-0 mx-4 h-[34px] shadow-2xl rounded-[4px] flex items-center gap-1 bg-[#F7F7F7] py-2 px-3 z-30"
       >
         <BellIcon className="shrink-0" />

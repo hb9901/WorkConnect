@@ -16,19 +16,19 @@ const SidebarMenuList = () => {
   const menuItems = useMemo(() => {
     return [
       {
-        href: `/${workspaceId}/chat/${id}/media`,
+        href: `/${workspaceId}/channels/${id}/media`,
         icon: ImageIcon,
         label: '사진·동영상',
         svgType: 'stroke'
       },
       {
-        href: `/${workspaceId}/chat/${id}/file`,
+        href: `/${workspaceId}/channels/${id}/file`,
         icon: PaperclipIcon,
         label: '파일',
         svgType: 'fill'
       },
       {
-        href: `/${workspaceId}/chat/${id}/notice`,
+        href: `/${workspaceId}/channels/${id}/notice`,
         icon: HashIcon,
         label: '공지',
         svgType: 'fill'

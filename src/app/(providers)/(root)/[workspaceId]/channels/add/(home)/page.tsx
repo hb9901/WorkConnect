@@ -35,7 +35,7 @@ const AddChatPage = () => {
     });
 
     if (existingChannelId) {
-      router.push(`/${workspaceId}/chat/${existingChannelId}`);
+      router.push(`/${workspaceId}/channels/${existingChannelId}`);
       return;
     }
 

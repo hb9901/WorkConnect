@@ -36,7 +36,7 @@ const useCreateChannel = () => {
     await createChannelUsers({ channel_id: channelId, workspaceUserIds: userIds });
 
     if (type === CHANNEL_TYPE.chat) {
-      router.push(`/${workspaceId}/chat/${channelId}`);
+      router.push(`/${workspaceId}/channels/${channelId}`);
       return;
     }
 

@@ -28,7 +28,7 @@ const Chats = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
   const { openContextMenu } = useContextMenu();
   const lastActiveAt = useMemo(() => getLastActiveAtForChannel({ usersInChannel, workspaceUserId }), [usersInChannel]);
 
-  const noticeUrl = `/${workspaceId}/chat/${channelId}/notice`;
+  const noticeUrl = `/${workspaceId}/channels/${channelId}/notice`;
 
   if (isEmpty(usersInChannel)) return null;
 
