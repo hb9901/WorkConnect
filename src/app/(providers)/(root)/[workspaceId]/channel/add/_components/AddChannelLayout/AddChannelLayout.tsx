@@ -1,9 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { PageLayout } from '@/components/PageLayout';
 import { Check1Icon, XIcon } from '@/icons';
 import { StrictPropsWithChildren } from '@/types/common';
+import { useRouter } from 'next/navigation';
 
 type AddChannelLayoutProps = {
   title: string;
