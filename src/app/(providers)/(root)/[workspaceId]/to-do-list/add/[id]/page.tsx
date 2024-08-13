@@ -1,7 +1,8 @@
 'use client';
 import BottomSheet from '@/components/BottomSheet';
 import Button from '@/components/Button';
-import TextField from '@/components/TextField';
+import CountTextField from '@/components/CountTextField';
+import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
 import useTodoList from '@/hooks/useTodo';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
@@ -20,8 +21,11 @@ import { Tables } from '@/types/supabase';
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import DateButtons from '../../_components/DateButtons';
+import MonthDate from '../../_components/MonthDate';
 import DateBottom from './_components/DateBottom/DateBottom';
+import DateModal from './_components/DateModal';
 import Header from './_components/Header';
 import InputCard from './_components/InputCard';
 import OptionCard from './_components/OptionCard';
@@ -51,6 +55,8 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const initStartTime = selectedTodo ? dayjs(selectedTodo.start_date) : initTime;
   const initEndTime = selectedTodo ? dayjs(selectedTodo.end_date) : initTime;
   const { selectedDate } = useDateStore();
+  const selectedDateStr = selectedDate.format('M월 DD일 선택');
+  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
 
   const {
     title,
@@ -139,19 +145,20 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     router.push(`/${workspaceId}/to-do-list`);
   };
 
+  const handleCalendarClick = () => {
+    setIsCalendarOpen((prev) => !prev);
+  };
+
   return (
-    <div className="bg-white">
+    <div className="bg-white px-[16px]">
       <header>
         <Header />
       </header>
-      <div className="flex flex-col gap-[20px] mt-[24px] px-[16px]">
-        <TextField
-          id="1"
+      <div className="flex flex-col gap-[20px] mt-[24px]">
+        <CountTextField
           label="일정 이름"
-          value={title}
           placeholder="일정 이름을 입력해주세요."
-          LabelColor="grey700Black"
-          children=""
+          value={title}
           onChange={handleTitleChange}
         />
         <div className="flex flex-col gap-[6px]">
@@ -159,10 +166,12 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
             기본 설정
           </Typography>
           <InputCard>
-            <CalendarIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
-            <Typography variant="Subtitle16px" color="grey700Black">
-              {date}
-            </Typography>
+            <button className="flex flex-row w-full gap-[12px]" onClick={handleCalendarClick}>
+              <CalendarIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
+              <Typography variant="Subtitle16px" color="grey700Black">
+                {date}
+              </Typography>
+            </button>
           </InputCard>
           <InputCard>
             <ClockIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
@@ -251,16 +260,47 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
         </Button>
       </div>
 
-      <BottomSheet isOpen={isBottomSheetOpen} onClose={hanldeBottomSheetClick}>
-        <DateBottom
-          isStartTime={isStartTime}
-          handleClose={hanldeBottomSheetClick}
-          startTime={startTime}
-          endTime={endTime}
-          handleSetStartTime={handleSetStartTime}
-          handleSetEndTime={handleSetEndTime}
-        />
-      </BottomSheet>
+      <div className="lg:hidden">
+        <BottomSheet isOpen={isBottomSheetOpen} onClose={hanldeBottomSheetClick}>
+          <DateBottom
+            isStartTime={isStartTime}
+            handleClose={hanldeBottomSheetClick}
+            startTime={startTime}
+            endTime={endTime}
+            handleSetStartTime={handleSetStartTime}
+            handleSetEndTime={handleSetEndTime}
+          />
+        </BottomSheet>
+      </div>
+      <div className="hidden lg:flex">
+        <Modal isOpen={isBottomSheetOpen} onClose={hanldeBottomSheetClick} isModal={false}>
+          <DateBottom
+            isStartTime={isStartTime}
+            handleClose={hanldeBottomSheetClick}
+            startTime={startTime}
+            endTime={endTime}
+            handleSetStartTime={handleSetStartTime}
+            handleSetEndTime={handleSetEndTime}
+          />
+        </Modal>
+      </div>
+
+      <div className="lg:hidden">
+        <BottomSheet isOpen={isCalendarOpen} onClose={handleCalendarClick}>
+          <div className="">
+            <DateButtons showWeeklyButton={false} />
+            <div className="mb-[24px]">
+              <MonthDate />
+            </div>
+            <Button theme="primary" onClick={handleCalendarClick} isFullWidth>
+              {selectedDateStr}
+            </Button>
+          </div>
+        </BottomSheet>
+      </div>
+      <div className="hidden lg:flex">
+        <DateModal isOpen={isCalendarOpen} onClose={handleCalendarClick} />
+      </div>
     </div>
   );
 };

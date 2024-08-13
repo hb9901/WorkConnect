@@ -10,22 +10,19 @@ const useInput = () => {
   const [phone, setPhone] = useState<string | undefined>('');
   const [isPhoneBottomOpen, setIsPhoneBottomOpen] = useState<boolean>(false);
 
-  const handleNameClick = (value: string | undefined) => {
+  const handleNameChange = (value: string | undefined) => {
     setName(value);
-    setIsNameBottomOpen((prev) => !prev);
   };
 
-  const handleStatusClick = (value: string | undefined) => {
+  const handleStateChange = (value: string | undefined) => {
     setState(value);
-    setIsStatusBottomOpen((prev) => !prev);
   };
-  const handleEmailClick = (value: string | undefined) => {
+
+  const handleEmailChange = (value: string | undefined) => {
     setEmail(value);
-    setIsEmailBottomOpen((prev) => !prev);
   };
-  const handlePhoneClick = (value: string | undefined) => {
+  const handlePhoneChange = (value: string | undefined) => {
     setPhone(value);
-    setIsPhoneBottomOpen((prev) => !prev);
   };
 
   const editInputs = [
@@ -33,25 +30,25 @@ const useInput = () => {
       label: '이름',
       value: name,
       isOpen: isNameBottomOpen,
-      onClick: handleNameClick
+      onChange: handleNameChange
     },
     {
       label: '활동상태',
       value: state,
       isOpen: isStatusBottomOpen,
-      onClick: handleStatusClick
+      onChange: handleStateChange
     },
     {
       label: '이메일',
       value: email,
       isOpen: isEmailBottomOpen,
-      onClick: handleEmailClick
+      onChange: handleEmailChange
     },
     {
       label: '전화번호',
       value: phone,
       isOpen: isPhoneBottomOpen,
-      onClick: handlePhoneClick
+      onChange: handlePhoneChange
     }
   ];
 

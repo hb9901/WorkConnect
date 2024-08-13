@@ -1,19 +1,15 @@
 'use client';
 import api from '@/api/api';
 import Button from '@/components/Button';
-import TextFieldButton from '@/components/TextFieldButton';
+import EditTextfield from '@/components/EditTextField';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
-import AvatarIcon from '@/icons/Avatar.svg';
-import CameraIcon from '@/icons/Camera.svg';
 import useUserStore from '@/store/userStore';
-import { cva } from 'class-variance-authority';
-import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Header from '../_components/Header';
+import ProfileImgButton from '../_components/ProfileImgButton';
 import IsOpenInput from './_components/Input/IsOpenInput';
-import InputBottomSheet from './_components/InputBottomSheets/InputBottomSheet';
 import useInput from './_hooks/useInput';
 
 const ProfileEditPage = () => {
@@ -108,37 +104,18 @@ const ProfileEditPage = () => {
       <Header title="내 프로필 편집" type="edit" />
       <main>
         <div className="flex flex-col w-full items-center px-5 relative">
-          <div className={AvatarVariants({ isImageExist: imageURL ? true : false })}>
-            {imageURL ? (
-              <Image
-                src={imageURL.toString()}
-                alt="프로필이미지"
-                className="object-cover rounded-full"
-                fill
-                priority
-                sizes="140px"
-              />
-            ) : (
-              <AvatarIcon className="w-[84px] h-[84px] bg-[#BDBDBD]" />
-            )}
-            <button className="absolute bottom-0 right-0">
-              <label htmlFor="profile" className="hover:cursor-pointer">
-                <div className="flex items-center justify-center w-[46px] h-[46px] rounded-full bg-[#FAFAFA]">
-                  <CameraIcon className="w-[24px] h-[24px]" />
-                </div>
-              </label>
-            </button>
-          </div>
-          <input id="profile" type="file" accept="image/*" onChange={handleProfileImageChange} className="hidden" />
-          <div className="flex flex-col w-full gap-[12px] mb-[30px]">
+          <ProfileImgButton imageURL={imageURL} handleProfileImageChange={handleProfileImageChange} />
+          <div className="flex flex-col w-full gap-[16px] mb-[30px]">
             {editInputs.map((editInput) => (
-              <TextFieldButton
-                key={editInput.label}
-                LabelColor="grey400"
-                label={editInput.label}
-                value={editInput.value}
-                onClick={() => editInput.onClick(editInput.value)}
-              />
+              <>
+                <EditTextfield
+                  key={editInput.label}
+                  label={editInput.label}
+                  labelColor="grey400"
+                  onChange={() => editInput.onChange(editInput.value)}
+                />
+                <div className="lg:border-grey50 lg:border-b-[1px]" />
+              </>
             ))}
             <IsOpenInput isOpen={isOpen} handleIsOpenClick={handleIsOpenClick} />
           </div>
@@ -147,27 +124,8 @@ const ProfileEditPage = () => {
           </Button>
         </div>
       </main>
-
-      {editInputs.map((editInput) => (
-        <InputBottomSheet editInput={editInput} key={editInput.label} />
-      ))}
     </div>
   );
 };
 
 export default ProfileEditPage;
-
-const AvatarVariants = cva(
-  'mt-[54px] flex items-center justify-center w-[140px] h-[140px] aspect-auto relative rounded-full',
-  {
-    variants: {
-      isImageExist: {
-        true: '',
-        false: 'bg-[#BDBDBD]'
-      }
-    },
-    defaultVariants: {
-      isImageExist: false
-    }
-  }
-);

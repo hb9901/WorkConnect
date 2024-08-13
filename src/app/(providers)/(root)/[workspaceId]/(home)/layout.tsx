@@ -1,21 +1,21 @@
-'use client';
 import { PageLayout } from '@/components/PageLayout';
 import SelectHeader from '@/components/SelectHeader';
-import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { StrictPropsWithChildren } from '@/types/common';
 
 interface HomeParallelLayoutProps {
-  profile: React.ReactNode;
+  params: {
+    workspaceId: string;
+  };
 }
 
-const HomeParallelLayout = ({ children }: StrictPropsWithChildren<HomeParallelLayoutProps>) => {
-  const workspaceId = useWorkspaceId();
+const HomeParallelLayout = ({ children, params }: StrictPropsWithChildren<HomeParallelLayoutProps>) => {
+  const workspaceId = Number(params.workspaceId);
 
   return (
     <>
       <PageLayout title="" showTopBar={false}>
         <SelectHeader workspaceId={workspaceId} isFull />
-        <div className="">{children}</div>
+        <div className="lg:pl-[87px]">{children}</div>
       </PageLayout>
     </>
   );
