@@ -1,10 +1,10 @@
 import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
-import EditTextField, { EditTextFieldProps } from './EditTextField';
+import EditTextfield, { EditTextfieldProps } from './EditTextfield';
 
 export default {
-  title: 'Components/EditTextField',
-  component: EditTextField,
+  title: 'Components/EditTextfield',
+  component: EditTextfield,
   parameters: {
     layout: 'centered'
   },
@@ -19,10 +19,10 @@ export default {
   }
 };
 
-const Template: StoryFn<EditTextFieldProps> = (args) => {
+const Template: StoryFn<EditTextfieldProps> = (args) => {
   const [value, setValue] = useState(args.value);
 
-  return <EditTextField {...args} value={value} onChange={(e) => setValue(e.target.value)} />;
+  return <EditTextfield {...args} value={value} onChange={(e) => setValue(e.target.value)} />;
 };
 
 export const Default = Template.bind({});
