@@ -17,6 +17,7 @@ const MobileLayout = ({ tracks }: VideoConferenceProps) => {
   const { isMobile } = useDeviceType();
   const { focusedTrack, setFocusedTrack } = useFocosedTrack();
 
+  // TODO: 나를 제외한 사용자 리스트로 출력 해보기.
   const remoteTrackRefs = tracks.filter((track) => track.participant.sid !== localParticipant.sid);
 
   useEffect(() => {

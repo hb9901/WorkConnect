@@ -41,9 +41,7 @@ const WebLayout = ({ tracks }: VideoConferenceProps) => {
   }, [localTracks]);
 
   return (
-    <FocusLayoutContainer
-      className={`${focusedTrack ? 'block' : 'none'} relative w-screen h-[81vh] m-0 overflow-hidden`}
-    >
+    <FocusLayoutContainer className={`${focusedTrack ? 'block' : 'none'} relative w-screen h-full m-0 overflow-hidden`}>
       {focusedTrack && (
         <FocusLayout trackRef={focusedTrack} className="h-full md:w-[65vw] lg:w-[70vw] xl:w-[75vw] mx-1">
           {isTrackReference(focusedTrack) && (
