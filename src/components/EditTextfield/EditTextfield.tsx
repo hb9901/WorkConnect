@@ -1,75 +1,148 @@
-import { ReactNode, useRef, useState } from 'react';
-import Typography from '../Typography';
+import clsx from 'clsx';
+import { ReactNode, useEffect, useId, useRef, useState } from 'react';
+import Label from '../Label';
 
 export interface EditTextfieldProps {
   children?: ReactNode;
   className?: string;
+  id?: string;
   label?: string;
+  labelClassName?: string;
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   LabelColor: 'primary200Main' | 'grey400' | 'grey700Black' | 'error' | undefined;
+  onClick?: () => void;
 }
 
 const EditTextfield = ({
+  id,
   label,
+  labelClassName,
   className,
   onChange,
-  LabelColor = 'grey700Black',
+  LabelColor = 'grey400',
   children,
   value,
   type = 'text',
   ...props
 }: EditTextfieldProps) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const inputId = useId();
+  const customId = id || inputId;
+  const [isFocused, setIsFocused] = useState(false);
+  const [state, setState] = useState<'default' | 'focus' | 'typing'>('default');
+  const valueRef = useRef(value);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleIconClick = () => {
-    setIsEditing(true);
+  useEffect(() => {
+    valueRef.current = value;
+    setState(value ? 'typing' : 'default');
+  }, [value]);
+
+  const handleClickDelete = () => {
+    const event = {
+      target: { value: '' }
+    } as React.ChangeEvent<HTMLInputElement>;
+    onChange(event);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    setState('focus');
     inputRef.current?.focus();
   };
 
   const handleBlur = () => {
-    setIsEditing(false);
+    setIsFocused(false);
+    if (valueRef.current) {
+      setState('typing');
+    } else {
+      setState('default');
+    }
   };
 
+  const renderIcon = () => {
+    if (state === 'default') {
+      return (
+        <svg
+          onClick={handleFocus}
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clipPath="url(#clip0_2962_7388)">
+            <path
+              d="M11.333 2.00004C11.5081 1.82494 11.716 1.68605 11.9447 1.59129C12.1735 1.49653 12.4187 1.44775 12.6663 1.44775C12.914 1.44775 13.1592 1.49653 13.3879 1.59129C13.6167 1.68605 13.8246 1.82494 13.9997 2.00004C14.1748 2.17513 14.3137 2.383 14.4084 2.61178C14.5032 2.84055 14.552 3.08575 14.552 3.33337C14.552 3.58099 14.5032 3.82619 14.4084 4.05497C14.3137 4.28374 14.1748 4.49161 13.9997 4.66671L4.99967 13.6667L1.33301 14.6667L2.33301 11L11.333 2.00004Z"
+              stroke="#737B91"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_2962_7388">
+              <rect width="16" height="16" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      );
+    } else if (state === 'focus') {
+      return null;
+    } else if (state === 'typing') {
+      return (
+        <svg
+          onClick={handleClickDelete}
+          width="10"
+          height="11"
+          viewBox="0 0 10 11"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9 1.5L1 9.5M1 1.5L9 9.5"
+            stroke="#737B91"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    }
+  };
+
+  const inputClassNames = clsx({
+    'bg-[#F5F6FF]': state === 'focus' || state === 'typing',
+    'border-transparent': state !== 'focus'
+  });
+
   return (
-    <div className="relative flex flex-col w-full">
+    <div className="relative flex flex-col gap-2 w-full" {...props}>
       {label && (
-        <Typography variant="Body14px" color="grey400" className="mb-2">
+        <Label htmlFor={customId} color={LabelColor} className={clsx(labelClassName, className)}>
           {label}
-        </Typography>
+        </Label>
       )}
-      <div className="flex flex-row items-center justify-between h-[48px] text-start w-full py-[12px] px-[16px] border-b border-grey50">
+      <div className="flex flex-row items-center justify-center w-full group">
         <input
           ref={inputRef}
-          type={type}
+          id={customId}
           value={value}
-          onChange={onChange}
-          readOnly={!isEditing}
+          type={type}
+          className={clsx(
+            'py-[12px] px-[16px] pr-[40px] outline-none hover:bg-[#F5F6FF] h-[45px] rounded-md',
+            inputClassNames,
+            className
+          )}
+          onFocus={handleFocus}
           onBlur={handleBlur}
-          className={`outline-none w-full pr-[20px] bg-transparent ${className}`}
-          {...props}
+          onChange={(e) => {
+            valueRef.current = e.target.value;
+            onChange(e);
+          }}
         />
-        <span className="absolute right-3 transform cursor-pointer" onClick={handleIconClick}>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g id="Size=16" clip-path="url(#clip0_2637_3201)">
-              <path
-                id="Icon"
-                d="M11.334 2.00004C11.5091 1.82494 11.7169 1.68605 11.9457 1.59129C12.1745 1.49653 12.4197 1.44775 12.6673 1.44775C12.9149 1.44775 13.1601 1.49653 13.3889 1.59129C13.6177 1.68605 13.8256 1.82494 14.0007 2.00004C14.1757 2.17513 14.3146 2.383 14.4094 2.61178C14.5042 2.84055 14.5529 3.08575 14.5529 3.33337C14.5529 3.58099 14.5042 3.82619 14.4094 4.05497C14.3146 4.28374 14.1757 4.49161 14.0007 4.66671L5.00065 13.6667L1.33398 14.6667L2.33398 11L11.334 2.00004Z"
-                stroke="#2F323C"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_2637_3201">
-                <rect width="16" height="16" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-        </span>
+        <span className="absolute right-3 transform cursor-pointer group-hover:opacity-100">{renderIcon()}</span>
       </div>
     </div>
   );

@@ -10,28 +10,11 @@ export default {
   },
   tags: ['autodocs'],
   argTypes: {
-    label: {
-      control: 'text',
-      description: 'Label'
-    },
-    value: {
-      control: 'text',
-      description: '입력 필드의 현재 값'
-    },
     LabelColor: {
       control: {
         type: 'select',
-        options: ['primary200Main', 'grey400', 'grey700Black', 'error']
-      },
-      description: '라벨 색상'
-    },
-    onChange: {
-      action: 'changed',
-      description: '입력 필드의 값이 변경될 때 호출되는 함수'
-    },
-    onClick: {
-      action: 'iconClicked',
-      description: '아이콘이 클릭될 때 호출되는 함수'
+        options: ['primary200Main', 'grey700Black', 'error']
+      }
     }
   }
 };
@@ -44,6 +27,8 @@ const Template: StoryFn<EditTextfieldProps> = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  label: 'Default Label',
+  id: 'id',
+  label: 'Label',
+  type: 'text',
   value: ''
 };

@@ -19,3 +19,7 @@
   background-color: #7173fa;
   margin: 0 8px !important;
 }
+
+.group:hover input {
+  background-color: #f5f6ff;
+}
