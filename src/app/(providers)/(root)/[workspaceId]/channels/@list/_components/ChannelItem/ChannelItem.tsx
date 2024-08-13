@@ -2,7 +2,6 @@ import { CHANNEL_TYPE } from '@/constants/channel';
 import ChatCard from '@/components/ChatCard/ChatCard';
 import Link from 'next/link';
 import { ComponentProps } from 'react';
-import { AirPlayIcon } from '@/icons';
 import dayjs from 'dayjs';
 import Avatar from '@/components/Avatar';
 import { GetChannelsResponse } from '@/types/channel';

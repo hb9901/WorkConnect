@@ -2,8 +2,8 @@
 
 import { useParams } from 'next/navigation';
 import { CHAT_TYPE } from '@/constants/chat';
-import ChatVideo from '../../_components/ChatVideo';
-import ChatImage from '../../_components/ChatImage';
+import ChatVideo from '../../../_components/ChatVideo';
+import ChatImage from '../../../_components/ChatImage';
 import { useGetChannelMedia } from '../../../_hook/useChatQuery';
 
 const MediaListPage = () => {

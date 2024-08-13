@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import ChannelItem from './_components/ChannelItem';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import { isEmpty } from '@/utils/isEmpty';
-import { useChannelHandlers } from './_hooks/useChannelHandlers';
 import { CHANNEL_TYPE } from '@/constants/channel';
-import { handleSubscribeToChannels } from './_utils/subscribe';
 import { useGetChannels } from '../_hooks/useChannelQuery';
+import { handleSubscribeToChannels } from '../@list/_utils/subscribe';
+import ChannelItem from '../@list/_components/ChannelItem';
+import { useChannelHandlers } from '../@list/_hooks/useChannelHandlers';
 
 const ChannelListPage = () => {
   const workspaceId = useWorkspaceId();

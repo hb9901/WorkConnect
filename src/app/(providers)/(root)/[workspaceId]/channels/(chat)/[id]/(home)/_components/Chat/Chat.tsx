@@ -4,8 +4,8 @@ import { memo, useCallback, useMemo, type ComponentProps } from 'react';
 import { CHAT_TYPE } from '@/constants/chat';
 import clsx from 'clsx';
 import type { ContextMenuContextType } from '../../_provider/ContextMenuProvider';
-import ChatImage from '../../../_components/ChatImage';
-import ChatVideo from '../../../_components/ChatVideo';
+import ChatImage from '../../../../_components/ChatImage';
+import ChatVideo from '../../../../_components/ChatVideo';
 import useLongPress from '@/hooks/useLongPress';
 import { ChatFile, ChatText, ChatNotice } from './Components';
 
