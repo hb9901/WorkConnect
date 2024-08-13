@@ -25,11 +25,11 @@ const ProfileParallelLayout = ({ children, home, params }: StrictPropsWithChildr
         </div>
       </div>
       {/*PC 레이아웃*/}
-      <div className="hidden lg:flex">
+      <div className="hidden lg:grid">
         <PageLayout title="" showTopBar={false}>
           <SelectHeader workspaceId={workspaceId} isFull isHidden />
-          <div className="flex lg:flex-row">
-            <div className="hidden lg:flex lg:w-full lg:pl-[87px]">{home}</div>
+          <div className="flex lg:flex-row lg:pl-[87px]">
+            <div className="hidden lg:grid lg:w-full ">{home}</div>
             <div className="w-full lg:min-w-[374px] lg:max-w-[374px]"></div>
             <div className="w-full fixed lg:min-w-[374px] lg:max-w-[374px] lg:w-[374px] lg:top-[84px] lg:right-0">
               {children}
