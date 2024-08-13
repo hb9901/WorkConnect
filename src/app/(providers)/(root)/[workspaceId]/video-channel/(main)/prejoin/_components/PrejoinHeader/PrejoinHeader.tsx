@@ -8,9 +8,9 @@ import useDeviceType from '../../../../_hooks/useDeviceType';
 
 const PrejoinHeader = () => {
   const router = useRouter();
-  const device = useDeviceType();
+  const { isMobile } = useDeviceType();
   return (
-    <header className={`fixed top-0 left-0 right-0 z-10 shadow-m ${device === 'mobile' ? 'bg-white' : 'bg-[#F4F4F6]'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-10 shadow-m ${isMobile ? 'bg-white' : 'bg-[#F4F4F6]'}`}>
       <div className={`flex items-center justify-between px-4 py-3 mt-[2px] `}>
         <ChevronLeftIcon className="size-6" stroke="#2F323C" onClick={() => router.back()} />
         <Typography color="grey700Black" variant="Title20px" as="h2">
