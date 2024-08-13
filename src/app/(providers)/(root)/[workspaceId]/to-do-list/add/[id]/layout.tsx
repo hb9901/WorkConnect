@@ -31,11 +31,11 @@ const ProfileParallelLayout = ({ children, todolist, params }: StrictPropsWithCh
       <div className="hidden lg:grid">
         <PageLayout title="" showTopBar={false}>
           <SelectHeader workspaceId={workspaceId} isTodoList />
-          <div className="hidden lg:grid lg:w-full">
+          <div className="hidden lg:grid lg:w-full lg:pl-[87px]">
             <PcHeader />
             {todolist}
           </div>
-          <div className="w-full lg:max-w-[calc((100dvw-297px)/3)] lg:absolute lg:top-[84px] lg:right-0 lg:transition-all lg:duration-200 lg:pl-[87px]">
+          <div className="w-full lg:max-w-[calc((100dvw-297px)/3)] lg:absolute lg:top-[84px] lg:right-0 lg:transition-all lg:duration-200">
             {children}
           </div>
         </PageLayout>
