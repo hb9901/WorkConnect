@@ -1,9 +1,14 @@
+import clsx from 'clsx';
 import NotFoundIcon from '../../icons/NotFoundIcon.svg';
 import Typography from '../Typography';
 
-const NotFound = () => {
+export interface NotFoundProps {
+  className?: string;
+}
+
+const NotFound = ({ className }: NotFoundProps) => {
   return (
-    <div className="flex flex-col items-center justify-center text-center my-auto">
+    <div className={clsx('flex flex-col items-center justify-center text-center my-auto', className)}>
       <NotFoundIcon />
       <Typography
         color="grey700Black"
