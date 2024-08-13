@@ -6,7 +6,7 @@ import { ResponseList } from '../../_components/ResponseLayout';
 import ChatLayout from '../_components/ChatLayout';
 import { BottomBar } from '@/components/PageLayout';
 import clsx from 'clsx';
-import useIsPC from '@/hooks/useIsPc';
+import useIsPC from '@/hooks/useIsPC';
 
 const ChatSlot = () => {
   const isPC = useIsPC();

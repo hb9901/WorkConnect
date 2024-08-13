@@ -10,6 +10,7 @@ import { useGetChannels } from '../../../_hooks/useChannelQuery';
 import { handleSubscribeToChannels } from '../../_utils/subscribe';
 import ChannelItem from '../ChannelItem';
 import clsx from 'clsx';
+import useRedirectForPC from '../../_hooks/useRedirectForPC';
 
 type ChannelListPageProps = {
   className?: string;
@@ -18,7 +19,6 @@ type ChannelListPageProps = {
 const ChannelListPage = ({ className }: ChannelListPageProps) => {
   const workspaceId = useWorkspaceId();
   const workspaceUserId = useWorkspaceUserId();
-
   const { handleChatInserts, handleChannelUserUpdates } = useChannelHandlers();
 
   const { data: channels = [] } = useGetChannels(workspaceId);
@@ -26,6 +26,10 @@ const ChannelListPage = ({ className }: ChannelListPageProps) => {
   const channelIds = useMemo(() => {
     return channels.map((channel) => channel.channel_id).join(',');
   }, [channels]);
+
+  // TODO 이게 최선일까? 처음에 데이터 가져와서.. 페이지 리다이렉트 시키는게 그게 좋은 걸까..?
+  // TODO ChatLayout이 방해되면 안됨 그것때문에 뭔가 새로고침하듯이 페이지 이동하는거 진짜 안 좋은 UX 같음
+  useRedirectForPC(channels[0]?.channel_id ?? null);
 
   useEffect(() => {
     if (isEmpty(channelIds)) return;

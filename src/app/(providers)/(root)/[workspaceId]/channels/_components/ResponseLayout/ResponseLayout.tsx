@@ -9,7 +9,7 @@ export const ResponseList = ({ children, className }: StrictPropsWithChildren<{ 
   return (
     <div
       className={clsx(
-        'w-full lg:max-w-[300px] lg:max-h-dvh lg:overflow-y-scroll lg:flex-shrink-0 scroll-container',
+        'w-full lg:max-w-[300px] lg:max-h-dvh lg:overflow-y-scroll lg:flex-shrink-0 lg:scroll-container',
         className
       )}
     >
