@@ -1,7 +1,5 @@
 'use client';
-import { supabase } from '@/utils/supabase/supabaseClient';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { checkEmail, emailRegex } from '../_utils/emailCheck';
 import { useSnackBar } from '@/providers/SnackBarContext';
@@ -11,7 +9,7 @@ import { validatePassword } from './verify/_utils/validatePassword';
 import Typography from '@/components/Typography';
 import WorkConnectWebTextLogo from '@/icons/WorkConnetWebText.svg';
 import WorkConnectLogo from '@/icons/WorkConnectLogo.svg';
-import Modal from '@/components/Modal';
+import { useSignUp } from './_hooks/useSignup';
 
 const SignUpPage = () => {
   const [name, setName] = useState<string>('');
@@ -20,42 +18,27 @@ const SignUpPage = () => {
   const [password, setPassword] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
-  const route = useRouter();
   const { openSnackBar } = useSnackBar();
 
-  // TODO : 리팩터링 예정
-  const signUpMutation = useMutation({
-    mutationFn: async () => {
-      const passwordValidationMessage = validatePassword(password);
-      if (!emailCheck) return openSnackBar({ message: '이메일 중복확인을 해주세요' });
-      if (password !== passwordCheck) return openSnackBar({ message: '비밀번호가 일치하지 않아요' });
-      if (passwordValidationMessage !== true) return openSnackBar({ message: passwordValidationMessage });
-
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${process.env.NEXT_PUBLIC_API_URL}/api/signup/email`,
-          data: {
-            name: name
-          }
-        }
-      });
-
-      if (error?.message === 'Email rate limit exceeded') {
-        return openSnackBar({ message: '할당량이 초과되었어요.' });
-      }
-
-      if (error) {
-        return openSnackBar({ message: '에러가 발생했어요.' });
-      }
-
-      if (data) {
-        setEmailCheck(false);
-        handleToggleBottomSheet();
-      }
+  const { mutate: handleSignUpMutation, isPending: signUpIsPending } = useSignUp({
+    onSuccess: () => {
+      setEmailCheck(false);
+      handleToggleBottomSheet();
+    },
+    onError: () => {
+      openSnackBar({ message: '에러가 발생했어요.' });
     }
   });
+
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const passwordValidationMessage = validatePassword(password);
+    if (!emailCheck) return openSnackBar({ message: '이메일 중복확인을 해주세요' });
+    if (password !== passwordCheck) return openSnackBar({ message: '비밀번호가 일치하지 않아요' });
+    if (passwordValidationMessage !== true) return openSnackBar({ message: passwordValidationMessage });
+
+    handleSignUpMutation({ email, password, name });
+  };
 
   const emailCheckMutation = useMutation({
     mutationFn: async (email: string) => {
@@ -78,7 +61,6 @@ const SignUpPage = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const { mutate: handleSignUp } = signUpMutation;
   const { mutate: handleEmailCheck } = emailCheckMutation;
 
   return (
@@ -88,12 +70,7 @@ const SignUpPage = () => {
       </div>
       <div className="flex flex-col mx-4 w-full lg:mx-[151px]">
         <TopBar title="" style={{ padding: '0px' }} />
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSignUp();
-          }}
-        >
+        <form onSubmit={handleSignUp}>
           <div className="flex-grow">
             <h1 className="text-[20px] text-[#2E2E2E] font-semibold pt-[42px] mb-[18px] flex items-center">
               회원 가입
@@ -178,9 +155,9 @@ const SignUpPage = () => {
           <div className="flex justify-center pb-4 sticky bottom-0 bg-white">
             <button
               className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
-              disabled={signUpMutation.isPending ? true : false}
+              disabled={signUpIsPending ? true : false}
             >
-              {signUpMutation.isPending ? '메일 발송중...' : '인증 메일 발송'}
+              {signUpIsPending ? '메일 발송중...' : '인증 메일 발송'}
             </button>
           </div>
         </form>

@@ -123,42 +123,42 @@ const InviteCodePage = () => {
 
   const { mutate: handleSubmitMutate } = handleSubmit;
 
-  useEffect(() => {
-    const getSession = async () => {
-      if (cookieWorkspaceId) {
-        return;
-      }
-      const {
-        data: { session }
-      } = await supabase.auth.getSession();
+  // useEffect(() => {
+  //   const getSession = async () => {
+  //     if (cookieWorkspaceId) {
+  //       return;
+  //     }
+  //     const {
+  //       data: { session }
+  //     } = await supabase.auth.getSession();
 
-      if (session?.user.app_metadata.provider !== 'kakao') return;
+  //     if (session?.user.app_metadata.provider !== 'kakao') return;
 
-      //? 최근 생성한 워크스페이스 조회
-      const { data: workspaceUser, error: workspaceUserError } = await supabase
-        .from('workspace_user')
-        .select('workspace_id')
-        .eq('user_id', session.user.id)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
+  //     //? 최근 생성한 워크스페이스 조회
+  //     const { data: workspaceUser, error: workspaceUserError } = await supabase
+  //       .from('workspace_user')
+  //       .select('workspace_id')
+  //       .eq('user_id', session.user.id)
+  //       .order('created_at', { ascending: false })
+  //       .limit(1)
+  //       .single();
 
-      if (workspaceUserError) {
-        openSnackBar({ message: '유저 조회 에러' });
-        return;
-      }
+  //     if (workspaceUserError) {
+  //       openSnackBar({ message: '유저 조회 에러' });
+  //       return;
+  //     }
 
-      if (workspaceUser.workspace_id !== null) {
-        setWorkspaceIdCookie(workspaceUser.workspace_id);
-        setWorkspaceUserIdCookie(session.user.id);
-        setUserData(session.user.id, workspaceUser.workspace_id);
-        return route.replace(`/${workspaceUser.workspace_id}`); // TODO: 홈 화면이동 처리
-      }
-      return;
-    };
+  //     if (workspaceUser.workspace_id !== null) {
+  //       setWorkspaceIdCookie(workspaceUser.workspace_id);
+  //       setWorkspaceUserIdCookie(session.user.id);
+  //       setUserData(session.user.id, workspaceUser.workspace_id);
+  //       return route.replace(`/${workspaceUser.workspace_id}`); // TODO: 홈 화면이동 처리
+  //     }
+  //     return;
+  //   };
 
-    getSession();
-  }, []);
+  //   getSession();
+  // }, []);
 
   return (
     <main className="flex justify-center items-center w-full h-dvh">

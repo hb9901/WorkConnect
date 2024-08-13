@@ -82,7 +82,7 @@ const NewWorkSpacePage = () => {
           .single();
 
         if (workspaceError) {
-          openSnackBar({ message: '오류가 발생했어요' });
+          openSnackBar({ message: '오류가 발생했어요?' });
           return;
         }
 
@@ -205,7 +205,7 @@ const NewWorkSpacePage = () => {
   return (
     <main className="flex justify-center items-center w-full h-dvh">
       <div className="flex flex-col w-[375px] lg:w-[590px] h-dvh px-4">
-        <TopBar title="워크스페이스 만들기" className="px-0 lg:hidden" />
+        <TopBar title="워크스페이스 만들기" className="px-0 lg:hidden" style={{ padding: '0px' }} />
         <div className="flex flex-col items-center mt-[109px]">
           <div className="w-[105px] h-[55px] lg:w-[95px] lg:h-[50px] lg:mb-9">
             <WorkConnectLogoIcon className="w-full h-full" />
