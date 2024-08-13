@@ -41,14 +41,30 @@ export const useGetWorkspaceUserIdMutation = ({ ...options }) => {
     mutationFn: async (userId: string) => {
       const { data, error } = await supabase
         .from('workspace_user')
-        .select('user_id')
+        .select('id')
         .eq('user_id', userId)
         .order('created_at', { ascending: false })
         .limit(1)
         .single();
 
       if (error) throw error;
-      return data.user_id;
+      return data.id;
+    },
+    ...options
+  });
+};
+
+export const useGetUserSessionMutation = ({ ...options }) => {
+  return useMutation({
+    mutationFn: async () => {
+      const {
+        data: { session },
+        error
+      } = await supabase.auth.getSession();
+      console.log('data', session?.user);
+
+      if (error) throw error;
+      return session?.user;
     },
     ...options
   });

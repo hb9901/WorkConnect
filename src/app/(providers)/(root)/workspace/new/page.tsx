@@ -9,7 +9,13 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import { getWorkspaceUserIdCookie, setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/cookie/workspace';
+import {
+  getUserIdCookie,
+  getWorkspaceUserIdCookie,
+  setUserIdCookie,
+  setWorkspaceIdCookie,
+  setWorkspaceUserIdCookie
+} from '@/utils/cookie/workspace';
 import { TopBar } from '@/components/TopBar';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
@@ -37,7 +43,7 @@ const NewWorkSpacePage = () => {
   // TODO : 리팩터링 예정
   const handleJoin = useMutation({
     mutationFn: async () => {
-      const cookieWorkspaceUserId = getWorkspaceUserIdCookie();
+      const cookieUserId = getUserIdCookie();
       const randomNumbers = getRandomNumbers(6, 1, 9);
       const combinedNumber = Number(randomNumbers.join(''));
 
@@ -54,7 +60,7 @@ const NewWorkSpacePage = () => {
       }
 
       //? 로그인 상태일 때, 워크스페이스 생성
-      if (cookieWorkspaceUserId) {
+      if (cookieUserId) {
         //? 새 워크스페이스 생성
         const { error } = await supabase.from('workspace').insert({
           name: orgName,
@@ -83,7 +89,7 @@ const NewWorkSpacePage = () => {
         //? 워크스페이스 생성 완료 후, workspace_user 테이블에 workspace_id 추가
         const { error: workspaceUserError } = await supabase.from('workspace_user').insert({
           workspace_id: workspaceData.id,
-          user_id: cookieWorkspaceUserId,
+          user_id: cookieUserId,
           name: user.user_metadata.name,
           email: user.user_metadata.email
         });
@@ -94,7 +100,7 @@ const NewWorkSpacePage = () => {
         }
 
         setWorkspaceIdCookie(workspaceData.id);
-        setWorkspaceUserIdCookie(cookieWorkspaceUserId);
+        setUserIdCookie(cookieUserId);
         setUserData(user.id, workspaceData.id);
 
         // TODO : 생성 완료 후 페이지 이동처리하기
@@ -143,7 +149,7 @@ const NewWorkSpacePage = () => {
       }
 
       setWorkspaceIdCookie(workspaceData.id);
-      setWorkspaceUserIdCookie(user.id);
+      setUserIdCookie(user.id);
       setUserData(user.id, workspaceData.id);
 
       // TODO : 생성 완료 후 페이지 이동처리하기
@@ -178,7 +184,7 @@ const NewWorkSpacePage = () => {
       //? 로그인하고 new 페이지 오면 돌아가짐
       if (workspaceUserError) {
         console.log(workspaceUserError);
-        openSnackBar({ message: '오류가 발생했어요ㅇㅇㅇ' });
+        openSnackBar({ message: '오류가 발생했어요' });
         route.replace('/');
         return;
       }
@@ -199,6 +205,7 @@ const NewWorkSpacePage = () => {
   return (
     <main className="flex justify-center items-center w-full h-dvh">
       <div className="flex flex-col w-[375px] lg:w-[590px] h-dvh px-4">
+        <TopBar title="워크스페이스 만들기" className="px-0 lg:hidden" />
         <div className="flex flex-col items-center mt-[109px]">
           <div className="w-[105px] h-[55px] lg:w-[95px] lg:h-[50px] lg:mb-9">
             <WorkConnectLogoIcon className="w-full h-full" />
