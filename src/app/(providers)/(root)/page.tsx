@@ -10,61 +10,62 @@ import { signInWithKakao } from './auth/_utils/kakaoLogin';
 import KakaoIcon from '@/icons/Kakao.svg';
 import Typography from '@/components/Typography';
 import { useState } from 'react';
-import { setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/cookie/workspace';
-import useUserStore from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import { useMutation } from '@tanstack/react-query';
-import { supabase } from '@/utils/supabase/supabaseClient';
 import Button from '@/components/Button';
+import { useGetWorkspaceIdMutation, useGetWorkspaceUserIdMutation, useSignInMutation } from './_hook/useLogin';
+import { LOGIN_ERROR_MESSAGE } from './_utils/constants';
+import useSetGlobalUser from '@/hooks/useSetGlobalUser';
 
-// TODO : 리팩터링 예정
 const LandingPage = () => {
   const [showSwiper, setShowSwiper] = useState(true);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const setUserData = useUserStore((state) => state.setUserData);
   const route = useRouter();
   const { openSnackBar } = useSnackBar();
+  const { handleSetGlobalUser } = useSetGlobalUser();
 
-  // TODO : 리팩터링 예정
-  const loginMutation = useMutation({
-    mutationFn: async () => {
-      const {
-        data: { session },
-        error
-      } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
-
-      if (!session) return openSnackBar({ message: '로그인에 실패했어요' });
-
-      if (error) return openSnackBar({ message: '정보가 일치하지 않아요' });
-
-      const { data: workspaceUserData, error: workspaceUserError } = await supabase
-        .from('workspace_user')
-        .select('workspace_id')
-        .eq('user_id', session.user.id)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
-
-      if (workspaceUserError) return openSnackBar({ message: '존재하지 않는 유저에요' });
-
-      if (workspaceUserData.workspace_id === null) {
-        route.push(`/workspace/landing`);
+  const { mutateAsync: postSignInMutation, isPending: signInPending } = useSignInMutation({
+    onError: (error: any) => {
+      if (error.message === LOGIN_ERROR_MESSAGE.INVALID_CREDENTIALS) {
+        openSnackBar({ message: '이메일 또는 비밀번호가 일치하지 않아요' });
         return;
       }
 
-      setWorkspaceIdCookie(workspaceUserData.workspace_id);
-      setWorkspaceUserIdCookie(session.user.id);
-      setUserData(session.user.id, workspaceUserData.workspace_id);
-      route.replace(`/${workspaceUserData.workspace_id}`); // TODO : 메인 홈 으로 이동
+      openSnackBar({ message: '로그인에 실패했어요' });
+      return;
     }
   });
 
-  const { mutate: emailLoginMutate } = loginMutation;
+  const { mutateAsync: getWorkspaceIdMutation, isPending: workspaceIdPending } = useGetWorkspaceIdMutation({
+    onError: () => {
+      openSnackBar({ message: '문제가 발생했어요 (E-PGRST116)' });
+      return;
+    }
+  });
+
+  const { mutateAsync: getWorkspaceUserIdMutation, isPending: workspaceUserIdPending } = useGetWorkspaceUserIdMutation({
+    onError: () => {
+      openSnackBar({ message: '문제가 발생했어요' });
+      return;
+    }
+  });
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const { id: userId } = await postSignInMutation({ email, password });
+    const workspaceId = await getWorkspaceIdMutation(userId);
+    const workspaceUserId = await getWorkspaceUserIdMutation(userId);
+
+    if (workspaceId === null) {
+      route.replace('/workspace/landing');
+      return;
+    }
+
+    handleSetGlobalUser({ userId, workspaceId, workspaceUserId });
+    route.replace(`/${workspaceId}`);
+  };
 
   const handleClose = () => {
     setShowSwiper(false);
@@ -164,7 +165,7 @@ const LandingPage = () => {
               </Swiper>
             </div>
           </div>
-          {/* //? 로그인 폼 */}
+
           <div
             className={`flex-col w-full h-dvh mx-4 lg:justify-center lg:mx-[155px] lg:flex ${showSwiper ? 'hidden' : 'flex'}`}
           >
@@ -175,12 +176,7 @@ const LandingPage = () => {
             >
               로그인
             </Typography>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                emailLoginMutate();
-              }}
-            >
+            <form onSubmit={onSubmit}>
               <div className="flex flex-col gap-[24px]">
                 <div className="flex flex-col">
                   <label className="text-[14px] text-[#2F323C] pl-[6px] pb-2" htmlFor="email">
@@ -215,11 +211,10 @@ const LandingPage = () => {
                 <Button
                   type="submit"
                   theme="primary"
-                  className="text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
-                  isDisabled={loginMutation.isPending}
+                  isDisabled={signInPending || workspaceIdPending || workspaceUserIdPending}
                   isFullWidth={true}
                 >
-                  {loginMutation.isPending ? '로그인 중입니다...' : '로그인'}
+                  로그인
                 </Button>
               </div>
             </form>
@@ -239,6 +234,7 @@ const LandingPage = () => {
                 </Typography>
               </Link>
               <span className="text-[#5C6275] text-[11px] mx-3">|</span>
+              {/* // TODO: MVP이후 비밀번호 찾기 구현  */}
               {/* <Link href="/"> */}
               <button onClick={() => alert('준비중입니다.')}>
                 <Typography as="span" variant="Body14px" color="grey500">
@@ -247,8 +243,6 @@ const LandingPage = () => {
               </button>
               {/* </Link> */}
             </div>
-            {/* // TODO: MVP이후 비밀번호 찾기 구현  */}
-            {/* <button className="text-[#333] text-center text-[12px] font-normal underline">비밀번호를 잊으셨나요?</button> */}
           </div>
         </div>
       </div>
