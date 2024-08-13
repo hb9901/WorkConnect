@@ -36,6 +36,22 @@ const nextConfig = {
         }
       ]
     });
+
+    config.module.rules.push({
+      test: /\.lottie$/,
+      use: [
+        {
+          loader: 'lottie-loader'
+        }
+      ]
+    });
+
+    config.module.rules.push({
+      test: /\.json$/,
+      type: 'javascript/auto',
+      use: 'json-loader'
+    });
+
     return config;
   }
 };
