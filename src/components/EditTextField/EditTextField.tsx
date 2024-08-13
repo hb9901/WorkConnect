@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { ReactNode, useEffect, useId, useRef, useState } from 'react';
 import Label from '../Label';
 
-export interface EditTextfieldProps {
+export interface EditTextFieldProps {
   children?: ReactNode;
   className?: string;
   id?: string;
@@ -15,7 +15,7 @@ export interface EditTextfieldProps {
   onClick?: () => void;
 }
 
-const EditTextfield = ({
+const EditTextField = ({
   id,
   label,
   labelClassName,
@@ -26,7 +26,7 @@ const EditTextfield = ({
   value,
   type = 'text',
   ...props
-}: EditTextfieldProps) => {
+}: EditTextFieldProps) => {
   const inputId = useId();
   const customId = id || inputId;
   const [isFocused, setIsFocused] = useState(false);
@@ -148,4 +148,4 @@ const EditTextfield = ({
   );
 };
 
-export default EditTextfield;
+export default EditTextField;
