@@ -7,20 +7,28 @@ export interface CountTextFieldProps {
   children?: string;
   maxLength?: number;
   placeholder?: string;
+  value?: string;
+  onChange: (value: string) => void;
 }
 
-const CountTextField = ({ label, children, placeholder, maxLength = 20 }: CountTextFieldProps) => {
-  const [text, setText] = useState<string>('');
+const CountTextField = ({
+  label,
+  children,
+  placeholder,
+  maxLength = 20,
+  value = '',
+  onChange
+}: CountTextFieldProps) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= maxLength) {
-      setText(e.target.value);
+      onChange(e.target.value);
     }
   };
 
   return (
-    <div className="flex flex-col mb-4">
+    <div className="flex flex-col">
       <Label className="mx-[4px]">
         <Typography variant="Body14px" color="grey700Black">
           {label}
@@ -33,7 +41,7 @@ const CountTextField = ({ label, children, placeholder, maxLength = 20 }: CountT
       >
         <input
           type="text"
-          value={text}
+          value={value}
           onChange={handleChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
@@ -41,8 +49,8 @@ const CountTextField = ({ label, children, placeholder, maxLength = 20 }: CountT
           children={children}
           className="flex-1 outline-none bg-transparent"
         />
-        {text && (
-          <button onClick={() => setText('')} className="ml-2 text-gray-500 hover:text-gray-700">
+        {value && (
+          <button onClick={() => onChange('')} className="ml-2 text-gray-500 hover:text-gray-700">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_3235_6608)">
                 <path
@@ -63,7 +71,7 @@ const CountTextField = ({ label, children, placeholder, maxLength = 20 }: CountT
         )}
       </div>
       <Typography variant="Body14px" color="grey300" className="text-right">
-        {text.length}/{maxLength}
+        {value.length}/{maxLength}
       </Typography>
     </div>
   );

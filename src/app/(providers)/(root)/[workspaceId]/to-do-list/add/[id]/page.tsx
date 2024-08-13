@@ -1,7 +1,7 @@
 'use client';
 import BottomSheet from '@/components/BottomSheet';
 import Button from '@/components/Button';
-import TextField from '@/components/TextField';
+import CountTextField from '@/components/CountTextField';
 import Typography from '@/components/Typography';
 import useTodoList from '@/hooks/useTodo';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
@@ -145,13 +145,10 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
         <Header />
       </header>
       <div className="flex flex-col gap-[20px] mt-[24px]">
-        <TextField
-          id="1"
+        <CountTextField
           label="일정 이름"
-          value={title}
           placeholder="일정 이름을 입력해주세요."
-          LabelColor="grey700Black"
-          children=""
+          value={title}
           onChange={handleTitleChange}
         />
         <div className="flex flex-col gap-[6px]">
