@@ -120,7 +120,7 @@ const EditTextField = ({
   return (
     <div className="relative flex flex-col gap-2 w-full" {...props}>
       {label && (
-        <Label htmlFor={customId} color={LabelColor} className={clsx(labelClassName, className)}>
+        <Label htmlFor={customId} color={LabelColor} className={clsx('pl-1', labelClassName, className)}>
           {label}
         </Label>
       )}
@@ -142,7 +142,7 @@ const EditTextField = ({
             onChange(e);
           }}
         />
-        <span className="absolute right-3 transform cursor-pointer group-hover:opacity-100">{renderIcon()}</span>
+        <span className="absolute p-1 right-3 transform cursor-pointer group-hover:opacity-100">{renderIcon()}</span>
       </div>
     </div>
   );
