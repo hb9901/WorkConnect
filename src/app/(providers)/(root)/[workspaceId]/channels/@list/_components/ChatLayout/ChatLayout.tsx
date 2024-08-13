@@ -22,7 +22,7 @@ const ChatLayout = ({ children }: StrictPropsWithChildren) => {
 
 const VideoChatButton = ({ workspaceId }: { workspaceId: number }) => {
   return (
-    <Link href={`/${workspaceId}/channel/add?type=video`}>
+    <Link href={`/${workspaceId}/channels/add?type=video`}>
       <Video48Icon className="text-grey700Black stroke-current w-6 h-6" />
     </Link>
   );
@@ -30,7 +30,7 @@ const VideoChatButton = ({ workspaceId }: { workspaceId: number }) => {
 
 const MessageChatButton = ({ workspaceId }: { workspaceId: number }) => {
   return (
-    <Link href={`/${workspaceId}/channel/add?type=chat`}>
+    <Link href={`/${workspaceId}/channels/add?type=chat`}>
       <MessagePlusIcon className="text-grey700Black stroke-current w-6 h-6" />
     </Link>
   );
