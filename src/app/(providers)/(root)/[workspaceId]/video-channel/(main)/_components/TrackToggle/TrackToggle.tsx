@@ -27,7 +27,7 @@ const TrackToggle: <T extends ToggleSource>(
 ) {
   const { buttonProps, enabled } = useTrackToggle(props);
   return (
-    <button ref={ref} {...buttonProps} className="flex flex-col items-center">
+    <button ref={ref} {...buttonProps} aria-pressed="true" className="flex flex-col items-center">
       {(showIcon ?? true) && <ToggleIcon source={props.source} enabled={enabled} />}
       <Typography variant={'Subtitle12px'} color="grey700Black" as="p">
         {props.children}

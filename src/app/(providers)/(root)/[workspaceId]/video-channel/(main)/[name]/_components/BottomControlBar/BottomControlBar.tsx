@@ -89,30 +89,36 @@ const BottomControlBar = ({ variation, controls, saveUserChoices = true, ...prop
   );
 
   return (
-    <div className="flex border-t-2 justify-between mx-4 py-4 px-6 fixed bottom-0 bg-white w-[100vw] ">
-      {visibleControls.microphone && (
-        <div className="">
-          <TrackToggle source={Track.Source.Microphone} showIcon={showIcon} onChange={microphoneOnChange}></TrackToggle>
-        </div>
-      )}
-      {visibleControls.camera && (
-        <div className="">
-          <TrackToggle source={Track.Source.Camera} showIcon={showIcon} onChange={cameraOnChange}></TrackToggle>
-        </div>
-      )}
-      {visibleControls.screenShare && browserSupportsScreenSharing && (
-        <TrackToggle
-          source={Track.Source.ScreenShare}
-          captureOptions={{ audio: true, selfBrowserSurface: 'include' }}
-          showIcon={showIcon}
-          onChange={onScreenShareChange}
-        >
-          {showText && (isScreenShareEnabled ? 'Stop screen share' : '')}
-        </TrackToggle>
-      )}
-      <button className="w-12 h-6 flex justify-center">
-        <UserIcon />
-      </button>
+    <div className="flex items-center justify-center mx-4 py-4 px-6 fixed bottom-0 bg-white w-[100vw] md:h-[85px] lg:h-[100px] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+      <div className="flex items-center justify-center gap-[4rem] px-4">
+        {visibleControls.camera && (
+          <div className="">
+            <TrackToggle source={Track.Source.Camera} showIcon={showIcon} onChange={cameraOnChange}></TrackToggle>
+          </div>
+        )}
+        {visibleControls.microphone && (
+          <div className="">
+            <TrackToggle
+              source={Track.Source.Microphone}
+              showIcon={showIcon}
+              onChange={microphoneOnChange}
+            ></TrackToggle>
+          </div>
+        )}
+        {visibleControls.screenShare && browserSupportsScreenSharing && (
+          <TrackToggle
+            source={Track.Source.ScreenShare}
+            captureOptions={{ audio: true, selfBrowserSurface: 'include' }}
+            showIcon={showIcon}
+            onChange={onScreenShareChange}
+          >
+            {/* {showText && (isScreenShareEnabled ? 'Stop screen share' : '')} */}
+          </TrackToggle>
+        )}
+        <button className="w-12 h-6 flex justify-center">
+          <UserIcon />
+        </button>
+      </div>
     </div>
   );
 };

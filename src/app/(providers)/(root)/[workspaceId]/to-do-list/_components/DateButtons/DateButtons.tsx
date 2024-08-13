@@ -39,7 +39,7 @@ const DateButtons = () => {
             className="flex items-center justify-center w-[20px] h-[20px] rounded-full border-[1px] border-[#737B91]"
           >
             <div>
-              <ChevronLeftIcon className="w-[10px] h-[10px]" />
+              <ChevronLeftIcon className="w-[10px] h-[10px] stroke-[#737B91]" />
             </div>
           </button>
           <button onClick={handleClickNext}>

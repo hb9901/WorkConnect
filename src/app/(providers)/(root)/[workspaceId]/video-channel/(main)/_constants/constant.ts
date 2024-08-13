@@ -1,0 +1,4 @@
+const HEADER_HEIGHT = '84px';
+const BOTTOMNAV_HEIGHT = '100px';
+
+export { BOTTOMNAV_HEIGHT, HEADER_HEIGHT };
