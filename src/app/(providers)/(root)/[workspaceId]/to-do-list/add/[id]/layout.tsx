@@ -17,6 +17,7 @@ const ProfileParallelLayout = ({ children, todolist, params }: StrictPropsWithCh
 
   return (
     <>
+      {/*모바일 레이아웃 */}
       <div className="lg:hidden">
         <div className="hidden lg:grid lg:w-full">
           <PcHeader />
@@ -26,6 +27,7 @@ const ProfileParallelLayout = ({ children, todolist, params }: StrictPropsWithCh
           {children}
         </div>
       </div>
+      {/*PC 레이아웃 */}
       <div className="hidden lg:grid">
         <PageLayout title="" showTopBar={false}>
           <SelectHeader workspaceId={workspaceId} isTodoList />
@@ -33,7 +35,7 @@ const ProfileParallelLayout = ({ children, todolist, params }: StrictPropsWithCh
             <PcHeader />
             {todolist}
           </div>
-          <div className="w-full lg:max-w-[calc((100dvw-297px)/3)] lg:absolute lg:top-[84px] lg:right-0 lg:transition-all lg:duration-200">
+          <div className="w-full lg:max-w-[calc((100dvw-297px)/3)] lg:absolute lg:top-[84px] lg:right-0 lg:transition-all lg:duration-200 lg:pl-[87px]">
             {children}
           </div>
         </PageLayout>
