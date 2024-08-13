@@ -12,7 +12,6 @@ const PcDate = ({ weekName, date, isSelected }: PcDateProps) => {
 
   return (
     <>
-      <div className="lg:absolute lg:top-[84px] lg:bottom-0 lg:left-0 lg:right-[calc(100%-297px)] lg:bg-[#F4F4F6] lg:-z-[1]"></div>
       <button
         onClick={() => handleClickDate(date)}
         className={`hidden lg:flex lg:flex-row lg:items-center lg:justify-center lg:h-[93px] lg:w-full ${isSelected ? 'bg-[#EBECFE]' : ''}`}

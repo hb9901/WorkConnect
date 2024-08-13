@@ -41,7 +41,9 @@ const SelectHeader = ({ workspaceId, isTodoList = false, isFull = false, isHidde
 
   return (
     <header
-      className={`${isFull ? 'w-full' : ' '} ${isHidden ? 'hidden' : 'flex flex-row'} ${isTodoList ? 'w-full lg:w-[297px]' : ''} sticky top-0 items-center justify-between z-10 bg-white pt-[14px] px-[16px] pb-[12px] lg:bg-[#F4F4F6] lg:h-[84px] lg:flex`}
+      className={`${isFull ? 'w-full' : ' '} ${isHidden ? 'hidden' : 'flex flex-row'} ${isTodoList ? 'w-full lg:w-[384px]' : ''} 
+      sticky top-0 items-center justify-between z-50 bg-white pt-[14px] px-[16px] pb-[12px] 
+      lg:bg-[#F4F4F6] lg:h-[84px] lg:flex lg:border-[#E5E7EB] lg:border-b-[1px]`}
     >
       <div className="flex flex-row gap-[8px]">
         <div className="hidden lg:flex items-center justify-center w-[32px] h-[32px] pl-[5px] pt-[11px] pb-[10px] pr-[6px] border-[1px] border-[#C9CCD4] rounded-[6px]">

@@ -11,7 +11,7 @@ export interface EditTextFieldProps {
   value?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
-  LabelColor: 'primary200Main' | 'grey400' | 'grey700Black' | 'error' | undefined;
+  labelColor: 'primary200Main' | 'grey400' | 'grey700Black' | 'error' | undefined;
   onClick?: () => void;
 }
 
@@ -21,7 +21,7 @@ const EditTextField = ({
   labelClassName,
   className,
   onChange,
-  LabelColor = 'grey400',
+  labelColor = 'grey400',
   children,
   value,
   type = 'text',
@@ -120,7 +120,7 @@ const EditTextField = ({
   return (
     <div className="relative flex flex-col gap-2 w-full" {...props}>
       {label && (
-        <Label htmlFor={customId} color={LabelColor} className={clsx('pl-1', labelClassName, className)}>
+        <Label htmlFor={customId} color={labelColor} className={clsx('pl-1', labelClassName, className)}>
           {label}
         </Label>
       )}

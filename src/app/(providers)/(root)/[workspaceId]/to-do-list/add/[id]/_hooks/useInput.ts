@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 
 const useInput = () => {
   const [title, setTitle] = useState<string>('');
@@ -7,8 +7,8 @@ const useInput = () => {
   const [isPriorityOpen, setIsPriorityOpen] = useState<boolean>(false);
   const [isStatusOpen, setIsStatusOpen] = useState<boolean>(false);
 
-  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+  const handleTitleChange = (value: string) => {
+    setTitle(value);
   };
 
   const handleChangePriority = (priority: string) => {

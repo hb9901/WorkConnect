@@ -10,7 +10,7 @@ const BackButton = () => {
   };
 
   return (
-    <button className="flex items-center justify-start w-[24px] h-[24px]" onClick={handleClick}>
+    <button className="flex items-center justify-start w-[24px] h-[24px] lg:hidden" onClick={handleClick}>
       <ArrowLeftIcon className="w-full h-full" />
     </button>
   );

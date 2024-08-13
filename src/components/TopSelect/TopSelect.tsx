@@ -28,13 +28,13 @@ const TopSelect = ({ workspaceList, isOpen, onClick }: TopSelectProps) => {
   };
 
   return (
-    <div className={`fixed top-[50px] z-10 inset-0 ${isOpen ? 'h-full' : 'h-0'}`}>
+    <div className={`fixed top-[50px] z-50 inset-0 ${isOpen ? 'h-full' : 'h-0'}`}>
       {isOpen && (
         <>
           <div className="fixed top-[52px] inset-0 bg-black opacity-40 lg:opacity-0" onClick={onClick} />{' '}
           <div
             className={`fixed flex flex-col top-[52px] left-0 right-0 bg-white scrollbar-hide max-h-calc(100vh - 200px) 
-          rounded-b-[6px] overflow-y-scroll snap-none gap-[16px] px-[16px] py-[16px] lg:px-[16px] lg:py-[6px] lg:max-w-[343px] lg:translate-x-[56px] lg:shadow-lg`}
+          rounded-b-[6px] overflow-y-scroll snap-none gap-[16px] px-[16px] py-[16px] lg:px-[16px] lg:py-[6px] lg:max-w-[343px] lg:translate-x-[56px] lg:shadow-lg lg:mt-[8px]`}
           >
             {workspaceList.map(({ id, workspace_user_id, name }) => (
               <Link
