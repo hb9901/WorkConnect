@@ -1,20 +1,23 @@
 'use client';
 import { PersonFilledIcon } from '@/icons';
 import { facingModeFromLocalTrack, LocalTrack, LocalVideoTrack, Track } from 'livekit-client';
-import { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 type VideoChannelProps = {
-  videoEnabled: boolean;
   tracks: LocalTrack<Track.Kind>[] | undefined;
+  videoEnable: boolean;
 };
 
-const VideoChannel = ({ tracks, videoEnabled }: VideoChannelProps) => {
+const VideoChannel = ({ tracks, videoEnable }: VideoChannelProps) => {
   const videoEl = useRef<HTMLVideoElement | null>(null);
-
+  const [isvideoEnable, setIsVideoEnable] = useState<boolean>();
   const videoTrack = useMemo(
     () => tracks?.filter((track) => track.kind === Track.Kind.Video)[0] as LocalVideoTrack,
     [tracks]
   );
+  useEffect(() => {
+    setIsVideoEnable(videoEnable);
+  }, [videoEnable]);
 
   useEffect(() => {
     if (videoEl.current && videoTrack) {
@@ -37,17 +40,18 @@ const VideoChannel = ({ tracks, videoEnabled }: VideoChannelProps) => {
   }, [videoTrack]);
 
   return (
-    <div className="flex items-center mt-4 mx-4 w-[80vw]">
-      {videoTrack && videoEnabled ? (
-        <div className="flex items-center justify-center bg-[#121212] rounded-[10px] h-[55vh] overflow-hidden mx-auto aspect-w-16 aspect-h-9">
+    <div className="w-full h-full relative">
+      {videoTrack && isvideoEnable ? (
+        <div className="flex items-center justify-center bg-[#121212] w-full h-[55vh] overflow-hidden mx-auto aspect-w-16 aspect-h-9">
           <video
+            autoFocus
             className="transform scale-x-[-1] w-full h-full object-cover"
             ref={videoEl}
             data-lk-facing-mode={facingMode}
           />
         </div>
       ) : (
-        <div className="flex items-center justify-center h-[50vh] bg-[#D9D9D9] min-w-[383px] max-w-[1000px] rounded-[10px] mx-auto aspect-w-16 aspect-h-9">
+        <div className="flex items-center justify-center h-[50vh] bg-[#D9D9D9] min-w-[363px] md:w-[43vw] max-w-[1000px] rounded-[10px] mx-auto aspect-w-16 aspect-h-9">
           <div className="rounded-full bg-[#BDBDBD] w-[140px] h-[140px] flex items-center justify-center">
             <PersonFilledIcon />
           </div>
@@ -57,4 +61,4 @@ const VideoChannel = ({ tracks, videoEnabled }: VideoChannelProps) => {
   );
 };
 
-export default VideoChannel;
+export default React.memo(VideoChannel);

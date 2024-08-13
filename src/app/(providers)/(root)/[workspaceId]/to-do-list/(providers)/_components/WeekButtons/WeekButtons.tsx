@@ -26,12 +26,9 @@ const WeekButtons = () => {
           {date}
         </Typography>
         <div className="flex flex-row gap-[8px]">
-          <button
-            onClick={handleClickPreviousWeek}
-            className="flex items-center justify-center w-[20px] h-[20px] rounded-full border-[1px] border-[#737B91]"
-          >
-            <div>
-              <ChevronLeftIcon className="w-[10px] h-[10px]" />
+          <button onClick={handleClickPreviousWeek}>
+            <div className="flex items-center justify-center w-[20px] h-[20px] rounded-full border-[1px] border-[#737B91]">
+              <ChevronLeftIcon className="w-[10px] h-[10px]" stoke="#737B91" />
             </div>
           </button>
           <button onClick={handleClickNextWeek}>
