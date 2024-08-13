@@ -20,8 +20,8 @@ const WeekButtons = () => {
   const today = dayjs();
 
   return (
-    <div className="flex flex-row justify-between">
-      <div className="flex flex-row items-center gap-[16px]">
+    <div className="flex flex-row justify-between lg:px-[12px] lg:py-[14px]">
+      <div className="flex flex-row items-center gap-[16px] lg:gap-[12px]">
         <Typography variant="Title22px" color="grey900">
           {date}
         </Typography>

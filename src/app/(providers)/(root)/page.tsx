@@ -76,9 +76,11 @@ const LandingPage = () => {
       <div className="relative w-full h-dvh flex flex-col justify-center items-center">
         {showSwiper && (
           <div className="w-[375px] h-dvh relative flex flex-col lg:hidden">
-            <button type="button" className="absolute top-20 right-8" onClick={handleClose}>
-              ✕
-            </button>
+            <Button type="button" theme="text" className="ml-auto" onClick={handleClose}>
+              <Typography variant="Subtitle16px" color="grey400">
+                건너뛰기
+              </Typography>
+            </Button>
             <div className="flex-grow flex items-center">
               <Swiper
                 modules={[Navigation, Pagination]}

@@ -1,15 +1,17 @@
 'use client';
+
+import useWorkspaceId from '@/hooks/useWorkspaceId';
 import PlusCircleIcon from '@/icons/PlusCircle.svg';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const ToDoAddButton = () => {
-  const router = useRouter();
-  const handleClickAdd = () => {
-    router.push(`to-do-list/add/new`);
-  };
+  const workspaceId = useWorkspaceId();
+
   return (
-    <button onClick={handleClickAdd} className="w-[24px] h-[24px]">
-      <PlusCircleIcon className="w-full h-full #2F323C" />
+    <button className="w-[24px] h-[24px]">
+      <Link href={`/${workspaceId}/to-do-list/add/new`}>
+        <PlusCircleIcon className="w-full h-full #2F323C" />
+      </Link>
     </button>
   );
 };
