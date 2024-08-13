@@ -9,8 +9,13 @@ import { useChannelHandlers } from '../../_hooks/useChannelHandlers';
 import { useGetChannels } from '../../../_hooks/useChannelQuery';
 import { handleSubscribeToChannels } from '../../_utils/subscribe';
 import ChannelItem from '../ChannelItem';
+import clsx from 'clsx';
 
-const ChannelListPage = () => {
+type ChannelListPageProps = {
+  className?: string;
+};
+
+const ChannelListPage = ({ className }: ChannelListPageProps) => {
   const workspaceId = useWorkspaceId();
   const workspaceUserId = useWorkspaceUserId();
 
@@ -36,7 +41,7 @@ const ChannelListPage = () => {
   if (isEmpty(channels)) return null;
 
   return (
-    <ul>
+    <ul className={clsx('relative z-[1]', className)}>
       {channels.map((item) => {
         const href =
           item.type === CHANNEL_TYPE.chat

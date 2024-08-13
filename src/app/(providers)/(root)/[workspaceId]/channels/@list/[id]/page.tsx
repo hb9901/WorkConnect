@@ -12,7 +12,7 @@ const ChatSlot = () => {
 
   if (!isPC) return null;
 
-  return <ChatList />;
+  return <ChatList className="sm:hidden lg:block" />;
 };
 
 export default ChatSlot;
