@@ -31,7 +31,10 @@ const ProfileParallelLayout = ({ children, home, params }: StrictPropsWithChildr
           <div className="flex lg:flex-row lg:pl-[87px]">
             <div className="hidden lg:grid lg:w-full ">{home}</div>
             <div className="w-full lg:min-w-[374px] lg:max-w-[374px]"></div>
-            <div className="w-full fixed lg:min-w-[374px] lg:max-w-[374px] lg:w-[374px] lg:top-[84px] lg:right-0">
+            <div
+              className="w-full fixed lg:min-w-[374px] lg:max-w-[374px] lg:w-[374px] lg:top-[84px] lg:right-0 
+            lg:border-[#E5E7EB] lg:border-l-[1px]"
+            >
               {children}
             </div>
           </div>
