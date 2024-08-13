@@ -124,13 +124,15 @@ const EditTextField = ({
           {label}
         </Label>
       )}
-      <div className={clsx('flex flex-row items-center w-full px-1 hover:bg-[#F5F6FF] rounded-md', inputClassNames)}>
+      <div
+        className={clsx('flex flex-row items-center w-full gap-1 px-1 hover:bg-[#F5F6FF] rounded-md', inputClassNames)}
+      >
         <input
           ref={inputRef}
           id={customId}
           value={value}
           type={type}
-          className={clsx('flex-1 pl-2 py-[12px] w-[calc(100% - 5px)] outline-none bg-transparent h-[45px]', className)}
+          className={clsx('flex-1 pl-2 py-[12px] w-[calc(100% - 9px)] outline-none bg-transparent h-[45px]', className)}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(e) => {
@@ -138,7 +140,7 @@ const EditTextField = ({
             onChange(e);
           }}
         />
-        <button className="p-3 transform cursor-pointer">{renderIcon()}</button>
+        <button className="w-5 h-5 mx-[2px] transform cursor-pointer">{renderIcon()}</button>
       </div>
     </div>
   );
