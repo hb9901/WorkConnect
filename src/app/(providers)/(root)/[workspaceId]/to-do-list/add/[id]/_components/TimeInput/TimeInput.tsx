@@ -14,7 +14,7 @@ const TimeInput = ({ handleUp, handleDown, checkStr, time }: TimeInputProps) => 
   return (
     <div className="flex flex-col items-center gap-2">
       <button onClick={handleUp}>
-        <ChevronUpIcon />
+        <ChevronUpIcon className="stroke-[#5C6275]" />
       </button>
       <Typography variant="Title22px" color="grey900">
         <div className="flex items-center justify-center w-[71px] h-[71px] bg-[#FAFAFA] rounded-[6px]">
@@ -29,7 +29,7 @@ const TimeInput = ({ handleUp, handleDown, checkStr, time }: TimeInputProps) => 
         </div>
       </Typography>
       <button onClick={handleDown}>
-        <ChevronDownIcon />
+        <ChevronDownIcon className="stroke-[#5C6275]" />
       </button>
     </div>
   );

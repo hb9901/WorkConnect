@@ -7,7 +7,11 @@ import useDateStore from '@/store/dateStore';
 import dayjs, { Dayjs } from 'dayjs';
 import { useShallow } from 'zustand/react/shallow';
 
-const DateButtons = () => {
+interface DateButtonsProps {
+  showWeeklyButton?: boolean;
+}
+
+const DateButtons = ({ showWeeklyButton = true }: DateButtonsProps) => {
   const { selectedDate, isWeekly, changeIsWeekly, handleClickNext, handleClickPrevious, handleClickDate } =
     useDateStore(
       useShallow((state) => ({
@@ -49,14 +53,16 @@ const DateButtons = () => {
           </button>
         </div>
       </div>
-      <button
-        onClick={() => handleClickWeekOrMonth(today)}
-        className="flex flex-shrink-0 w-[50px] px-[2px] justify-center items-center rounded-[14px] bg-[#F7F7F7] lg:bg-[#E5E7EB]"
-      >
-        <Typography variant="Subtitle16px" color="grey700Black">
-          {isWeekly ? '월' : '주'}
-        </Typography>
-      </button>
+      {showWeeklyButton && (
+        <button
+          onClick={() => handleClickWeekOrMonth(today)}
+          className="flex flex-shrink-0 w-[50px] px-[2px] justify-center items-center rounded-[14px] bg-[#F7F7F7] lg:bg-[#E5E7EB]"
+        >
+          <Typography variant="Subtitle16px" color="grey700Black">
+            {isWeekly ? '월' : '주'}
+          </Typography>
+        </button>
+      )}
     </div>
   );
 };

@@ -10,7 +10,7 @@ const MonthDate = () => {
   const monthDates = getMonthDates(selectedDate);
 
   return (
-    <div className="text-center mt-[30px] mb-8px lg:mt-0 lg:mb-0 lg:px-[12px] lg:py-[20px]">
+    <div className="text-center mt-[30px] mb-8px lg:mt-0 lg:mb-0 lg:px-[12px] lg:py-[20px] lg:w-full">
       <div className="grid grid-cols-7">
         {weekNames.map((weekName) => (
           <Typography key={weekName} variant="Title14px" color={weekName === '일' ? 'error' : 'grey600'}>

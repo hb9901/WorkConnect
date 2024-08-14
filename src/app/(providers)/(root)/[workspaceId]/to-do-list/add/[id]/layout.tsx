@@ -1,45 +1,41 @@
-'use client';
-import { PageLayout } from '@/components/PageLayout';
+import BottomNavigationBar from '@/components/BottomNavigationBar';
 import SelectHeader from '@/components/SelectHeader';
-import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { StrictPropsWithChildren } from '@/types/common';
 import PcHeader from '../../_components/PcHeader';
 
-interface ProfileParallelLayoutProps {
+interface TodoAddLayoutProps {
   todolist: React.ReactNode;
   params: {
     workspaceId: string;
   };
 }
 
-const ProfileParallelLayout = ({ children, todolist, params }: StrictPropsWithChildren<ProfileParallelLayoutProps>) => {
-  const workspaceId = useWorkspaceId();
+const TodoAddLayout = ({ children, todolist, params }: StrictPropsWithChildren<TodoAddLayoutProps>) => {
+  const workspaceId = Number(params.workspaceId);
 
   return (
     <>
-      <div className="lg:hidden">
-        <div className="hidden lg:grid lg:w-full">
+      <main>
+        <SelectHeader workspaceId={workspaceId} isTodoList isHidden />
+
+        <div className="hidden lg:grid lg:w-full lg:pl-[87px]">
           <PcHeader />
           {todolist}
         </div>
-        <div className="w-full lg:max-w-[calc((100dvw-297px)/3)] lg:absolute lg:top-[84px] lg:right-0 lg:transition-all lg:duration-200">
-          {children}
-        </div>
-      </div>
-      <div className="hidden lg:grid">
-        <PageLayout title="" showTopBar={false}>
-          <SelectHeader workspaceId={workspaceId} isTodoList />
-          <div className="hidden lg:grid lg:w-full">
-            <PcHeader />
-            {todolist}
-          </div>
-          <div className="w-full lg:max-w-[calc((100dvw-297px)/3)] lg:absolute lg:top-[84px] lg:right-0 lg:transition-all lg:duration-200">
+        <div className="w-full lg:w-auto lg:absolute lg:inline-grid lg:grid-cols-3 lg:gap-[12px] lg:bottom-0 lg:left-[400px] lg:top-[84px] lg:right-[17px] lg:rounded-[6px]">
+          <div />
+          <div />
+          <div className="lg:h-full lg:w-full lg:bg-white lg:border-[#E5E7EB] lg:border-l-[1px] overflow-y-scroll">
             {children}
           </div>
-        </PageLayout>
-      </div>
+        </div>
+      </main>
+      <>
+        <div className="h-[87px]" />
+        <BottomNavigationBar className="hidden fixed bottom-0 left-0 z-30 xs:w-full lg:top-[84px] lg:flex lg:items-start lg:w-[87px] lg:h-[vh100%] lg:bg-[#F4F4F6] lg:border-r-[1px] lg:border-grey50" />
+      </>
     </>
   );
 };
 
-export default ProfileParallelLayout;
+export default TodoAddLayout;
