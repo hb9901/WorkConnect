@@ -1,20 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import useShallowSelector from '@/hooks/useShallowSelector';
 import { useAuthStore } from '@/providers/AuthStoreProvider';
 import { AuthStoreTypes } from '@/store/authStore';
-import useUserStore from '@/store/userStore';
-import { supabase } from '@/utils/supabase/supabaseClient';
-import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
-import {
-  getUserIdCookie,
-  getWorkspaceIdCookie,
-  setWorkspaceIdCookie,
-  setWorkspaceUserIdCookie
-} from '@/utils/cookie/workspace';
+import { getUserIdCookie } from '@/utils/cookie/workspace';
 import WorkConnectLogoIcon from '@/icons/WorkConnectLogo.svg';
 import Typography from '@/components/Typography';
 import Input from '@/components/Input';
@@ -26,7 +18,7 @@ import {
   useInsertWorkspaceUser,
   useUpdateWorkspaceUser
 } from './_hooks/useInvite';
-import { INVITE_ERROR_CODE } from './onstants';
+import { INVITE_ERROR_CODE } from './constants';
 import { useGetWorkspaceUserIdMutation } from '../../_hook/useLogin';
 
 type UserType = {
@@ -81,13 +73,6 @@ const InviteCodePage = () => {
     }
   });
 
-  const handleSubmitLoading =
-    getWorkspaceIdWithInviteCodePending ||
-    existingWorkspaceUserPending ||
-    insertWorkspaceUserPending ||
-    getWorkspaceUserIdPending ||
-    updateWorkspaceUserPending;
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -126,10 +111,16 @@ const InviteCodePage = () => {
 
     handleSetGlobalUser({ userId: user.id, workspaceId, workspaceUserId });
 
-    // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
     setInviteCode('');
     route.replace('/welcome');
   };
+
+  const handleSubmitLoading =
+    getWorkspaceIdWithInviteCodePending ||
+    existingWorkspaceUserPending ||
+    insertWorkspaceUserPending ||
+    getWorkspaceUserIdPending ||
+    updateWorkspaceUserPending;
 
   return (
     <main className="flex justify-center items-center w-full h-dvh">
