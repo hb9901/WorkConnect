@@ -33,7 +33,7 @@ const EditOrMessageButton = ({
     });
 
     if (existChannel) {
-      router.push(`/${workspaceId}/chat/${existChannel}`);
+      router.push(`/${workspaceId}/channels/${existChannel}`);
       return;
     } else {
       const newChannel: ChannelInsertType = {
@@ -45,7 +45,7 @@ const EditOrMessageButton = ({
       const channelId = Number(response.id);
       const channelUsersInfo = { workspaceUserIds: [targetWorkspaceUserId, workspaceUserId], channel_id: channelId };
       await api.channelUser.createChannelUsers(channelUsersInfo);
-      router.push(`/${workspaceId}/chat/${channelId}`);
+      router.push(`/${workspaceId}/channels/${channelId}`);
     }
   };
 
