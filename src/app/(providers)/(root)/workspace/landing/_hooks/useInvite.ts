@@ -17,7 +17,56 @@ export const useGetWorkspaceIdWithInviteCode = ({ ...options }) => {
   });
 };
 
-type UpdateWorkspaceUserProps = { workspaceId: number; userId: string };
+type ExWorkspaceUserProps = {
+  workspaceId: number;
+  userId: string;
+};
+/** 중복된 초대코드를 입력 했을 시 처리 */
+export const useExistingWorkspaceUser = () => {
+  return useMutation({
+    mutationFn: async ({ workspaceId, userId }: ExWorkspaceUserProps) => {
+      const { data } = await supabase
+        .from('workspace_user')
+        .select('id')
+        .eq('workspace_id', workspaceId)
+        .eq('user_id', userId)
+        .single();
+
+      return data;
+    }
+  });
+};
+
+type InsertWorkspaceUserProps = {
+  workspaceId: number;
+  userId: string;
+  userName: string;
+  userEmail: string;
+};
+
+export const useInsertWorkspaceUser = ({ ...options }) => {
+  return useMutation({
+    mutationFn: async ({ workspaceId, userId, userName, userEmail }: InsertWorkspaceUserProps) => {
+      const { error } = await supabase
+        .from('workspace_user')
+        .insert({
+          workspace_id: workspaceId,
+          user_id: userId,
+          name: userName,
+          email: userEmail
+        })
+        .select();
+
+      if (error) throw error;
+    },
+    ...options
+  });
+};
+
+type UpdateWorkspaceUserProps = {
+  workspaceId: number;
+  userId: string;
+};
 
 export const useUpdateWorkspaceUser = ({ ...options }) => {
   return useMutation({

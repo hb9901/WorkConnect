@@ -201,7 +201,6 @@ const NewWorkSpacePage = () => {
     getWorkspaceUser();
   }, []);
 
-  // TODO:
   return (
     <main className="flex justify-center items-center w-full h-dvh">
       <div className="flex flex-col w-[375px] lg:w-[590px] h-dvh px-4">

@@ -61,7 +61,6 @@ export const useGetUserSessionMutation = ({ ...options }) => {
         data: { session },
         error
       } = await supabase.auth.getSession();
-      console.log('data', session?.user);
 
       if (error) throw error;
       return session?.user;
