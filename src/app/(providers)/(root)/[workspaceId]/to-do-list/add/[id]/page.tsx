@@ -20,7 +20,7 @@ import { Tables } from '@/types/supabase';
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import DateBottom from './_components/DateBottom/DateBottom';
 import DateModal from './_components/DateModal';
 import Header from './_components/Header';
@@ -53,7 +53,6 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const initEndTime = selectedTodo ? dayjs(selectedTodo.end_date) : initTime;
   const { selectedDate } = useDateStore();
   const selectedDateStr = selectedDate.format('M월 DD일 선택');
-  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
 
   const {
     title,
@@ -76,12 +75,14 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     endTime,
     isStartTime,
     isBottomSheetOpen,
+    isCalendarOpen,
     setStartTime,
     setEndTime,
     handleSetStartTime,
     handleSetEndTime,
     handleTimeClick,
-    hanldeBottomSheetClick
+    hanldeBottomSheetClick,
+    handleCalendarClick
   } = useBottomTime(initStartTime, initEndTime);
 
   const placeRef = useRef<HTMLInputElement>(null);
@@ -142,10 +143,6 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     router.push(`/${workspaceId}/to-do-list`);
   };
 
-  const handleCalendarClick = () => {
-    setIsCalendarOpen((prev) => !prev);
-  };
-
   return (
     <div className="bg-white px-[16px]">
       <header>
@@ -163,9 +160,11 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
             기본 설정
           </Typography>
           <InputCard>
-            <BottomSheetModal isOpen={isCalendarOpen} onClose={handleCalendarClick}>
-              <DateModal onClick={handleCalendarClick} selectedDateStr={selectedDateStr} />
-            </BottomSheetModal>
+            {isCalendarOpen && (
+              <BottomSheetModal isOpen={isCalendarOpen} onClose={handleCalendarClick}>
+                <DateModal onClick={handleCalendarClick} selectedDateStr={selectedDateStr} />
+              </BottomSheetModal>
+            )}
             <button className="flex flex-row w-full gap-[12px]" onClick={handleCalendarClick}>
               <CalendarIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
               <Typography variant="Subtitle16px" color="grey700Black">
@@ -175,16 +174,18 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
           </InputCard>
 
           <InputCard>
-            <BottomSheetModal isOpen={isBottomSheetOpen} onClose={hanldeBottomSheetClick}>
-              <DateBottom
-                isStartTime={isStartTime}
-                handleClose={hanldeBottomSheetClick}
-                startTime={startTime}
-                endTime={endTime}
-                handleSetStartTime={handleSetStartTime}
-                handleSetEndTime={handleSetEndTime}
-              />
-            </BottomSheetModal>
+            {!isCalendarOpen && (
+              <BottomSheetModal isOpen={isBottomSheetOpen} onClose={hanldeBottomSheetClick}>
+                <DateBottom
+                  isStartTime={isStartTime}
+                  handleClose={hanldeBottomSheetClick}
+                  startTime={startTime}
+                  endTime={endTime}
+                  handleSetStartTime={handleSetStartTime}
+                  handleSetEndTime={handleSetEndTime}
+                />
+              </BottomSheetModal>
+            )}
             <ClockIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
             <div className="flex flex-row items-center gap-[4px]">
               <button onClick={() => handleTimeClick(true)}>{startTimeFormat}</button>

@@ -42,7 +42,7 @@ const SelectHeader = ({ workspaceId, isTodoList = false, isFull = false, isHidde
   return (
     <header
       className={`${isFull ? 'w-full' : ' '} ${isHidden ? 'hidden' : 'flex flex-row'} ${isTodoList ? 'w-full lg:w-[384px]' : ''} 
-      sticky top-0 items-center justify-between z-50 bg-white pt-[14px] px-[16px] pb-[12px] 
+      sticky top-0 items-center justify-between z-40 bg-white pt-[14px] px-[16px] pb-[12px] 
       lg:bg-[#F4F4F6] lg:h-[84px] lg:flex lg:border-[#E5E7EB] lg:border-b-[1px]`}
     >
       <div className="flex flex-row gap-[8px]">

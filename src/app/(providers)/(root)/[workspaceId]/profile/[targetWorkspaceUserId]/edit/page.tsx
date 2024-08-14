@@ -106,7 +106,7 @@ const ProfileEditPage = () => {
     <div>
       <Header title="내 프로필 편집" type="edit" />
       <main>
-        <div className="flex flex-col w-full items-center px-5 relative">
+        <div className="flex flex-col w-full items-center px-5">
           <ProfileImgButton imageURL={imageURL} handleProfileImageChange={handleProfileImageChange} />
           <div className="flex flex-col w-full gap-[16px] mb-[30px]">
             {editInputs.map((editInput) => {
@@ -144,8 +144,6 @@ const ProfileEditPage = () => {
           </Button>
         </div>
       </main>
-
-      {/* <InputBottomSheet editInput={editInputs[1]} /> */}
     </div>
   );
 };

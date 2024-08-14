@@ -1,3 +1,4 @@
+import useBottomsheetModalBackDropStore from '@/store/bottomsheetModalBackDropStore';
 import { useState } from 'react';
 
 const useInput = () => {
@@ -9,6 +10,7 @@ const useInput = () => {
   const [isEmailBottomOpen, setIsEmailBottomOpen] = useState<boolean>(false);
   const [phone, setPhone] = useState<string | undefined>('');
   const [isPhoneBottomOpen, setIsPhoneBottomOpen] = useState<boolean>(false);
+  const setOpen = useBottomsheetModalBackDropStore((state) => state.setOpen);
 
   const handleNameChange = (value: string | undefined) => {
     setName(value);
@@ -16,6 +18,7 @@ const useInput = () => {
 
   const handleStateChange = (value: string | undefined) => {
     setState(value);
+    setOpen();
     setIsStatusBottomOpen((prev) => !prev);
   };
 

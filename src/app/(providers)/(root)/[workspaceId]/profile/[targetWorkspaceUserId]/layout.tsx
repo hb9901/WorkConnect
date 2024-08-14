@@ -19,17 +19,17 @@ const ProfileParallelLayout = ({ children, home, params }: StrictPropsWithChildr
 
         <div className="flex lg:flex-row lg:pl-[87px]">
           <div className="hidden lg:grid lg:w-full ">{home}</div>
-          <div className="w-full lg:min-w-[374px] lg:max-w-[374px]" />
+          <div className="w-full lg:min-w-[375px] lg:max-w-[375px]" />
           <div
-            className="w-full fixed lg:min-w-[374px] lg:max-w-[374px] lg:w-[374px] lg:top-[84px] lg:bottom-0 lg:right-0 
-            lg:border-[#E5E7EB] lg:border-l-[1px] lg:overflow-y-scroll"
+            className="w-full fixed lg:min-w-[375px] lg:max-w-[375px] lg:w-[375px] lg:top-[84px] lg:bottom-0 lg:right-0 
+            lg:border-[#E5E7EB] lg:border-l-[1px] lg:overflow-y-scroll z-50"
           >
             {children}
           </div>
         </div>
       </main>
       <>
-        <div className="h-[87px]" />
+        <div className="h-[87px] lg:hidden;" />
         <BottomNavigationBar className="hidden fixed bottom-0 left-0 z-30 xs:w-full lg:top-[84px] lg:flex lg:items-start lg:w-[87px] lg:h-[vh100%] lg:bg-[#F4F4F6] lg:border-r-[1px] lg:border-grey50" />
       </>
     </>
