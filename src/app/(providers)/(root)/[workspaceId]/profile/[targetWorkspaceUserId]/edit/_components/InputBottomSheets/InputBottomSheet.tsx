@@ -1,5 +1,3 @@
-import BottomLineTextFieldCount from '@/components/BottomLineTextFieldCount';
-import BottomSheet from '@/components/BottomSheet';
 import Button from '@/components/Button';
 import { ChangeEvent, useState } from 'react';
 import StatusCheckBox from '../StatusCheckBox';
@@ -23,23 +21,12 @@ const InputBottomSheet = ({ editInput }: InputBottomSheetsProps) => {
 
   return (
     <>
-      <BottomSheet key={editInput.label} isOpen={editInput.isOpen} onClose={() => editInput.handleFn(editInput.value)}>
-        <div className="mt-[12px] mb-[20px]">
-          {editInput.label === '활동상태' ? (
-            <StatusCheckBox status={inputValue} onChange={handleInputChange} />
-          ) : (
-            <BottomLineTextFieldCount
-              label={editInput.label}
-              LabelColor="grey700Black"
-              defaultValue={editInput.value}
-              onChange={handleInputChange}
-            />
-          )}
-        </div>
-        <Button theme="primary" isFullWidth className="mb-[16px]" onClick={() => editInput.handleFn(inputValue)}>
-          확인
-        </Button>
-      </BottomSheet>
+      <div className="mt-[12px] mb-[20px]">
+        <StatusCheckBox status={inputValue} onChange={handleInputChange} />
+      </div>
+      <Button theme="primary" isFullWidth className="mb-[16px]" onClick={() => editInput.handleFn(inputValue)}>
+        확인
+      </Button>
     </>
   );
 };

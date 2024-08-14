@@ -1,5 +1,6 @@
 'use client';
 import api from '@/api/api';
+import BottomSheetModal from '@/components/BottomSheetModal';
 import Button from '@/components/Button';
 import EditTextfield from '@/components/EditTextField';
 import TextFieldButton from '@/components/TextFieldButton';
@@ -112,6 +113,9 @@ const ProfileEditPage = () => {
               if (editInput.label === '활동상태')
                 return (
                   <div key={editInput.label}>
+                    <BottomSheetModal isOpen={editInput.isOpen} onClose={() => editInput.handleFn(editInput.value)}>
+                      <InputBottomSheet editInput={editInput} />
+                    </BottomSheetModal>
                     <TextFieldButton
                       LabelColor="grey400"
                       label={editInput.label}
@@ -141,7 +145,7 @@ const ProfileEditPage = () => {
         </div>
       </main>
 
-      <InputBottomSheet editInput={editInputs[1]} key={editInputs[1].label} />
+      {/* <InputBottomSheet editInput={editInputs[1]} /> */}
     </div>
   );
 };

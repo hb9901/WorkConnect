@@ -1,8 +1,7 @@
 'use client';
-import BottomSheet from '@/components/BottomSheet';
+import BottomSheetModal from '@/components/BottomSheetModal';
 import Button from '@/components/Button';
 import CountTextField from '@/components/CountTextField';
-import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
 import useTodoList from '@/hooks/useTodo';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
@@ -22,8 +21,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import DateButtons from '../../_components/DateButtons';
-import MonthDate from '../../_components/MonthDate';
 import DateBottom from './_components/DateBottom/DateBottom';
 import DateModal from './_components/DateModal';
 import Header from './_components/Header';
@@ -166,6 +163,9 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
             기본 설정
           </Typography>
           <InputCard>
+            <BottomSheetModal isOpen={isCalendarOpen} onClose={handleCalendarClick}>
+              <DateModal onClick={handleCalendarClick} selectedDateStr={selectedDateStr} />
+            </BottomSheetModal>
             <button className="flex flex-row w-full gap-[12px]" onClick={handleCalendarClick}>
               <CalendarIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
               <Typography variant="Subtitle16px" color="grey700Black">
@@ -173,7 +173,18 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
               </Typography>
             </button>
           </InputCard>
+
           <InputCard>
+            <BottomSheetModal isOpen={isBottomSheetOpen} onClose={hanldeBottomSheetClick}>
+              <DateBottom
+                isStartTime={isStartTime}
+                handleClose={hanldeBottomSheetClick}
+                startTime={startTime}
+                endTime={endTime}
+                handleSetStartTime={handleSetStartTime}
+                handleSetEndTime={handleSetEndTime}
+              />
+            </BottomSheetModal>
             <ClockIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
             <div className="flex flex-row items-center gap-[4px]">
               <button onClick={() => handleTimeClick(true)}>{startTimeFormat}</button>
@@ -258,48 +269,6 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
         <Button theme="primary" isFullWidth={true} className="mt-[65px] mb-[20px]" onClick={handleAdd}>
           {params.id === 'new' ? '작성 완료' : '수정 완료'}
         </Button>
-      </div>
-
-      <div className="lg:hidden">
-        <BottomSheet isOpen={isBottomSheetOpen} onClose={hanldeBottomSheetClick}>
-          <DateBottom
-            isStartTime={isStartTime}
-            handleClose={hanldeBottomSheetClick}
-            startTime={startTime}
-            endTime={endTime}
-            handleSetStartTime={handleSetStartTime}
-            handleSetEndTime={handleSetEndTime}
-          />
-        </BottomSheet>
-      </div>
-      <div className="hidden lg:flex">
-        <Modal isOpen={isBottomSheetOpen} onClose={hanldeBottomSheetClick} isModal={false}>
-          <DateBottom
-            isStartTime={isStartTime}
-            handleClose={hanldeBottomSheetClick}
-            startTime={startTime}
-            endTime={endTime}
-            handleSetStartTime={handleSetStartTime}
-            handleSetEndTime={handleSetEndTime}
-          />
-        </Modal>
-      </div>
-
-      <div className="lg:hidden">
-        <BottomSheet isOpen={isCalendarOpen} onClose={handleCalendarClick}>
-          <div className="">
-            <DateButtons showWeeklyButton={false} />
-            <div className="mb-[24px]">
-              <MonthDate />
-            </div>
-            <Button theme="primary" onClick={handleCalendarClick} isFullWidth>
-              {selectedDateStr}
-            </Button>
-          </div>
-        </BottomSheet>
-      </div>
-      <div className="hidden lg:flex">
-        <DateModal isOpen={isCalendarOpen} onClose={handleCalendarClick} />
       </div>
     </div>
   );
