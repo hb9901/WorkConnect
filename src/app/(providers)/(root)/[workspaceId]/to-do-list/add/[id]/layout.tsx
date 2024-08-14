@@ -16,9 +16,7 @@ const TodoAddLayout = ({ children, todolist, params }: StrictPropsWithChildren<T
   return (
     <>
       <main>
-        <div className="hidden lg:grid">
-          <SelectHeader workspaceId={workspaceId} isTodoList />
-        </div>
+        <SelectHeader workspaceId={workspaceId} isTodoList isHidden />
 
         <div className="hidden lg:grid lg:w-full lg:pl-[87px]">
           <PcHeader />
