@@ -111,28 +111,26 @@ const ProfileEditPage = () => {
             {editInputs.map((editInput) => {
               if (editInput.label === '활동상태')
                 return (
-                  <>
+                  <div key={editInput.label}>
                     <TextFieldButton
-                      key={editInput.label}
                       LabelColor="grey400"
                       label={editInput.label}
                       value={editInput.value}
                       onClick={() => editInput.handleFn(editInput.value)}
                     />
                     <div className="lg:border-grey50 lg:border-b-[1px]" />
-                  </>
+                  </div>
                 );
               else
                 return (
-                  <>
+                  <div key={editInput.label}>
                     <EditTextfield
-                      key={editInput.label}
                       label={editInput.label}
                       labelColor="grey400"
                       onChange={() => editInput.handleFn(editInput.value)}
                     />
                     <div className="lg:border-grey50 lg:border-b-[1px]" />
-                  </>
+                  </div>
                 );
             })}
             <IsOpenInput isOpen={isOpen} handleIsOpenClick={handleIsOpenClick} />
