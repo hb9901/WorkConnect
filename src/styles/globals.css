@@ -9,6 +9,30 @@
     -ms-user-select: none;
     user-select: none;
   }
+
+  .scroll-container::-webkit-scrollbar {
+    width: 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .scroll-container:hover::-webkit-scrollbar {
+    opacity: 1;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .scroll-container:hover::-webkit-scrollbar-thumb {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+  }
 }
 
 .focus\:outline-none:focus {
@@ -18,4 +42,8 @@
 .swiper .swiper-pagination-bullet {
   background-color: #7173fa;
   margin: 0 8px !important;
+}
+
+.group:hover input {
+  background-color: #f5f6ff;
 }

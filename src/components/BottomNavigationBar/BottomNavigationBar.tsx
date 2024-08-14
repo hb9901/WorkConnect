@@ -28,12 +28,12 @@ const BottomNavigationBar = ({ className }: { className?: string }) => {
             홈
           </Link>
         </Tab>
-        <Tab active={curPath === 'channel'}>
-          <Link href={`/${workspaceId}/channel`} className="w-full">
+        <Tab active={curPath === 'channels'}>
+          <Link href={`/${workspaceId}/channels`} className="w-full">
             <MessageCircleIcon
               className={clsx(
                 'stroke-current items-center justify-center mx-auto mb-3',
-                curPath === 'channel' ? 'stroke-primary200Main text-primary200Main' : 'stroke-gray-500 text-gray-500'
+                curPath === 'channels' ? 'stroke-primary200Main text-primary200Main' : 'stroke-gray-500 text-gray-500'
               )}
             />
             대화

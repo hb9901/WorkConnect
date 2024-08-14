@@ -33,7 +33,8 @@ const Header = () => {
     <header>
       <div
         className="flex flex-row justify-between
-        items-center px-[16px] pt-[14px] pb-[12px] w-full"
+        items-center pt-[14px] pb-[12px] w-full 
+        lg:pt-[32px] lg:pb-[32px] lg:border-grey50 lg:border-b-[1px]"
       >
         <BackButton />
         <Typography
@@ -41,7 +42,7 @@ const Header = () => {
           color="grey700Black"
           className="text-center text-ellipsis whitespace-nowrap overflow-hidden"
         >
-          일정상세
+          일정 상세
         </Typography>
         {isExist ? <DeleteButton onClick={handleIsOpen} /> : <div />}
 
