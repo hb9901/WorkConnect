@@ -17,6 +17,7 @@ import useSetGlobalUser from '@/hooks/useSetGlobalUser';
 import {
   useCreateWorkspace,
   useCreateWorkspaceUser,
+  useNewWorkspaceUserId,
   useSingleWorkspaceId,
   useUpdateNewWorkspaceUser
 } from './_hooks/useNewWorkspace';
@@ -33,7 +34,6 @@ const NewWorkSpacePage = () => {
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
   const { openSnackBar } = useSnackBar();
   const { handleSetGlobalUser } = useSetGlobalUser();
-
   const cookieUserId = getUserIdCookie();
   const randomNumbers = getRandomNumbers(6, 1, 9);
   const combinedNumber = Number(randomNumbers.join(''));
@@ -65,12 +65,9 @@ const NewWorkSpacePage = () => {
 
     useCreateWorkspaceMutate({ orgName, combinedNumber, adminUserId: workUserData.id });
 
-    //? 워크스페이스 생성 완료 후, workspace의 id 가져옴
     const workspaceId = await useSingleWorkspaceId(workUserData.id);
 
-    //? 로그인 상태일 때
     if (cookieUserId) {
-      //? 워크스페이스 생성 완료 후, workspace_user 테이블에 workspace_id 추가
       useCreateWorkspaceUserMutate({
         workspaceId: Number(workspaceId),
         userId: user.id,
@@ -100,8 +97,6 @@ const NewWorkSpacePage = () => {
       workspaceUserId: workUserData.id
     });
 
-    openSnackBar({ message: '첫 회원가입 후 조인...' });
-
     setOrgName('');
     return route.replace('/welcome');
   };
@@ -111,40 +106,20 @@ const NewWorkSpacePage = () => {
 
   useEffect(() => {
     const getWorkspaceUser = async () => {
-      // const {
-      //   data: { user }
-      // } = await supabase.auth.getUser();
-
       if (!user) {
         openSnackBar({ message: '로그인이 필요합니다' });
         route.replace('/');
         return;
       }
 
-      //? limit(1)해도 오류
-      const { data: workspaceUserId, error: workspaceUserIdError } = await supabase
-        .from('workspace_user')
-        .select('id')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
+      const newWorkspaceUserId = await useNewWorkspaceUserId(user.id);
 
-      //? 지금 여기서 오류남 이유는 아직 모름
-      //? 로그인하고 new 페이지 오면 돌아가짐
-      if (workspaceUserIdError) {
+      if (!newWorkspaceUserId) {
         openSnackBar({ message: '오류가 발생했어요' });
-        route.replace('/');
         return;
       }
 
-      if (!workspaceUserId) {
-        openSnackBar({ message: '해당 유저는 워크스페이스에 속해있지 않아요' });
-        route.replace('/');
-        return;
-      }
-
-      setWorkUserData({ id: workspaceUserId.id });
+      setWorkUserData({ id: newWorkspaceUserId });
     };
 
     getWorkspaceUser();
