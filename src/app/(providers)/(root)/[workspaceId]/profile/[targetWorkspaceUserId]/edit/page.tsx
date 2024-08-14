@@ -2,6 +2,7 @@
 import api from '@/api/api';
 import Button from '@/components/Button';
 import EditTextfield from '@/components/EditTextField';
+import TextFieldButton from '@/components/TextFieldButton';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import useUserStore from '@/store/userStore';
@@ -10,6 +11,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Header from '../_components/Header';
 import ProfileImgButton from '../_components/ProfileImgButton';
 import IsOpenInput from './_components/Input/IsOpenInput';
+import InputBottomSheet from './_components/InputBottomSheets/InputBottomSheet';
 import useInput from './_hooks/useInput';
 
 const ProfileEditPage = () => {
@@ -106,17 +108,33 @@ const ProfileEditPage = () => {
         <div className="flex flex-col w-full items-center px-5 relative">
           <ProfileImgButton imageURL={imageURL} handleProfileImageChange={handleProfileImageChange} />
           <div className="flex flex-col w-full gap-[16px] mb-[30px]">
-            {editInputs.map((editInput) => (
-              <>
-                <EditTextfield
-                  key={editInput.label}
-                  label={editInput.label}
-                  labelColor="grey400"
-                  onChange={() => editInput.onChange(editInput.value)}
-                />
-                <div className="lg:border-grey50 lg:border-b-[1px]" />
-              </>
-            ))}
+            {editInputs.map((editInput) => {
+              if (editInput.label === '활동상태')
+                return (
+                  <>
+                    <TextFieldButton
+                      key={editInput.label}
+                      LabelColor="grey400"
+                      label={editInput.label}
+                      value={editInput.value}
+                      onClick={() => editInput.handleFn(editInput.value)}
+                    />
+                    <div className="lg:border-grey50 lg:border-b-[1px]" />
+                  </>
+                );
+              else
+                return (
+                  <>
+                    <EditTextfield
+                      key={editInput.label}
+                      label={editInput.label}
+                      labelColor="grey400"
+                      onChange={() => editInput.handleFn(editInput.value)}
+                    />
+                    <div className="lg:border-grey50 lg:border-b-[1px]" />
+                  </>
+                );
+            })}
             <IsOpenInput isOpen={isOpen} handleIsOpenClick={handleIsOpenClick} />
           </div>
           <Button theme="primary" isFullWidth onClick={handleEdit}>
@@ -124,6 +142,8 @@ const ProfileEditPage = () => {
           </Button>
         </div>
       </main>
+
+      <InputBottomSheet editInput={editInputs[1]} key={editInputs[1].label} />
     </div>
   );
 };

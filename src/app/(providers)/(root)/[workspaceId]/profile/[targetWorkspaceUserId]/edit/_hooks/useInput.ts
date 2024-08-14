@@ -16,6 +16,7 @@ const useInput = () => {
 
   const handleStateChange = (value: string | undefined) => {
     setState(value);
+    setIsStatusBottomOpen((prev) => !prev);
   };
 
   const handleEmailChange = (value: string | undefined) => {
@@ -30,25 +31,25 @@ const useInput = () => {
       label: '이름',
       value: name,
       isOpen: isNameBottomOpen,
-      onChange: handleNameChange
+      handleFn: handleNameChange
     },
     {
       label: '활동상태',
       value: state,
       isOpen: isStatusBottomOpen,
-      onChange: handleStateChange
+      handleFn: handleStateChange
     },
     {
       label: '이메일',
       value: email,
       isOpen: isEmailBottomOpen,
-      onChange: handleEmailChange
+      handleFn: handleEmailChange
     },
     {
       label: '전화번호',
       value: phone,
       isOpen: isPhoneBottomOpen,
-      onChange: handlePhoneChange
+      handleFn: handlePhoneChange
     }
   ];
 

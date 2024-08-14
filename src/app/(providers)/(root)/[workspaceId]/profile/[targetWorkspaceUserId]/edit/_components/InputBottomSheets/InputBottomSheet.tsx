@@ -9,7 +9,7 @@ interface InputBottomSheetsProps {
     label: string;
     value: string | undefined;
     isOpen: boolean;
-    onClick: (value: string | undefined) => void;
+    handleFn: (value: string | undefined) => void;
   };
 }
 
@@ -23,7 +23,7 @@ const InputBottomSheet = ({ editInput }: InputBottomSheetsProps) => {
 
   return (
     <>
-      <BottomSheet key={editInput.label} isOpen={editInput.isOpen} onClose={() => editInput.onClick(editInput.value)}>
+      <BottomSheet key={editInput.label} isOpen={editInput.isOpen} onClose={() => editInput.handleFn(editInput.value)}>
         <div className="mt-[12px] mb-[20px]">
           {editInput.label === '활동상태' ? (
             <StatusCheckBox status={inputValue} onChange={handleInputChange} />
@@ -36,7 +36,7 @@ const InputBottomSheet = ({ editInput }: InputBottomSheetsProps) => {
             />
           )}
         </div>
-        <Button theme="primary" isFullWidth className="mb-[16px]" onClick={() => editInput.onClick(inputValue)}>
+        <Button theme="primary" isFullWidth className="mb-[16px]" onClick={() => editInput.handleFn(inputValue)}>
           확인
         </Button>
       </BottomSheet>
