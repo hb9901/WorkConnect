@@ -35,108 +35,11 @@ type UserType = {
 
 const InviteCodePage = () => {
   const [inviteCode, setInviteCode] = useState<string | ''>('');
-  const setUserData = useUserStore((state) => state.setUserData);
   const route = useRouter();
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
   const { openSnackBar } = useSnackBar();
   const cookieUserId = getUserIdCookie();
   const { handleSetGlobalUser } = useSetGlobalUser();
-
-  // TODO : 리팩터링 예정
-  // const handleSubmit = useMutation({
-  //   mutationFn: async () => {
-  //     if (!user) {
-  //       openSnackBar({ message: '로그인이 필요해요' });
-  //       route.push('/');
-  //       return;
-  //     }
-
-  //     //? 로그인 상태일 때, 초대코드 입력 시 워크스페이스 입장
-  //     if (cookieWorkspaceId) {
-  //       console.log('쿠키에 저장된 workspaceId:', cookieWorkspaceId);
-  //       console.log('로그인 돼있다~~~~~~~~~~');
-  //       //? 초대코드랑 같은 workspace_id를 가져옴
-  //       const { data: workspaceData, error: workspaceError } = await supabase
-  //         .from('workspace')
-  //         .select('id')
-  //         .eq('invite_code', Number(inviteCode))
-  //         .single();
-
-  //       if (workspaceError) return openSnackBar({ message: '존재하지 않는 초대코드에요' });
-
-  //       //? 이미 가입된 초대코드 일 때
-  //       const { data: existingWorkspaceUser, error: existingWorkspaceUserError } = await supabase
-  //         .from('workspace_user')
-  //         .select('id')
-  //         .eq('workspace_id', workspaceData.id)
-  //         .eq('user_id', user.id)
-  //         .single();
-
-  //       console.log('existingWorkspaceUser:', existingWorkspaceUser);
-
-  //       if (existingWorkspaceUser) {
-  //         openSnackBar({ message: '이미 워크스페이스에 가입되어 있습니다.' });
-  //         return;
-  //       }
-
-  //       //? 초대코드랑 같은 workspace_id를 가져온 유저를 workspace_user 테이블에 추가
-  //       const { error: workspaceUserError } = await supabase
-  //         .from('workspace_user')
-  //         .insert({
-  //           workspace_id: workspaceData.id,
-  //           user_id: user.id,
-  //           name: user.user_metadata.name,
-  //           email: user.user_metadata.email
-  //         })
-  //         .select();
-
-  //       if (workspaceUserError) {
-  //         openSnackBar({ message: '에러가 발생했어요' });
-  //         return;
-  //       }
-
-  //       setWorkspaceIdCookie(workspaceData.id);
-  //       setWorkspaceUserIdCookie(user.id);
-  //       setUserData(user.id, workspaceData.id);
-
-  //       // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
-  //       setInviteCode('');
-  //       return route.replace(`/${workspaceData.id}`);
-  //     }
-
-  //     //? 로그인 안했을때, 초대코드 입력 시 워크스페이스 입장
-  //     if (!inviteCode) return openSnackBar({ message: '초대 코드를 입력해주세요' });
-
-  //     const { data: workspaceData, error: workspaceError } = await supabase
-  //       .from('workspace')
-  //       .select('id')
-  //       .eq('invite_code', Number(inviteCode))
-  //       .single();
-
-  //     if (workspaceError) return openSnackBar({ message: '초대코드가 일치하지 않습니다' });
-
-  //     const { error: workspaceUserError } = await supabase
-  //       .from('workspace_user')
-  //       .update({ workspace_id: workspaceData.id })
-  //       .eq('user_id', user.id)
-  //       .select();
-
-  //     if (workspaceUserError) {
-  //       openSnackBar({ message: '에러가 발생했어요' });
-  //       return;
-  //     }
-
-  //     setWorkspaceIdCookie(workspaceData.id);
-  //     setWorkspaceUserIdCookie(user.id);
-  //     setUserData(user.id, workspaceData.id);
-
-  //     // TODO : 초대코드 입력 성공 시 메인페이지 이동처리하기
-  //     setInviteCode('');
-  //     route.replace('/welcome');
-  //   }
-  // });
-
-  // const { mutate: handleSubmitMutate } = handleSubmit;
 
   const { mutateAsync: getWorkspaceIdWithInviteCodeMutation, isPending: getWorkspaceIdWithInviteCodePending } =
     useGetWorkspaceIdWithInviteCode({

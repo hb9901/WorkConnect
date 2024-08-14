@@ -50,6 +50,7 @@ const LandingPage = () => {
       return;
     }
   });
+  const handleLoginPending = signInPending || workspaceIdPending || workspaceUserIdPending;
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -208,13 +209,8 @@ const LandingPage = () => {
                 </div>
               </div>
               <div className="flex flex-col justify-center mt-[28px] gap-4">
-                <Button
-                  type="submit"
-                  theme="primary"
-                  isDisabled={signInPending || workspaceIdPending || workspaceUserIdPending}
-                  isFullWidth={true}
-                >
-                  로그인
+                <Button type="submit" theme="primary" isDisabled={handleLoginPending ? true : false} isFullWidth={true}>
+                  {handleLoginPending ? '로그인 중...' : '로그인'}
                 </Button>
               </div>
             </form>

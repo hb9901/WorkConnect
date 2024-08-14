@@ -77,7 +77,6 @@ const AuthVerifyPage = () => {
     setEmail(emailFromQuery || '');
   }, []);
 
-  // TODO: 모달 분리하기
   return (
     <main className="flex justify-center items-center">
       <div className="w-full h-dvh hidden lg:flex justify-center items-center bg-[#FAFAFF] gap-[18px]">
@@ -86,45 +85,56 @@ const AuthVerifyPage = () => {
       <div className="flex flex-col w-full h-dvh mx-4 lg:mx-[151px] lg:justify-center">
         <TopBar title="메일 인증" style={{ padding: '0px' }} className="lg:hidden" />
         <div className="flex-grow lg:flex-grow-0 ">
-          <Typography variant="Title20px" className="lg:text-[36px] lg:mb-[18px]" color="grey700Black">
+          <Typography
+            variant="Title20px"
+            className="mt-[29px] mb-4 lg:text-[36px] lg:mt-0 lg:mb-[18px]"
+            color="grey700Black"
+          >
             인증 코드 입력
           </Typography>
-          <div className="flex flex-col gap-[12px] mb-[12px] text-[16px] text-[#5C6275] lg:mb-[42px]">
-            <p>{email}으로 인증코드를 전송하였습니다.</p>
-            <p>이메일에 있는 인증코드를 입력해 주세요.</p>
+          <div className="flex flex-col gap-1 mb-[25px] lg:mb-[42px]">
+            <Typography variant="Subtitle16px" color="grey400">
+              {email}으로 인증코드를 전송하였습니다.
+            </Typography>
+            <Typography variant="Subtitle16px" color="grey400">
+              이메일에 있는 인증코드를 입력해 주세요.
+            </Typography>
           </div>
-          <div className="flex flex-col mb-[13px] gap-2 lg:mb-4">
-            <Typography variant="Subtitle14px" as="label" color="grey700Black">
+          <div className="flex flex-col gap-2">
+            <Typography variant="Subtitle14px" as="label" color="grey700Black" className="ml-[6px]">
               인증코드
             </Typography>
             <Input
               onChange={(e) => setOtp(e.target.value)}
               value={otp}
               type="text"
-              placeholder="인증코드 6자리를 입력해 주세요"
+              placeholder="인증코드 6자리를 입력해 주세요"
             />
           </div>
-          <div className="text-[12px] text-[#464A59] flex items-center lg:mb-[42px]">
-            <span className="mr-[10px]">이메일을 받지 못하셨나요?</span>
-            <button onClick={isResetModalOpen} className="underline">
-              인증 코드 재전송
-            </button>
+          <div className="flex items-center mt-[-10px] ml-[6px] lg:mb-[22px]">
+            <Typography variant="Subtitle12px" color="grey400">
+              이메일을 받지 못하셨나요?
+            </Typography>
+            <Button theme="underlineText" onClick={isResetModalOpen} className="ml-[-12px]">
+              <Typography variant="Subtitle12px" color="grey400">
+                인증 코드 재전송
+              </Typography>
+            </Button>
           </div>
         </div>
-        <div className="flex justify-center lg:mb-[18px]">
-          <button
-            onClick={() => otpMutate()}
-            className="w-full text-lg py-[12px] px-[22px] bg-[#7173FA] text-white rounded-lg shadow-md"
-          >
+        <div className="flex justify-center">
+          <Button theme="primary" onClick={() => otpMutate()} isFullWidth>
             가입 완료
-          </button>
+          </Button>
         </div>
-        <div className="text-[#2F323C] text-center text-[14px] my-3">
-          <button onClick={isModalOpen}>처음부터 다시 하기</button>
-        </div>
+        <Button theme="text" onClick={isModalOpen}>
+          <Typography variant="Subtitle14px" color="grey400">
+            처음부터 다시 하기
+          </Typography>
+        </Button>
       </div>
       <Modal isOpen={modalOpen} onClose={() => {}} isModal={false}>
-        <div className="flex flex-col w-[335px] h-auto px-[6px] py-5 gap-5 lg:mx-[127px] lg:my-[50px] ">
+        <div className="flex flex-col w-[335px] h-auto px-[6px] py-5 gap-5 lg:mx-[100px] lg:my-[40px] ">
           <div className="flex flex-col items-center gap-2">
             <DangerIcon className="mb-[22px] hidden lg:flex" />
             <Typography variant="Title18px" color="grey700Black">
@@ -141,7 +151,7 @@ const AuthVerifyPage = () => {
         </div>
       </Modal>
       <Modal isOpen={resetModalOpen} onClose={isResetModalOpen} isModal={false}>
-        <div className="my-5 lg:mx-[127px] lg:my-[40px]">
+        <div className="my-5 lg:mx-[100px] lg:my-[40px]">
           <div className="mx-4 mb-[20px] flex flex-col items-center gap-2">
             <SuccessIcon className="hidden lg:flex mb-[22px]" />
             <Typography variant="Title18px" color="grey700Black">
