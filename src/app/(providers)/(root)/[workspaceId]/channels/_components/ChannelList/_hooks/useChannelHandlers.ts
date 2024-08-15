@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { updateChatChannels } from '../_utils/updateChatChannels';
 import { ChatSubscribePayloadProps } from '@/types/chat';
 import { GetChannelsResponse } from '@/types/channel';
-import { QUERY_KEYS } from '../../_constants/constants';
+import { QUERY_KEYS } from '../../../_constants/constants';
 
 type WorkspaceInfoProps = {
   workspaceId: number;

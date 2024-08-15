@@ -1,11 +1,13 @@
 'use client';
 
-import { PageLayout } from '@/components/PageLayout';
+import { BottomBar, PageAside, PageLayout, PageMain } from '@/components/NewPageLayout';
 import { StrictPropsWithChildren } from '@/types/common';
 import Sidebar from '../Sidebar';
 import { useState } from 'react';
 import { MenuIcon } from '@/icons';
 import { useFetchChannelName } from '../../_hooks/useFetchChannelName';
+import { TopBar } from '@/components/TopBar';
+import ChannelList from '../../../../../_components/ChannelList';
 
 const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -15,15 +17,21 @@ const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
     setIsOpenSidebar((prev) => !prev);
   };
 
+  // TODO: BottomBar 모바일에서는 안 보여야해서 컴포넌트 나눈거임
   return (
     <>
-      <PageLayout
-        title={channelName}
-        showBottomBar={false}
-        TopBarRightIcon1={<MenuButton onClick={handleOpenSidebar} aria-label="사이드바 열기" />}
-        contentClassName="h-[calc(100dvh-52px)] overflow-hidden"
-      >
-        {children}
+      <PageLayout>
+        <PageAside>
+          <ChannelList />
+        </PageAside>
+        <PageMain className="h-dvh overflow-hidden">
+          <TopBar
+            title={channelName}
+            TopBarRightIcon1={<MenuButton onClick={handleOpenSidebar} aria-label="사이드바 열기" />}
+          />
+          {children}
+        </PageMain>
+        <BottomBar className="hidden lg:block" />
       </PageLayout>
       <Sidebar isOpenSidebar={isOpenSidebar} handleOpenSidebar={handleOpenSidebar} channelName={channelName} />
     </>

@@ -9,6 +9,7 @@ import ChevronUpIcon from '@/icons/ChevronUpIcon.svg';
 import WorkConnectLogo from '@/icons/WorkConnectLogo.svg';
 import useUserStore from '@/store/userStore';
 import { useState } from 'react';
+import clsx from 'clsx';
 
 interface SelectHeaderProps {
   workspaceId: number;
@@ -16,9 +17,16 @@ interface SelectHeaderProps {
   isMainPage?: boolean;
   isFull?: boolean;
   isHidden?: boolean;
+  className?: string;
 }
 
-const SelectHeader = ({ workspaceId, isTodoList = false, isFull = false, isHidden = false }: SelectHeaderProps) => {
+const SelectHeader = ({
+  workspaceId,
+  isTodoList = false,
+  isFull = false,
+  isHidden = false,
+  className
+}: SelectHeaderProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const userId = useUserStore((state) => state.userId);
@@ -41,9 +49,12 @@ const SelectHeader = ({ workspaceId, isTodoList = false, isFull = false, isHidde
 
   return (
     <header
-      className={`${isFull ? 'w-full' : ' '} ${isHidden ? 'hidden' : 'flex flex-row'} ${isTodoList ? 'w-full lg:w-[384px]' : ''} 
+      className={clsx(
+        `${isFull ? 'w-full' : ' '} ${isHidden ? 'hidden' : 'flex flex-row'} ${isTodoList ? 'w-full lg:w-[384px]' : ''} 
       sticky top-0 items-center justify-between z-50 bg-white pt-[14px] px-[16px] pb-[12px] 
-      lg:bg-[#F4F4F6] lg:h-[84px] lg:flex lg:border-[#E5E7EB] lg:border-b-[1px]`}
+      lg:bg-[#F4F4F6] lg:h-[84px] lg:flex lg:border-[#E5E7EB] lg:border-b-[1px]`,
+        className
+      )}
     >
       <div className="flex flex-row gap-[8px]">
         <div className="hidden lg:flex items-center justify-center w-[32px] h-[32px] pl-[5px] pt-[11px] pb-[10px] pr-[6px] border-[1px] border-[#C9CCD4] rounded-[6px]">

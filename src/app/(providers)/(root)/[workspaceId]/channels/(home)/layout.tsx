@@ -1,21 +1,30 @@
 'use client';
 
-import { PageLayout } from '@/components/PageLayout';
+import { BottomBar, PageAside, PageLayout, PageMain } from '@/components/NewPageLayout';
+import { TopBar } from '@/components/TopBar';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { MessagePlusIcon, Video48Icon } from '@/icons';
 import { StrictPropsWithChildren } from '@/types/common';
 import Link from 'next/link';
+import ChannelList from '../_components/ChannelList';
 
-const ChatLayout = ({ children }: StrictPropsWithChildren) => {
+const ChannelHomeLayout = ({ children, list }: StrictPropsWithChildren<{ list: React.ReactNode }>) => {
   const workspaceId = useWorkspaceId();
 
   return (
-    <PageLayout
-      title="대화"
-      TopBarRightIcon2={<VideoChatButton workspaceId={workspaceId} />}
-      TopBarRightIcon1={<MessageChatButton workspaceId={workspaceId} />}
-    >
-      {children}
+    <PageLayout>
+      <PageAside>
+        <ChannelList />
+      </PageAside>
+      <PageMain>
+        <TopBar
+          title="대화"
+          TopBarRightIcon2={<VideoChatButton workspaceId={workspaceId} />}
+          TopBarRightIcon1={<MessageChatButton workspaceId={workspaceId} />}
+        />
+        {children}
+      </PageMain>
+      <BottomBar />
     </PageLayout>
   );
 };
@@ -36,4 +45,4 @@ const MessageChatButton = ({ workspaceId }: { workspaceId: number }) => {
   );
 };
 
-export default ChatLayout;
+export default ChannelHomeLayout;
