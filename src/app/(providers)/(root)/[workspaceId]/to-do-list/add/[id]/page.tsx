@@ -166,7 +166,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
               </BottomSheetModal>
             )}
             <button className="flex flex-row w-full gap-[12px]" onClick={handleCalendarClick}>
-              <CalendarIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
+              <CalendarIcon className="flex-shrink-0 w-[20px] h-[20px] stroke-[#2F323C]" />
               <Typography variant="Subtitle16px" color="grey700Black">
                 {date}
               </Typography>
@@ -186,7 +186,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
                 />
               </BottomSheetModal>
             )}
-            <ClockIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
+            <ClockIcon className="flex-shrink-0 w-[20px] h-[20px] stroke-[#2F323C]" />
             <div className="flex flex-row items-center gap-[4px]">
               <button onClick={() => handleTimeClick(true)}>{startTimeFormat}</button>
               <ChevronRightIcon className="w-[16px] h-[16px] stroke-[#9096A7]" />
