@@ -1,9 +1,8 @@
+import Typography from '@/components/Typography';
 import useUserStore from '@/store/userStore';
 import { TWorkspaceInfo } from '@/types/workspace';
 import { setWorkspaceIdCookie, setWorkspaceUserIdCookie } from '@/utils/cookie/workspace';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import Typography from '../Typography';
 
 interface TopSelectProps {
   workspaceList: TWorkspaceInfo[];
@@ -11,16 +10,8 @@ interface TopSelectProps {
   onClick: () => void;
 }
 
-/** @deprecated */
 const TopSelect = ({ workspaceList, isOpen, onClick }: TopSelectProps) => {
-  const pathUrl = usePathname();
-  const paths = pathUrl.split('/');
   const setWorkspaceUserIdData = useUserStore((state) => state.setWorkspaceUserIdData);
-
-  const setUrl = (workspaceId: number) => {
-    const newUrl = paths.map((path, index) => (index === 1 ? workspaceId : path)).join('/');
-    return newUrl;
-  };
 
   const handleClick = ({ id, workspace_user_id }: { id: number; workspace_user_id: string }) => {
     setWorkspaceIdCookie(id);
@@ -40,7 +31,7 @@ const TopSelect = ({ workspaceList, isOpen, onClick }: TopSelectProps) => {
             {workspaceList.map(({ id, workspace_user_id, name }) => (
               <Link
                 key={id}
-                href={setUrl(id)}
+                href={`/${id}`}
                 onClick={() => handleClick({ id, workspace_user_id })}
                 className="flex flex-row justify-between px-[8px] sm:py-[8px]"
               >

@@ -2,9 +2,9 @@
 
 import { StrictPropsWithChildren } from '@/types/common';
 import BottomNavigationBar from '../../BottomNavigationBar';
-import SelectHeader from '../../NewSelectHeader';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import clsx from 'clsx';
+import SelectHeader from '../SelectHeader';
 
 // TODO: 더이상 여기에 헤더를 넣을 고민을 하지말자 다신 두번 다신 못 넣음 그냥 children에 넣어 이제 더 고민 하지마 안되는건 안되는거야..
 export const PageLayout = ({ children }: StrictPropsWithChildren) => {
@@ -25,7 +25,16 @@ export const PageAside = ({ children }: StrictPropsWithChildren) => {
 };
 
 export const PageMain = ({ children, className }: StrictPropsWithChildren & { className?: string }) => {
-  return <main className={clsx('w-full lg:w-[calc(100%-300px)]', className)}>{children}</main>;
+  return (
+    <main
+      className={clsx(
+        'w-full lg:w-[calc(100%-300px)] overflow-hidden lg:h-dvh lg:overflow-y-scroll lg:scroll-container',
+        className
+      )}
+    >
+      {children}
+    </main>
+  );
 };
 
 export const PCWrapper = ({ children }: StrictPropsWithChildren) => {

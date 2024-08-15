@@ -28,8 +28,12 @@ const ResourceLayout = ({ children }: StrictPropsWithChildren) => {
           <ChannelList />
         </div>
       </PageAside>
-      <PageMain className="h-dvh overflow-hidden">
-        <TopBar title="파일 내역" Icon1={<XIcon onClick={() => router.back()} />} />
+      <PageMain>
+        <TopBar
+          title="파일 내역"
+          Icon1={<XIcon onClick={() => router.back()} className="lg:hidden" />}
+          Icon4={<XIcon onClick={() => router.back()} className="hidden lg:block" />}
+        />
         <Tabs>
           <Tab as="button" onClick={() => handleReplace(`${originPath}/media`)} active={activeTab === 0}>
             사진&middot;동영상

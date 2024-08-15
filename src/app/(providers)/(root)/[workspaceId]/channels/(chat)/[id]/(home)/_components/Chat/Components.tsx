@@ -14,7 +14,7 @@ type ChatTextProps = ComponentProps<'div'> & ClassNameProps & { className?: stri
 export const ChatText = ({ children, className, ...props }: ChatTextProps) => {
   return (
     <Typography
-      variant="Body12px"
+      variant="Body14px"
       className={clsx(
         `max-w-[280px] px-3 py-2 rounded-[20px] whitespace-pre-wrap break-words selection:bg-transparent break-keep`,
         className

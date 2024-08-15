@@ -11,14 +11,14 @@ export type TopBarProps = {
   Icon2?: ReactNode;
   Icon3?: ReactNode;
   Icon4?: ReactNode;
-  title: string;
-} & ComponentProps<'header'>;
+  title: ReactNode | string;
+} & Omit<ComponentProps<'header'>, 'title'>;
 
 export const TopBar = ({ Icon1, Icon2, Icon3, Icon4, title, className, ...props }: TopBarProps) => {
   return (
     <header
       className={clsx(
-        'flex items-center justify-between h-[52px] px-4 gap-x-4 bg-white z-10 lg:border-b lg:border-b-grey50 lg:h-[84px]',
+        'grid grid-cols-[1fr_3fr_1fr] h-[52px] items-center px-4 gap-x-4 bg-white z-10 lg:border-b lg:border-b-grey50 lg:h-[84px] sticky top-0 lg:grid-cols-[3fr_1fr_1fr]',
         className
       )}
       {...props}
@@ -36,7 +36,7 @@ const TopBarTitle = ({ children }: { children: ReactNode }) => {
       as="h1"
       variant="Title20px"
       color="grey900"
-      className="flex-1 text-center whitespace-nowrap overflow-hidden overflow-ellipsis"
+      className="flex-1 text-center whitespace-nowrap overflow-hidden overflow-ellipsis lg:text-left"
     >
       {children}
     </Typography>

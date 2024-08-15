@@ -1,7 +1,7 @@
 'use client';
 
 import ToDoAddButton from '@/app/(providers)/(root)/[workspaceId]/to-do-list/_components/ToDoAddButton';
-import TopSelect from '@/components/TopSelect';
+import TopSelect from '@/components/Layout/TopSelect';
 import Typography from '@/components/Typography';
 import useWorkspaceList from '@/hooks/useWorkspaceList';
 import ChevronDownIcon from '@/icons/ChevronDownIcon.svg';
