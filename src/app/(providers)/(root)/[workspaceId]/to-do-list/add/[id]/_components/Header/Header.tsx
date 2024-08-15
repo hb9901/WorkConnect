@@ -51,7 +51,7 @@ const Header = () => {
             <BackArrowButton />
           </div>
         ) : (
-          <div />
+          <BackArrowButton />
         )}
 
         <Modal isOpen={isOpen} onClose={handleIsOpen} isModal={false}>
