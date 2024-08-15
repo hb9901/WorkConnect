@@ -9,6 +9,7 @@ const useInput = () => {
   const setOpen = useBottomsheetModalBackDropStore((state) => state.setOpen);
 
   const handleNameChange = (value: string | undefined) => {
+    console.log(value);
     setName(value);
   };
 
@@ -28,21 +29,25 @@ const useInput = () => {
     {
       label: '이름',
       value: name,
+      isRequeired: true,
       handleFn: handleNameChange
     },
     {
       label: '활동상태',
       value: state,
+      isRequeired: false,
       handleFn: handleStateChange
     },
     {
       label: '이메일',
       value: email,
+      isRequeired: false,
       handleFn: handleEmailChange
     },
     {
       label: '전화번호',
       value: phone,
+      isRequeired: false,
       handleFn: handlePhoneChange
     }
   ];

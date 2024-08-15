@@ -6,6 +6,7 @@ import EditTextfield from '@/components/EditTextField';
 import TextFieldButton from '@/components/TextFieldButton';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
+import { useSnackBar } from '@/providers/SnackBarContext';
 import useUserStore from '@/store/userStore';
 import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -17,6 +18,7 @@ import useInput from './_hooks/useInput';
 
 const ProfileEditPage = () => {
   const { editInputs, name, state, email, phone, setName, setState, setEmail, setPhone } = useInput();
+  const { openSnackBar } = useSnackBar();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const userId = useUserStore((state) => state.userId);
   const workspaceId = useWorkspaceId();
@@ -66,7 +68,10 @@ const ProfileEditPage = () => {
 
   const handleEdit = async () => {
     if (!(userId && workspaceId)) return;
-
+    if (!name) {
+      openSnackBar({ message: '이름이 존재하지 않습니다' });
+      return;
+    }
     if (image) {
       const filename = crypto.randomUUID();
       await api.storageProfile.postStorageProfile(image, filename);
@@ -131,7 +136,9 @@ const ProfileEditPage = () => {
                     <EditTextfield
                       label={editInput.label}
                       labelColor="grey400"
-                      onChange={() => editInput.handleFn(editInput.value)}
+                      value={editInput.value}
+                      onChange={editInput.handleFn}
+                      isRequired={editInput.isRequeired}
                     />
                     <div className="lg:border-grey50 lg:border-b-[1px]" />
                   </div>
