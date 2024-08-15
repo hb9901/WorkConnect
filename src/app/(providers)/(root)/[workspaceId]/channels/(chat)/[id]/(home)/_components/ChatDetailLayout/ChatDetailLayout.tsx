@@ -46,7 +46,7 @@ const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
 
 const TopBarTitle = ({ channelName }: { channelName: string }) => {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 justify-center lg:justify-start">
       <Avatar size="40px" className="hidden lg:flex" />
       {channelName}
     </div>
