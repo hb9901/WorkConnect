@@ -30,7 +30,7 @@ const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
             <ChannelList />
           </div>
         </PageAside>
-        <PageMain className="h-dvh overflow-hidden">
+        <PageMain>
           <TopBar
             title={<TopBarTitle channelName={channelName} />}
             Icon4={isOpenSidebar ? <XIcon onClick={handleOpenSidebar} /> : <MenuButton onClick={handleOpenSidebar} />}

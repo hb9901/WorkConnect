@@ -8,9 +8,13 @@ export const useGetChannels = (workspaceId: number) => {
   return useQuery(getChannelsOptions(workspaceId));
 };
 
-export const useGetSearchWorkspaceUsers = ({ workspace_id, term }: GetSearchWorkspaceUsersProps) => {
+type UseGetSearchWorkspaceUsersProps = GetSearchWorkspaceUsersProps & {
+  workspace_id: number;
+};
+
+export const useGetSearchWorkspaceUsers = ({ workspace_id, term }: UseGetSearchWorkspaceUsersProps) => {
   return useQuery({
-    queryKey: QUERY_KEYS.SEARCH_WORKSPACE_USERS,
+    queryKey: QUERY_KEYS.SEARCH_WORKSPACE_USERS(workspace_id),
     queryFn: () => api.workspace.getSearchWorkspaceUsers({ workspace_id, term }),
     refetchOnWindowFocus: false
   });

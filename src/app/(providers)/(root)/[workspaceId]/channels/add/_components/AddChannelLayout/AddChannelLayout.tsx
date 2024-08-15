@@ -24,10 +24,10 @@ const AddChannelLayout = ({ title, children, onSubmit }: StrictPropsWithChildren
           <ChannelList />
         </div>
       </PageAside>
-      <PageMain className="h-dvh overflow-hidden">
+      <PageMain>
         <TopBar
           title={title}
-          Icon1={<XIcon onClick={() => router.back()} />}
+          Icon1={<XIcon onClick={() => router.back()} className="lg:hidden" />}
           Icon4={
             <button onClick={onSubmit}>
               <Check1Icon />

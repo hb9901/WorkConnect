@@ -28,7 +28,7 @@ const ResourceLayout = ({ children }: StrictPropsWithChildren) => {
           <ChannelList />
         </div>
       </PageAside>
-      <PageMain className="h-dvh overflow-hidden">
+      <PageMain>
         <TopBar
           title="파일 내역"
           Icon1={<XIcon onClick={() => router.back()} className="lg:hidden" />}

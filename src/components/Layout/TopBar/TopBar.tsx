@@ -18,7 +18,7 @@ export const TopBar = ({ Icon1, Icon2, Icon3, Icon4, title, className, ...props 
   return (
     <header
       className={clsx(
-        'relative grid grid-cols-[1fr_3fr_1fr] h-[52px] items-center px-4 gap-x-4 bg-white z-10 lg:border-b lg:border-b-grey50 lg:h-[84px]',
+        'relative grid grid-cols-[1fr_3fr_1fr] h-[52px] items-center px-4 gap-x-4 bg-white z-10 lg:border-b lg:border-b-grey50 lg:h-[84px] sticky top-0',
         className
       )}
       {...props}

@@ -25,7 +25,16 @@ export const PageAside = ({ children }: StrictPropsWithChildren) => {
 };
 
 export const PageMain = ({ children, className }: StrictPropsWithChildren & { className?: string }) => {
-  return <main className={clsx('w-full lg:w-[calc(100%-300px)]', className)}>{children}</main>;
+  return (
+    <main
+      className={clsx(
+        'w-full lg:w-[calc(100%-300px)] overflow-hidden lg:h-dvh lg:overflow-y-scroll lg:scroll-container',
+        className
+      )}
+    >
+      {children}
+    </main>
+  );
 };
 
 export const PCWrapper = ({ children }: StrictPropsWithChildren) => {
