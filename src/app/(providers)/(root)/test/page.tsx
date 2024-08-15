@@ -1,9 +1,9 @@
-import TodoEmpty from '@/components/TodoEmpty';
+import FileEmpty from '@/components/FileEmpty';
 
 const page = () => {
   return (
     <div>
-      <TodoEmpty />
+      <FileEmpty />
     </div>
   );
 };
