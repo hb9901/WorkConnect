@@ -6,7 +6,7 @@ interface DeleteButtonProps {
 
 const DeleteButton = ({ onClick }: DeleteButtonProps) => {
   return (
-    <button onClick={onClick} className="flex items-center justify-start w-[24px] h-[24px]">
+    <button onClick={onClick} className="flex items-center justify-start w-[24px] h-[24px] lg:size-[20px]">
       <Trash2Icon className="w-full h-full" />
     </button>
   );
