@@ -10,6 +10,7 @@ import ChannelList from '../../../../../_components/ChannelList';
 import ChannelListTopBar from '../../../../../_components/ChannelListTopBar';
 import { MenuButton } from '../../../../../_components/TopBarButtons';
 import Avatar from '@/components/Avatar';
+import { XIcon } from '@/icons';
 
 const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -32,7 +33,7 @@ const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
         <PageMain className="h-dvh overflow-hidden">
           <TopBar
             title={<TopBarTitle channelName={channelName} />}
-            Icon4={<MenuButton onClick={handleOpenSidebar} />}
+            Icon4={isOpenSidebar ? <XIcon onClick={handleOpenSidebar} /> : <MenuButton onClick={handleOpenSidebar} />}
           />
           {children}
         </PageMain>
