@@ -21,7 +21,10 @@ const BottomSheetModal = ({ isUp = false, children }: StrictPropsWithChildren<Bo
           <div className="flex justify-center p-3 lg:hidden" onClick={setClose}>
             <div className="w-20 h-1 bg-grey900 rounded flex-shrink-0" />
           </div>
-          <div className={`lg:fixed bg-white lg:-translate-x-[100%] ${isUp && 'lg:-translate-y-[100%]'}`}>
+          <div
+            className={`bg-white shadow-md rounded-[6px]
+            lg:fixed lg:w-[375px] lg:-translate-x-[calc(100%+24px)] ${isUp && 'lg:-translate-y-[calc(100%-78px)]'}`}
+          >
             {children}
           </div>
         </div>

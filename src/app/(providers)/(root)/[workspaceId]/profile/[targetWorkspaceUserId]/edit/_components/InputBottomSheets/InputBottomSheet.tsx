@@ -1,11 +1,12 @@
-import { ChangeEvent, MutableRefObject, useState } from 'react';
+import Button from '@/components/Button';
+import { ChangeEvent, useState } from 'react';
 import StatusCheckBox from '../StatusCheckBox';
 
 interface InputBottomSheetsProps {
   editInput: {
     label: string;
     value: string | undefined;
-    handleFn: (value: string | undefined, ref: MutableRefObject<null>) => void;
+    handleFn: (value: string | undefined) => void;
   };
 }
 
@@ -19,12 +20,16 @@ const InputBottomSheet = ({ editInput }: InputBottomSheetsProps) => {
 
   return (
     <>
-      <div className="mt-[12px] mb-[20px]">
-        <StatusCheckBox status={inputValue} onChange={handleInputChange} />
+      <div className="pb-[12px]">
+        <div className="pt-[12px] pb-[20px] px-[18px]">
+          <StatusCheckBox status={inputValue} onChange={handleInputChange} />
+        </div>
+        <div className="px-[16px] pb-[16px]">
+          <Button theme="primary" isFullWidth onClick={() => editInput.handleFn(inputValue)}>
+            확인
+          </Button>
+        </div>
       </div>
-      {/* <Button theme="primary" isFullWidth className="mb-[16px]" onClick={() => editInput.handleFn(inputValue)}>
-        확인
-      </Button> */}
     </>
   );
 };

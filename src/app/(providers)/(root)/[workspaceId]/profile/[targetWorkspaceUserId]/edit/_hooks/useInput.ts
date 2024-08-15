@@ -6,16 +6,15 @@ const useInput = () => {
   const [state, setState] = useState<string | undefined>('');
   const [email, setEmail] = useState<string | undefined>('');
   const [phone, setPhone] = useState<string | undefined>('');
-  const setOpen = useBottomsheetModalBackDropStore((state) => state.setOpen);
+  const handleOpen = useBottomsheetModalBackDropStore((state) => state.handleOpen);
 
   const handleNameChange = (value: string | undefined) => {
-    console.log(value);
     setName(value);
   };
 
   const handleStateChange = (value: string | undefined) => {
     setState(value);
-    setOpen();
+    handleOpen();
   };
 
   const handleEmailChange = (value: string | undefined) => {
