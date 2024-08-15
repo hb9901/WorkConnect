@@ -111,7 +111,7 @@ const ProfileEditPage = () => {
     <div>
       <Header title="내 프로필 편집" type="edit" />
       <main>
-        <div className="flex flex-col w-full items-center px-5">
+        <div className="flex flex-col w-full items-center px-5 pb-[36px]">
           <ProfileImgButton imageURL={imageURL} handleProfileImageChange={handleProfileImageChange} />
           <div className="flex flex-col w-full gap-[16px] mb-[30px]">
             {editInputs.map((editInput) => {
