@@ -9,6 +9,7 @@ import { TopBar } from '@/components/Layout/TopBar';
 import ChannelList from '../../../../../_components/ChannelList';
 import ChannelListTopBar from '../../../../../_components/ChannelListTopBar';
 import { MenuButton } from '../../../../../_components/TopBarButtons';
+import Avatar from '@/components/Avatar';
 
 const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -29,13 +30,25 @@ const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
           </div>
         </PageAside>
         <PageMain className="h-dvh overflow-hidden">
-          <TopBar title={channelName} Icon4={<MenuButton onClick={handleOpenSidebar} />} />
+          <TopBar
+            title={<TopBarTitle channelName={channelName} />}
+            Icon4={<MenuButton onClick={handleOpenSidebar} />}
+          />
           {children}
         </PageMain>
         <BottomBar className="hidden lg:block" />
       </PageLayout>
       <Sidebar isOpenSidebar={isOpenSidebar} handleOpenSidebar={handleOpenSidebar} channelName={channelName} />
     </>
+  );
+};
+
+const TopBarTitle = ({ channelName }: { channelName: string }) => {
+  return (
+    <div className="flex items-center gap-3">
+      <Avatar size="40px" className="hidden lg:flex" />
+      {channelName}
+    </div>
   );
 };
 

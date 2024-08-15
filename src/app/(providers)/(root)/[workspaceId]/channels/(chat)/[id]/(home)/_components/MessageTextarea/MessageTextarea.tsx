@@ -55,7 +55,7 @@ const MessageTextarea = ({ handleOpenUtil }: MessageTextareaProps) => {
           type="button"
           onClick={handleOpenUtil}
           aria-label="파일 추가"
-          className="w-6 h-6 rounded-full bg-primary200Main flex justify-center items-center shrink-0"
+          className="w-6 h-6 rounded-full bg-primary200Main flex justify-center items-center shrink-0 lg:hidden"
         >
           <PlusIcon className="w-5 h-5 text-white stroke-current" />
         </button>

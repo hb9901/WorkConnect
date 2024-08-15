@@ -1,5 +1,5 @@
 export { default as ArrowLeftIcon } from '@/icons/ArrowLeft.svg';
-export { default as VideoIcon } from '@/icons/video.svg';
+export { default as VideoIcon } from '@/icons/Video.svg';
 export { default as Video48Icon } from '@/icons/Video48.svg';
 export { default as MessagePlusIcon } from '@/icons/MessagePlus.svg';
 export { default as XIcon } from '@/icons/X.svg';
@@ -18,6 +18,6 @@ export { default as WorkConnectLogoIcon } from '@/icons/WorkConnectLogo.svg';
 export { default as Check1Icon } from '@/icons/Check1.svg';
 export { default as UserIcon } from '@/icons/User.svg';
 export { default as HashIcon } from '@/icons/Hash.svg';
-export { default as ImageIcon } from '@/icons/image.svg';
-export { default as PaperclipIcon } from '@/icons/paperclip.svg';
+export { default as ImageIcon } from '@/icons/Image.svg';
+export { default as PaperclipIcon } from '@/icons/Paperclip.svg';
 export { default as ChevronRightIcon } from '@/icons/ChevronRight.svg';
