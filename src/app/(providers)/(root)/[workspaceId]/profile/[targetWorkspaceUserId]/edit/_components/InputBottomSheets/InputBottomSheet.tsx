@@ -5,7 +5,6 @@ interface InputBottomSheetsProps {
   editInput: {
     label: string;
     value: string | undefined;
-    isOpen: boolean;
     handleFn: (value: string | undefined, ref: MutableRefObject<null>) => void;
   };
 }
