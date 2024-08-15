@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import XCircleIcon from '../../icons/InputXCircle.svg';
 import Label from '../Label';
 import Typography from '../Typography';
 
@@ -47,26 +48,11 @@ const CountTextField = ({
           onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
           children={children}
-          className="flex-1 outline-none bg-transparent"
+          className="flex w-full outline-none bg-transparent"
         />
         {value && (
-          <button onClick={() => onChange('')} className="ml-2 text-gray-500 hover:text-gray-700">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_3235_6608)">
-                <path
-                  d="M9.99967 6.00016L5.99967 10.0002M5.99967 6.00016L9.99967 10.0002M14.6663 8.00016C14.6663 11.6821 11.6816 14.6668 7.99967 14.6668C4.31778 14.6668 1.33301 11.6821 1.33301 8.00016C1.33301 4.31826 4.31778 1.3335 7.99967 1.3335C11.6816 1.3335 14.6663 4.31826 14.6663 8.00016Z"
-                  stroke="#2F323C"
-                  stroke-width="1.6"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_3235_6608">
-                  <rect width="16" height="16" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
+          <button onClick={() => onChange('')} className="flex pl-2">
+            <XCircleIcon />
           </button>
         )}
       </div>
