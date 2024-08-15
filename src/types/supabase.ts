@@ -93,7 +93,7 @@ export type Database = {
           created_at: string
           id: number
           type: string
-          workspace_user_id: string
+          workspace_user_id: string | null
         }
         Insert: {
           channel_id: number
@@ -101,7 +101,7 @@ export type Database = {
           created_at?: string
           id?: number
           type: string
-          workspace_user_id: string
+          workspace_user_id?: string | null
         }
         Update: {
           channel_id?: number
@@ -109,7 +109,7 @@ export type Database = {
           created_at?: string
           id?: number
           type?: string
-          workspace_user_id?: string
+          workspace_user_id?: string | null
         }
         Relationships: [
           {
@@ -305,6 +305,13 @@ export type Database = {
           wuid: string
         }
         Returns: string
+      }
+      get_chat_channel_id: {
+        Args: {
+          wid: number
+          wuid: string
+        }
+        Returns: number
       }
       get_chat_channels: {
         Args: {

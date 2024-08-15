@@ -2,10 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '../_constants/constants';
 import api from '@/api';
 import { GetSearchWorkspaceUsersProps } from '@/types/workspaceUser';
-import { getChannelsOptions } from '../_utils/getQueryOptions';
+import { getChannelIdOptions, getChannelsOptions } from '../_utils/getQueryOptions';
 
 export const useGetChannels = (workspaceId: number) => {
   return useQuery(getChannelsOptions(workspaceId));
+};
+
+export const useGetChannelId = (workspaceId: number) => {
+  return useQuery(getChannelIdOptions(workspaceId));
 };
 
 type UseGetSearchWorkspaceUsersProps = GetSearchWorkspaceUsersProps & {
