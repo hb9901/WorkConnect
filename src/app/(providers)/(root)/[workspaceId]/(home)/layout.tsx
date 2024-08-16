@@ -1,5 +1,6 @@
-import { PageLayout } from '@/components/PageLayout';
-import SelectHeader from '@/components/SelectHeader';
+import { BottomBar, PageMain, PCWrapper } from '@/components/Layout/PageLayout';
+import SelectHeader from '@/components/Layout/SelectHeader';
+
 import { StrictPropsWithChildren } from '@/types/common';
 
 interface HomeParallelLayoutProps {
@@ -13,10 +14,11 @@ const HomeParallelLayout = ({ children, params }: StrictPropsWithChildren<HomePa
 
   return (
     <>
-      <PageLayout title="" showTopBar={false}>
+      <PCWrapper isHome>
         <SelectHeader workspaceId={workspaceId} isFull />
-        <div className="lg:pl-[87px]">{children}</div>
-      </PageLayout>
+        <PageMain className="lg:pl-[87px] lg:!w-full">{children}</PageMain>
+        <BottomBar />
+      </PCWrapper>
     </>
   );
 };
