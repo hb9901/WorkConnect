@@ -27,7 +27,7 @@ const MobileLayout = ({ tracks }: VideoConferenceProps) => {
           </FocusLayout>
         )}
         <div className="absolute mt-1 right-0 top-0 ">
-          <ParticipantListLayout />
+          <ParticipantListLayout trackRefs={remoteTrackRefs} />
         </div>
       </FocusLayoutContainer>
     </div>

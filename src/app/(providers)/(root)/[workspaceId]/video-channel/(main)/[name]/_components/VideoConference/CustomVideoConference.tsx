@@ -19,10 +19,13 @@ const CustomVideoConference = () => {
   const { isMobile } = useDeviceType();
 
   return (
-    <div className="flex flex-col items-center md:h-[85vh] xl:h-[88vh] bg-grey600">
+    <div className="relative flex flex-col items-center h-[92vh] bg-grey600">
       {isMobile ? <MobileLayout tracks={tracks} /> : <WebLayout tracks={tracks} />}
-
-      <BottomControlBar controls={{ microphone: true, camera: true, screenShare: true }} variation="verbose" />
+      <BottomControlBar
+        className="absolute bottom-0"
+        controls={{ microphone: true, camera: true, screenShare: true }}
+        variation="verbose"
+      />
     </div>
   );
 };
