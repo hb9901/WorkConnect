@@ -19,13 +19,11 @@ const WebLayout = ({ tracks }: VideoConferenceProps) => {
   const { isMobile } = useDeviceType();
   const { localParticipant } = useLocalParticipant();
   const speaker = useSpeakingParticipants();
-  const speakerTrackRef = tracks.find((track) => track.participant.isSpeaking);
   const screenShareTrackRef = useTracks([Track.Source.ScreenShare])[0];
   const localTracks = tracks.filter((track) => track.participant.sid === localParticipant.sid)[0];
 
   useEffect(() => {
     if (!focusedTrack) {
-      console.log('포커싱된 트랙이 없음.');
       if (isTrackReference(localTracks)) {
         setFocusedTrack(localTracks);
       }
@@ -55,12 +53,10 @@ const WebLayout = ({ tracks }: VideoConferenceProps) => {
   return (
     <FocusLayoutContainer className={`relative flex items-end justify-end h-full overflow-hidden`}>
       <div style={{ width: 'calc(100% - 300px)' }} id="focusTrackWrapper" className="absolute pl-[4rem] top-0 bottom-0">
-        {focusedTrack ? (
+        {focusedTrack && (
           <FocusLayout trackRef={focusedTrack} className="h-full w-full">
             <FocusedVideoTrack focusedTrackRef={focusedTrack} />
           </FocusLayout>
-        ) : (
-          <div className="w-[75vw]"></div>
         )}
       </div>
       <div id="participantLayoutWrapper" className="absolute top-0 right-0 flex flex-shrink-0 h-full w-[300px] ">

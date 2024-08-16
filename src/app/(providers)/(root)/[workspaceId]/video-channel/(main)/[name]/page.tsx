@@ -1,3 +1,4 @@
+import LoadingSpinner from '@/components/LoadingSpinner';
 import Typography from '@/components/Typography';
 import '@livekit/components-styles';
 import { Suspense } from 'react';
@@ -18,7 +19,7 @@ const VideoCallRoom = ({ params }: Params) => {
     );
   }
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingSpinner />}>
       <VideoRoom name={params.name} />
     </Suspense>
   );

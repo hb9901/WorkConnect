@@ -1,11 +1,11 @@
+import LoadingSpinner from '@/components/LoadingSpinner';
 import '@livekit/components-styles';
 import { Suspense } from 'react';
-import Loading from '../_components/Loading';
 import PrejoinContent from './_components/PrejoinContent';
 
 const PreJoinPage = async () => {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<LoadingSpinner />}>
       <PrejoinContent />
     </Suspense>
   );

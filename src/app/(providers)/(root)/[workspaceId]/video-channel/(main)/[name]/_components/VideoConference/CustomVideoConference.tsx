@@ -3,6 +3,7 @@
 import { useTracks } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import useDeviceType from '../../../../_hooks/useDeviceType';
+import useFocosedTrack from '../../_store/useFocusTrack';
 import BottomControlBar from '../BottomControlBar';
 import MobileLayout from '../MobileLayout';
 import WebLayout from '../WebLayout';
@@ -17,6 +18,7 @@ const CustomVideoConference = () => {
     { onlySubscribed: true }
   );
   const { isMobile } = useDeviceType();
+  const {} = useFocosedTrack();
 
   return (
     <div className="relative flex flex-col items-center h-[92vh] bg-grey600">

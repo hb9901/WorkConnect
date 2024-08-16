@@ -20,9 +20,9 @@ const MobileLayout = ({ tracks }: VideoConferenceProps) => {
 
   return (
     <div className={`relative h-[50rem] w-screen items-center justify-center overflow-hidden `}>
-      <FocusLayoutContainer className={`h-full flex`}>
-        {focusedTrack && (
-          <FocusLayout trackRef={focusedTrack} style={{ height: '50rem', display: 'flex' }}>
+      <FocusLayoutContainer className={`h-full flex `}>
+        {!!focusedTrack && (
+          <FocusLayout trackRef={focusedTrack}>
             <FocusedVideoTrack focusedTrackRef={focusedTrack} />
           </FocusLayout>
         )}

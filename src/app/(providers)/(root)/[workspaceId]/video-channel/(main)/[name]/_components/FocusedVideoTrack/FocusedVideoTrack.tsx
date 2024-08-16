@@ -25,10 +25,10 @@ const FocusedVideoTrack = ({ focusedTrackRef }: FocusedVideoTrackProps) => {
 
   return (
     <div className="relative h-full bg-grey700Black/[0.3] rounded-[5px] ">
-      {isTrackReference(focusedTrackRef) ? (
+      {isTrackReference(focusedTrackRef) && !focusedTrackRef.publication.isMuted ? (
         <VideoTrack trackRef={focusedTrackRef} className="object-cover" />
       ) : (
-        <div className="w-[94vw]  h-full flex items-center justify-center bg-slate-500">
+        <div className="w-full  h-full flex items-center justify-center bg-slate-500">
           <CameraPlaceholderIcon size="7" />
         </div>
       )}
