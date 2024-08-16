@@ -1,4 +1,7 @@
+import Image from 'next/image';
 import { ReactNode, useState } from 'react';
+import ChevronDownIcon from '../../icons/ChevronDownIcon.svg';
+import ChevronUpIcon from '../../icons/ChevronUpIcon.svg';
 
 export interface Option {
   label: string;
@@ -34,43 +37,9 @@ export const SelectBox = ({ label, options, onChange, ...props }: SelectBoxProps
       >
         {selectedValue || label}
         {isOpen ? (
-          <svg
-            width="20"
-            height="21"
-            viewBox="0 0 20 21"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="cursor-pointer"
-          >
-            <g id="ChevronUp">
-              <path
-                d="M15 13L10 8L5 13"
-                stroke="#9096A7"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </g>
-          </svg>
+          <Image src={ChevronUpIcon} alt="Up" className="cursor-pointer" />
         ) : (
-          <svg
-            width="20"
-            height="21"
-            viewBox="0 0 20 21"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="cursor-pointer"
-          >
-            <g id="ChevronDown">
-              <path
-                d="M5 8L10 13L15 8"
-                stroke="#9096A7"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </g>
-          </svg>
+          <Image src={ChevronDownIcon} alt="Down" className="cursor-pointer" />
         )}
       </div>
       {isOpen && (
