@@ -8,8 +8,8 @@ import ChevronDownIcon from '@/icons/ChevronDownIcon.svg';
 import ChevronUpIcon from '@/icons/ChevronUpIcon.svg';
 import WorkConnectLogo from '@/icons/WorkConnectLogo.svg';
 import useUserStore from '@/store/userStore';
-import { useState } from 'react';
 import clsx from 'clsx';
+import { useState } from 'react';
 
 interface SelectHeaderProps {
   workspaceId: number;
@@ -52,7 +52,7 @@ const SelectHeader = ({
     <header
       className={clsx(
         `${isFull ? 'w-full' : ' '} ${isHidden ? 'hidden' : 'flex flex-row'} ${isTodoList ? 'w-full lg:w-[384px]' : ''} 
-      sticky top-0 items-center justify-between z-50 bg-white pt-[14px] px-[16px] pb-[12px] 
+      sticky top-0 items-center justify-between z-40 bg-white pt-[14px] px-[16px] pb-[12px] 
       lg:bg-[#F4F4F6] lg:h-[84px] lg:flex lg:border-[#E5E7EB] lg:border-b-[1px]`,
         className
       )}

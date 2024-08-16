@@ -1,5 +1,6 @@
+import { useSnackBar } from '@/providers/SnackBarContext';
 import clsx from 'clsx';
-import { ReactNode, useEffect, useId, useRef, useState } from 'react';
+import { ChangeEvent, ReactNode, useEffect, useId, useRef, useState } from 'react';
 import Label from '../Label';
 
 export interface EditTextFieldProps {
@@ -9,10 +10,11 @@ export interface EditTextFieldProps {
   label?: string;
   labelClassName?: string;
   value?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: string) => void;
   type?: string;
   labelColor?: 'primary200Main' | 'grey400' | 'grey700Black' | 'error' | undefined;
   onClick?: () => void;
+  isRequired?: boolean;
 }
 
 const EditTextField = ({
@@ -25,8 +27,12 @@ const EditTextField = ({
   children,
   value,
   type = 'text',
+  isRequired = false,
   ...props
 }: EditTextFieldProps) => {
+  const INPUT_REQUIRED_MAX = 20;
+  const INPUT_MAX = 30;
+  const { openSnackBar } = useSnackBar();
   const inputId = useId();
   const customId = id || inputId;
   const [isFocused, setIsFocused] = useState(false);
@@ -43,7 +49,7 @@ const EditTextField = ({
     const event = {
       target: { value: '' }
     } as React.ChangeEvent<HTMLInputElement>;
-    onChange(event);
+    onChange(event.target.value);
   };
 
   const handleFocus = () => {
@@ -59,6 +65,20 @@ const EditTextField = ({
     } else {
       setState('default');
     }
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    valueRef.current = e.target.value;
+    const value = e.target.value;
+    if (isRequired && value.length > INPUT_REQUIRED_MAX) {
+      openSnackBar({ message: '20자를 초과하였습니다' });
+      return;
+    }
+    if (value.length > INPUT_MAX) {
+      openSnackBar({ message: '30자를 초과하였습니다' });
+      return;
+    }
+    onChange(value);
   };
 
   const renderIcon = () => {
@@ -122,6 +142,7 @@ const EditTextField = ({
       {label && (
         <Label htmlFor={customId} color={labelColor} className={clsx('pl-1', labelClassName, className)}>
           {label}
+          {isRequired && <span className="text-error"> (필수)</span>}
         </Label>
       )}
       <div
@@ -135,10 +156,7 @@ const EditTextField = ({
           className={clsx('flex-1 pl-2 py-[12px] w-[calc(100% - 9px)] outline-none bg-transparent h-[45px]', className)}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          onChange={(e) => {
-            valueRef.current = e.target.value;
-            onChange(e);
-          }}
+          onChange={handleInputChange}
         />
         <button className="w-5 h-5 mx-[2px] transform cursor-pointer">{renderIcon()}</button>
       </div>

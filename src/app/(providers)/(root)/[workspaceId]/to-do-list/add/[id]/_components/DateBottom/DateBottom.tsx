@@ -2,27 +2,21 @@
 
 import Button from '@/components/Button';
 import Typography from '@/components/Typography';
+import useBottomsheetModalBackDropStore from '@/store/bottomsheetModalBackDropStore';
 import dayjs, { Dayjs } from 'dayjs';
 import useTime from '../../_hooks/useTime';
 import TimeInput from '../TimeInput';
 
 interface DateBottomProps {
   isStartTime: boolean;
-  handleClose: () => void;
   startTime: Dayjs;
   endTime: Dayjs;
   handleSetStartTime: (startTime: Dayjs) => void;
   handleSetEndTime: (endTime: Dayjs) => void;
 }
 
-const DateBottom = ({
-  isStartTime,
-  handleClose,
-  startTime,
-  endTime,
-  handleSetStartTime,
-  handleSetEndTime
-}: DateBottomProps) => {
+const DateBottom = ({ isStartTime, startTime, endTime, handleSetStartTime, handleSetEndTime }: DateBottomProps) => {
+  const setClose = useBottomsheetModalBackDropStore((state) => state.setClose);
   const time = isStartTime ? dayjs(startTime) : dayjs(endTime);
   const initIsAM = time.format('a') === 'am';
   const initHour = time.format('a') === 'am' ? time.hour() : time.hour() - 12;
@@ -47,12 +41,12 @@ const DateBottom = ({
       .set('minute', minute);
 
     isStartTime ? handleSetStartTime(newTime) : handleSetEndTime(newTime);
-    handleClose();
+    setClose();
   };
 
   return (
     <>
-      <div className="flex flex-col w-full justify-center items-center pt-[12px] pb-[8px]">
+      <div className="flex flex-col w-full justify-center items-center pt-[12px] pb-[24px] px-[16px]">
         <div className="flex flex-row w-full items-center justify-between gap-[9px]">
           <Button theme={isAm ? 'primary' : 'grey'} onClick={handleAM} isFullWidth>
             오전
@@ -69,7 +63,7 @@ const DateBottom = ({
             checkStr={checkHourStr}
             initTime={initHour}
           />
-          <Typography variant="Title22px" color="grey900">
+          <Typography variant="Title36px" color="grey900">
             :
           </Typography>
           <TimeInput
@@ -81,7 +75,7 @@ const DateBottom = ({
           />
         </div>
         <Button theme="primary" isFullWidth onClick={handleCheck}>
-          확인
+          완료
         </Button>
       </div>
     </>

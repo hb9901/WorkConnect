@@ -1,5 +1,5 @@
 import Typography from '@/components/Typography';
-import ChevronDownIcon from '@/icons/ChevronDown.svg';
+import ChevronDownIcon from '@/icons/ChevronDownIcon.svg';
 import ChevronUpIcon from '@/icons/ChevronUpIcon.svg';
 
 interface TimeInputProps {
@@ -14,10 +14,10 @@ const TimeInput = ({ handleUp, handleDown, checkStr, time }: TimeInputProps) => 
   return (
     <div className="flex flex-col items-center gap-2">
       <button onClick={handleUp}>
-        <ChevronUpIcon className="stroke-[#5C6275]" />
+        <ChevronUpIcon className="size-[32px] stroke-[#5C6275]" />
       </button>
-      <Typography variant="Title22px" color="grey900">
-        <div className="flex items-center justify-center w-[71px] h-[71px] bg-[#FAFAFA] rounded-[6px]">
+      <Typography variant="Title36px" color="grey900">
+        <div className="flex items-center justify-center w-[71px] h-[71px] p-[15px] bg-[#FAFAFA] rounded-[6px]">
           <input
             className="w-10 text-center bg-[#FAFAFA] appearance-none"
             type="text"
@@ -29,7 +29,7 @@ const TimeInput = ({ handleUp, handleDown, checkStr, time }: TimeInputProps) => 
         </div>
       </Typography>
       <button onClick={handleDown}>
-        <ChevronDownIcon className="stroke-[#5C6275]" />
+        <ChevronDownIcon className="size-[32px] stroke-[#5C6275]" />
       </button>
     </div>
   );
