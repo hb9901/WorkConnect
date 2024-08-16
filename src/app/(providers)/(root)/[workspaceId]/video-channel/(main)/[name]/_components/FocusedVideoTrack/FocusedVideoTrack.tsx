@@ -24,7 +24,7 @@ const FocusedVideoTrack = ({ focusedTrackRef }: FocusedVideoTrackProps) => {
   };
 
   return (
-    <div className="relative h-full bg-grey700Black/[0.3] rounded-[5px] ">
+    <div className="relative h-[88%] bg-grey700Black/[0.3] rounded-[5px] ">
       {isTrackReference(focusedTrackRef) && !focusedTrackRef.publication.isMuted ? (
         <VideoTrack trackRef={focusedTrackRef} className="object-cover" />
       ) : (

@@ -5,7 +5,7 @@ import PrejoinContent from './_components/PrejoinContent';
 
 const PreJoinPage = async () => {
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense fallback={<LoadingSpinner className="h-full w-full items-center justify-center" />}>
       <PrejoinContent />
     </Suspense>
   );

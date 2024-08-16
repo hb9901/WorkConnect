@@ -1,21 +1,16 @@
-import CameraPlaceholderIcon from '@/icons/CameraPlaceholder.svg';
 import {
   CarouselLayout,
-  isTrackReference,
   ParticipantClickEvent,
-  ParticipantName,
-  TrackMutedIndicator,
   TrackRefContext,
   TrackReferenceOrPlaceholder,
   useSpeakingParticipants,
-  useTracks,
-  VideoTrack
+  useTracks
 } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import useDeviceType from '../../../../_hooks/useDeviceType';
 import useFocosedTrack from '../../_store/useFocusTrack';
-import UserDefinedConnectionQualityIndicator from '../UserDefinedConnectionQualityIndicator';
+import RenderTrack from '../RenderTrack/RenderTrack';
 
 type ParticipantListLayoutProps = {
   trackRefs?: TrackReferenceOrPlaceholder[];
@@ -48,7 +43,7 @@ const ParticipantListLayout = React.memo(({ trackRefs }: ParticipantListLayoutPr
     }
   }, [activeSpeakers]);
 
-  const handelClickFocus = useCallback(
+  const handleClickFocus = useCallback(
     (e: ParticipantClickEvent) => {
       if (e.participant.sid === focusedTrack?.participant.sid && e.track === focusedTrack.publication) {
         return;
@@ -64,37 +59,9 @@ const ParticipantListLayout = React.memo(({ trackRefs }: ParticipantListLayoutPr
 
   const renderTrackRef = useCallback(
     (trackRef: TrackReferenceOrPlaceholder) => (
-      <div
-        id="VideoTrack"
-        className={`relative aspect-square ${
-          isMobile ? 'w-[150px] h-[150px] mr-4 mt-5' : 'w-[281px] h-[281px]'
-        } bg-grey700Black rounded-[14px] overflow-hidden my-1 shadow-md`}
-      >
-        {isTrackReference(trackRef) && !trackRef.publication.videoTrack!.isMuted ? (
-          <VideoTrack trackRef={trackRef} onTrackClick={handelClickFocus} />
-        ) : (
-          <div className="w-full  h-full flex items-center justify-center ">
-            <CameraPlaceholderIcon size="7" />
-          </div>
-        )}
-        <div className="absolute bottom-0 left-0 bg-slate-300/[0.5] gap-1 flex justify-center items-center px-1">
-          {trackRef.source !== Track.Source.ScreenShare && (
-            <>
-              <TrackMutedIndicator
-                trackRef={{
-                  participant: trackRef.participant,
-                  source: Track.Source.Microphone
-                }}
-                className="mr-[1.25rem]"
-              />
-              {isMobile ? null : <ParticipantName />}
-              <UserDefinedConnectionQualityIndicator />
-            </>
-          )}
-        </div>
-      </div>
+      <RenderTrack trackRef={trackRef} isMobile={isMobile} onTrackClick={handleClickFocus} />
     ),
-    [isMobile, handelClickFocus]
+    [isMobile, handleClickFocus]
   );
 
   const carouselTracks = useMemo(() => (isMobile && trackRefs ? trackRefs : tracks), [isMobile, trackRefs, tracks]);

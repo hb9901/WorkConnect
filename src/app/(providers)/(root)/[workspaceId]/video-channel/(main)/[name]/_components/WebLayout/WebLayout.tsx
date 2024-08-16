@@ -49,9 +49,8 @@ const WebLayout = ({ tracks }: VideoConferenceProps) => {
     }
   }, [localTracks, isMobile]);
 
-  //md:w-[65vw] lg:w-[70vw] xl:w-[75vw] md:ml-[2rem] lg:ml-[3rem] xl:ml-[4rem]
   return (
-    <FocusLayoutContainer className={`relative flex items-end justify-end h-full overflow-hidden`}>
+    <FocusLayoutContainer className={`relative flex items-end justify-end h-full  overflow-hidden`}>
       <div style={{ width: 'calc(100% - 300px)' }} id="focusTrackWrapper" className="absolute pl-[4rem] top-0 bottom-0">
         {focusedTrack && (
           <FocusLayout trackRef={focusedTrack} className="h-full w-full">
