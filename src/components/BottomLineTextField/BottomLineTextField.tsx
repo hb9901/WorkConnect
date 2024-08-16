@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import { ReactNode, useEffect, useId, useRef, useState } from 'react';
-import InputXIcon from '../../icons/InputX.svg';
+import InputXCircleIcon from '../../icons/InputXCircle.svg';
 import PencilIcon from '../../icons/Pencil.svg';
 import Label from '../Label';
 
@@ -70,7 +70,7 @@ const BottomLineTextField = ({
     } else if (state === 'focus') {
       return null;
     } else if (state === 'typing') {
-      return <Image src={InputXIcon} onClick={handleClickDelete} alt="X Icon" />;
+      return <Image src={InputXCircleIcon} onClick={handleClickDelete} alt="X Icon" />;
     }
   };
 
