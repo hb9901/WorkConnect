@@ -5,18 +5,17 @@ import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { useWorkspaceUserId } from '@/hooks/useWorkspaceUserId';
 import { isEmpty } from '@/utils/isEmpty';
 import { CHANNEL_TYPE } from '@/constants/channel';
-import { useChannelHandlers } from '../../_hooks/useChannelHandlers';
-import { useGetChannels } from '../../../_hooks/useChannelQuery';
-import { handleSubscribeToChannels } from '../../_utils/subscribe';
-import ChannelItem from '../ChannelItem';
 import clsx from 'clsx';
-import useRedirectForPC from '../../_hooks/useRedirectForPC';
+import { handleSubscribeToChannels } from './_utils/subscribe';
+import { useGetChannels } from '../../_hooks/useChannelQuery';
+import { useChannelHandlers } from './_hooks/useChannelHandlers';
+import ChannelItem from '../ChannelItem';
 
 type ChannelListPageProps = {
   className?: string;
 };
 
-const ChannelListPage = ({ className }: ChannelListPageProps) => {
+const ChannelList = ({ className }: ChannelListPageProps) => {
   const workspaceId = useWorkspaceId();
   const workspaceUserId = useWorkspaceUserId();
   const { handleChatInserts, handleChannelUserUpdates } = useChannelHandlers();
@@ -29,7 +28,7 @@ const ChannelListPage = ({ className }: ChannelListPageProps) => {
 
   // TODO 이게 최선일까? 처음에 데이터 가져와서.. 페이지 리다이렉트 시키는게 그게 좋은 걸까..?
   // TODO ChatLayout이 방해되면 안됨 그것때문에 뭔가 새로고침하듯이 페이지 이동하는거 진짜 안 좋은 UX 같음
-  useRedirectForPC(channels[0]?.channel_id ?? null);
+  //useRedirectForPC(channels[0]?.channel_id ?? null);
 
   useEffect(() => {
     if (isEmpty(channelIds)) return;
@@ -67,4 +66,4 @@ const ChannelListPage = ({ className }: ChannelListPageProps) => {
   );
 };
 
-export default ChannelListPage;
+export default ChannelList;

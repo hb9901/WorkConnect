@@ -10,6 +10,7 @@ export interface MemberCardProps {
   onToggle?: () => void;
 }
 
+/** @deprecated */
 export const MemberCard = ({ name, position, status, icon, checked, onToggle }: MemberCardProps) => {
   return (
     <div
