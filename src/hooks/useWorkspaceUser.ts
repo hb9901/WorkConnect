@@ -1,8 +1,9 @@
 import api from '@/api/api';
 import { Tables } from '@/types/supabase';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const useWorkspaceUser = (workspaceUserId: string | null) => {
+  const queryClient = useQueryClient();
   const {
     data: workspaceUser,
     isPending,
@@ -18,7 +19,10 @@ const useWorkspaceUser = (workspaceUserId: string | null) => {
 
   const { mutateAsync: updateWorkspaceUser } = useMutation({
     mutationFn: (workspaceUser: Partial<Tables<'workspace_user'>>) =>
-      api.workspaceUser.updateWorkspaceUser(workspaceUser)
+      api.workspaceUser.updateWorkspaceUser(workspaceUser),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['workspaceUser', workspaceUserId] });
+    }
   });
 
   return { workspaceUser, isPending, isError, updateWorkspaceUser };

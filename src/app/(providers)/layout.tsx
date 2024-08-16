@@ -1,4 +1,5 @@
 import { AuthStoreProvider } from '@/providers/AuthStoreProvider';
+import BottomSheetModalBackDropProvider from '@/providers/BottomSheetModalBackDropProvider';
 import QueryProvider from '@/providers/QueryProvider';
 import { SnackBarContextProvider } from '@/providers/SnackBarContext';
 import SupabaseProvider from '@/providers/SupabaseProvider';
@@ -9,7 +10,9 @@ const ProvidersLayout = ({ children }: StrictPropsWithChildren) => {
     <QueryProvider>
       <SupabaseProvider>
         <AuthStoreProvider>
-          <SnackBarContextProvider>{children}</SnackBarContextProvider>
+          <SnackBarContextProvider>
+            <BottomSheetModalBackDropProvider>{children}</BottomSheetModalBackDropProvider>
+          </SnackBarContextProvider>
         </AuthStoreProvider>
       </SupabaseProvider>
     </QueryProvider>

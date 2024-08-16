@@ -20,7 +20,7 @@ const useTodoList = (workspaceUserId: string | null) => {
   const { mutateAsync: delTodo } = useMutation({
     mutationFn: (todoId: string) => api.todo.delTodo(todoId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todo'] });
+      queryClient.invalidateQueries({ queryKey: [`todo${workspaceUserId}`] });
     }
   });
 
@@ -29,7 +29,7 @@ const useTodoList = (workspaceUserId: string | null) => {
       return api.todo.postTodo(todo);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todo'] });
+      queryClient.invalidateQueries({ queryKey: [`todo${workspaceUserId}`] });
     }
   });
 
@@ -38,7 +38,7 @@ const useTodoList = (workspaceUserId: string | null) => {
       return api.todo.putTodo(todo, id);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todo'] });
+      queryClient.invalidateQueries({ queryKey: [`todo${workspaceUserId}`] });
     }
   });
   return { todoList, isPending, isError, delTodo, addTodo, updateTodo };

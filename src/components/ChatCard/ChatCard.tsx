@@ -16,7 +16,7 @@ export interface ChatCardProps {
 
 const ChatCard = ({ icon, name, status, date, message, unreadCount, pin, userCount, ...props }: ChatCardProps) => {
   return (
-    <div className="flex items-start justify-between p-4 border-b border-white bg-transparent w-full" {...props}>
+    <div className="flex items-start justify-between p-4 bg-transparent w-full" {...props}>
       <div className="flex flex-row w-full gap-x-3">
         <div className="flex items-center justify-center flex-shrink-0">{icon}</div>
         <div className="flex flex-col justify-between h-[59px] overflow-hidden">

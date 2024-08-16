@@ -1,5 +1,7 @@
+import ChannelList from '../_components/ChannelList';
+
 const ChannelHomePage = () => {
-  return null;
+  return <ChannelList />;
 };
 
 export default ChannelHomePage;
