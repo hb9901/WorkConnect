@@ -8,9 +8,14 @@ export interface FileEmptyProps {
 
 const FileEmpty = ({ className }: FileEmptyProps) => {
   return (
-    <div className={clsx('flex flex-col items-center justify-center text-center my-auto', className)}>
+    <div
+      className={clsx(
+        'flex flex-col items-center justify-center text-center my-auto gap-[20px] sm:gap-[26px]',
+        className
+      )}
+    >
       <FileEmptyIcon />
-      <Typography color="grey700Black" className="text-[32px]">
+      <Typography color="grey700Black" className="sm:text-[32px] text-[24px] text-center">
         파일이 비어있어요!
       </Typography>
     </div>
