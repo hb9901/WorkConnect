@@ -1,24 +1,22 @@
-import { PageLayout } from '@/components/PageLayout';
-import SelectHeader from '@/components/SelectHeader';
+import { BottomBar, PageAside, PageMain, PCHeader, PCWrapper } from '@/components/Layout/PageLayout';
 import { StrictPropsWithChildren } from '@/types/common';
+import DateSelect from '../_components/DateSelect';
 import PcHeader from '../_components/PcHeader';
 
-interface TodoListHomeLayoutProps {
-  params: {
-    workspaceId: string;
-  };
-}
-
-function TodoListHomeLayout({ children, params }: StrictPropsWithChildren<TodoListHomeLayoutProps>) {
-  const workspaceId = Number(params.workspaceId);
-
+function TodoListHomeLayout({ children }: StrictPropsWithChildren) {
   return (
     <>
-      <PageLayout title="" showTopBar={false}>
-        <SelectHeader workspaceId={workspaceId} isTodoList />
-        <PcHeader />
-        <div className="grid w-full lg:pl-[87px]">{children}</div>
-      </PageLayout>
+      <PCWrapper>
+        <PCHeader className="grid lg:!fixed" />
+        <PageAside>
+          <DateSelect />
+        </PageAside>
+        <PageMain>
+          <PcHeader />
+          {children}
+        </PageMain>
+        <BottomBar />
+      </PCWrapper>
     </>
   );
 }
