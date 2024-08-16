@@ -1,11 +1,11 @@
 'use client';
+import { weekNames } from '@/assets/weekNames';
 import Typography from '@/components/Typography';
 import useDateStore from '@/store/dateStore';
 import DateButton from '../DateButton';
 import { getMonthDates } from './function';
 
 const MonthDate = () => {
-  const weekNames = ['일', '월', '화', '수', '목', '금', '토'];
   const selectedDate = useDateStore((state) => state.selectedDate);
   const monthDates = getMonthDates(selectedDate);
 

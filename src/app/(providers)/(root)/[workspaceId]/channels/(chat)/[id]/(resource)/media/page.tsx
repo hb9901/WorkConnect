@@ -11,7 +11,7 @@ const MediaListPage = () => {
   const { data: media = [] } = useGetChannelMedia(Number(id));
 
   return (
-    <ul className="grid grid-cols-3 gap-x-2 gap-y-3 py-[22px] px-4">
+    <ul className="grid grid-cols-3 gap-x-2 gap-y-3 py-[22px] px-4 lg:grid-cols-4">
       {media.map((media) => {
         if (!media.content) return null;
 

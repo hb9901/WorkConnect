@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+//사용 어떻게 해야 할까요? ㅠㅠ
 
 type CheckboxTheme = 'primary' | 'grey';
 

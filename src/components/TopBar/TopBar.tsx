@@ -24,6 +24,7 @@ export type TopBarProps = {
   title: string;
 } & ComponentProps<'header'>;
 
+/** TODO: @deprecated */
 export const TopBar = ({
   TopBarLeftIcon1,
   TopBarLeftIcon2,

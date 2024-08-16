@@ -11,6 +11,7 @@ interface TopSelectProps {
   onClick: () => void;
 }
 
+/** @deprecated */
 const TopSelect = ({ workspaceList, isOpen, onClick }: TopSelectProps) => {
   const pathUrl = usePathname();
   const paths = pathUrl.split('/');

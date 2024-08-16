@@ -9,6 +9,7 @@ type PageLayoutProps = {
 } & StrictPropsWithChildren &
   TopBarProps;
 
+/** TODO: @deprecated */
 export const PageLayout = ({
   children,
   showTopBar = true,

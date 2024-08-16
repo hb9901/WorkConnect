@@ -89,7 +89,7 @@ const BottomControlBar = ({ variation, controls, saveUserChoices = true, ...prop
   );
 
   return (
-    <div className="flex items-center justify-center mx-4 py-4 px-6 fixed bottom-0 bg-white w-[100vw] md:h-[85px] lg:h-[100px] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+    <div className="flex items-center justify-center mx-4 py-4 px-6 bottom-0 bg-white w-[100vw] md:h-[85px] lg:h-[100px] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
       <div className="flex items-center justify-center gap-[4rem] px-4">
         {visibleControls.camera && (
           <div className="">

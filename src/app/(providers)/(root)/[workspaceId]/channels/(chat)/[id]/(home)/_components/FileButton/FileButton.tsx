@@ -33,8 +33,10 @@ const FileButton = ({
         onClick={handleClick}
         {...props}
       >
-        <div className="flex items-center justify-center w-[46px] h-[46px] rounded-full bg-[#74B974]">{children}</div>
-        <Typography as="span" variant="Body12px" className="text-grey500">
+        <div className="flex items-center justify-center w-[46px] h-[46px] rounded-full bg-[#74B974] lg:w-auto lg:h-auto lg:bg-transparent">
+          {children}
+        </div>
+        <Typography as="span" variant="Body12px" className="text-grey500 lg:hidden">
           {title}
         </Typography>
       </button>
