@@ -25,7 +25,7 @@ const SidebarMenuList = () => {
         href: `/${workspaceId}/channels/${id}/file`,
         icon: PaperclipIcon,
         label: '파일',
-        svgType: 'fill'
+        svgType: 'stroke'
       },
       {
         href: `/${workspaceId}/channels/${id}/notice`,

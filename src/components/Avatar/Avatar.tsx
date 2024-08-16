@@ -35,6 +35,7 @@ const Avatar = ({ src, size = '48px', variant, className, ...props }: AvatarProp
 const AvatarVariants = cva('object-cover flex items-center justify-center flex-shrink-0 bg-[#BDBDBD]', {
   variants: {
     size: {
+      '106px': 'w-[106px] h-[106px]',
       '48px': 'w-[48px] h-[48px]',
       '40px': 'w-[40px] h-[40px]',
       '32px': 'w-[32px] h-[32px]',
@@ -56,6 +57,7 @@ const AvatarVariants = cva('object-cover flex items-center justify-center flex-s
 const AvatarIconVariants = cva('stroke-white', {
   variants: {
     size: {
+      '106px': 'w-[55px] h-[55px]',
       '48px': 'w-[29px] h-[29px]',
       '40px': 'w-[24px] h-[24px]',
       '32px': 'w-[24px] h-[24px]',
