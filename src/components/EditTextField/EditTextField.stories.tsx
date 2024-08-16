@@ -22,7 +22,7 @@ export default {
 const Template: StoryFn<EditTextFieldProps> = (args) => {
   const [value, setValue] = useState(args.value);
 
-  return <EditTextField {...args} value={value} onChange={(e) => setValue(e.target.value)} />;
+  return <EditTextField {...args} value={value} onChange={() => setValue(value)} />;
 };
 
 export const Default = Template.bind({});

@@ -32,10 +32,11 @@ const CountTextField = ({
       <Label className="mx-[4px]">
         <Typography variant="Body14px" color="grey700Black">
           {label}
+          <span className="text-error"> (필수)</span>
         </Typography>
       </Label>
       <div
-        className={`flex items-center border rounded-md p-3 my-[8px] transition-all duration-200 ${
+        className={`flex items-center border rounded-md p-3 my-[8px] transition-all duration-200 text-ellipsis line-clamp-1 ${
           isFocused ? 'border-primary200Main' : 'border-gray-300'
         }`}
       >

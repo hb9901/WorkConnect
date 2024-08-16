@@ -20,12 +20,16 @@ const ToDoListMain = () => {
 
   return (
     <>
-      <main className="flex flex-col px-[16px] lg:inline-flex lg:flex-row lg:px-0 lg:h-full lg:w-full">
+      <main
+        className="flex flex-col px-[16px] lg:inline-flex lg:flex-row lg:px-0 lg:h-full lg:w-full
+      lg:max-h-[calc(100dvh-84px)] lg:overflow-y-scroll lg:scroll-container
+      "
+      >
         <div className="lg:flex lg:flex-col lg:flex-shrink-0 lg:w-[297px] lg:bg-[#F4F4F6]">
           <DateButtons />
           {isWeekly ? <WeekDate /> : <MonthDate />}
         </div>
-        <div className="flex flex-col lg:inline-grid lg:grid-cols-3 lg:ml-[16px] lg:mr-[17px] lg:mt-[24px] lg:gap-[12px] lg:w-full lg:h-full">
+        <div className="flex flex-col lg:inline-grid lg:grid-cols-3 lg:pl-[16px] lg:pr-[17px] lg:pt-[24px] lg:gap-[12px] lg:w-full lg:h-full">
           <ToDoList title="진행 전" todoList={beforeTodoList} />
           <ToDoList title="진행 중" todoList={progressTodoList} />
           <ToDoList title="완료" todoList={completedTodoList} />
