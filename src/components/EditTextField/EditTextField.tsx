@@ -1,13 +1,9 @@
 import { useSnackBar } from '@/providers/SnackBarContext';
 import clsx from 'clsx';
-<<<<<<< HEAD
 import Image from 'next/image';
-import { ReactNode, useEffect, useId, useRef, useState } from 'react';
+import { ChangeEvent, ReactNode, useEffect, useId, useRef, useState } from 'react';
 import InputXIcon from '../../icons/InputX.svg';
 import PencilIcon from '../../icons/Pencil.svg';
-=======
-import { ChangeEvent, ReactNode, useEffect, useId, useRef, useState } from 'react';
->>>>>>> develop
 import Label from '../Label';
 export interface EditTextFieldProps {
   children?: ReactNode;
