@@ -1,6 +1,5 @@
 import {
   CarouselLayout,
-  ParticipantClickEvent,
   TrackRefContext,
   TrackReferenceOrPlaceholder,
   useSpeakingParticipants,
@@ -43,25 +42,9 @@ const ParticipantListLayout = React.memo(({ trackRefs }: ParticipantListLayoutPr
     }
   }, [activeSpeakers]);
 
-  const handleClickFocus = useCallback(
-    (e: ParticipantClickEvent) => {
-      if (e.participant.sid === focusedTrack?.participant.sid && e.track === focusedTrack.publication) {
-        return;
-      }
-      setFocusedTrack({
-        participant: e.participant,
-        publication: e.participant.getTrackPublication(e.track!.source),
-        source: e.track!.source
-      });
-    },
-    [focusedTrack, setFocusedTrack]
-  );
-
   const renderTrackRef = useCallback(
-    (trackRef: TrackReferenceOrPlaceholder) => (
-      <RenderTrack trackRef={trackRef} isMobile={isMobile} onTrackClick={handleClickFocus} />
-    ),
-    [isMobile, handleClickFocus]
+    (trackRef: TrackReferenceOrPlaceholder) => <RenderTrack trackRef={trackRef} isMobile={isMobile} />,
+    [isMobile]
   );
 
   const carouselTracks = useMemo(() => (isMobile && trackRefs ? trackRefs : tracks), [isMobile, trackRefs, tracks]);
