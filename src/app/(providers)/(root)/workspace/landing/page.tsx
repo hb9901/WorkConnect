@@ -140,7 +140,7 @@ const InviteCodePage = () => {
               전달 받은 초대 코드를 입력해주세요
             </Typography>
           </div>
-          <form onSubmit={handleSubmit} className="lg:px-[55px]">
+          <form onSubmit={handleSubmit} className="lg:px-[55px] mb-[78px]">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col">
                 <Input
@@ -150,13 +150,7 @@ const InviteCodePage = () => {
                 />
               </div>
             </div>
-            <Button
-              type="submit"
-              theme="primary"
-              isDisabled={handleSubmitLoading}
-              isFullWidth
-              className="mt-4 mb-[167px]"
-            >
+            <Button type="submit" theme="primary" isDisabled={handleSubmitLoading} isFullWidth className="mt-4 ">
               {handleSubmitLoading ? '초대코드 확인 중...' : '확인'}
             </Button>
           </form>

@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
 import Link from 'next/link';
 import { signInWithKakao } from './auth/_utils/kakaoLogin';
@@ -75,59 +75,24 @@ const LandingPage = () => {
   return (
     <main className="relative flex justify-center items-center">
       <div className="relative w-full h-dvh flex flex-col justify-center items-center">
-        {showSwiper && (
-          <div className="w-[375px] h-dvh relative flex flex-col lg:hidden">
-            <Button type="button" theme="text" className="ml-auto" onClick={handleClose}>
+        <div className="flex w-full">
+          <div
+            className={`w-full h-dvh flex-col justify-center items-center bg-[#FAFAFF] flex fixed lg:relative z-10 ${showSwiper ? '' : 'hidden'} lg:flex`}
+          >
+            <Button type="button" theme="text" className="ml-auto lg:hidden" onClick={handleClose}>
               <Typography variant="Subtitle16px" color="grey400">
                 건너뛰기
               </Typography>
             </Button>
-            <div className="flex-grow flex items-center">
-              <Swiper
-                modules={[Navigation, Pagination]}
-                slidesPerView={1}
-                navigation
-                pagination={{
-                  clickable: true
-                }}
-              >
-                {onboardingData.map((item) => (
-                  <SwiperSlide key={item.id}>
-                    <div className="flex flex-col items-center justify-center">
-                      <div className="w-full">
-                        <Image
-                          className="w-full h-auto object-cover aspect-square"
-                          src={item.image}
-                          alt="일러스트 이미지"
-                          width={375}
-                          height={454}
-                          unoptimized
-                        />
-                      </div>
-                      <div className="flex flex-col items-center justify-center h-[132px] text-[24px] font-bold mb-9">
-                        <Typography variant="Title22px" className="text-center mb-3 " color="grey900">
-                          {item.title}
-                        </Typography>
-                        <Typography
-                          variant="Subtitle16px"
-                          className="text-center whitespace-pre-line tracking-tighter "
-                          color="grey500"
-                        >
-                          {item.subTitle}
-                        </Typography>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-          </div>
-        )}
-        <div className="flex w-full">
-          <div className="w-full h-dvh relative flex-col justify-center items-center bg-[#FAFAFF] hidden lg:flex">
             <div className="w-[375px] flex-grow flex items-center">
               <Swiper
-                modules={[Navigation, Pagination]}
+                modules={[Navigation, Pagination, Autoplay]}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false
+                }}
+                loop={true}
+                speed={1000}
                 slidesPerView={1}
                 navigation
                 pagination={{
@@ -166,9 +131,7 @@ const LandingPage = () => {
             </div>
           </div>
 
-          <div
-            className={`flex-col w-full h-dvh mx-4 lg:justify-center lg:mx-[155px] lg:flex ${showSwiper ? 'hidden' : 'flex'}`}
-          >
+          <div className={`flex-col w-full h-dvh mx-4 lg:justify-center lg:mx-[155px] lg:flex `}>
             <Typography
               variant="Title20px"
               color="grey700Black"
