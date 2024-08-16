@@ -7,6 +7,7 @@ const useWorkspaceUser = (workspaceUserId: string | null) => {
   const {
     data: workspaceUser,
     isPending,
+    isLoading,
     isError
   } = useQuery<Tables<'workspace_user'> | undefined>({
     queryKey: ['workspaceUser', workspaceUserId],
@@ -25,7 +26,7 @@ const useWorkspaceUser = (workspaceUserId: string | null) => {
     }
   });
 
-  return { workspaceUser, isPending, isError, updateWorkspaceUser };
+  return { workspaceUser, isPending, isLoading, isError, updateWorkspaceUser };
 };
 
 export default useWorkspaceUser;

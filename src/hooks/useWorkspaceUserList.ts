@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 const useWorkspaceUserList = (workspaceId: number, workspaceUserId: string | null) => {
   const {
     data: workspaceUserList,
+    isLoading,
     isPending,
     isError
   } = useQuery<Tables<'workspace_user'>[] | undefined>({
@@ -16,7 +17,7 @@ const useWorkspaceUserList = (workspaceId: number, workspaceUserId: string | nul
     enabled: !!workspaceUserId
   });
 
-  return { workspaceUserList, isPending, isError };
+  return { workspaceUserList, isLoading, isPending, isError };
 };
 
 export default useWorkspaceUserList;
