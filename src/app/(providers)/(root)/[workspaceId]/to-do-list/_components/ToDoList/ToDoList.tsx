@@ -1,42 +1,27 @@
 'use client';
 
-import Typography from '@/components/Typography';
-import CheckCircleIcon from '@/icons/CheckCircle.svg';
-import LoaderIcon from '@/icons/Loader.svg';
-import MinusCircleIcon from '@/icons/MinusCircle.svg';
-import useDateStore from '@/store/dateStore';
 import { Tables } from '@/types/supabase';
 import { cva, VariantProps } from 'class-variance-authority';
 import Todo from '../Todo/Todo';
-import { isDateSelected } from './function';
+import TodoListTitle from '../TodoListTitle';
 
 type ToDoListProps = {
   todoList: Tables<'todo'>[] | undefined;
 } & VariantProps<typeof todoListClass>;
 
 const ToDoList = ({ todoList, title }: ToDoListProps) => {
-  const selectedDate = useDateStore((state) => state.selectedDate);
-  const selectedTodoList =
-    todoList && todoList.filter((todo) => isDateSelected(todo.start_date, todo.end_date, selectedDate));
-  if (!selectedTodoList) return;
+  if (!todoList)
+    return (
+      <div className={todoListClass({ title })}>
+        <TodoListTitle title={title} />
+      </div>
+    );
+
   return (
     <div className={todoListClass({ title })}>
-      <div className="mb-[12px] lg:flex lg:flex-row lg:items-center lg:gap-[12px]">
-        {title === '진행 전' ? (
-          <MinusCircleIcon className="hidden lg:flex w-[20px] h-[20px] stroke-[#737B91]" />
-        ) : title === '진행 중' ? (
-          <LoaderIcon className="hidden lg:flex w-[20px] h-[20px] stroke-[#737B91]" />
-        ) : title === '완료' ? (
-          <CheckCircleIcon className="hidden lg:flex w-[20px] h-[20px] stroke-[#737B91]" />
-        ) : (
-          <></>
-        )}
-        <Typography variant="Subtitle16px" color="grey700Black">
-          {title}
-        </Typography>
-      </div>
+      <TodoListTitle title={title} />
       <div className="flex flex-col gap-[8px]">
-        {selectedTodoList.map((todo) => (
+        {todoList.map((todo) => (
           <Todo
             key={todo.id}
             id={todo.id}
