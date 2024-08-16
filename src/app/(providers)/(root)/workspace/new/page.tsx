@@ -37,22 +37,24 @@ const NewWorkSpacePage = () => {
   const randomNumbers = getRandomNumbers(6, 1, 9);
   const combinedNumber = Number(randomNumbers.join(''));
 
-  const { mutate: useCreateWorkspaceMutate, isPending: useCreateWorkspacePending } = useCreateWorkspace({
+  const { mutateAsync: createWorkspaceMutate, isPending: createWorkspacePending } = useCreateWorkspace({
     onError: () => openSnackBar({ message: '오류가 발생했어요' })
   });
 
-  const { mutate: useCreateWorkspaceUserMutate, isPending: useCreateWorkspaceUserPending } = useCreateWorkspaceUser({
+  const { mutateAsync: createWorkspaceUserMutate, isPending: createWorkspaceUserPending } = useCreateWorkspaceUser({
     onError: () => openSnackBar({ message: '오류가 발생했어요' })
   });
 
-  const { mutate: useUpdateNewWorkspaceUserMutate, isPending: useUpdateNewWorkspaceUserPending } =
+  const { mutateAsync: updateNewWorkspaceUserMutate, isPending: updateNewWorkspaceUserPending } =
     useUpdateNewWorkspaceUser({
       onError: () => openSnackBar({ message: '오류가 발생했어요' })
     });
 
-  const handleJoin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const { mutateAsync: singleWorkspaceIdMutate, isPending: useSingleWorkspaceIdPending } = useSingleWorkspaceId({
+    onError: () => openSnackBar({ message: '오류가 발생했어요' })
+  });
 
+  const handleJoin = async () => {
     if (!user) {
       openSnackBar({ message: '로그인이 필요해요' });
       return route.replace('/');
@@ -62,12 +64,12 @@ const NewWorkSpacePage = () => {
 
     if (!workUserData) return openSnackBar({ message: '워크스페이스에 유저 데이터가 없어요' });
 
-    useCreateWorkspaceMutate({ orgName, combinedNumber, adminUserId: workUserData.id });
-
-    const workspaceId = await useSingleWorkspaceId(workUserData.id);
-
     if (cookieUserId) {
-      useCreateWorkspaceUserMutate({
+      await createWorkspaceMutate({ orgName, combinedNumber, adminUserId: workUserData.id });
+
+      const workspaceId = await singleWorkspaceIdMutate(workUserData.id);
+
+      await createWorkspaceUserMutate({
         workspaceId: Number(workspaceId),
         userId: user.id,
         userName: user.user_metadata.name,
@@ -84,8 +86,12 @@ const NewWorkSpacePage = () => {
       return route.replace(`/${workspaceId}`);
     }
 
-    //? 로그인 안했을때 (회원가입 후 워크스페이스 생성)
-    useUpdateNewWorkspaceUserMutate({
+    //? 회원가입 후 첫 워크스페이스 생성
+    await createWorkspaceMutate({ orgName, combinedNumber, adminUserId: workUserData.id });
+
+    const workspaceId = await singleWorkspaceIdMutate(workUserData.id);
+
+    await updateNewWorkspaceUserMutate({
       workspaceId: Number(workspaceId),
       userId: user.id
     });
@@ -100,8 +106,11 @@ const NewWorkSpacePage = () => {
     return route.replace('/welcome');
   };
 
-  const handleJoinPending =
-    useUpdateNewWorkspaceUserPending || useCreateWorkspaceUserPending || useCreateWorkspacePending;
+  const joinPending =
+    updateNewWorkspaceUserPending ||
+    createWorkspaceUserPending ||
+    createWorkspacePending ||
+    useSingleWorkspaceIdPending;
 
   useEffect(() => {
     const getWorkspaceUser = async () => {
@@ -143,7 +152,7 @@ const NewWorkSpacePage = () => {
               새 워크스페이스를 만들려면 계정 정보가 필요해요
             </Typography>
           </div>
-          <form onSubmit={handleJoin} className="lg:px-[55px]">
+          <div className="lg:px-[55px]">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col">
                 <Typography variant="Body14px" color="grey700Black" className="mb-2">
@@ -157,13 +166,19 @@ const NewWorkSpacePage = () => {
               </div>
             </div>
             <div className="flex justify-center mt-4">
-              <Button type="submit" theme="primary" isDisabled={handleJoinPending ? true : false} isFullWidth>
+              <Button
+                type="button"
+                theme="primary"
+                onClick={handleJoin}
+                isDisabled={joinPending ? true : false}
+                isFullWidth
+              >
                 <Typography variant="Subtitle18px" className="text-white">
-                  {handleJoinPending ? '워크스페이스 생성중...' : '가입하기'}
+                  가입하기
                 </Typography>
               </Button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </main>

@@ -72,7 +72,6 @@ const LandingPage = () => {
     setShowSwiper(false);
   };
 
-  //? 컴포넌트 분리하기!!
   return (
     <main className="relative flex justify-center items-center">
       <div className="relative w-full h-dvh flex flex-col justify-center items-center">
@@ -230,14 +229,11 @@ const LandingPage = () => {
                 </Typography>
               </Link>
               <span className="text-[#5C6275] text-[11px] mx-3">|</span>
-              {/* // TODO: MVP이후 비밀번호 찾기 구현  */}
-              {/* <Link href="/"> */}
-              <button onClick={() => alert('준비중입니다.')}>
+              <Link href="/password-find">
                 <Typography as="span" variant="Body14px" color="grey500">
                   비밀번호 찾기
                 </Typography>
-              </button>
-              {/* </Link> */}
+              </Link>
             </div>
           </div>
         </div>

@@ -1,8 +1,7 @@
 'use client';
 import { supabase } from '@/utils/supabase/supabaseClient';
-import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { useLayoutEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import { useSnackBar } from '@/providers/SnackBarContext';
 import { TopBar } from '@/components/TopBar';
 import Modal from '@/components/Modal';
@@ -13,46 +12,38 @@ import WorkConnectWebTextLogo from '@/icons/WorkConnetWebText.svg';
 import WorkConnectLogo from '@/icons/WorkConnectLogo.svg';
 import DangerIcon from '@/icons/DialogDanger.svg';
 import SuccessIcon from '@/icons/DialogSuccess.svg';
+import { useVerifyCodeStore } from '@/store/verifyCode';
+import { useEmailVerify } from './_hooks/useEmailVerify';
 
 const AuthVerifyPage = () => {
   const [otp, setOtp] = useState<string>('');
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [resetModalOpen, setResetModalOpen] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('');
+  const searchParams = useSearchParams();
+  const email = searchParams.get('email') || '';
   const route = useRouter();
   const { openSnackBar } = useSnackBar();
+  const { verifyCode } = useVerifyCodeStore();
+  const { generateVerifyCode } = useEmailVerify();
 
-  // TODO : 리팩터링 예정
-  const otpMutation = useMutation({
-    mutationFn: async () => {
-      // const { data, error } = await supabase.auth.verifyOtp({
-      //   type: 'signup',
-      //   email,
-      //   token: fullOtp
-      // });
-
-      // if (error) return openSnackBar({ message: '인증번호가 일치하지 않아요' });
-      if (otp === '123456') return route.replace('/workspace/landing');
+  const otpVerify = () => {
+    if (verifyCode !== otp) {
       return openSnackBar({ message: '인증번호가 일치하지 않아요' });
-
-      // TODO : 처음 회원가입 시에는 /workspace/landing페이지
-      // if (data) return route.push('/workspace/landing');
     }
-  });
 
-  // TODO : 수정작업 (MVP이후 작업 피드백)
+    if (verifyCode === otp) {
+      openSnackBar({ message: '인증이 완료되었어요' });
+      return route.replace('/workspace/landing');
+    }
+
+    if (otp === '123456') return route.replace('/workspace/landing');
+
+    return openSnackBar({ message: '인증번호가 일치하지 않아요' });
+  };
+
   const resendOtp = async () => {
-    // const { data, error } = await supabase.auth.resend({
-    //   type: 'signup',
-    //   email,
-    //   options: {
-    //     emailRedirectTo: `${process.env.NEXT_PUBLIC_API_URL}/api/signup/email`
-    //   }
-    // });
-    // if (error) return openSnackBar({ message: '에러가 발생했어요' });
-    // if (data) return openSnackBar({ message: '인증번호가 재전송되었어요' });
+    await generateVerifyCode(email);
     setResetModalOpen((prev) => !prev);
-    // openSnackBar({ message: '인증번호가 재전송되었어요' });
   };
 
   const isModalOpen = () => {
@@ -68,14 +59,6 @@ const AuthVerifyPage = () => {
     isModalOpen();
     return route.push('/');
   };
-
-  const { mutate: otpMutate } = otpMutation;
-
-  useLayoutEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    const emailFromQuery = query.get('email');
-    setEmail(emailFromQuery || '');
-  }, []);
 
   return (
     <main className="flex justify-center items-center">
@@ -115,7 +98,7 @@ const AuthVerifyPage = () => {
             <Typography variant="Subtitle12px" color="grey400">
               이메일을 받지 못하셨나요?
             </Typography>
-            <Button theme="underlineText" onClick={isResetModalOpen} className="ml-[-12px]">
+            <Button theme="underlineText" onClick={resendOtp} className="ml-[-12px]">
               <Typography variant="Subtitle12px" color="grey400">
                 인증 코드 재전송
               </Typography>
@@ -123,7 +106,7 @@ const AuthVerifyPage = () => {
           </div>
         </div>
         <div className="flex justify-center">
-          <Button theme="primary" onClick={() => otpMutate()} isFullWidth>
+          <Button theme="primary" onClick={otpVerify} isFullWidth>
             가입 완료
           </Button>
         </div>

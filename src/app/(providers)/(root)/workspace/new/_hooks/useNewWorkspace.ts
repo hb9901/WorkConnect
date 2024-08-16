@@ -22,18 +22,23 @@ export const useCreateWorkspace = ({ ...options }) => {
   });
 };
 
-export const useSingleWorkspaceId = async (adminUserId: string) => {
-  const { data, error } = await supabase
-    .from('workspace')
-    .select('id')
-    .eq('admin_user_id', adminUserId)
-    .order('created_at', { ascending: false })
-    .limit(1)
-    .single();
+export const useSingleWorkspaceId = ({ ...options }) => {
+  return useMutation({
+    mutationFn: async (adminUserId: CreateWorkspaceProps['adminUserId']) => {
+      const { data, error } = await supabase
+        .from('workspace')
+        .select('id')
+        .eq('admin_user_id', adminUserId)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
 
-  if (error) throw error;
+      if (error) throw error;
 
-  return data.id;
+      return data.id;
+    },
+    ...options
+  });
 };
 
 type CreateWorkspaceUserProps = {
