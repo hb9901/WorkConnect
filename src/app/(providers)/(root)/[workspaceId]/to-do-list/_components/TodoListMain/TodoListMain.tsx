@@ -1,4 +1,5 @@
 'use client';
+import LoadingSpinner2 from '@/components/LoadingSpinner2';
 import useTodoList from '@/hooks/useTodo';
 import useUserStore from '@/store/userStore';
 import DateSelect from '../DateSelect';
@@ -7,8 +8,11 @@ import ToDoList from '../ToDoList/ToDoList';
 const ToDoListMain = () => {
   const workspaceUserId = useUserStore((state) => state.workspaceUserId);
   const { todoList, isPending, isError } = useTodoList(workspaceUserId);
+
+  if (isPending) return <LoadingSpinner2 />;
+
   if (!todoList || isError) return;
-  if (isPending) return;
+
   const beforeTodoList = todoList.filter((todo) => todo.status === '진행 전');
   const progressTodoList = todoList.filter((todo) => todo.status === '진행 중');
   const completedTodoList = todoList.filter((todo) => todo.status === '완료');

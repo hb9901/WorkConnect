@@ -1,11 +1,7 @@
 import HomeMain from '../_components/HomeMain';
 
 const Homepage = () => {
-  return (
-    <>
-      <HomeMain />
-    </>
-  );
+  return <HomeMain />;
 };
 
 export default Homepage;

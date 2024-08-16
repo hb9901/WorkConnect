@@ -1,5 +1,4 @@
-import { PageAside, PageMain, PCHeader, PCWrapper } from '@/components/Layout/PageLayout';
-import { BottomBar } from '@/components/PageLayout';
+import { BottomBar, PageAside, PageMain, PCHeader, PCWrapper } from '@/components/Layout/PageLayout';
 import { StrictPropsWithChildren } from '@/types/common';
 import DateSelect from '../../_components/DateSelect';
 import PcHeader from '../../_components/PcHeader';

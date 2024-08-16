@@ -3,6 +3,8 @@ import api from '@/api/api';
 import BottomSheetModal from '@/components/BottomSheetModal';
 import Button from '@/components/Button';
 import EditTextfield from '@/components/EditTextField';
+import LoadingSpinner2 from '@/components/LoadingSpinner2';
+import NotFoundError from '@/components/NotFoundError';
 import TextFieldButton from '@/components/TextFieldButton';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
@@ -27,7 +29,7 @@ const ProfileEditPage = () => {
   const [imageURL, setImageURL] = useState<string | ArrayBuffer | null>();
   const params = useParams();
   const workspaceUserId = params.targetWorkspaceUserId as string;
-  const { workspaceUser, updateWorkspaceUser } = useWorkspaceUser(workspaceUserId);
+  const { workspaceUser, isPending, isError, updateWorkspaceUser } = useWorkspaceUser(workspaceUserId);
   const profileImage = workspaceUser && workspaceUser.profile_image;
   const workspaceName = workspaceUser && workspaceUser.name;
   const workspaceEmail = workspaceUser && workspaceUser.email;
@@ -106,6 +108,9 @@ const ProfileEditPage = () => {
       return;
     }
   };
+
+  if (isPending) return <LoadingSpinner2 />;
+  if (isError) return <NotFoundError />;
 
   return (
     <div>
