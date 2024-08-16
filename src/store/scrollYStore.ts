@@ -1,3 +1,4 @@
+//삭제 필요
 import { create } from 'zustand';
 
 interface scrollYState {

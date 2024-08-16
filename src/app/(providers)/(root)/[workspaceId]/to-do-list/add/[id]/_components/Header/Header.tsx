@@ -7,6 +7,7 @@ import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useUserStore from '@/store/userStore';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import BackArrowButton from '../BackArrowButton';
 import BackButton from '../BackButton';
 import DeleteButton from '../DeleteButton';
 
@@ -44,7 +45,17 @@ const Header = () => {
         >
           일정 상세
         </Typography>
-        {isExist ? <DeleteButton onClick={handleIsOpen} /> : <div />}
+        {isExist ? (
+          <div className="flex flex-row gap-[12px]">
+            <DeleteButton onClick={handleIsOpen} />
+            <BackArrowButton />
+          </div>
+        ) : (
+          <>
+            <BackArrowButton />
+            <div className="lg:hidden" />
+          </>
+        )}
 
         <Modal isOpen={isOpen} onClose={handleIsOpen} isModal={false}>
           <div className="flex flex-col justify-center w-[335px] py-[10px]">

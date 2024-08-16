@@ -9,29 +9,27 @@ interface TodoProps {
   startDate: string;
   endDate: string;
   place: string | null;
-  priority: string;
+  priority: string | null;
 }
 
 const Todo = ({ id, title, startDate, endDate, place, priority }: TodoProps) => {
-  if (!(priority === 'high' || priority === 'medium' || priority === 'low')) return;
-
   return (
     <Link
       href={`to-do-list/add/${id}`}
       className="flex flex-row justify-between items-center rounded-[8px] bg-[#FAFAFA] px-[16px] py-[12px] shadow-sm shadow-slate-200 hover:brightness-90 active:brightness-75
       lg:w-full lg:py-[24px] lg:shadow-md "
     >
-      <div className="flex flex-col gap-[6px]">
-        <Typography variant="Title16px" color="grey700Black">
+      <div className="flex flex-col w-full gap-[6px]">
+        <Typography variant="Title16px" color="grey700Black" className="w-full line-clamp-2">
           {title}
         </Typography>
         <div>
-          <Typography variant="Subtitle14px" color="grey400">
-            {changeDateStr(startDate, endDate)} | {place}
+          <Typography variant="Subtitle14px" color="grey400" className="w-full line-clamp-2">
+            {changeDateStr(startDate, endDate)} {place && '| ' + place}
           </Typography>
         </div>
       </div>
-      <Tag theme={priority}>{priority}</Tag>
+      {priority === 'high' || priority === 'medium' || (priority === 'low' && <Tag theme={priority}>{priority}</Tag>)}
     </Link>
   );
 };

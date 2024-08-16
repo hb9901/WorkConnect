@@ -1,8 +1,7 @@
 'use client';
-import BottomSheet from '@/components/BottomSheet';
+import BottomSheetModal from '@/components/BottomSheetModal';
 import Button from '@/components/Button';
 import CountTextField from '@/components/CountTextField';
-import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
 import useTodoList from '@/hooks/useTodo';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
@@ -21,9 +20,7 @@ import { Tables } from '@/types/supabase';
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import DateButtons from '../../_components/DateButtons';
-import MonthDate from '../../_components/MonthDate';
+import { useEffect, useRef } from 'react';
 import DateBottom from './_components/DateBottom/DateBottom';
 import DateModal from './_components/DateModal';
 import Header from './_components/Header';
@@ -56,7 +53,6 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const initEndTime = selectedTodo ? dayjs(selectedTodo.end_date) : initTime;
   const { selectedDate } = useDateStore();
   const selectedDateStr = selectedDate.format('M월 DD일 선택');
-  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
 
   const {
     title,
@@ -79,12 +75,14 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     endTime,
     isStartTime,
     isBottomSheetOpen,
+    isCalendarOpen,
     setStartTime,
     setEndTime,
     handleSetStartTime,
     handleSetEndTime,
     handleTimeClick,
-    hanldeBottomSheetClick
+    hanldeBottomSheetClick,
+    handleCalendarClick
   } = useBottomTime(initStartTime, initEndTime);
 
   const placeRef = useRef<HTMLInputElement>(null);
@@ -98,17 +96,31 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     const initTime = dayjs().set('hour', 9).set('minute', 0);
     initStartTime ? setStartTime(initStartTime) : setStartTime(initTime);
     initEndTime ? setEndTime(initEndTime) : setEndTime(initTime);
-    if (!(existPriority && existStatus && existTitle)) return;
+    if (!(existStatus && existTitle)) return;
     setSelectedStatus(existStatus);
-    setSelectedPriority(existPriority);
     setTitle(existTitle);
+    if (!existPriority) return;
+    setSelectedPriority(existPriority);
   }, [todoList]);
 
   const handleAdd = async () => {
-    if (!title || !placeRef.current || !workspaceUserId || !selectedPriority || !selectedStatus) {
-      openSnackBar({ message: '빈 입력 값이 존재합니다!' });
+    if (!title) {
+      openSnackBar({ message: '일정 이름이 존재하지 않습니다' });
       return;
     }
+    if (!selectedStatus) {
+      openSnackBar({ message: '진행 상태를 선택하지 않습니다' });
+      return;
+    }
+    if (!placeRef.current || !workspaceUserId) {
+      openSnackBar({ message: '오류가 발생하였습니다' });
+      return;
+    }
+    if (dayjs(startTime).hour() >= dayjs(endTime).hour() && dayjs(startTime).minute() > dayjs(endTime).minute()) {
+      openSnackBar({ message: '시작 혹은 완료 시간을 변경해주세요' });
+      return;
+    }
+
     const startDate = selectedDate
       .set('hour', dayjs(startTime).hour())
       .set('minute', dayjs(startTime).minute())
@@ -145,10 +157,6 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     router.push(`/${workspaceId}/to-do-list`);
   };
 
-  const handleCalendarClick = () => {
-    setIsCalendarOpen((prev) => !prev);
-  };
-
   return (
     <div className="bg-white px-[16px]">
       <header>
@@ -164,17 +172,35 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
         <div className="flex flex-col gap-[6px]">
           <Typography variant="Body14px" color="grey700Black" className="px-[6px] mb-[2px]">
             기본 설정
+            <span className="text-error"> (필수)</span>
           </Typography>
           <InputCard>
+            {isCalendarOpen && (
+              <BottomSheetModal onClose={handleCalendarClick}>
+                <DateModal onClick={handleCalendarClick} selectedDateStr={selectedDateStr} />
+              </BottomSheetModal>
+            )}
             <button className="flex flex-row w-full gap-[12px]" onClick={handleCalendarClick}>
-              <CalendarIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
+              <CalendarIcon className="flex-shrink-0 w-[20px] h-[20px] stroke-[#2F323C]" />
               <Typography variant="Subtitle16px" color="grey700Black">
                 {date}
               </Typography>
             </button>
           </InputCard>
+
           <InputCard>
-            <ClockIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
+            {!isCalendarOpen && (
+              <BottomSheetModal onClose={hanldeBottomSheetClick}>
+                <DateBottom
+                  isStartTime={isStartTime}
+                  startTime={startTime}
+                  endTime={endTime}
+                  handleSetStartTime={handleSetStartTime}
+                  handleSetEndTime={handleSetEndTime}
+                />
+              </BottomSheetModal>
+            )}
+            <ClockIcon className="flex-shrink-0 w-[20px] h-[20px] stroke-[#2F323C] mr-[12px]" />
             <div className="flex flex-row items-center gap-[4px]">
               <button onClick={() => handleTimeClick(true)}>{startTimeFormat}</button>
               <ChevronRightIcon className="w-[16px] h-[16px] stroke-[#9096A7]" />
@@ -215,12 +241,15 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
             추가 설정
           </Typography>
           <InputCard>
-            <MapPinIcon className="w-[20px] h-[20px] stroke-[#2F323C]" />
-            <Typography variant="Subtitle16px" color="grey700Black">
+            <label htmlFor="place">
+              <MapPinIcon className="flex-shrink-0 w-[20px] h-[20px] stroke-[#2F323C] mr-[12px]" />
+            </label>
+            <Typography variant="Subtitle16px" color="grey700Black" className="w-full">
               <input
+                id="place"
                 defaultValue={place ? place : ''}
                 placeholder="장소를 입력해주세요."
-                className="focus:outline-none"
+                className="w-full focus:outline-none line-clamp-1 "
                 ref={placeRef}
               />
             </Typography>
@@ -258,48 +287,6 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
         <Button theme="primary" isFullWidth={true} className="mt-[65px] mb-[20px]" onClick={handleAdd}>
           {params.id === 'new' ? '작성 완료' : '수정 완료'}
         </Button>
-      </div>
-
-      <div className="lg:hidden">
-        <BottomSheet isOpen={isBottomSheetOpen} onClose={hanldeBottomSheetClick}>
-          <DateBottom
-            isStartTime={isStartTime}
-            handleClose={hanldeBottomSheetClick}
-            startTime={startTime}
-            endTime={endTime}
-            handleSetStartTime={handleSetStartTime}
-            handleSetEndTime={handleSetEndTime}
-          />
-        </BottomSheet>
-      </div>
-      <div className="hidden lg:flex">
-        <Modal isOpen={isBottomSheetOpen} onClose={hanldeBottomSheetClick} isModal={false}>
-          <DateBottom
-            isStartTime={isStartTime}
-            handleClose={hanldeBottomSheetClick}
-            startTime={startTime}
-            endTime={endTime}
-            handleSetStartTime={handleSetStartTime}
-            handleSetEndTime={handleSetEndTime}
-          />
-        </Modal>
-      </div>
-
-      <div className="lg:hidden">
-        <BottomSheet isOpen={isCalendarOpen} onClose={handleCalendarClick}>
-          <div className="">
-            <DateButtons showWeeklyButton={false} />
-            <div className="mb-[24px]">
-              <MonthDate />
-            </div>
-            <Button theme="primary" onClick={handleCalendarClick} isFullWidth>
-              {selectedDateStr}
-            </Button>
-          </div>
-        </BottomSheet>
-      </div>
-      <div className="hidden lg:flex">
-        <DateModal isOpen={isCalendarOpen} onClose={handleCalendarClick} />
       </div>
     </div>
   );

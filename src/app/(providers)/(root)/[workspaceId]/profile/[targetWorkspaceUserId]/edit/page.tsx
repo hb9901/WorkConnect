@@ -1,19 +1,24 @@
 'use client';
 import api from '@/api/api';
+import BottomSheetModal from '@/components/BottomSheetModal';
 import Button from '@/components/Button';
 import EditTextfield from '@/components/EditTextField';
+import TextFieldButton from '@/components/TextFieldButton';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
+import { useSnackBar } from '@/providers/SnackBarContext';
 import useUserStore from '@/store/userStore';
 import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Header from '../_components/Header';
 import ProfileImgButton from '../_components/ProfileImgButton';
 import IsOpenInput from './_components/Input/IsOpenInput';
+import InputBottomSheet from './_components/InputBottomSheets/InputBottomSheet';
 import useInput from './_hooks/useInput';
 
 const ProfileEditPage = () => {
   const { editInputs, name, state, email, phone, setName, setState, setEmail, setPhone } = useInput();
+  const { openSnackBar } = useSnackBar();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const userId = useUserStore((state) => state.userId);
   const workspaceId = useWorkspaceId();
@@ -63,7 +68,10 @@ const ProfileEditPage = () => {
 
   const handleEdit = async () => {
     if (!(userId && workspaceId)) return;
-
+    if (!name) {
+      openSnackBar({ message: '이름이 존재하지 않습니다' });
+      return;
+    }
     if (image) {
       const filename = crypto.randomUUID();
       await api.storageProfile.postStorageProfile(image, filename);
@@ -103,20 +111,39 @@ const ProfileEditPage = () => {
     <div>
       <Header title="내 프로필 편집" type="edit" />
       <main>
-        <div className="flex flex-col w-full items-center px-5 relative">
+        <div className="flex flex-col w-full items-center px-5 pb-[36px]">
           <ProfileImgButton imageURL={imageURL} handleProfileImageChange={handleProfileImageChange} />
           <div className="flex flex-col w-full gap-[16px] mb-[30px]">
-            {editInputs.map((editInput) => (
-              <>
-                <EditTextfield
-                  key={editInput.label}
-                  label={editInput.label}
-                  labelColor="grey400"
-                  onChange={() => editInput.onChange(editInput.value)}
-                />
-                <div className="lg:border-grey50 lg:border-b-[1px]" />
-              </>
-            ))}
+            {editInputs.map((editInput) => {
+              if (editInput.label === '활동상태')
+                return (
+                  <div key={editInput.label}>
+                    <BottomSheetModal isUp={true} onClose={() => editInput.handleFn(editInput.value)}>
+                      <InputBottomSheet editInput={editInput} />
+                    </BottomSheetModal>
+                    <TextFieldButton
+                      LabelColor="grey400"
+                      label={editInput.label}
+                      value={editInput.value}
+                      onClick={() => editInput.handleFn(editInput.value)}
+                    />
+                    <div className="lg:border-grey50 lg:border-b-[1px]" />
+                  </div>
+                );
+              else
+                return (
+                  <div key={editInput.label}>
+                    <EditTextfield
+                      label={editInput.label}
+                      labelColor="grey400"
+                      value={editInput.value}
+                      onChange={editInput.handleFn}
+                      isRequired={editInput.isRequeired}
+                    />
+                    <div className="lg:border-grey50 lg:border-b-[1px]" />
+                  </div>
+                );
+            })}
             <IsOpenInput isOpen={isOpen} handleIsOpenClick={handleIsOpenClick} />
           </div>
           <Button theme="primary" isFullWidth onClick={handleEdit}>

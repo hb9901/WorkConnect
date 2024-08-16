@@ -16,7 +16,7 @@ const SelectedUsers = () => {
           <button
             type="button"
             onClick={() => handleRemoveUser(user)}
-            className="absolute top-0 right-0 z-10 flex items-center justify-center bg-grey50 rounded-full w-[21px] h-[21px]"
+            className="absolute top-0 right-0 z-[1px] flex items-center justify-center bg-grey50 rounded-full w-[21px] h-[21px]"
           >
             <XIcon className="w-4 h-4" />
           </button>

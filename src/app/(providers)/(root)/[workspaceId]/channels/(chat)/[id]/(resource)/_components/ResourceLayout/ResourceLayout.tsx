@@ -1,11 +1,14 @@
 'use client';
 
-import { PageLayout } from '@/components/PageLayout';
+import { PageAside, PageMain, PageLayout, BottomBar } from '@/components/Layout/PageLayout';
 import { Tab, Tabs } from '@/components/Tabs';
+import { TopBar } from '@/components/Layout/TopBar';
 import { XIcon } from '@/icons';
 import { StrictPropsWithChildren } from '@/types/common';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import ChannelList from '../../../../../_components/ChannelList';
+import ChannelListTopBar from '../../../../../_components/ChannelListTopBar';
 
 const ResourceLayout = ({ children }: StrictPropsWithChildren) => {
   const router = useRouter();
@@ -18,19 +21,33 @@ const ResourceLayout = ({ children }: StrictPropsWithChildren) => {
   };
 
   return (
-    <PageLayout title="파일 내역" showBottomBar={false} TopBarLeftIcon1={<XIcon onClick={() => router.back()} />}>
-      <Tabs>
-        <Tab as="button" onClick={() => handleReplace(`${originPath}/media`)} active={activeTab === 0}>
-          사진&middot;동영상
-        </Tab>
-        <Tab as="button" onClick={() => handleReplace(`${originPath}/file`)} active={activeTab === 1}>
-          파일
-        </Tab>
-        <Tab as="button" onClick={() => handleReplace(`${originPath}/notice`)} active={activeTab === 2}>
-          공지
-        </Tab>
-      </Tabs>
-      {children}
+    <PageLayout>
+      <PageAside>
+        <div className="mr-[-8px]">
+          <ChannelListTopBar />
+          <ChannelList />
+        </div>
+      </PageAside>
+      <PageMain>
+        <TopBar
+          title="파일 내역"
+          Icon1={<XIcon onClick={() => router.back()} className="lg:hidden" />}
+          Icon4={<XIcon onClick={() => router.back()} className="hidden lg:block" />}
+        />
+        <Tabs>
+          <Tab as="button" onClick={() => handleReplace(`${originPath}/media`)} active={activeTab === 0}>
+            사진&middot;동영상
+          </Tab>
+          <Tab as="button" onClick={() => handleReplace(`${originPath}/file`)} active={activeTab === 1}>
+            파일
+          </Tab>
+          <Tab as="button" onClick={() => handleReplace(`${originPath}/notice`)} active={activeTab === 2}>
+            공지
+          </Tab>
+        </Tabs>
+        {children}
+      </PageMain>
+      <BottomBar className="hidden lg:block" />
     </PageLayout>
   );
 };

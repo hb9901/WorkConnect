@@ -1,7 +1,6 @@
+import { TagTheme } from '@/types/todotag';
 import clsx from 'clsx';
 import Typography from '../Typography';
-
-type TagTheme = 'high' | 'medium' | 'low';
 
 interface TagProps {
   children: string;

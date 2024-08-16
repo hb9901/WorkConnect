@@ -7,6 +7,8 @@ import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useEmailVerify } from '../../verify/_hooks/useEmailVerify';
+import { useMutation } from '@tanstack/react-query';
 
 type AgreeBottomSheetProps = {
   isOpen: boolean;
@@ -15,11 +17,12 @@ type AgreeBottomSheetProps = {
 };
 
 const AgreeBottomSheet = ({ isOpen, handleToggleBottomSheet, email }: AgreeBottomSheetProps) => {
-  const [isAll, setIsAll] = useState(false);
-  const [checked1, setChecked1] = useState(false);
-  const [checked2, setChecked2] = useState(false);
-  const [checked3, setChecked3] = useState(false);
+  const [isAll, setIsAll] = useState<boolean>(false);
+  const [checked1, setChecked1] = useState<boolean>(false);
+  const [checked2, setChecked2] = useState<boolean>(false);
+  const [checked3, setChecked3] = useState<boolean>(false);
   const router = useRouter();
+  const { generateVerifyCode } = useEmailVerify();
 
   const handleCheckedAllNext = () => {
     setIsAll((prev) => !prev);
@@ -28,9 +31,14 @@ const AgreeBottomSheet = ({ isOpen, handleToggleBottomSheet, email }: AgreeBotto
     setChecked3(!isAll);
   };
 
-  const onSubmit = () => {
-    router.push(`/auth/signup/verify?email=${encodeURIComponent(email)}`);
-  };
+  const onSubmit = useMutation({
+    mutationFn: async (email: string) => {
+      await generateVerifyCode(email);
+      router.replace(`/auth/signup/verify?email=${encodeURIComponent(email)}`);
+    }
+  });
+
+  const { mutateAsync: onSubmitMutation, isPending: onSubmitPending } = onSubmit;
 
   return (
     <>
@@ -67,7 +75,12 @@ const AgreeBottomSheet = ({ isOpen, handleToggleBottomSheet, email }: AgreeBotto
             </Typography>
           </div>
         </div>
-        <Button onClick={onSubmit} isDisabled={!checked1 || !checked2} theme="primary" isFullWidth={true}>
+        <Button
+          onClick={() => onSubmitMutation(email)}
+          isDisabled={!checked1 || !checked2 || onSubmitPending}
+          theme="primary"
+          isFullWidth={true}
+        >
           다음
         </Button>
       </BottomSheet>
@@ -105,8 +118,13 @@ const AgreeBottomSheet = ({ isOpen, handleToggleBottomSheet, email }: AgreeBotto
               </Typography>
             </div>
 
-            <Button onClick={onSubmit} isDisabled={!checked1 || !checked2} theme="primary" isFullWidth={true}>
-              다음
+            <Button
+              onClick={() => onSubmitMutation(email)}
+              isDisabled={!checked1 || !checked2 || onSubmitPending}
+              theme="primary"
+              isFullWidth={true}
+            >
+              {onSubmitPending ? '발송 중...' : '다음'}
             </Button>
           </div>
         </Modal>

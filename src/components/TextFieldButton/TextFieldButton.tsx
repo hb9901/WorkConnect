@@ -31,7 +31,7 @@ const TextFieldButton = ({
           {label}
         </Typography>
       )}
-      <div className="flex flex-row items-center justify-between h-[48px] text-start w-full py-[12px] px-[16px] border-b border-grey50">
+      <div className="flex flex-row items-center justify-between h-[48px] text-start w-full py-[12px] px-[16px]">
         <Typography variant="Subtitle16px" color="grey700Black" className="outline-none w-full pr-[20px]">
           {value}
         </Typography>
