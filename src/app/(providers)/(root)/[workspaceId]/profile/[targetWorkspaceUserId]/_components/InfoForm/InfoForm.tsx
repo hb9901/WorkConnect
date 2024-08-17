@@ -14,7 +14,7 @@ const InfoForm = ({ title, content, children }: StrictPropsWithChildren<InfoForm
         <Typography variant="Subtitle14px" color="grey400">
           {title}
         </Typography>
-        <Typography variant="Title16px" color="grey700Black">
+        <Typography variant="Title16px" color="grey700Black" className="line-clamp-1">
           {content}
         </Typography>
       </div>

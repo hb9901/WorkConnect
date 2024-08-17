@@ -27,7 +27,7 @@ const MainInfo = ({ profileImg, name }: MainInfoProps) => {
       </div>
 
       <div className="flex flex-col mt-[18px] mb-[32px] items-center gap-[8px]">
-        <Typography variant="Title22px" color="grey700Black">
+        <Typography variant="Title22px" color="grey700Black" className="line-clamp-1">
           {name}
         </Typography>{' '}
         {/*직책 넣기로 했었나요??*/}
