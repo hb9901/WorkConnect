@@ -19,16 +19,20 @@ const ToDoListMain = () => {
   if (isPending) return <LoadingSpinner2 />;
 
   if (!todoList || isError) return;
-  console.log(urlPath.split('/').length > 4);
+
   const selectedTodoList = todoList.filter((todo) => isDateSelected(todo.start_date, todo.end_date, selectedDate));
   if (selectedTodoList.length === 0)
     return (
       <>
         <main
-          className="flex flex-col lg:w-full lg:h-full
+          className="flex flex-col px-[16px] lg:w-full lg:h-full lg:px-0
       lg:max-h-[calc(100dvh-84px)] lg:overflow-y-scroll lg:scroll-container
       "
         >
+          <div className="lg:hidden">
+            <DateSelect />
+          </div>
+
           <div className="lg:grid lg:grid-cols-3 lg:pl-[16px] lg:pr-[17px] lg:pt-[24px] lg:gap-[12px] lg:w-full ">
             <div className={todoListClass({ title: '진행 전' })}>
               <TodoListTitle title="진행 전" />

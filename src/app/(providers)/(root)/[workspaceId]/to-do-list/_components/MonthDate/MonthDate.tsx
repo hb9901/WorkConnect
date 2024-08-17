@@ -13,7 +13,11 @@ const MonthDate = () => {
     <div className="text-center mt-[30px] mb-8px lg:mt-0 lg:mb-0 lg:px-[12px] lg:py-[20px] lg:w-full">
       <div className="grid grid-cols-7">
         {weekNames.map((weekName) => (
-          <Typography key={weekName} variant="Title14px" color={weekName === '일' ? 'error' : 'grey600'}>
+          <Typography
+            key={weekName}
+            variant="Title14px"
+            color={weekName === '일' ? 'error' : weekName === '토' ? 'information' : 'grey600'}
+          >
             {weekName}
           </Typography>
         ))}
@@ -23,6 +27,7 @@ const MonthDate = () => {
           <div className="w-full" key={date.format('MM:DD')}>
             <DateButton
               date={date}
+              isSameMonth={selectedDate.month() === date.month()}
               isSelected={selectedDate.month() === date.month() && selectedDate.date() === date.date()}
             />
           </div>
