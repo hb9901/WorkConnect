@@ -1,9 +1,8 @@
-import { FocusLayout, FocusLayoutContainer, useLocalParticipant } from '@livekit/components-react';
+import { FocusLayoutContainer, isTrackReference, useLocalParticipant, VideoTrack } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import { useEffect } from 'react';
 import useFocosedTrack from '../../_store/useFocusTrack';
 import { VideoConferenceProps } from '../../_types/VideoConforenceProps';
-import FocusedVideoTrack from '../FocusedVideoTrack';
 import ParticipantListLayout from '../RemoteParticipant/RemoteParticipant';
 
 const MobileLayout = ({ tracks }: VideoConferenceProps) => {
@@ -19,13 +18,11 @@ const MobileLayout = ({ tracks }: VideoConferenceProps) => {
   }, [tracks]);
 
   return (
-    <div className={`relative h-[50rem] w-screen items-center justify-center overflow-hidden `}>
-      <FocusLayoutContainer className={`h-full flex `}>
-        {!!focusedTrack && (
-          <FocusLayout trackRef={focusedTrack}>
-            <FocusedVideoTrack focusedTrackRef={focusedTrack} />
-          </FocusLayout>
-        )}
+    <div id="mobile-layout" className={`relative h-full w-screen `}>
+      <FocusLayoutContainer className="h-[100%]">
+        <div className="absolute h-screen">
+          {isTrackReference(focusedTrack) && <VideoTrack trackRef={focusedTrack} />}
+        </div>
         <div className="absolute mt-1 right-0 top-0 ">
           <ParticipantListLayout trackRefs={remoteTrackRefs} />
         </div>

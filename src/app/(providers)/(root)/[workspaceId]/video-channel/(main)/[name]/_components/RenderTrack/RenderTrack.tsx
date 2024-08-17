@@ -1,4 +1,6 @@
+import Typography from '@/components/Typography';
 import CameraPlaceholderIcon from '@/icons/CameraPlaceholder.svg';
+import ScreenShareIcon from '@/icons/Share.svg';
 import {
   isTrackReference,
   ParticipantClickEvent,
@@ -11,7 +13,6 @@ import { Track } from 'livekit-client';
 import React, { useCallback } from 'react';
 import useFocosedTrack from '../../_store/useFocusTrack';
 import UserDefinedConnectionQualityIndicator from '../UserDefinedConnectionQualityIndicator';
-
 interface RenderTrackProps {
   trackRef: TrackReferenceOrPlaceholder;
   isMobile?: boolean;
@@ -41,18 +42,18 @@ const RenderTrack: React.FC<RenderTrackProps> = React.memo(({ trackRef, isMobile
   return (
     <div
       id="VideoTrack"
-      className={`relative aspect-square ${dimensionClass} bg-grey700Black rounded-[14px] overflow-hidden my-1 shadow-md`}
+      className={`relative aspect-square ${dimensionClass} bg-grey700Black rounded-[14px] overflow-hidden my-1 shadow-md flex-shrink-0`}
       style={{ width: isMobile ? 150 : size, height: isMobile ? 150 : size }}
     >
-      {isTrack && !trackRef.publication.isMuted ? (
+      {isTrack && (Track.Source.Camera === trackRef.source || Track.Source.ScreenShare === trackRef.source) ? (
         <VideoTrack trackRef={trackRef} onTrackClick={handleClickFocus} />
       ) : (
         <div className="w-full h-full flex items-center justify-center ">
           <CameraPlaceholderIcon size="7" />
         </div>
       )}
-      <div className="absolute bottom-0 left-0 bg-slate-300/[0.5] gap-1 flex justify-center items-center px-1">
-        {trackRef.source !== Track.Source.ScreenShare && (
+      <div className="absolute bottom-0 left-0 p-1 bg-slate-300/[0.5] gap-1 flex justify-center items-center px-1">
+        {trackRef.source !== Track.Source.ScreenShare ? (
           <>
             <TrackMutedIndicator
               trackRef={{
@@ -62,6 +63,13 @@ const RenderTrack: React.FC<RenderTrackProps> = React.memo(({ trackRef, isMobile
               className="mr-[1.25rem]"
             />
             {isMobile ? null : <ParticipantName />}
+            <UserDefinedConnectionQualityIndicator />
+          </>
+        ) : (
+          <>
+            <ScreenShareIcon className="size-4" />
+            {isMobile ? null : <ParticipantName />}
+            {isMobile ? null : <Typography color="grey800">{'의 화면'}</Typography>}
             <UserDefinedConnectionQualityIndicator />
           </>
         )}

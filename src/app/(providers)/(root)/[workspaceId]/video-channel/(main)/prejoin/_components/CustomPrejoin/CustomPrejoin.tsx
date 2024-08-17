@@ -22,7 +22,7 @@ import {
 import React from 'react';
 import DeviceMenuButton from '../../../_components/DeviceMenuButton';
 import TrackToggle from '../../../_components/TrackToggle';
-import VideoChannel from '../../../_components/VideoChannel';
+import VideoChannel from '../VideoChannel';
 
 export interface PreJoinProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSubmit' | 'onError'> {
   /** This function is called with the `LocalUserChoices` if validation is passed. */

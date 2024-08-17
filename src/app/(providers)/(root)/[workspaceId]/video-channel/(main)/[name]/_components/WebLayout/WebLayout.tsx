@@ -50,19 +50,20 @@ const WebLayout = ({ tracks }: VideoConferenceProps) => {
   }, [localTracks, isMobile]);
 
   return (
-    <FocusLayoutContainer className={`relative flex items-end justify-end h-full  overflow-hidden`}>
+    <FocusLayoutContainer className={`relative flex items-end justify-end h-full  overflow-y-hidden`}>
       {focusedTrack && (
         <div
           style={{ width: 'calc(100% - 300px)' }}
           id="focusTrackWrapper"
-          className="absolute pl-[4rem] top-0 bottom-0"
+          className="absolute pl-[4rem] top-[1rem] bottom-0
+        "
         >
-          <FocusLayout trackRef={focusedTrack} className="h-full w-full">
+          <FocusLayout trackRef={focusedTrack} className="h-[88%] w-full flex items-center justify-center">
             <FocusedVideoTrack focusedTrackRef={focusedTrack} />
           </FocusLayout>
         </div>
       )}
-      <div id="participantLayoutWrapper" className="absolute top-0 right-0 flex flex-shrink-0 h-full w-[300px] ">
+      <div id="participantLayoutWrapper" className="absolute top-[1rem] right-0 flex flex-shrink-0 h-full w-[300px] ">
         <ParticipantListLayout />
       </div>
     </FocusLayoutContainer>

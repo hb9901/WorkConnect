@@ -50,7 +50,11 @@ const ParticipantListLayout = React.memo(({ trackRefs }: ParticipantListLayoutPr
   const carouselTracks = useMemo(() => (isMobile && trackRefs ? trackRefs : tracks), [isMobile, trackRefs, tracks]);
 
   return (
-    <CarouselLayout tracks={carouselTracks} orientation="vertical" className={`w-full flex flex-col items-center`}>
+    <CarouselLayout
+      tracks={carouselTracks}
+      orientation="vertical"
+      className={`w-full h-[88%] mx-2 py-2 flex flex-col gap-[0.2rem] items-center overflow-auto scroll-container `}
+    >
       <TrackRefContext.Consumer>{(trackRef) => trackRef && renderTrackRef(trackRef)}</TrackRefContext.Consumer>
     </CarouselLayout>
   );

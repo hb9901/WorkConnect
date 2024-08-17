@@ -1,7 +1,7 @@
-import LoadingSpinner from '@/components/LoadingSpinner';
 import NotFound from '@/components/NotFound';
 import '@livekit/components-styles';
 import { Suspense } from 'react';
+import Loading from '../_components/Loading';
 import VideoRoom from './_components/VideoRoom';
 type Params = {
   params: {
@@ -15,7 +15,7 @@ const VideoCallRoom = ({ params }: Params) => {
     return <NotFound />;
   }
   return (
-    <Suspense fallback={<LoadingSpinner className="h-full w-full items-center justify-center" />}>
+    <Suspense fallback={<Loading />}>
       <VideoRoom name={params.name} />
     </Suspense>
   );
