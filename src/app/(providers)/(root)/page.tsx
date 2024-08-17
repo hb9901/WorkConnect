@@ -100,12 +100,6 @@ const LandingPage = () => {
                 pagination={{
                   clickable: true
                 }}
-                on={{
-                  _swiper: (swiper) => {
-                    swiper.autoplay.start();
-                    swiper.update();
-                  }
-                }}
               >
                 {onboardingData.map((item) => (
                   <SwiperSlide key={item.id}>
