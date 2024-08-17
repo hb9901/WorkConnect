@@ -29,7 +29,7 @@ const Todo = ({ id, title, startDate, endDate, place, priority }: TodoProps) => 
           </Typography>
         </div>
       </div>
-      {priority === 'high' || priority === 'medium' || (priority === 'low' && <Tag theme={priority}>{priority}</Tag>)}
+      {(priority === 'high' || priority === 'medium' || priority === 'low') && <Tag theme={priority}>{priority}</Tag>}
     </Link>
   );
 };
