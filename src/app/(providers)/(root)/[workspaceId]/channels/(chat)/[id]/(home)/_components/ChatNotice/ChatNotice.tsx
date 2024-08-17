@@ -9,10 +9,10 @@ import { isEmpty } from '@/utils/isEmpty';
 import { useEffect } from 'react';
 import { useGetLatestNotice } from '../../../../_hook/useChatQuery';
 import { handleSubscribeToNotice } from '../../_utils/subscribe';
-import useGetChannelId from '../../../../_hook/useGetChannelId';
+import useGetParamsChannelId from '../../../../_hook/useGetParamsChannelId';
 
 const ChatNotice = () => {
-  const channelId = useGetChannelId();
+  const channelId = useGetParamsChannelId();
   const workspaceId = useWorkspaceId();
 
   const { data: latestNotice } = useGetLatestNotice({ id: channelId });

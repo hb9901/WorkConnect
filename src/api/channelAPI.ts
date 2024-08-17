@@ -6,6 +6,11 @@ import type {
 } from '@/types/channel';
 import { AxiosInstance } from 'axios';
 
+type GetChannelIdProps = {
+  workspace_id: number;
+  workspace_user_id: string;
+};
+
 class ChannelAPI {
   private axios: AxiosInstance;
   path;
@@ -39,8 +44,13 @@ class ChannelAPI {
     return data.data;
   };
 
-  getChannelId = async (): Promise<GetChannelsResponse> => {
-    const { data } = await this.axios.get('/api/channel/id');
+  getChannelId = async ({ workspace_id, workspace_user_id }: GetChannelIdProps): Promise<GetChannelsResponse> => {
+    const { data } = await this.axios.get('/api/channel/id', {
+      params: {
+        workspace_id,
+        workspace_user_id
+      }
+    });
 
     return data.data;
   };

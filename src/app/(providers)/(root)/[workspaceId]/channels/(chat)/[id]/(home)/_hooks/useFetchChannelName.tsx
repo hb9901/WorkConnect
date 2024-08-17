@@ -1,8 +1,8 @@
 import { useGetChannelName } from '../../../_hook/useChatQuery';
-import useGetChannelId from '../../../_hook/useGetChannelId';
+import useGetParamsChannelId from '../../../_hook/useGetParamsChannelId';
 
 export const useFetchChannelName = () => {
-  const channelId = useGetChannelId();
+  const channelId = useGetParamsChannelId();
 
   const { data, isPending } = useGetChannelName({ id: channelId });
 

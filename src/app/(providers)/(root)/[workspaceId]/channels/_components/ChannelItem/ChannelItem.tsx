@@ -6,12 +6,14 @@ import dayjs from 'dayjs';
 import Avatar from '@/components/Avatar';
 import { GetChannelsResponse } from '@/types/channel';
 import VideoChatAvatar from '@/components/VideoChatAvatar';
+import clsx from 'clsx';
 
 type ChannelListImageProps = Pick<ComponentProps<'img'>, 'src'> & {
   type: keyof typeof CHANNEL_TYPE;
 };
 
 type ChannelItemProps = {
+  isActive: boolean;
   href: string;
   user_count: number | undefined;
   user_thumbnail: string | undefined;
@@ -23,6 +25,7 @@ type ChannelItemProps = {
 };
 
 const ChannelItem = ({
+  isActive,
   message,
   user_state,
   user_thumbnail,
@@ -33,7 +36,7 @@ const ChannelItem = ({
   user_count
 }: ChannelItemProps) => {
   return (
-    <Link href={href} className="block lg:hover:bg-primary25">
+    <Link href={href} className={clsx('block lg:hover:bg-primary25', isActive && 'bg-primary25')}>
       <ChatCard
         date={dayjs(created_at).format('YYYY-MM-DD')}
         icon={<ChannelImage type={type} src={user_thumbnail} />}

@@ -9,11 +9,3 @@ export const getChannelsOptions = (workspaceId: number) => {
     refetchOnWindowFocus: false
   });
 };
-
-export const getChannelIdOptions = (workspaceId: number) => {
-  return queryOptions({
-    queryKey: QUERY_KEYS.CHANNEL_ID(workspaceId),
-    queryFn: api.channel.getChannelId,
-    refetchOnWindowFocus: false
-  });
-};
