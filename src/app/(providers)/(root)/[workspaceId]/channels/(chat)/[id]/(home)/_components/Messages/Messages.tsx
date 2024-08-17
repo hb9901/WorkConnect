@@ -6,10 +6,10 @@ import { MessagesWrapper } from '../MessagesContainer';
 import { useGetChatMessages, useGetUsersInChannel } from '../../../../_hook/useChatQuery';
 import { useChatHandlers } from '../../_hooks/useChatHandlers';
 import { handleSubscribeToChat } from '../../_utils/subscribe';
-import useGetChannelId from '../../../../_hook/useGetChannelId';
+import useGetParamsChannelId from '../../../../_hook/useGetParamsChannelId';
 
 const Messages = () => {
-  const channelId = useGetChannelId();
+  const channelId = useGetParamsChannelId();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { data: chatMessages = [], isPending } = useGetChatMessages({

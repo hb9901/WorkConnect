@@ -35,7 +35,7 @@ const Chats = ({ data = [], usersInChannel = {} }: ChatMessagesProps) => {
   return (
     <>
       {data.map((chat) => {
-        const userInfo = usersInChannel[chat.workspace_user_id];
+        const userInfo = usersInChannel[chat.workspace_user_id || ''];
         const isMe = chat.workspace_user_id === workspaceUserId;
         const profileUrl = `/${workspaceId}/profile/${chat.workspace_user_id}`;
         const hasRead = isMe && lastActiveAt?.isAfter(dayjs(chat.created_at));

@@ -6,7 +6,7 @@ const SearchInput = () => {
   const { searchTerm, handleSearch } = useSearch();
 
   return (
-    <div className="mx-4 py-3 bg-white sticky lg:py-4 top-[52px] lg:top-[84px]">
+    <div className="px-4 py-3 bg-white sticky lg:py-4 top-[52px] lg:top-[84px] z-[1]">
       <input
         type="text"
         placeholder="검색..."

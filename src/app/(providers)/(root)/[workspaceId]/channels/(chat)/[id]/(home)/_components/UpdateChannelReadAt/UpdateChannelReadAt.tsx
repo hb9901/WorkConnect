@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
-import useGetChannelId from '../../../../_hook/useGetChannelId';
+import useGetParamsChannelId from '../../../../_hook/useGetParamsChannelId';
 import { useMutationUpdateChannelActiveAt } from '../../../../_hook/useChatMutation';
 
 const UpdateChannelReadAt = () => {
-  const channelId = useGetChannelId();
+  const channelId = useGetParamsChannelId();
 
   const { mutate: updateChannelActiveAt } = useMutationUpdateChannelActiveAt();
 
