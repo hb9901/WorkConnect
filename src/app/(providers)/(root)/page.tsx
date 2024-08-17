@@ -91,12 +91,20 @@ const LandingPage = () => {
                   delay: 3000,
                   disableOnInteraction: false
                 }}
+                observer={true} // 슬라이드 전환 시 스와이퍼 자체를 감지하는 옵션 (DOM 변경이 감지되면 Swiper업데이트)
+                observeParents={true} // 슬라이드 전환 시 부모 요소를 감지하는 옵션
                 loop={true}
                 speed={1000}
                 slidesPerView={1}
                 navigation
                 pagination={{
                   clickable: true
+                }}
+                on={{
+                  _swiper: (swiper) => {
+                    swiper.autoplay.start();
+                    swiper.update();
+                  }
                 }}
               >
                 {onboardingData.map((item) => (
