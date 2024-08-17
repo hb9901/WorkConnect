@@ -25,7 +25,7 @@ const Todo = ({ id, title, startDate, endDate, place, priority }: TodoProps) => 
         </Typography>
         <div>
           <Typography variant="Subtitle14px" color="grey400" className="w-full line-clamp-2">
-            {changeDateStr(startDate, endDate)} | {place}
+            {changeDateStr(startDate, endDate)} {place && '| ' + place}
           </Typography>
         </div>
       </div>

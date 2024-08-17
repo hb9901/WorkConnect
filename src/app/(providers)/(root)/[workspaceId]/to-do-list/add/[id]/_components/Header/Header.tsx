@@ -51,7 +51,10 @@ const Header = () => {
             <BackArrowButton />
           </div>
         ) : (
-          <BackArrowButton />
+          <>
+            <BackArrowButton />
+            <div className="lg:hidden" />
+          </>
         )}
 
         <Modal isOpen={isOpen} onClose={handleIsOpen} isModal={false}>
