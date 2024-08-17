@@ -15,7 +15,7 @@ const DateButtons = ({ showWeeklyButton = true }: DateButtonsProps) => {
   const { selectedDate, isWeekly, changeIsWeekly, handleClickNext, handleClickPrevious, handleClickDate } =
     useDateStore(
       useShallow((state) => ({
-        selectedDate: state.selectedDate,
+        selectedDate: dayjs(state.selectedDate),
         isWeekly: state.isWeekly,
         changeIsWeekly: state.changeIsWeekly,
         handleClickNext: state.handleClickNext,

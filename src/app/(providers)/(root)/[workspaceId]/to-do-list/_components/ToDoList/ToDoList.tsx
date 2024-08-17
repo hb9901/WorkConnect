@@ -1,6 +1,7 @@
 'use client';
 
 import { Tables } from '@/types/supabase';
+import { useDroppable } from '@dnd-kit/core';
 import { cva, VariantProps } from 'class-variance-authority';
 import Todo from '../Todo/Todo';
 import TodoListTitle from '../TodoListTitle';
@@ -10,17 +11,24 @@ type ToDoListProps = {
 } & VariantProps<typeof todoListClass>;
 
 const ToDoList = ({ todoList, title }: ToDoListProps) => {
-  if (!todoList)
+  if (!todoList || !title)
     return (
       <div className={todoListClass({ title })}>
         <TodoListTitle title={title} />
       </div>
     );
 
+  const { setNodeRef } = useDroppable({
+    id: 'todo' + title,
+    data: {
+      status: title
+    }
+  });
+
   return (
-    <div className={todoListClass({ title })}>
+    <div className={todoListClass({ title })} ref={setNodeRef}>
       <TodoListTitle title={title} />
-      <div className="flex flex-col gap-[8px]">
+      <div className="flex flex-col gap-[8px] mt-[12px] lg:mt-[18px]">
         {todoList.map((todo) => (
           <Todo
             key={todo.id}
@@ -30,6 +38,7 @@ const ToDoList = ({ todoList, title }: ToDoListProps) => {
             endDate={todo.end_date}
             place={todo.place}
             priority={todo.priority}
+            status={todo.status}
           />
         ))}
       </div>

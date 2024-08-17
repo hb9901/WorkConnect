@@ -2,10 +2,11 @@
 import { weekNames } from '@/assets/weekNames';
 import Typography from '@/components/Typography';
 import useDateStore from '@/store/dateStore';
+import dayjs from 'dayjs';
 import ToDoAddButton from '../ToDoAddButton';
 
 const PcHeader = () => {
-  const selectedDate = useDateStore((state) => state.selectedDate);
+  const selectedDate = dayjs(useDateStore((state) => state.selectedDate));
   const dayName = weekNames[selectedDate.day()];
   const dateStr = selectedDate.format('YYYY. MM. DD');
 

@@ -51,7 +51,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
   const existPriority = selectedTodo && selectedTodo.priority;
   const initStartTime = selectedTodo ? dayjs(selectedTodo.start_date) : initTime;
   const initEndTime = selectedTodo ? dayjs(selectedTodo.end_date) : initTime;
-  const { selectedDate } = useDateStore();
+  const selectedDate = dayjs(useDateStore((state) => state.selectedDate));
   const selectedDateStr = selectedDate.format('M월 DD일 선택');
 
   const {

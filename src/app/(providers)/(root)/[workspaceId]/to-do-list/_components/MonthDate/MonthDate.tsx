@@ -2,11 +2,12 @@
 import { weekNames } from '@/assets/weekNames';
 import Typography from '@/components/Typography';
 import useDateStore from '@/store/dateStore';
+import dayjs from 'dayjs';
 import DateButton from '../DateButton';
 import { getMonthDates } from './function';
 
 const MonthDate = () => {
-  const selectedDate = useDateStore((state) => state.selectedDate);
+  const selectedDate = dayjs(useDateStore((state) => state.selectedDate));
   const monthDates = getMonthDates(selectedDate);
 
   return (

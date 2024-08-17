@@ -4,8 +4,10 @@ import TodoEmpty from '@/components/TodoEmpty';
 import useTodoList from '@/hooks/useTodo';
 import useDateStore from '@/store/dateStore';
 import useUserStore from '@/store/userStore';
+import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { cva } from 'class-variance-authority';
-import { usePathname } from 'next/navigation';
+import dayjs from 'dayjs';
+import { usePathname, useRouter } from 'next/navigation';
 import DateSelect from '../DateSelect';
 import { isDateSelected } from '../ToDoList/function';
 import ToDoList from '../ToDoList/ToDoList';
@@ -14,8 +16,27 @@ import TodoListTitle from '../TodoListTitle';
 const ToDoListMain = () => {
   const urlPath = usePathname();
   const workspaceUserId = useUserStore((state) => state.workspaceUserId);
-  const { todoList, isPending, isError } = useTodoList(workspaceUserId);
-  const selectedDate = useDateStore((state) => state.selectedDate);
+  const { todoList, isPending, isError, updateTodo } = useTodoList(workspaceUserId);
+  const selectedDate = dayjs(useDateStore((state) => state.selectedDate));
+  const router = useRouter();
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!active.data.current) return;
+
+    if (over && over.data.current && active.data.current) {
+      const id = active.data.current.id;
+      if (over.data.current.status === active.data.current.status) router.push(`to-do-list/add/${id}`);
+      else {
+        const newStatus = over.data.current.status as string;
+        const newTodo = {
+          status: newStatus
+        };
+        updateTodo({ todo: newTodo, id });
+      }
+    }
+  };
+
   if (isPending) return <LoadingSpinner2 />;
 
   if (!todoList || isError) return;
@@ -66,9 +87,11 @@ const ToDoListMain = () => {
         </div>
 
         <div className="flex flex-col lg:inline-grid lg:grid-cols-3 lg:pl-[16px] lg:pr-[17px] lg:pt-[24px] lg:gap-[12px] lg:w-full lg:h-full">
-          <ToDoList title="진행 전" todoList={beforeTodoList} />
-          <ToDoList title="진행 중" todoList={progressTodoList} />
-          <ToDoList title="완료" todoList={completedTodoList} />
+          <DndContext onDragEnd={handleDragEnd}>
+            <ToDoList title="진행 전" todoList={beforeTodoList} />
+            <ToDoList title="진행 중" todoList={progressTodoList} />
+            <ToDoList title="완료" todoList={completedTodoList} />
+          </DndContext>
         </div>
       </main>
     </>
