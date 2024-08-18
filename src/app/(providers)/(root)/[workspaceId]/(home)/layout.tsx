@@ -3,13 +3,13 @@ import SelectHeader from '@/components/Layout/SelectHeader';
 
 import { StrictPropsWithChildren } from '@/types/common';
 
-interface HomeParallelLayoutProps {
+interface HomeLayoutProps {
   params: {
     workspaceId: string;
   };
 }
 
-const HomeParallelLayout = ({ children, params }: StrictPropsWithChildren<HomeParallelLayoutProps>) => {
+const HomeLayout = ({ children, params }: StrictPropsWithChildren<HomeLayoutProps>) => {
   const workspaceId = Number(params.workspaceId);
 
   return (
@@ -23,4 +23,4 @@ const HomeParallelLayout = ({ children, params }: StrictPropsWithChildren<HomePa
   );
 };
 
-export default HomeParallelLayout;
+export default HomeLayout;
