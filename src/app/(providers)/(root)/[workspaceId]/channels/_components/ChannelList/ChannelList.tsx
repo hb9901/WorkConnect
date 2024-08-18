@@ -59,6 +59,7 @@ const ChannelList = ({ className }: ChannelListPageProps) => {
             name={item.user_name ?? item.channel_name}
             user_count={item.is_dm ? undefined : item.user_count}
             user_thumbnail={item.user_thumbnail ?? undefined}
+            un_read_chat={item.un_read_chat ?? undefined}
           />
         );
       })}

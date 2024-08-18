@@ -331,6 +331,7 @@ export type Database = {
           user_count: number
           type: string
           created_at: string
+          un_read_chat: number
         }[]
       }
       get_chat_messages: {

@@ -22,6 +22,7 @@ type ChannelItemProps = {
   message: GetChannelsResponse['message'];
   type: GetChannelsResponse['type'];
   created_at: GetChannelsResponse['created_at'];
+  un_read_chat: GetChannelsResponse['un_read_chat'];
 };
 
 const ChannelItem = ({
@@ -33,7 +34,8 @@ const ChannelItem = ({
   type,
   created_at,
   name,
-  user_count
+  user_count,
+  un_read_chat
 }: ChannelItemProps) => {
   return (
     <Link href={href} className={clsx('block lg:hover:bg-primary25', isActive && 'bg-primary25')}>
@@ -44,6 +46,7 @@ const ChannelItem = ({
         name={name}
         status={user_state}
         userCount={user_count}
+        unreadCount={un_read_chat}
       />
     </Link>
   );
