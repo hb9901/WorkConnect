@@ -16,7 +16,7 @@ type ChannelItemProps = {
   isActive: boolean;
   href: string;
   user_count: number | undefined;
-  user_thumbnail: string | undefined;
+  channel_thumbnail: string | undefined;
   name: string;
   user_state: GetChannelsResponse['user_state'];
   message: GetChannelsResponse['message'];
@@ -29,7 +29,7 @@ const ChannelItem = ({
   isActive,
   message,
   user_state,
-  user_thumbnail,
+  channel_thumbnail,
   href,
   type,
   created_at,
@@ -41,7 +41,7 @@ const ChannelItem = ({
     <Link href={href} className={clsx('block lg:hover:bg-primary25', isActive && 'bg-primary25')}>
       <ChatCard
         date={dayjs(created_at).format('YYYY-MM-DD')}
-        icon={<ChannelImage type={type} src={user_thumbnail} />}
+        icon={<ChannelImage type={type} src={channel_thumbnail} />}
         message={message}
         name={name}
         status={user_state}
