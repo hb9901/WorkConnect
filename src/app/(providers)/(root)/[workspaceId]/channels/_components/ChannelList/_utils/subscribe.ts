@@ -11,8 +11,7 @@ type SubscribeToChannelsProps = {
 export const handleSubscribeToChannels = ({
   handleChatInserts,
   channelIds,
-  handleChannelUserUpdates,
-  workspaceUserId
+  handleChannelUserUpdates
 }: SubscribeToChannelsProps) => {
   return createRealtimeChannel({
     channelName: REALTIME_CHANNEL_NAME.CHANNEL_LIST,
@@ -28,7 +27,7 @@ export const handleSubscribeToChannels = ({
         event: '*',
         schema: 'public',
         table: 'channel_user',
-        filter: `workspace_user_id=eq.${workspaceUserId}`,
+        filter: `channel_id=in.(${channelIds})`,
         handler: handleChannelUserUpdates
       }
     ]

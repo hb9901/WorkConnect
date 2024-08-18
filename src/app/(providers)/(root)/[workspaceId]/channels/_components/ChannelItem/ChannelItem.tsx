@@ -8,22 +8,13 @@ import { GetChannelsResponse } from '@/types/channel';
 import VideoChatAvatar from '@/components/VideoChatAvatar';
 import clsx from 'clsx';
 
-type ChannelListImageProps = Pick<ComponentProps<'img'>, 'src'> & {
-  type: keyof typeof CHANNEL_TYPE;
-};
-
 type ChannelItemProps = {
   isActive: boolean;
   href: string;
   user_count: number | undefined;
   channel_thumbnail: string | undefined;
   name: string;
-  user_state: GetChannelsResponse['user_state'];
-  message: GetChannelsResponse['message'];
-  type: GetChannelsResponse['type'];
-  created_at: GetChannelsResponse['created_at'];
-  un_read_chat: GetChannelsResponse['un_read_chat'];
-};
+} & Pick<GetChannelsResponse, 'message' | 'type' | 'user_state' | 'created_at' | 'un_read_chat'>;
 
 const ChannelItem = ({
   isActive,
@@ -50,6 +41,10 @@ const ChannelItem = ({
       />
     </Link>
   );
+};
+
+type ChannelListImageProps = Pick<ComponentProps<'img'>, 'src'> & {
+  type: keyof typeof CHANNEL_TYPE;
 };
 
 const ChannelImage = ({ src = '', type }: ChannelListImageProps) => {
