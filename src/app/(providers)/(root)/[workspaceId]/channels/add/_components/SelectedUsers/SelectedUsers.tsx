@@ -1,28 +1,35 @@
 'use client';
 
 import { XIcon } from '@/icons';
-import Avatar from '@/components/Avatar';
 import { useSearchUsers } from '../../_provider/SearchUsersProvider';
 import { memo } from 'react';
+import { SearchCardContent, SearchCardThumbnail, SearchCardWrapper } from '../SearchMemberCard';
 
 const SelectedUsers = () => {
   const { handleRemoveUser, selectedUsers } = useSearchUsers();
 
   return (
-    <div className="flex flex-wrap gap-x-[10px] px-4 mb-[2px]">
-      {selectedUsers.map((user) => (
-        <div key={user.id} className="flex items-center ml-[-6px] relative p-[6px]">
-          <Avatar size="48px" src={user.profile_image ?? undefined} />
-          <button
-            type="button"
-            onClick={() => handleRemoveUser(user)}
-            className="absolute top-0 right-0 z-[1px] flex items-center justify-center bg-grey50 rounded-full w-[21px] h-[21px]"
-          >
-            <XIcon className="w-4 h-4" />
-          </button>
-        </div>
-      ))}
-    </div>
+    <>
+      <ul className="flex flex-wrap gap-[10px] px-4 mb-[2px] lg:gap-y-6 lg:mb-0 lg:p-0 lg:pt-3 lg:gap-0">
+        {selectedUsers.map((user) => (
+          <SearchCardWrapper key={user.id} onClick={() => handleRemoveUser(user)} className="w-auto p-0">
+            <SearchCardContent>
+              <div className="relative">
+                <SearchCardThumbnail src={user.profile_image ?? undefined} className="mt-[6px] mr-[6px] lg:m-0" />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveUser(user)}
+                  className="absolute z-[1] flex items-center justify-center bg-grey50 rounded-full w-[21px] h-[21px] top-0 right-0 lg:top-[2px] lg:right-[2px]"
+                >
+                  <XIcon className="w-4 h-4" />
+                </button>
+              </div>
+            </SearchCardContent>
+          </SearchCardWrapper>
+        ))}
+      </ul>
+      {selectedUsers.length > 0 && <div className="lg:h-[1px] lg:bg-grey50 lg:my-8" />}
+    </>
   );
 };
 

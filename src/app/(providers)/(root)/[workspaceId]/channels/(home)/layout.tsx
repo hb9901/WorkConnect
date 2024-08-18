@@ -10,7 +10,7 @@ const ChannelHomeLayout = ({ children }: StrictPropsWithChildren) => {
     <PageLayout>
       <PageAside> </PageAside>
       <PageMain>
-        <TopBar title="대화" Icon3={<MessageChatButton />} Icon4={<VideoChatButton />} />
+        <TopBar title="대화" Icon3={<VideoChatButton />} Icon4={<MessageChatButton />} />
         {children}
       </PageMain>
       <BottomBar />

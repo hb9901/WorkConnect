@@ -55,8 +55,8 @@ const ChatCard = ({ icon, name, status, date, message, unreadCount, pin, userCou
             </Typography>
             <div className="ml-auto">
               {unreadCount !== undefined && unreadCount > 0 && (
-                <div className="flex items-center justify-center w-6 h-6 bg-primary200Main text-white rounded-full">
-                  {unreadCount}
+                <div className="flex leading-[22px] justify-center w-6 h-6 bg-primary200Main text-white rounded-full">
+                  {unreadCount >= 100 ? '99+' : unreadCount}
                 </div>
               )}
             </div>
