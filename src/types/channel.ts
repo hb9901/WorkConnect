@@ -37,6 +37,7 @@ export type GetChannelsResponse = {
   user_count: number;
   type: ChannelType['type'];
   created_at: string;
+  un_read_chat: number;
 };
 
 export type GetChannelsProps = Pick<ChannelType, 'workspace_id'> & {
