@@ -15,7 +15,7 @@ const SelectedUsers = () => {
           <SearchCardWrapper key={user.id} onClick={() => handleRemoveUser(user)} className="w-auto p-0">
             <SearchCardContent>
               <div className="relative">
-                <SearchCardThumbnail src={user.profile_image ?? undefined} className="mt-[6px] mr-[6px] lg:m-0" />
+                <SearchCardThumbnail src={user.profile_image ?? undefined} className="mt-[6px] mr-[6px]" />
                 <button
                   type="button"
                   onClick={() => handleRemoveUser(user)}

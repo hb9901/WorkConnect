@@ -28,7 +28,7 @@ export const SearchCardContent = ({ children }: StrictPropsWithChildren) => {
 
 export const SearchCardThumbnail = ({ src, className }: { src: string | undefined; className?: string }) => {
   return (
-    <div className={clsx('flex items-center justify-center mr-4 flex-shrink-0', className)}>
+    <div className={clsx('flex items-center justify-center mr-4 flex-shrink-0 lg:m-0', className)}>
       <Avatar size="48px" src={src} className="lg:hidden" />
       <Avatar size="106px" src={src} className="hidden lg:flex" />
     </div>
