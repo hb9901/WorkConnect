@@ -12,7 +12,7 @@ const SelectedUsers = () => {
     <>
       <ul className="flex flex-wrap gap-[10px] px-4 mb-[2px] lg:gap-y-6 lg:mb-0 lg:p-0 lg:pt-3 lg:gap-0">
         {selectedUsers.map((user) => (
-          <SearchCardWrapper key={user.id} onClick={() => handleRemoveUser(user)} className="w-auto p-0">
+          <SearchCardWrapper key={user.id} onClick={() => handleRemoveUser(user)} className="w-auto px-0">
             <SearchCardContent>
               <div className="relative">
                 <SearchCardThumbnail src={user.profile_image ?? undefined} className="mt-[6px] mr-[6px]" />

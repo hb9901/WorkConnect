@@ -76,7 +76,7 @@ const GroupSettingPage = () => {
   return (
     <form onSubmit={handleSubmit}>
       <AddChannelLayout title={title}>
-        <div className="flex flex-col w-full max-w-[550px] items-center justify-center mx-auto flex-1">
+        <div className="flex flex-col w-full max-w-[550px] items-center justify-center px-4 pt-[66px] mx-auto flex-1 lg:px-0 lg:pt-0">
           {isVideo ? (
             <VideoChatAvatar size="140px" />
           ) : (
@@ -86,7 +86,7 @@ const GroupSettingPage = () => {
           <Typography as="p" variant="Body12px" className="text-grey300 w-full mt-4">
             설정하는 사진과 이름은 모든 대화상대에게도 동일하게 보입니다.
           </Typography>
-          <Button theme="primary" type="submit" isFullWidth className="max-w-[440px] mx-auto mt-[64px]">
+          <Button theme="primary" type="submit" isFullWidth className="max-w-[440px] mx-auto mt-[64px] hidden lg:block">
             채팅방 생성
           </Button>
         </div>

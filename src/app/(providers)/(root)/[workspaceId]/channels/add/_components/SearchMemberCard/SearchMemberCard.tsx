@@ -8,7 +8,7 @@ export const SearchCardWrapper = ({ children, className, ...props }: StrictProps
   return (
     <li
       className={clsx(
-        'flex items-center justify-between p-4 border-b border-white bg-transparent w-full lg:p-0 lg:w-[calc(16.66%)] lg:justify-center',
+        'flex items-center justify-between p-4 border-b border-white bg-transparent lg:p-0 lg:w-[calc(16.66%)] lg:justify-center',
         className
       )}
       {...props}
