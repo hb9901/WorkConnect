@@ -377,7 +377,6 @@ const CustomPrejoin = ({
               onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
             />
           </div>
-
           <DeviceMenuButton />
         </div>
 
