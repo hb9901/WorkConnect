@@ -47,7 +47,7 @@ type InsertWorkspaceUserProps = {
 export const useInsertWorkspaceUser = ({ ...options }) => {
   return useMutation({
     mutationFn: async ({ workspaceId, userId, userName, userEmail }: InsertWorkspaceUserProps) => {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('workspace_user')
         .insert({
           workspace_id: workspaceId,
@@ -55,9 +55,12 @@ export const useInsertWorkspaceUser = ({ ...options }) => {
           name: userName,
           email: userEmail
         })
-        .select();
+        .select('id')
+        .maybeSingle();
 
       if (error) throw error;
+
+      return data?.id;
     },
     ...options
   });
