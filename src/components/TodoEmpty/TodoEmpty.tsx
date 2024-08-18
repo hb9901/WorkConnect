@@ -11,7 +11,12 @@ export interface TodoEmptyProps {
 
 const TodoEmpty = ({ isOpen = false, className }: TodoEmptyProps) => {
   return (
-    <div className={clsx('flex flex-col h-full items-center justify-center text-center my-auto gap-[26px]', className)}>
+    <div
+      className={clsx(
+        'hidden lg:flex flex-col h-full items-center justify-center text-center my-auto gap-[26px]',
+        className
+      )}
+    >
       <TodoEmptyIcon />
       <Typography color="grey700Black" className="sm:text-[32px] text-[24px] text-center">
         새로운 할 일을 추가해보세요!

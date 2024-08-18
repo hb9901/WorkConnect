@@ -42,7 +42,7 @@ const SelectHeader = ({
   return (
     <header
       className={clsx(
-        `${isFull ? 'w-full' : 'w-[385px]'} ${isHidden ? 'hidden' : 'flex flex-row'} ${isTodoList ? 'w-full' : ''} 
+        `${isFull ? 'w-full' : 'w-[385px]'} ${isHidden ? 'hidden' : 'flex flex-row'}
       sticky top-0 items-center justify-between z-20 bg-white pt-[14px] px-[16px] pb-[12px] 
       lg:bg-[#F4F4F6] lg:h-[84px] lg:flex lg:border-[#E5E7EB] lg:border-b-[1px]`,
         className

@@ -7,7 +7,7 @@ function TodoListHomeLayout({ children }: StrictPropsWithChildren) {
   return (
     <>
       <PCWrapper>
-        <PCHeader className="grid lg:!fixed" />
+        <PCHeader isTodoList className="!flex !w-full !relative lg:!w-auto lg:!fixed" />
         <PageAside>
           <DateSelect />
         </PageAside>
