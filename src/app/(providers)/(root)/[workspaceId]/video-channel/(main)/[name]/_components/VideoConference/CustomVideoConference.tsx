@@ -3,8 +3,8 @@
 import { useTracks } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import useDeviceType from '../../../../_hooks/useDeviceType';
-import BottomControlBar from '../BottomControlBar';
 import MobileLayout from '../MobileLayout';
+import VideoLayout from '../VideoLayout';
 import WebLayout from '../WebLayout';
 
 const CustomVideoConference = () => {
@@ -17,14 +17,9 @@ const CustomVideoConference = () => {
     { onlySubscribed: true }
   );
   const { isMobile } = useDeviceType();
+  // const { hasFocusedTrack } = useFocosedTrack();
 
-  return (
-    <div className="flex flex-col items-center md:h-[85vh] xl:h-[88vh] bg-grey600">
-      {isMobile ? <MobileLayout tracks={tracks} /> : <WebLayout tracks={tracks} />}
-
-      <BottomControlBar controls={{ microphone: true, camera: true, screenShare: true }} variation="verbose" />
-    </div>
-  );
+  return <VideoLayout>{isMobile ? <MobileLayout tracks={tracks} /> : <WebLayout tracks={tracks} />}</VideoLayout>;
 };
 
 export default CustomVideoConference;

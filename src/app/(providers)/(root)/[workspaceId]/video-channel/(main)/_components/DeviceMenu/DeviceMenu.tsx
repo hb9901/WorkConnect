@@ -19,12 +19,12 @@ const DeviceMenu = ({ onClose }: DeviceMenueProps) => {
     setSelectedDeviceId(deviceId);
   };
   return (
-    <div className="h-[33vh] ">
+    <div className="h-[33vh] relative overflow-hidden ">
       <Typography variant="Title18px" color="grey700Black">
         오디오 장치 선택
       </Typography>
 
-      <ul className="">
+      <ul className="h-[75%] overflow-auto scroll-container">
         {devices.length === 0 && <li>오디오를 찾을 수 없습니다.</li>}
         {devices.map((device) => (
           <li
@@ -40,14 +40,15 @@ const DeviceMenu = ({ onClose }: DeviceMenueProps) => {
             </Typography>
           </li>
         ))}
+        <li onClick={toggleMute} className="cursor-pointer rounded flex items-center gap-3 p-2 hover:bg-gray-200">
+          <SpeakerMuteIcon className="w-[22px]" />
+          <Typography variant="Body14px" color="grey600">
+            오디오 끔
+          </Typography>
+        </li>
       </ul>
-      <div onClick={toggleMute} className="cursor-pointer rounded flex items-center gap-3 p-2 hover:bg-gray-200">
-        <SpeakerMuteIcon className="w-[22px]" />
-        <Typography variant="Body14px" color="grey600">
-          오디오 끔
-        </Typography>
-      </div>
-      <div>
+
+      <div className="absolute w-full bottom-0">
         <Button theme="primary" isFullWidth className="mt-3" onClick={onClose}>
           확인
         </Button>
