@@ -11,7 +11,9 @@ export const GET = async (request: NextRequest) => {
     const { data: workspaceListData, error: userError } = await supabase
       .from('workspace_user')
       .select('id, workspace_id(id, name, invite_code)')
-      .eq('user_id', userId!);
+      .eq('user_id', userId!)
+      .order('created_at', { ascending: true });
+
     const { data: userData, error: workspaceListError } = await supabase
       .from('workspace_user')
       .select('*')
