@@ -1,7 +1,6 @@
 import Tag from '@/components/Tag';
 import Typography from '@/components/Typography';
 import { useDraggable } from '@dnd-kit/core';
-import { useRouter } from 'next/navigation';
 import { changeDateStr } from '../ToDoList/function';
 
 interface TodoProps {
@@ -15,8 +14,7 @@ interface TodoProps {
 }
 
 const Todo = ({ id, title, startDate, endDate, place, priority, status }: TodoProps) => {
-  const router = useRouter();
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: 'todo' + id,
     data: {
       id: id,

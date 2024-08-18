@@ -30,10 +30,6 @@ const MainInfo = ({ profileImg, name }: MainInfoProps) => {
         <Typography variant="Title22px" color="grey700Black" className="line-clamp-1">
           {name}
         </Typography>{' '}
-        {/*직책 넣기로 했었나요??*/}
-        {/* <Typography variant="Subtitle16px" color="grey500">
-          Position
-        </Typography> */}
       </div>
     </div>
   );
