@@ -13,6 +13,8 @@ import ThumbnailInput from './_components/ThumbnailInput';
 import GroupNameInput from './_components/GroupNameInput';
 import { useMutationUploadThumbnail } from '../../_hooks/useChannelMutation';
 import VideoChatAvatar from '@/components/VideoChatAvatar';
+import Typography from '@/components/Typography';
+import Button from '@/components/Button';
 
 const MAX_FILE_SIZE = 3;
 
@@ -37,7 +39,9 @@ const GroupSettingPage = () => {
     fileRef.current?.click();
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     if (!ref.current?.value) {
       openSnackBar({ message: '채팅방 이름을 입력해주세요' });
       return;
@@ -70,17 +74,25 @@ const GroupSettingPage = () => {
   const title = isVideo ? '화상대화방 설정' : '그룹대화방 설정';
 
   return (
-    <AddChannelLayout title={title} onSubmit={handleSubmit}>
-      <div className="flex flex-col gap-4 p-4 h-[300px] w-[300px] items-center justify-center mx-auto">
-        {isVideo ? (
-          <VideoChatAvatar size="140px" />
-        ) : (
-          <ThumbnailInput thumbnail={thumbnail} handleClick={handleFileClick} />
-        )}
-        <GroupNameInput ref={ref} />
-      </div>
-      <FileInput name="thumbnail" accept="image/*" ref={fileRef} onChange={onChange} />
-    </AddChannelLayout>
+    <form onSubmit={handleSubmit}>
+      <AddChannelLayout title={title}>
+        <div className="flex flex-col w-full max-w-[550px] items-center justify-center mx-auto flex-1">
+          {isVideo ? (
+            <VideoChatAvatar size="140px" />
+          ) : (
+            <ThumbnailInput thumbnail={thumbnail} handleClick={handleFileClick} />
+          )}
+          <GroupNameInput ref={ref} className="mt-[38px]" />
+          <Typography as="p" variant="Body12px" className="text-grey300 w-full mt-4">
+            설정하는 사진과 이름은 모든 대화상대에게도 동일하게 보입니다.
+          </Typography>
+          <Button theme="primary" type="submit" isFullWidth className="max-w-[440px] mx-auto mt-[64px]">
+            채팅방 생성
+          </Button>
+        </div>
+        <FileInput name="thumbnail" accept="image/*" ref={fileRef} onChange={onChange} />
+      </AddChannelLayout>
+    </form>
   );
 };
 

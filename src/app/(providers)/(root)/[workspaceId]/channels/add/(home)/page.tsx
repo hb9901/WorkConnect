@@ -20,7 +20,9 @@ const AddChatPage = () => {
   const { handleCreateChannelAndUsers } = useCreateChannel();
   const router = useRouter();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     const userIds = getSelectedUserIds();
     if (isEmpty(userIds)) return;
 
@@ -43,9 +45,11 @@ const AddChatPage = () => {
   };
 
   return (
-    <AddChannelLayout title="대화상대 선택" onSubmit={handleSubmit}>
-      <Search />
-    </AddChannelLayout>
+    <form onSubmit={handleSubmit}>
+      <AddChannelLayout title="대화상대 선택">
+        <Search />
+      </AddChannelLayout>
+    </form>
   );
 };
 
