@@ -123,7 +123,7 @@ const ProfileEditPage = () => {
               if (editInput.label === '활동상태')
                 return (
                   <div key={editInput.label}>
-                    <BottomSheetModal isUp={true} onClose={() => editInput.handleFn(editInput.value)}>
+                    <BottomSheetModal isUp={true}>
                       <InputBottomSheet editInput={editInput} />
                     </BottomSheetModal>
                     <TextFieldButton

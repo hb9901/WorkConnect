@@ -74,14 +74,12 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
     startTime,
     endTime,
     isStartTime,
-    isBottomSheetOpen,
     isCalendarOpen,
     setStartTime,
     setEndTime,
     handleSetStartTime,
     handleSetEndTime,
     handleTimeClick,
-    hanldeBottomSheetClick,
     handleCalendarClick
   } = useBottomTime(initStartTime, initEndTime);
 
@@ -176,7 +174,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
           </Typography>
           <InputCard>
             {isCalendarOpen && (
-              <BottomSheetModal onClose={handleCalendarClick}>
+              <BottomSheetModal>
                 <DateModal onClick={handleCalendarClick} selectedDateStr={selectedDateStr} />
               </BottomSheetModal>
             )}
@@ -190,7 +188,7 @@ const ToDoAddPage = ({ params }: ToDoAddPageProps) => {
 
           <InputCard>
             {!isCalendarOpen && (
-              <BottomSheetModal onClose={hanldeBottomSheetClick}>
+              <BottomSheetModal>
                 <DateBottom
                   isStartTime={isStartTime}
                   startTime={startTime}
