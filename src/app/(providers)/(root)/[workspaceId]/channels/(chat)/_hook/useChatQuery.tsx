@@ -8,7 +8,8 @@ export const useGetChatMessages = ({ channel_id }: GetChatMessagesProps) => {
   return useQuery({
     queryKey: QUERY_KEYS.CHAT_MESSAGES(channel_id),
     queryFn: () => api.chat.getChatMessages(channel_id),
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    staleTime: 0
   });
 };
 
@@ -16,7 +17,8 @@ export const useGetLatestNotice = ({ id }: { id: number }) => {
   return useQuery({
     queryKey: QUERY_KEYS.LATEST_NOTICE(id),
     queryFn: () => api.chat.getLatestNotice(id),
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    staleTime: 0
   });
 };
 
