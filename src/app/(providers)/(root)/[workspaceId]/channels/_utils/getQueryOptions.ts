@@ -6,6 +6,7 @@ export const getChannelsOptions = (workspaceId: number) => {
   return queryOptions({
     queryKey: QUERY_KEYS.CHANNELS(workspaceId),
     queryFn: api.channel.getChannels,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    staleTime: 0
   });
 };

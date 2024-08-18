@@ -20,7 +20,6 @@ const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
     setIsOpenSidebar((prev) => !prev);
   };
 
-  // TODO: BottomBar 모바일에서는 안 보여야해서 컴포넌트 나눈거임
   return (
     <>
       <PageLayout>
@@ -30,7 +29,7 @@ const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
             <ChannelList />
           </div>
         </PageAside>
-        <PageMain>
+        <PageMain className="h-dvh">
           <TopBar
             title={<TopBarTitle channelName={channelName} />}
             Icon4={isOpenSidebar ? <XIcon onClick={handleOpenSidebar} /> : <MenuButton onClick={handleOpenSidebar} />}

@@ -1,8 +1,16 @@
 import { type NextRequest } from 'next/server';
-import { updateSession } from './utils/supabase/middleware';
+import { updateSession } from './utils/middleware/supabaseMiddleware';
+import { redirectToChannel } from './utils/middleware/redirectToChannel';
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  let response = await updateSession(request);
+
+  const channelRedirectResponse = await redirectToChannel(request);
+  if (channelRedirectResponse) {
+    return channelRedirectResponse;
+  }
+
+  return response;
 }
 
 export const config = {

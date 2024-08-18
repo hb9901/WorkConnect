@@ -16,12 +16,14 @@ type OtherProfileProps = {
 
 export const OtherProfile = memo(({ profileImage, name, profileUrl }: OtherProfileProps) => {
   return (
-    <Link href={profileUrl} className="flex items-center gap-2 w-full">
-      <Avatar src={profileImage ?? undefined} size="32px" />
+    <div className="inline-flex items-center gap-2 w-full">
+      <Link href={profileUrl}>
+        <Avatar src={profileImage ?? undefined} size="32px" />
+      </Link>
       <Typography variant="Title16px" color="grey900">
         {name}
       </Typography>
-    </Link>
+    </div>
   );
 });
 
