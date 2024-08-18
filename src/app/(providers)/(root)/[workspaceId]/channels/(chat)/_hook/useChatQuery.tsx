@@ -1,7 +1,7 @@
 import api from '@/api';
 import type { GetChatMessagesProps } from '@/types/chat';
 import { useQuery } from '@tanstack/react-query';
-import { getChannelNameOptions, getUsersInChannelOptions } from '../_utils/getQueryOptions';
+import { getChannelInfoOptions, getUsersInChannelOptions } from '../_utils/getQueryOptions';
 import { QUERY_KEYS } from '../_constants/constants';
 
 export const useGetChatMessages = ({ channel_id }: GetChatMessagesProps) => {
@@ -26,8 +26,8 @@ export const useGetUsersInChannel = (channelId: number) => {
   return useQuery(getUsersInChannelOptions(channelId));
 };
 
-export const useGetChannelName = ({ id }: { id: number }) => {
-  return useQuery(getChannelNameOptions(id));
+export const useGetChannelInfo = ({ id }: { id: number }) => {
+  return useQuery(getChannelInfoOptions(id));
 };
 
 export const useGetChannelDocuments = (channelId: number) => {
