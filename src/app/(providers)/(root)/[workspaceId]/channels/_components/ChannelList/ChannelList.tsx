@@ -31,12 +31,16 @@ const ChannelList = ({ className }: ChannelListPageProps) => {
   useEffect(() => {
     if (isEmpty(channelIds)) return;
 
-    handleSubscribeToChannels({
+    const channel = handleSubscribeToChannels({
       channelIds,
       workspaceUserId,
       handleChatInserts: handleChatInserts({ workspaceId }),
       handleChannelUserUpdates: handleChannelUserUpdates({ workspaceId })
-    });
+    }).subscribe();
+
+    return () => {
+      channel.unsubscribe();
+    };
   }, [channelIds]);
 
   if (isEmpty(channels)) return null;

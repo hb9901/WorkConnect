@@ -16,7 +16,7 @@ const Messages = () => {
     channel_id: Number(channelId)
   });
 
-  const { payloadMessages, handleMessagesUpdates, handleUserUpdates } = useChatHandlers();
+  const { payloadMessages, handleMessagesUpdates, handleUserInfoUpdates } = useChatHandlers();
 
   const {
     data: usersInChannel = {},
@@ -33,12 +33,16 @@ const Messages = () => {
   useEffect(() => {
     if (!channelId || isPendingUsersInChannel) return;
 
-    handleSubscribeToChat({
+    const channel = handleSubscribeToChat({
       handleMessagesUpdates: handleMessagesUpdates({ channelId }),
-      handleUserUpdates: handleUserUpdates({ channelId }),
+      handleUserInfoUpdates: handleUserInfoUpdates({ channelId }),
       id: channelId,
       userIds: Object.keys(usersInChannel).join(',')
-    });
+    }).subscribe();
+
+    return () => {
+      channel.unsubscribe();
+    };
   }, [channelId, isPendingUsersInChannel]);
 
   return (
