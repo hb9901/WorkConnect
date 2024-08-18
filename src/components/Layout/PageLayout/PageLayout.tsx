@@ -12,7 +12,6 @@ interface HomeOrTodoProps {
   isTodo?: boolean;
 }
 
-// TODO: 더이상 여기에 헤더를 넣을 고민을 하지말자 다신 두번 다신 못 넣음 그냥 children에 넣어 이제 더 고민 하지마 안되는건 안되는거야..
 export const PageLayout = ({ children }: StrictPropsWithChildren) => {
   return (
     <PCWrapper>
@@ -65,7 +64,7 @@ export const BottomBar = ({ className }: { className?: string }) => {
   return (
     <div className={className}>
       <div className="h-[78px] lg:hidden" />
-      <BottomNavigationBar className="fixed bottom-0 left-0 z-10 xs:w-full w-full lg:top-[84px] lg:w-[85px] lg:h-[vh100%] lg:bg-[#F4F4F6] lg:border-r-[1px] lg:border-grey50" />
+      <BottomNavigationBar className="fixed bottom-0 left-0 z-10 xs:w-full w-full lg:top-0 lg:pt-[84px] lg:w-[85px] lg:h-[vh100%] lg:bg-[#F4F4F6] lg:border-r-[1px] lg:border-grey50" />
     </div>
   );
 };
