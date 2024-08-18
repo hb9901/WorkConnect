@@ -8,7 +8,7 @@ export const SearchCardWrapper = ({ children, className, ...props }: StrictProps
   return (
     <li
       className={clsx(
-        'flex items-center justify-between p-4 border-b border-white bg-transparent w-full lg:p-0 lg:w-[calc(16.66%)] lg:justify-center',
+        'flex items-center justify-between p-4 border-b border-white bg-transparent lg:p-0 lg:w-[calc(16.66%)] lg:justify-center',
         className
       )}
       {...props}
@@ -28,7 +28,7 @@ export const SearchCardContent = ({ children }: StrictPropsWithChildren) => {
 
 export const SearchCardThumbnail = ({ src, className }: { src: string | undefined; className?: string }) => {
   return (
-    <div className={clsx('flex items-center justify-center mr-4 flex-shrink-0', className)}>
+    <div className={clsx('flex items-center justify-center mr-4 flex-shrink-0 lg:m-0', className)}>
       <Avatar size="48px" src={src} className="lg:hidden" />
       <Avatar size="106px" src={src} className="hidden lg:flex" />
     </div>
