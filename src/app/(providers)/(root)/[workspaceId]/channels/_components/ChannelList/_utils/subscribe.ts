@@ -1,5 +1,5 @@
 import { REALTIME_CHANNEL_NAME } from '@/constants/realtime';
-import createRealtimeSubscription from '@/utils/createRealtimeSubscription';
+import createRealtimeChannel from '@/utils/createRealtimeChannel';
 
 type SubscribeToChannelsProps = {
   handleChatInserts: (payload: any) => void;
@@ -14,7 +14,7 @@ export const handleSubscribeToChannels = ({
   handleChannelUserUpdates,
   workspaceUserId
 }: SubscribeToChannelsProps) => {
-  return createRealtimeSubscription({
+  return createRealtimeChannel({
     channelName: REALTIME_CHANNEL_NAME.CHANNEL_LIST,
     eventHandlers: [
       {
