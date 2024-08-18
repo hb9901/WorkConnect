@@ -21,6 +21,7 @@ import {
   useUpdateNewWorkspaceUser
 } from './_hooks/useNewWorkspace';
 import { getRandomNumbers } from './_utils/randomNumbers';
+import { supabase } from '@/utils/supabase/supabaseClient';
 
 type UserType = {
   user: AuthStoreTypes['user'];
@@ -76,6 +77,42 @@ const NewWorkSpacePage = () => {
         userEmail: user.user_metadata.email
       });
 
+      //? 워크스페이스 생성 하면서 공지방 추가하기 로직 추가
+
+      //? 1. [공지채팅방 추가]: 워크스페이스 id를 얻었을 때 channel테이블에 정보를 insert하는 로직 추가
+      const { data: channelData, error: channelError } = await supabase
+        .from('channel')
+        .insert({
+          name: '전체_공지방',
+          type: 'chat',
+          workspace_id: workspaceId
+        })
+        .select()
+        .single();
+      console.log('channelData?.id', channelData?.id); //workspace_id,
+
+      //? 2. [워크스페이스 데이터 수정: 공지 아이디를 저장] : data.channel id를 얻었으면, inset workspace에 eq(workspace id) 정보넣기 notice_channel_id
+      // workspace테이블에 workspace id가 같은것에 notice_channel_id
+      const { data: workspaceData, error: workspaceError } = await supabase
+        .from('workspace')
+        .update({
+          notice_channel_id: channelData?.id
+        })
+        .eq('id', workspaceId)
+        .select()
+        .single();
+      console.log('workspaceData', workspaceData);
+
+      //? 3. [공지 채채팅방에 유저 입장 시키기] : insert channel_user -> channel id: channel id
+      const { data: channelUserData, error: channelUserError } = await supabase
+        .from('channel_user')
+        .insert({
+          channel_id: Number(channelData?.id),
+          workspace_user_id: workUserData.id
+        })
+        .select();
+      console.log('channelUserData', channelUserData);
+
       handleSetGlobalUser({
         userId: user.id,
         workspaceId: Number(workspaceId),
@@ -95,6 +132,46 @@ const NewWorkSpacePage = () => {
       workspaceId: Number(workspaceId),
       userId: user.id
     });
+
+    //? 워크스페이스 생성 하면서 해당 공지방으로 자동으로 들어갈 수 있게 추가하기 로직 추가
+
+    //! 워크스페이스 생성
+    //? 1. [공지채팅방 추가]: 워크스페이스 id를 얻었을 때 channel테이블에 정보를 insert하는 로직 추가
+    const { data: channelData, error: channelError } = await supabase
+      .from('channel')
+      .insert({
+        name: '전체_공지방',
+        type: 'chat',
+        workspace_id: workspaceId
+      })
+      .select()
+      .single();
+    console.log('channelData?.id', channelData?.id); //workspace_id,
+
+    //? 2. [워크스페이스 데이터 수정: 공지 아이디를 저장] : data.channel id를 얻었으면, inset workspace에 eq(workspace id) 정보넣기 notice_channel_id
+    // workspace테이블에 workspace id가 같은것에 notice_channel_id
+    const { data: workspaceData, error: workspaceError } = await supabase
+      .from('workspace')
+      .update({
+        notice_channel_id: channelData?.id
+      })
+      .eq('id', workspaceId)
+      .select()
+      .single();
+    console.log('workspaceData', workspaceData);
+
+    //? 3. [공지 채채팅방에 유저 입장 시키기] : insert channel_user -> channel id: channel id
+    const { data: channelUserData, error: channelUserError } = await supabase
+      .from('channel_user')
+      .insert({
+        channel_id: Number(channelData?.id),
+        workspace_user_id: workUserData.id
+      })
+      .select();
+    console.log('channelUserData', channelUserData);
+
+    //! 4. 기존 워크스페이스 입장
+    //? 1. [공지 채팅방에 유저 입장 시키기] : inset channel_user -> channel id: channel id
 
     handleSetGlobalUser({
       userId: user.id,
