@@ -29,7 +29,7 @@ export const createChannel = async ({ name, type, workspace_id, thumbnail }: Cha
 export const getChannels = async ({ workspace_id, workspace_user_id }: GetChannelsProps) => {
   const supabase = createClient();
 
-  const response = await supabase.rpc('get_chat_channels', {
+  const response = await supabase.rpc('get_channels', {
     wid: workspace_id,
     wuid: workspace_user_id
   });

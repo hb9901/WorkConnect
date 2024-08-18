@@ -29,7 +29,6 @@ export type GetChannelsResponse = {
   channel_name: ChannelType['name'];
   message_created_at: ChatType['created_at'];
   message: ChatType['content'];
-  user_name: WorkspaceUserType['name'];
   user_state: WorkspaceUserType['state'];
   user_thumbnail: WorkspaceUserType['profile_image'];
   workspace_user_id: WorkspaceUserType['id'];
