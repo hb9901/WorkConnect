@@ -69,7 +69,7 @@ const ProfileEditPage = () => {
   const handleEdit = async () => {
     if (!(userId && workspaceId)) return;
     if (!name) {
-      openSnackBar({ message: '이름이 존재하지 않습니다' });
+      openSnackBar({ message: '이름이 존재하지 않아요' });
       return;
     }
     if (image) {

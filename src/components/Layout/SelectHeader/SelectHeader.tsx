@@ -33,7 +33,7 @@ const SelectHeader = ({
   const { workspaceInfo, isPending } = useWorkspaceList(workspaceId, userId);
 
   const workspaceList = workspaceInfo?.workspaceListData || [];
-  const selectedWorkspace = workspaceList.filter((workspace) => workspace.id === workspaceId)[0];
+  const selectedWorkspace = workspaceList.filter((workspace) => workspace.id === workspaceId)[0] || {};
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);

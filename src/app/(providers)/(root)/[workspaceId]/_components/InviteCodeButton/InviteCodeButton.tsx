@@ -13,9 +13,9 @@ const InviteCodeButton = ({ workspaceId, isFullWidth }: InviteCodeButtonProps) =
     try {
       const workspaceIdStr = String(workspaceId);
       await navigator.clipboard.writeText(workspaceIdStr);
-      openSnackBar({ message: '초대 코드가 복사되었습니다.' });
+      openSnackBar({ message: '초대 코드를 복사했어요' });
     } catch (err) {
-      alert(err);
+      openSnackBar({ message: '초대 코드 복사에 실패했어요' });
     }
   };
 

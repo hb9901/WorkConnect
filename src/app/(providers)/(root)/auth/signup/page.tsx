@@ -27,7 +27,7 @@ const SignUpPage = () => {
       handleToggleBottomSheet();
     },
     onError: () => {
-      openSnackBar({ message: '에러가 발생했어요.' });
+      openSnackBar({ message: '에러가 발생했어요' });
     }
   });
 

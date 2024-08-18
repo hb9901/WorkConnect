@@ -60,7 +60,7 @@ const NewWorkSpacePage = () => {
       return route.replace('/');
     }
 
-    if (!orgName) return openSnackBar({ message: '조직 이름을 입력해주세요!' });
+    if (!orgName) return openSnackBar({ message: '조직 이름을 입력해주세요' });
 
     if (!workUserData) return openSnackBar({ message: '워크스페이스에 유저 데이터가 없어요' });
 
