@@ -299,6 +299,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_channel_info: {
+        Args: {
+          cid: number
+          wuid: string
+        }
+        Returns: {
+          channel_thumbnail: string
+          name: string
+        }[]
+      }
       get_channel_name: {
         Args: {
           cid: number

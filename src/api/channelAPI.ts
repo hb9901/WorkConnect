@@ -69,10 +69,10 @@ class ChannelAPI {
     return data.data;
   };
 
-  getChannelName = async (channelId: number): Promise<string> => {
-    const { data } = await this.axios.get(`/api/channel/${channelId}/name`);
+  getChannelInfo = async (channelId: number): Promise<{ name: string; channel_thumbnail: string }[]> => {
+    const { data } = await this.axios.get(`/api/channel/${channelId}/info`);
 
-    return data.data || '';
+    return data.data;
   };
 
   updateChannelActiveAt = async (channelId: number): Promise<void> => {

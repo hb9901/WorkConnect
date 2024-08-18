@@ -47,7 +47,7 @@ export const SnackBarContextProvider = ({ children }: StrictPropsWithChildren) =
       {children}
       {snackBarProps?.message && (
         <div
-          className={`fixed flex justify-center w-full transition-opacity duration-300 pointer-events-none`}
+          className={`fixed flex justify-center w-full transition-opacity duration-300 pointer-events-none z-50`}
           style={{ bottom: '90px' }}
         >
           <span className="bg-grey400 px-[16px] py-[8px] rounded-lg shadow-lg text-white">

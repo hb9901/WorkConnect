@@ -4,7 +4,7 @@ import {
   CHANNEL_NAME_RESPONSE_INVALID_REQUEST,
   CHANNEL_NAME_RESPONSE_SUCCESS
 } from './constants';
-import { getChannelName } from '@/services/channel';
+import { getChannelInfo } from '@/services/channel';
 import { getServerCookie } from '@/utils/cookie/serverUtils';
 
 /**
@@ -20,7 +20,7 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
   }
 
   try {
-    const { data, error } = await getChannelName({ id: Number(id), wuid: workspaceUserId });
+    const { data, error } = await getChannelInfo({ id: Number(id), wuid: workspaceUserId });
 
     if (error) {
       return NextResponse.json(Object.assign(CHANNEL_NAME_RESPONSE_FAILED, { error }), {
