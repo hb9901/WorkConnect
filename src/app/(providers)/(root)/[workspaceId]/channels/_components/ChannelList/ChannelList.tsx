@@ -58,7 +58,7 @@ const ChannelList = ({ className }: ChannelListPageProps) => {
             isActive={isActive}
             name={item.channel_name ?? '(알 수 없음)'}
             user_count={item.is_dm ? undefined : item.user_count}
-            user_thumbnail={item.user_thumbnail ?? undefined}
+            channel_thumbnail={item.channel_thumbnail ?? undefined}
             un_read_chat={item.un_read_chat ?? undefined}
           />
         );

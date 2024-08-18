@@ -316,12 +316,12 @@ export type Database = {
           message_created_at: string
           message: string
           is_dm: boolean
-          channel_name: string
           user_state: string
-          user_thumbnail: string
+          channel_thumbnail: string
           workspace_user_id: string
           user_count: number
           type: string
+          channel_name: string
           created_at: string
           un_read_chat: number
         }[]
