@@ -30,7 +30,6 @@ type UserType = {
 const NewWorkSpacePage = () => {
   const route = useRouter();
   const [orgName, setOrgName] = useState<string | ''>('');
-  const [workUserData, setWorkUserData] = useState<{ id: string } | null>(null);
   const { user } = useShallowSelector<AuthStoreTypes, UserType>(useAuthStore, ({ user }) => ({ user }));
   const { openSnackBar } = useSnackBar();
   const { handleSetGlobalUser } = useSetGlobalUser();
@@ -63,19 +62,19 @@ const NewWorkSpacePage = () => {
 
     if (!orgName) return openSnackBar({ message: '조직 이름을 입력해주세요!' });
 
-    if (!workUserData) return openSnackBar({ message: '워크스페이스에 유저 데이터가 없어요' });
-
     if (cookieUserId) {
-      await createWorkspaceMutate({ orgName, combinedNumber, adminUserId: workUserData.id });
+      const workspaceId = await createWorkspaceMutate({ orgName, combinedNumber });
 
-      const workspaceId = await singleWorkspaceIdMutate(workUserData.id);
+      if (!workspaceId) return openSnackBar({ message: '오류가 발생했어요' });
 
-      await createWorkspaceUserMutate({
+      const workspaceUserId = await createWorkspaceUserMutate({
         workspaceId: Number(workspaceId),
         userId: user.id,
         userName: user.user_metadata.name,
         userEmail: user.user_metadata.email
       });
+
+      if (!workspaceUserId) return openSnackBar({ message: '오류가 발생했어요' });
 
       //? 워크스페이스 생성 하면서 공지방 추가하기 로직 추가
 
@@ -108,7 +107,7 @@ const NewWorkSpacePage = () => {
         .from('channel_user')
         .insert({
           channel_id: Number(channelData?.id),
-          workspace_user_id: workUserData.id
+          workspace_user_id: workspaceUserId
         })
         .select();
       console.log('channelUserData', channelUserData);
@@ -116,22 +115,24 @@ const NewWorkSpacePage = () => {
       handleSetGlobalUser({
         userId: user.id,
         workspaceId: Number(workspaceId),
-        workspaceUserId: workUserData.id
+        workspaceUserId
       });
 
       setOrgName('');
       return route.replace(`/${workspaceId}`);
     }
 
-    //? 회원가입 후 첫 워크스페이스 생성
-    await createWorkspaceMutate({ orgName, combinedNumber, adminUserId: workUserData.id });
+    //? 회원가입 후 첫 워크스페이스 생성 ?????????????????????!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! workspaceUserId 를 써야하는데
+    const workspaceId = await createWorkspaceMutate({ orgName, combinedNumber });
 
-    const workspaceId = await singleWorkspaceIdMutate(workUserData.id);
+    if (!workspaceId) return openSnackBar({ message: '오류가 발생했어요' });
 
-    await updateNewWorkspaceUserMutate({
+    const workspaceUserId = await updateNewWorkspaceUserMutate({
       workspaceId: Number(workspaceId),
       userId: user.id
     });
+
+    if (!workspaceUserId) return openSnackBar({ message: '오류가 발생했어요' });
 
     //? 워크스페이스 생성 하면서 해당 공지방으로 자동으로 들어갈 수 있게 추가하기 로직 추가
 
@@ -165,7 +166,7 @@ const NewWorkSpacePage = () => {
       .from('channel_user')
       .insert({
         channel_id: Number(channelData?.id),
-        workspace_user_id: workUserData.id
+        workspace_user_id: workspaceUserId
       })
       .select();
     console.log('channelUserData', channelUserData);
@@ -176,7 +177,7 @@ const NewWorkSpacePage = () => {
     handleSetGlobalUser({
       userId: user.id,
       workspaceId: Number(workspaceId),
-      workspaceUserId: workUserData.id
+      workspaceUserId
     });
 
     setOrgName('');
@@ -188,27 +189,6 @@ const NewWorkSpacePage = () => {
     createWorkspaceUserPending ||
     createWorkspacePending ||
     useSingleWorkspaceIdPending;
-
-  useEffect(() => {
-    const getWorkspaceUser = async () => {
-      if (!user) {
-        openSnackBar({ message: '로그인이 필요합니다' });
-        route.replace('/');
-        return;
-      }
-
-      const newWorkspaceUserId = await useNewWorkspaceUserId(user.id);
-
-      if (!newWorkspaceUserId) {
-        openSnackBar({ message: '오류가 발생했어요' });
-        return;
-      }
-
-      setWorkUserData({ id: newWorkspaceUserId });
-    };
-
-    getWorkspaceUser();
-  }, []);
 
   return (
     <main className="flex justify-center items-center w-full h-dvh">
