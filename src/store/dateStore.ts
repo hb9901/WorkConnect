@@ -22,14 +22,14 @@ const useDateStore = create<TDateState>()(
         set({ isWeekly: !prevIsWeekly });
       },
       handleClickNext: () => {
-        const selectedDate = get().selectedDate;
+        const selectedDate = dayjs(get().selectedDate);
         const isWeekly = get().isWeekly;
         const newDate = isWeekly ? selectedDate.add(1, 'week') : selectedDate.add(1, 'month');
 
         set({ selectedDate: newDate });
       },
       handleClickPrevious: () => {
-        const selectedDate = get().selectedDate;
+        const selectedDate = dayjs(get().selectedDate);
         const isWeekly = get().isWeekly;
         const newDate = isWeekly ? selectedDate.add(-1, 'week') : selectedDate.add(-1, 'month');
 
