@@ -122,7 +122,7 @@ const NewWorkSpacePage = () => {
       return route.replace(`/${workspaceId}`);
     }
 
-    //? 회원가입 후 첫 워크스페이스 생성 ?????????????????????!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! workspaceUserId 를 써야하는데
+    //? 회원가입 후 첫 워크스페이스 생성 workspaceUserId 를 써야하는데
     const workspaceId = await createWorkspaceMutate({ orgName, combinedNumber });
 
     if (!workspaceId) return openSnackBar({ message: '오류가 발생했어요' });
@@ -201,12 +201,12 @@ const NewWorkSpacePage = () => {
         </div>
 
         <div className="lg:border lg:px-[42px] lg:py-[72px] lg:rounded-lg">
-          <div className="mt-8 mb-7 flex flex-col items-center gap-3">
+          <div className="mt-8 mb-7 flex flex-col items-center gap-3 lg:mt-0 lg:mb-[38px]">
             <Typography variant="Title20px" className="lg:text-[36px]" color="grey700Black">
               협업의 새로운 연결, 워크커넥트
             </Typography>
             <Typography variant="Subtitle14px" className="lg:text-[18px]" color="grey500">
-              새 워크스페이스를 만들려면 계정 정보가 필요해요
+              생성할 워크스페이스의 이름을 입력해주세요
             </Typography>
           </div>
           <div className="lg:px-[55px]">
