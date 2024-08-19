@@ -1,7 +1,7 @@
 import Loading from '@/components/Loading';
 
-const ProfileLoading = () => {
+const HomeLoading = () => {
   return <Loading />;
 };
 
-export default ProfileLoading;
+export default HomeLoading;
