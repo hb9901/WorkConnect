@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingSpinner2 from '@/components/LoadingSpinner2';
+import Loading from '@/components/Loading';
 import NotFoundError from '@/components/NotFoundError';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
@@ -18,7 +18,7 @@ const Profile = () => {
   const workspaceUserId = useUserStore((state) => state.workspaceUserId);
   const { workspaceUser, isPending, isError } = useWorkspaceUser(targetWorkspaceUserId);
 
-  if (isPending) return <LoadingSpinner2 />;
+  if (isPending) return <Loading />;
   if (isError) return <NotFoundError />;
   if (!workspaceUser) return;
 
