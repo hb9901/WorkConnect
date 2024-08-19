@@ -1,1 +1,1 @@
-export type TagTheme = 'high' | 'medium' | 'low';
+export type TagTheme = 'High' | 'Medium' | 'Low';

@@ -29,7 +29,7 @@ import OptionCard from './_components/OptionCard';
 import useBottomTime from './_hooks/useBottomTime';
 import useInput from './_hooks/useInput';
 
-const priorityList = ['high', 'medium', 'low'];
+const priorityList = ['High', 'Medium', 'Low'];
 const statusList = ['진행 전', '진행 중', '완료'];
 type ToDoAddPageProps = {
   params: {

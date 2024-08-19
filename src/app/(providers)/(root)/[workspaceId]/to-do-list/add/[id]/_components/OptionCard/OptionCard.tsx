@@ -18,11 +18,11 @@ const OptionCard = ({ option, selectedOption, handleChange }: OptionCardProps) =
         <LoaderIcon className="w-[16px] h-[16px] stroke-[#737B91]" />
       ) : option === '완료' ? (
         <CheckCircleIcon className="w-[16px] h-[16px] stroke-[#737B91]" />
-      ) : option === 'high' ? (
+      ) : option === 'High' ? (
         <div className="w-[16px] h-[16px] rounded-full bg-[#D3D3FD]" />
-      ) : option === 'medium' ? (
+      ) : option === 'Medium' ? (
         <div className="w-[16px] h-[16px] rounded-full bg-[#DBEDDB]" />
-      ) : option === 'low' ? (
+      ) : option === 'Low' ? (
         <div className="w-[16px] h-[16px] rounded-full bg-[#E5E7EB]" />
       ) : (
         <></>

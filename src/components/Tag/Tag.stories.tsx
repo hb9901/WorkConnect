@@ -11,10 +11,10 @@ export default {
     theme: {
       control: {
         type: 'select',
-        options: ['high', 'medium', 'low']
+        options: ['High', 'Medium', 'Low']
       },
       description: 'Tag 테마를 지정합니다.',
-      defaultValue: 'high'
+      defaultValue: 'High'
     },
     children: {
       control: 'text',
@@ -27,27 +27,27 @@ export default {
 export const Default = {
   args: {
     children: 'Tag',
-    theme: 'high'
+    theme: 'High'
   }
 };
 
 export const High = {
   args: {
     children: 'High',
-    theme: 'high'
+    theme: 'High'
   }
 };
 
 export const Medium = {
   args: {
     children: 'Medium',
-    theme: 'medium'
+    theme: 'Medium'
   }
 };
 
 export const Low = {
   args: {
     children: 'Low',
-    theme: 'low'
+    theme: 'Low'
   }
 };

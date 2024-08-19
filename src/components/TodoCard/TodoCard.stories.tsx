@@ -20,7 +20,7 @@ export default {
     tag: {
       control: {
         type: 'select',
-        options: ['high', 'medium', 'low']
+        options: ['High', 'Medium', 'Low']
       },
       description: 'Todo 카드의 우선순위를 나타내는 태그입니다.'
     },
@@ -41,6 +41,6 @@ export const Default = Template.bind({});
 Default.args = {
   title: 'Title',
   subtitle: '시간 | 장소',
-  tag: 'high',
+  tag: 'High',
   onClick: () => alert('clicked')
 };
