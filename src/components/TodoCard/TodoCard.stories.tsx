@@ -11,26 +11,26 @@ export default {
   argTypes: {
     title: {
       control: 'text',
-      description: 'Todo 카드의 제목'
+      description: 'Todo 카드의 제목입니다.'
     },
     subtitle: {
       control: 'text',
-      description: 'Todo 카드의 부제목'
+      description: 'Todo 카드의 부제목입니다.'
     },
     tag: {
       control: {
         type: 'select',
         options: ['high', 'medium', 'low']
       },
-      description: 'Todo 카드의 우선순위를 나타내는 태그'
+      description: 'Todo 카드의 우선순위를 나타내는 태그입니다.'
     },
     onClick: {
       action: 'clicked',
-      description: '카드가 클릭될 때 호출되는 함수'
+      description: '카드가 클릭될 때 호출되는 함수입니다.'
     },
     className: {
       control: 'text',
-      description: '추가적인 CSS 클래스를 지정할 수 있음'
+      description: '추가적인 CSS 클래스를 지정할 수 있습니다.'
     }
   }
 };
