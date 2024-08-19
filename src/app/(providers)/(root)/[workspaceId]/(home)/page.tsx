@@ -1,12 +1,7 @@
-import Loading from '@/components/Loading';
+import HomeMain from '../_components/HomeMain';
 
 const Homepage = () => {
-  return (
-    <>
-      <Loading />
-      {/* <HomeMain /> */}
-    </>
-  );
+  return <HomeMain />;
 };
 
 export default Homepage;
