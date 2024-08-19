@@ -86,16 +86,12 @@ const InviteCodePage = () => {
     if (!inviteCode) return openSnackBar({ message: '초대 코드를 입력해주세요' });
     // 초대코드랑 같은 workspace테이블의 id값을 가져옴, [ 234324 입력하면 -> 2(내배캠) 반환 ]
     const inviteWorkspaceId = await getWorkspaceIdWithInviteCodeMutation(inviteCode);
-
-    // TODO : 워크스페이스 공지방 생성 추가
-    //! workspace_user테이블에 id 제대로 저장해라 미래의 나
-    //? 쿠키에 저장 할때 제대로 저장하고, workspace생성 후 셀렉트로 가져와라 미래의 나
-    //* workspace/new 폴더 복붙 잘해라 미래의 나
+    const { id: workspaceId, notice_channel_id } = inviteWorkspaceId;
 
     //* 로그인 돼있을 시
     if (cookieUserId) {
       const existingWorkspaceUser = await existingWorkspaceUserMutation({
-        workspaceId: inviteWorkspaceId,
+        workspaceId: workspaceId,
         userId: user.id
       });
 
@@ -105,49 +101,20 @@ const InviteCodePage = () => {
       }
 
       const workspaceUserId = await insertWorkspaceUserMutation({
-        workspaceId: inviteWorkspaceId,
+        workspaceId: workspaceId,
         userId: user.id,
         userName: user.user_metadata.name,
         userEmail: user.user_metadata.email
       });
       if (!workspaceUserId) return openSnackBar({ message: '알 수 없는 에러가 발생했어요' });
 
-      //? 1. [공지채팅방 추가]: 워크스페이스 id를 얻었을 때 channel테이블에 정보를 insert하는 로직 추가
-      const { data: channelData, error: channelError } = await supabase
-        .from('channel')
-        .insert({
-          name: '전체_공지방',
-          type: 'chat',
-          workspace_id: inviteWorkspaceId
-        })
-        .select()
-        .single();
-
-      if (channelError) return openSnackBar({ message: '알 수 없는 에러가 발생했어요' });
-
-      console.log('channelData?.id', channelData.id); //workspace_id
-
-      //? 2. [워크스페이스 데이터 수정: 공지 아이디를 저장] : data.channel id를 얻었으면, inset workspace에 eq(workspace id) 정보넣기 notice_channel_id
-      // workspace테이블에 workspace id가 같은것에 notice_channel_id
-      const { data: workspaceData, error: workspaceError } = await supabase
-        .from('workspace')
-        .update({
-          notice_channel_id: channelData?.id
-        })
-        .eq('id', inviteWorkspaceId)
-        .select()
-        .single();
-
       //? 3. [공지 채채팅방에 유저 입장 시키기] : insert channel_user -> channel id: channel id
-      const { data: channelUserData, error: channelUserError } = await supabase
-        .from('channel_user')
-        .insert({
-          channel_id: Number(channelData.id),
-          workspace_user_id: workspaceUserId
-        })
-        .select();
+      await supabase.from('channel_user').insert({
+        channel_id: Number(notice_channel_id),
+        workspace_user_id: workspaceUserId
+      });
 
-      handleSetGlobalUser({ userId: user.id, workspaceId: inviteWorkspaceId, workspaceUserId });
+      handleSetGlobalUser({ userId: user.id, workspaceId: workspaceId, workspaceUserId });
 
       setInviteCode('');
       return route.replace(`/${inviteWorkspaceId}`);
@@ -158,44 +125,15 @@ const InviteCodePage = () => {
     const workspaceUserId = await getWorkspaceUserIdMutation(user.id);
 
     // workspace_user테이블에 workspaceId 업데이트 (입력한 초대코드로 업데이트)
-    await updateWorkspaceUserMutation({ workspaceId: inviteWorkspaceId, userId: user.id });
-
-    //? 1. [공지채팅방 추가]: 워크스페이스 id를 얻었을 때 channel테이블에 정보를 insert하는 로직 추가
-    const { data: channelData, error: channelError } = await supabase
-      .from('channel')
-      .insert({
-        name: '전체_공지방',
-        type: 'chat',
-        workspace_id: inviteWorkspaceId
-      })
-      .select()
-      .single();
-
-    if (channelError) return openSnackBar({ message: '알 수 없는 에러가 발생했어요' });
-
-    console.log('channelData?.id', channelData.id); //workspace_id
-
-    //? 2. [워크스페이스 데이터 수정: 공지 아이디를 저장] : data.channel id를 얻었으면, inset workspace에 eq(workspace id) 정보넣기 notice_channel_id
-    // workspace테이블에 workspace id가 같은것에 notice_channel_id
-    const { data: workspaceData, error: workspaceError } = await supabase
-      .from('workspace')
-      .update({
-        notice_channel_id: channelData?.id
-      })
-      .eq('id', inviteWorkspaceId)
-      .select()
-      .single();
+    await updateWorkspaceUserMutation({ workspaceId: workspaceId, userId: user.id });
 
     //? 3. [공지 채채팅방에 유저 입장 시키기] : insert channel_user -> channel id: channel id
-    const { data: channelUserData, error: channelUserError } = await supabase
-      .from('channel_user')
-      .insert({
-        channel_id: Number(channelData.id),
-        workspace_user_id: workspaceUserId
-      })
-      .select();
+    await supabase.from('channel_user').insert({
+      channel_id: Number(notice_channel_id),
+      workspace_user_id: workspaceUserId
+    });
 
-    handleSetGlobalUser({ userId: user.id, workspaceId: inviteWorkspaceId, workspaceUserId });
+    handleSetGlobalUser({ userId: user.id, workspaceId: workspaceId, workspaceUserId });
 
     setInviteCode('');
     route.replace('/welcome');
