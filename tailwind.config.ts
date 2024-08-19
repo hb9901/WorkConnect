@@ -9,13 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
-        spin: 'spin 1s linear infinite'
+        spin: 'spin 1s linear infinite',
+        'bounce-1': 'bounceCustom 0.6s ease-in 0s infinite',
+        'bounce-2': 'bounceCustom 0.6s ease-in 0.45s infinite',
+        'bounce-3': 'bounceCustom 0.6s ease-in 0.9s infinite'
       },
       keyframes: {
         spin: {
           '0%': { tranform: 'rotate(0deg)' },
           '100%': { tranform: 'rotate(360deg)' }
-        }
+        },
+        bounceCustom: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-30px)' } }
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
