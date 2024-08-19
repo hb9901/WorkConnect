@@ -1,5 +1,5 @@
 'use client';
-import LoadingSpinner2 from '@/components/LoadingSpinner2';
+import Loading from '@/components/Loading';
 import TodoEmpty from '@/components/TodoEmpty';
 import useTodoList from '@/hooks/useTodo';
 import useDateStore from '@/store/dateStore';
@@ -37,7 +37,7 @@ const ToDoListMain = () => {
     }
   };
 
-  if (isPending) return <LoadingSpinner2 />;
+  if (isPending) return <Loading />;
 
   if (!todoList || isError) return;
 

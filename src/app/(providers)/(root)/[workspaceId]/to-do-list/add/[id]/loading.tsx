@@ -1,7 +1,7 @@
 import Loading from '@/components/Loading';
 
-const ProfileLoading = () => {
+const TodoAddLoading = () => {
   return <Loading />;
 };
 
-export default ProfileLoading;
+export default TodoAddLoading;
