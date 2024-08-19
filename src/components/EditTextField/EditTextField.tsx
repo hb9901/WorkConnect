@@ -1,11 +1,10 @@
 import { useSnackBar } from '@/providers/SnackBarContext';
 import clsx from 'clsx';
-import { ChangeEvent, ReactNode, useEffect, useId, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useId, useRef, useState } from 'react';
 import InputXIcon from '../../icons/InputX.svg';
 import PencilIcon from '../../icons/Pencil.svg';
 import Label from '../Label';
 export interface EditTextFieldProps {
-  children?: ReactNode;
   className?: string;
   id?: string;
   label?: string;
@@ -25,7 +24,6 @@ const EditTextField = ({
   className,
   onChange,
   labelColor = 'grey400',
-  children,
   value,
   type = 'text',
   isRequired = false,
@@ -100,7 +98,7 @@ const EditTextField = ({
   return (
     <div className="relative flex flex-col gap-2 w-full" {...props}>
       {label && (
-        <Label htmlFor={customId} color={labelColor} className={clsx('pl-1', labelClassName, className)}>
+        <Label htmlFor={customId} color={labelColor} className={clsx('pl-1', labelClassName)}>
           {label}
           {isRequired && <span className="text-error"> (필수)</span>}
         </Label>
