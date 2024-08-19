@@ -2,7 +2,6 @@
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Typography from '@/components/Typography';
-import { supabase } from '@/utils/supabase/supabaseClient';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { checkEmail } from '../auth/_utils/emailCheck';
@@ -40,7 +39,6 @@ const PasswordFindPage = () => {
       await resetPasswordEmailMutation(email);
 
       setEmail(userEmail);
-      openSnackBar({ message: '인증 메일이 발송되었어요' });
       return router.replace(`/password-find/verify?email=${encodeURIComponent(email)}`);
     }
   });
@@ -94,7 +92,6 @@ const PasswordFindPage = () => {
         </div>
       </div>
     </main>
-    // </div>
   );
 };
 

@@ -1,6 +1,5 @@
 'use client';
 
-import Typography from '@/components/Typography';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useStreamSetStore from '@/store/streamSetStore';
 import { LiveKitRoom, RoomAudioRenderer, usePersistentUserChoices } from '@livekit/components-react';
@@ -8,9 +7,8 @@ import { RoomConnectOptions } from 'livekit-client';
 
 import { redirect, useSearchParams } from 'next/navigation';
 
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { useEffect, useMemo, useState } from 'react';
-import Loading from '../../../_components/Loading';
-import VideoChannelHeader from '../VideoChannelHeader';
 import CustomVideoConference from '../VideoConference/CustomVideoConference';
 
 type videoRoomProps = {
@@ -28,8 +26,6 @@ const VideoRoom = ({ name }: videoRoomProps) => {
 
   useEffect(() => {
     if (!username || !isSettingOk) {
-      console.log(`라다이렉트 되는거임 username : ${username}  isSettingOk : ${isSettingOk}`);
-
       redirect(`/${workspaceId}/video-channel/prejoin?room=${name}`);
       return;
     }
@@ -50,18 +46,9 @@ const VideoRoom = ({ name }: videoRoomProps) => {
       autoSubscribe: true
     };
   }, []);
-  if (typeof token !== 'string' && token!) {
-    return (
-      <div className="flex h-[100vh] items-center justify-center">
-        <Typography as="h5" variant="Body16px">
-          토근을 가져오는 중 입니다...
-        </Typography>
-      </div>
-    );
-  }
 
   if (token === '' || token === null) {
-    return <Loading />;
+    return <LoadingSpinner className="h-full w-full items-center justify-center" />;
   }
 
   return (
@@ -78,7 +65,6 @@ const VideoRoom = ({ name }: videoRoomProps) => {
         }
       }}
     >
-      <VideoChannelHeader />
       <CustomVideoConference />
       <RoomAudioRenderer />
     </LiveKitRoom>

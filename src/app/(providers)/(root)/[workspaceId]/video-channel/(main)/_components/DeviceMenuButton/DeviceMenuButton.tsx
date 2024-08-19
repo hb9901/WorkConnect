@@ -1,11 +1,13 @@
 import BottomSheet from '@/components/BottomSheet';
+import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
 import VolumeIcon from '@/icons/Volume2.svg';
 import { useState } from 'react';
+import useDeviceType from '../../../_hooks/useDeviceType';
 import DeviceMenu from '../DeviceMenu/DeviceMenu';
 const DeviceMenuButton = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
+  const { isMobile } = useDeviceType();
   const handleClose = () => {
     setIsOpen(false);
   };
@@ -18,9 +20,15 @@ const DeviceMenuButton = () => {
           스피커
         </Typography>
       </button>
-      <BottomSheet isOpen={isOpen} onClose={handleClose} className="z-40">
-        <DeviceMenu onClose={handleClose} />
-      </BottomSheet>
+      {isMobile ? (
+        <BottomSheet isOpen={isOpen} onClose={handleClose} className="z-40">
+          <DeviceMenu onClose={handleClose} />
+        </BottomSheet>
+      ) : (
+        <Modal isOpen={isOpen} onClose={handleClose}>
+          <DeviceMenu onClose={handleClose} />
+        </Modal>
+      )}
     </>
   );
 };

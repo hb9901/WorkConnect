@@ -37,7 +37,7 @@ const EditOrMessageButton = ({
       return;
     } else {
       const newChannel: ChannelInsertType = {
-        name: '1대1 채팅',
+        name: null,
         type: 'chat',
         workspace_id: workspaceId
       };

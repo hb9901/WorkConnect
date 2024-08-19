@@ -12,7 +12,7 @@ export type RealtimeSubscribeProps = {
   }[];
 };
 
-const createRealtimeSubscription = ({ channelName, eventHandlers }: RealtimeSubscribeProps) => {
+const createRealtimeChannel = ({ channelName, eventHandlers }: RealtimeSubscribeProps) => {
   const channel = supabase.channel(channelName);
 
   eventHandlers.forEach(({ handler, ...config }) => {
@@ -20,11 +20,7 @@ const createRealtimeSubscription = ({ channelName, eventHandlers }: RealtimeSubs
     channel.on('postgres_changes', config, handler);
   });
 
-  channel.subscribe();
-
-  return () => {
-    channel.unsubscribe();
-  };
+  return channel;
 };
 
-export default createRealtimeSubscription;
+export default createRealtimeChannel;

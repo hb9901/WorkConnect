@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
 import Link from 'next/link';
 import { signInWithKakao } from './auth/_utils/kakaoLogin';
@@ -75,16 +75,21 @@ const LandingPage = () => {
   return (
     <main className="relative flex justify-center items-center">
       <div className="relative w-full h-dvh flex flex-col justify-center items-center">
-        {showSwiper && (
-          <div className="w-[375px] h-dvh relative flex flex-col lg:hidden">
-            <Button type="button" theme="text" className="ml-auto" onClick={handleClose}>
-              <Typography variant="Subtitle16px" color="grey400">
-                건너뛰기
-              </Typography>
-            </Button>
-            <div className="flex-grow flex items-center">
+        <div className="flex w-full">
+          <div
+            className={`w-full lg:w-[42%] h-dvh flex-col justify-center items-center bg-[#FAFAFF] flex fixed lg:relative z-10 ${showSwiper ? '' : 'hidden'} lg:flex`}
+          >
+            <div className="w-[375px] flex-grow flex items-center">
               <Swiper
-                modules={[Navigation, Pagination]}
+                modules={[Navigation, Pagination, Autoplay]}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false
+                }}
+                observer={true} // 슬라이드 전환 시 스와이퍼 자체를 감지하는 옵션 (DOM 변경이 감지되면 Swiper업데이트)
+                observeParents={true} // 슬라이드 전환 시 부모 요소를 감지하는 옵션
+                loop={true}
+                speed={1000}
                 slidesPerView={1}
                 navigation
                 pagination={{
@@ -121,54 +126,16 @@ const LandingPage = () => {
                 ))}
               </Swiper>
             </div>
-          </div>
-        )}
-        <div className="flex w-full">
-          <div className="w-full h-dvh relative flex-col justify-center items-center bg-[#FAFAFF] hidden lg:flex">
-            <div className="w-[375px] flex-grow flex items-center">
-              <Swiper
-                modules={[Navigation, Pagination]}
-                slidesPerView={1}
-                navigation
-                pagination={{
-                  clickable: true
-                }}
-              >
-                {onboardingData.map((item) => (
-                  <SwiperSlide key={item.id}>
-                    <div className="flex flex-col items-center justify-center">
-                      <div className="w-full">
-                        <Image
-                          className="w-full h-auto object-cover aspect-square"
-                          src={item.image}
-                          alt="일러스트 이미지"
-                          width={375}
-                          height={454}
-                          unoptimized
-                        />
-                      </div>
-                      <div className="flex flex-col items-center justify-center h-[132px] text-[24px] font-bold mb-9">
-                        <Typography variant="Title22px" className="text-center mb-3 " color="grey900">
-                          {item.title}
-                        </Typography>
-                        <Typography
-                          variant="Subtitle16px"
-                          className="text-center whitespace-pre-line tracking-tighter "
-                          color="grey500"
-                        >
-                          {item.subTitle}
-                        </Typography>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+            <div className="mb-4 w-[375px] lg:hidden">
+              <Button type="button" theme="primary" onClick={handleClose} isFullWidth>
+                <Typography variant="Title18px" color="white">
+                  로그인 하러가기
+                </Typography>
+              </Button>
             </div>
           </div>
 
-          <div
-            className={`flex-col w-full h-dvh mx-4 lg:justify-center lg:mx-[155px] lg:flex ${showSwiper ? 'hidden' : 'flex'}`}
-          >
+          <div className={`flex-col w-full h-dvh mx-4 lg:w-[58%] lg:flex lg:justify-center lg:items-center`}>
             <Typography
               variant="Title20px"
               color="grey700Black"
@@ -176,7 +143,7 @@ const LandingPage = () => {
             >
               로그인
             </Typography>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className="lg:w-[550px]">
               <div className="flex flex-col gap-[24px]">
                 <div className="flex flex-col">
                   <label className="text-[14px] text-[#2F323C] pl-[6px] pb-2" htmlFor="email">
@@ -192,7 +159,7 @@ const LandingPage = () => {
                     required={true}
                   />
                 </div>
-                <div className="flex flex-col ">
+                <div className="flex flex-col">
                   <label className="text-[14px] text-[#2F323C] pl-[6px] pb-2" htmlFor="password">
                     비밀번호
                   </label>
@@ -207,21 +174,22 @@ const LandingPage = () => {
                   />
                 </div>
               </div>
-              <div className="flex flex-col justify-center mt-[28px] gap-4">
+              <div className="flex flex-col justify-center mb-[18px] mt-[28px] gap-4">
                 <Button type="submit" theme="primary" isDisabled={handleLoginPending ? true : false} isFullWidth={true}>
-                  {handleLoginPending ? '로그인 중...' : '로그인'}
+                  <Typography variant="Title18px" color="white">
+                    {handleLoginPending ? '로그인 중...' : '로그인'}
+                  </Typography>
                 </Button>
+                <button
+                  onClick={signInWithKakao}
+                  className="flex justify-center items-center w-full h-[56px] text-lg font-medium bg-[#FEE502] rounded-lg text-[#3B1E1D] px-[22px] py-[12px] shadow-[0px_1px_5px_0px_rgba(0,0,0,0.12)]"
+                >
+                  <KakaoIcon className="h-6 w-6" />
+                  <span className="ml-3">카카오로 시작하기</span>
+                </button>
               </div>
             </form>
-            <div className="mt-4 mb-[18.5px]">
-              <button
-                onClick={signInWithKakao}
-                className="flex justify-center items-center w-full h-[56px] text-lg font-medium bg-[#FEE502] rounded-lg text-[#3B1E1D] px-[22px] py-[12px] shadow-[0px_1px_5px_0px_rgba(0,0,0,0.12)]"
-              >
-                <KakaoIcon className="h-6 w-6" />
-                <span className="ml-3">카카오로 시작하기</span>
-              </button>
-            </div>
+
             <div className="flex justify-center items-center">
               <Link href="/auth/signup">
                 <Typography as="span" variant="Body14px" color="grey500">

@@ -5,7 +5,7 @@ import SmileIcon from '@/icons/Smile.svg';
 import SendIcon from '@/icons/Send.svg';
 import { useRef, useState } from 'react';
 import { useMutationChatMessage } from '../../../../_hook/useChatMutation';
-import useGetChannelId from '../../../../_hook/useGetChannelId';
+import useGetParamsChannelId from '../../../../_hook/useGetParamsChannelId';
 
 type MessageTextareaProps = {
   handleOpenUtil: () => void;
@@ -19,7 +19,7 @@ const handleResizeHeight = (textArea: HTMLTextAreaElement | null) => {
 
 const MessageTextarea = ({ handleOpenUtil }: MessageTextareaProps) => {
   const [isComposing, setIsComposing] = useState(false);
-  const channelId = useGetChannelId();
+  const channelId = useGetParamsChannelId();
 
   const ref = useRef<HTMLTextAreaElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);

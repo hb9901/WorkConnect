@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import XCircleIcon from '../../icons/InputXCircle.svg';
 import Label from '../Label';
 import Typography from '../Typography';
-
 export interface CountTextFieldProps {
   label?: string;
   children?: string;

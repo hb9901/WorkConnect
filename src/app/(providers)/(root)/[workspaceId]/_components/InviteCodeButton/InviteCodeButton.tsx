@@ -1,5 +1,5 @@
 import Button from '@/components/Button';
-import Typography from '@/components/Typography';
+import ResponsiveTypography from '@/components/ResponsiveTypography';
 import { useSnackBar } from '@/providers/SnackBarContext';
 
 interface InviteCodeButtonProps {
@@ -13,40 +13,25 @@ const InviteCodeButton = ({ workspaceId, isFullWidth }: InviteCodeButtonProps) =
     try {
       const workspaceIdStr = String(workspaceId);
       await navigator.clipboard.writeText(workspaceIdStr);
-      openSnackBar({ message: '초대 코드가 복사되었습니다.' });
+      openSnackBar({ message: '초대 코드를 복사했어요' });
     } catch (err) {
-      alert(err);
+      openSnackBar({ message: '초대 코드 복사에 실패했어요' });
     }
   };
 
   return (
     <>
-      {/*모바일*/}
       <Button
         theme="primary"
         isFullWidth={isFullWidth}
         onClick={() => {
           handleClick(workspaceId);
         }}
-        isSmall
-        className="flex lg:hidden"
+        className="!h-[36px] lg:!h-[56px]"
       >
-        <Typography variant="Subtitle12px" color="white">
+        <ResponsiveTypography mobileVariant="Subtitle12px" pcVariant="Subtitle16px" color="white">
           초대 코드 복사
-        </Typography>
-      </Button>
-      {/*PC*/}
-      <Button
-        theme="primary"
-        isFullWidth={isFullWidth}
-        onClick={() => {
-          handleClick(workspaceId);
-        }}
-        className="hidden lg:flex"
-      >
-        <Typography variant="Subtitle16px" color="white">
-          초대 코드 복사
-        </Typography>
+        </ResponsiveTypography>
       </Button>
     </>
   );

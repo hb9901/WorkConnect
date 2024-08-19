@@ -6,17 +6,17 @@ import { MessagesWrapper } from '../MessagesContainer';
 import { useGetChatMessages, useGetUsersInChannel } from '../../../../_hook/useChatQuery';
 import { useChatHandlers } from '../../_hooks/useChatHandlers';
 import { handleSubscribeToChat } from '../../_utils/subscribe';
-import useGetChannelId from '../../../../_hook/useGetChannelId';
+import useGetParamsChannelId from '../../../../_hook/useGetParamsChannelId';
 
 const Messages = () => {
-  const channelId = useGetChannelId();
+  const channelId = useGetParamsChannelId();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { data: chatMessages = [], isPending } = useGetChatMessages({
     channel_id: Number(channelId)
   });
 
-  const { payloadMessages, handleMessagesUpdates, handleUserUpdates } = useChatHandlers();
+  const { payloadMessages, handleMessagesUpdates, handleUserInfoUpdates } = useChatHandlers();
 
   const {
     data: usersInChannel = {},
@@ -33,12 +33,16 @@ const Messages = () => {
   useEffect(() => {
     if (!channelId || isPendingUsersInChannel) return;
 
-    handleSubscribeToChat({
+    const channel = handleSubscribeToChat({
       handleMessagesUpdates: handleMessagesUpdates({ channelId }),
-      handleUserUpdates: handleUserUpdates({ channelId }),
+      handleUserInfoUpdates: handleUserInfoUpdates({ channelId }),
       id: channelId,
       userIds: Object.keys(usersInChannel).join(',')
-    });
+    }).subscribe();
+
+    return () => {
+      channel.unsubscribe();
+    };
   }, [channelId, isPendingUsersInChannel]);
 
   return (

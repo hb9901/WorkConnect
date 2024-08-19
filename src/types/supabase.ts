@@ -93,7 +93,7 @@ export type Database = {
           created_at: string
           id: number
           type: string
-          workspace_user_id: string
+          workspace_user_id: string | null
         }
         Insert: {
           channel_id: number
@@ -101,7 +101,7 @@ export type Database = {
           created_at?: string
           id?: number
           type: string
-          workspace_user_id: string
+          workspace_user_id?: string | null
         }
         Update: {
           channel_id?: number
@@ -109,7 +109,7 @@ export type Database = {
           created_at?: string
           id?: number
           type?: string
-          workspace_user_id?: string
+          workspace_user_id?: string | null
         }
         Relationships: [
           {
@@ -299,6 +299,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_channel_info: {
+        Args: {
+          cid: number
+          wuid: string
+        }
+        Returns: {
+          channel_thumbnail: string
+          name: string
+        }[]
+      }
       get_channel_name: {
         Args: {
           cid: number
@@ -306,25 +316,32 @@ export type Database = {
         }
         Returns: string
       }
-      get_chat_channels: {
+      get_channels: {
         Args: {
           wid: number
           wuid: string
         }
         Returns: {
           channel_id: number
-          channel_name: string
           message_created_at: string
           message: string
           is_dm: boolean
-          user_name: string
           user_state: string
-          user_thumbnail: string
+          channel_thumbnail: string
           workspace_user_id: string
           user_count: number
           type: string
+          channel_name: string
           created_at: string
+          un_read_chat: number
         }[]
+      }
+      get_chat_channel_id: {
+        Args: {
+          wid: number
+          wuid: string
+        }
+        Returns: number
       }
       get_chat_messages: {
         Args: {
