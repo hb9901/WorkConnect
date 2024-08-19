@@ -17,14 +17,14 @@ const ProfileParallelLayout = ({ children, home }: StrictPropsWithChildren<Profi
             </div>
             <div className="w-full lg:min-w-[375px] lg:max-w-[375px]" />
             <div
-              className="w-full fixed lg:min-w-[375px] lg:max-w-[375px] lg:w-[375px] lg:top-[84px] lg:bottom-0 lg:right-0 
-            lg:border-[#E5E7EB] lg:border-l-[1px] lg:overflow-y-scroll lg:scroll-container z-50"
+              className="w-full h-full fixed lg:h-auto lg:min-w-[375px] lg:max-w-[375px] lg:w-[375px] lg:top-[84px] lg:bottom-0 lg:right-0 
+            lg:border-[#E5E7EB] lg:border-l-[1px] overflow-y-scroll scroll-container z-50"
             >
               {children}
             </div>
           </div>
         </PageMain>
-        <BottomBar />
+        <BottomBar className="hidden lg:flex" />
       </PCWrapper>
     </>
   );
