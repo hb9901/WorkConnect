@@ -75,17 +75,17 @@ const Input = ({
       switch (state) {
         case 'focus':
           if (type === 'password') {
-            return <Image onClick={handleIconClick} src={InputEyeIcon} alt="Eye Icon" />;
+            return <InputEyeIcon onClick={handleIconClick} />;
           }
         case 'typing':
           if (type === 'password') {
-            return <Image onClick={handleIconClick} src={InputEyeIcon} alt="Eye Icon" />;
+            return <InputEyeIcon onClick={handleIconClick} />;
           } else {
-            return <Image onClick={handleClickDelete} src={InputXIcon} alt="X Icon" />;
+            return <InputXIcon onClick={handleClickDelete} />;
           }
         default:
           if (type === 'password') {
-            return <Image onClick={handleIconClick} src={InputEyeIcon} alt="Eye Icon" />;
+            return <InputEyeIcon onClick={handleIconClick} />;
           }
       }
     }
