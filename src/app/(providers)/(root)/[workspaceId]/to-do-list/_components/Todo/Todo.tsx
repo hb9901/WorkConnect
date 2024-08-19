@@ -34,18 +34,16 @@ const Todo = ({ id, title, startDate, endDate, place, priority, status }: TodoPr
       style={style}
       {...listeners}
       {...attributes}
-      className="flex flex-row justify-between items-center rounded-[8px] bg-[#FAFAFA] px-[16px] py-[12px] shadow-sm shadow-slate-200 hover:brightness-90 active:brightness-75
-      lg:w-full lg:py-[24px] lg:shadow-md "
+      className="rounded-[8px] bg-[#FAFAFA] px-[16px] py-[12px] shadow-sm shadow-slate-200 
+      hover:brightness-90 active:brightness-75 lg:py-[24px] lg:shadow-md "
     >
-      <div className="flex flex-col items-start text-start w-full gap-[6px]">
+      <div className="flex flex-col items-start text-start gap-[6px]">
         <Typography variant="Title16px" color="grey700Black" className="w-full line-clamp-2">
           {title}
         </Typography>
-        <div>
-          <Typography variant="Subtitle14px" color="grey400" className="w-full line-clamp-2">
-            {changeDateStr(startDate, endDate)} {place && '| ' + place}
-          </Typography>
-        </div>
+        <Typography variant="Subtitle14px" color="grey400" className="w-full line-clamp-2">
+          {changeDateStr(startDate, endDate)} {place && '| ' + place}
+        </Typography>
       </div>
       {(priority === 'High' || priority === 'Medium' || priority === 'Low') && <Tag theme={priority}>{priority}</Tag>}
     </button>
