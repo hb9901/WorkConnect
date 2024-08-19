@@ -1,5 +1,5 @@
 'use client';
-import LoadingSpinner2 from '@/components/LoadingSpinner2';
+import Loading from '@/components/Loading';
 import NotFoundError from '@/components/NotFoundError';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
@@ -19,7 +19,7 @@ const HomeMain = () => {
     isError: userListIsError
   } = useWorkspaceUserList(workspaceId, workspaceUserId);
 
-  if (userIsPending || userListIsPending) return <LoadingSpinner2 />;
+  if (userIsPending || userListIsPending) return <Loading />;
 
   if (!workspaceUser || userIsError || userListIsError) return <NotFoundError />;
 
