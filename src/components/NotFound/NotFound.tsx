@@ -1,5 +1,7 @@
 import clsx from 'clsx';
+import Link from 'next/link';
 import NotFoundIcon from '../../icons/NotFoundIcon.svg';
+import Button from '../Button';
 import Typography from '../Typography';
 
 export interface NotFoundProps {
@@ -22,6 +24,11 @@ const NotFound = ({ className }: NotFoundProps) => {
       <Typography color="grey400" className="text-[14px] sm:text-[24px]">
         페이지 주소가 잘못 입력되었거나 삭제된 페이지일 수 있습니다.
       </Typography>
+      <div className="pt-16">
+        <Button theme="outline" className="w-80 hover:bg-gray-50">
+          <Link href="/">홈으로 가기</Link>
+        </Button>
+      </div>
     </div>
   );
 };
