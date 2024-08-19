@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import InputErrorIcon from '../../icons/InputError.svg';
 import InputEyeIcon from '../../icons/InputEye.svg';
@@ -68,24 +67,24 @@ const Input = ({
 
   const renderIcon = () => {
     if (status === 'error') {
-      return <Image src={InputErrorIcon} alt="Error Icon" />;
+      return <InputErrorIcon />;
     } else if (status === 'success') {
-      return <Image src={InputSuccessIcon} alt="Success Icon" />;
+      return <InputSuccessIcon />;
     } else {
       switch (state) {
         case 'focus':
           if (type === 'password') {
-            return <Image onClick={handleIconClick} src={InputEyeIcon} alt="Eye Icon" />;
+            return <InputEyeIcon onClick={handleIconClick} />;
           }
         case 'typing':
           if (type === 'password') {
-            return <Image onClick={handleIconClick} src={InputEyeIcon} alt="Eye Icon" />;
+            return <InputEyeIcon onClick={handleIconClick} />;
           } else {
-            return <Image onClick={handleClickDelete} src={InputXIcon} alt="X Icon" />;
+            return <InputXIcon onClick={handleClickDelete} />;
           }
         default:
           if (type === 'password') {
-            return <Image onClick={handleIconClick} src={InputEyeIcon} alt="Eye Icon" />;
+            return <InputEyeIcon onClick={handleIconClick} />;
           }
       }
     }
