@@ -181,6 +181,7 @@ const LandingPage = () => {
                   </Typography>
                 </Button>
                 <button
+                  type="button"
                   onClick={signInWithKakao}
                   className="flex justify-center items-center w-full h-[56px] text-lg font-medium bg-[#FEE502] rounded-lg text-[#3B1E1D] px-[22px] py-[12px] shadow-[0px_1px_5px_0px_rgba(0,0,0,0.12)]"
                 >
