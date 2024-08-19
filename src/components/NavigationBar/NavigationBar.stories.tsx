@@ -5,13 +5,21 @@ export default {
   component: NavigationBar,
   subcomponents: { Tab },
   parameters: {
-    layout: 'centered'
+    layout: 'fullscreen'
   },
   tags: ['autodocs'],
   argTypes: {
     children: {
       control: false,
       description: 'Tab 컴포넌트만 들어갈 수 있습니다.'
+    },
+    active: {
+      control: 'boolean',
+      description: '현재 활성화된 탭을 설정합니다.'
+    },
+    className: {
+      control: 'text',
+      description: '추가적인 CSS 클래스를 지정합니다.'
     }
   }
 };
