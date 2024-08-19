@@ -7,7 +7,21 @@ export default {
   parameters: {
     layout: 'centered'
   },
-  tags: ['autodocs']
+  tags: ['autodocs'],
+  argTypes: {
+    label: {
+      control: 'text',
+      description: 'SelectBox의 레이블 텍스트를 지정합니다.'
+    },
+    options: {
+      control: 'object',
+      description: 'SelectBox의 옵션을 지정합니다.'
+    },
+    onChange: {
+      action: 'changed',
+      description: 'SelectBox의 변경 이벤트를 지정합니다.'
+    }
+  }
 };
 
 const Template: StoryFn<SelectBoxProps> = (args) => <SelectBox {...args} />;
