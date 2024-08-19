@@ -1,6 +1,5 @@
 import { useSnackBar } from '@/providers/SnackBarContext';
 import clsx from 'clsx';
-import Image from 'next/image';
 import { ChangeEvent, ReactNode, useEffect, useId, useRef, useState } from 'react';
 import InputXIcon from '../../icons/InputX.svg';
 import PencilIcon from '../../icons/Pencil.svg';
@@ -85,11 +84,11 @@ const EditTextField = ({
 
   const renderIcon = () => {
     if (state === 'default') {
-      return <Image src={PencilIcon} onClick={handleFocus} alt="Pencil Icon" />;
+      return <PencilIcon onClick={handleFocus} />;
     } else if (state === 'focus') {
       return null;
     } else if (state === 'typing') {
-      return <Image src={InputXIcon} onClick={handleClickDelete} alt="X Icon" />;
+      return <InputXIcon onClick={handleClickDelete} />;
     }
   };
 
