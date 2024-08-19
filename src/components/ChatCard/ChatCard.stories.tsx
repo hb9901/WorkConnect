@@ -7,7 +7,37 @@ export default {
   parameters: {
     layout: 'centered'
   },
-  tags: ['autodocs']
+  tags: ['autodocs'],
+  argTypes: {
+    icon: {
+      control: 'element',
+      description: '채팅방 아이콘을 지정합니다.'
+    },
+    name: {
+      control: 'text',
+      description: '채팅방 이름을 지정합니다.'
+    },
+    status: {
+      control: 'text',
+      description: '채팅방 상태를 지정합니다.'
+    },
+    date: {
+      control: 'text',
+      description: '채팅방 날짜를 지정합니다.'
+    },
+    message: {
+      control: 'text',
+      description: '채팅방 메시지를 지정합니다.'
+    },
+    unreadCount: {
+      control: 'number',
+      description: '읽지 않은 메시지 개수를 지정합니다.'
+    },
+    pin: {
+      control: 'boolean',
+      description: '고정 여부를 지정합니다.'
+    }
+  }
 };
 
 const Template: StoryFn<ChatCardProps> = (args) => <ChatCard {...args} />;
@@ -19,7 +49,7 @@ Default.args = {
   status: '미팅・회의',
   date: '2024-07-31',
   message: '메시지 미리보기',
-  unreadCount: 1,
+  unreadCount: 0,
   pin: true
 };
 
@@ -30,7 +60,7 @@ Vacation.args = {
   status: '휴가',
   date: '2024-07-31',
   message: '휴가 중입니다. 답변이 늦어질 수 있습니다.',
-  unreadCount: 0,
+  unreadCount: 1,
   pin: false
 };
 
@@ -63,6 +93,6 @@ OutOfOffice.args = {
   status: '자리 비움',
   date: '2024-07-31',
   message: '자리에 없습니다. 긴급한 경우 다른 분에게 문의해주세요.',
-  unreadCount: 5,
+  unreadCount: 4,
   pin: true
 };
