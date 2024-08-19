@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { ReactNode } from 'react';
 import CheckIcon from '../../icons/MemberCardCheck.svg';
 import UnCheckIcon from '../../icons/MemberCardUnCheck.svg';
@@ -37,11 +36,7 @@ export const MemberCard = ({ name, position, status, icon, checked, onToggle }: 
       </div>
       <Typography variant="Title14px" color="grey500" className="flex flex-row gap-1 flex-shrink-0">
         {status}
-        {checked ? (
-          <Image src={CheckIcon} alt="check" className="cursor-pointer" />
-        ) : (
-          <Image src={UnCheckIcon} alt="uncheck" className="cursor-pointer" />
-        )}
+        {checked ? <CheckIcon /> : <UnCheckIcon />}
       </Typography>
     </div>
   );

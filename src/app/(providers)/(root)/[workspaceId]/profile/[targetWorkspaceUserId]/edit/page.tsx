@@ -3,7 +3,7 @@ import api from '@/api/api';
 import BottomSheetModal from '@/components/BottomSheetModal';
 import Button from '@/components/Button';
 import EditTextfield from '@/components/EditTextField';
-import LoadingSpinner2 from '@/components/LoadingSpinner2';
+import Loading from '@/components/Loading';
 import NotFoundError from '@/components/NotFoundError';
 import TextFieldButton from '@/components/TextFieldButton';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
@@ -109,7 +109,7 @@ const ProfileEditPage = () => {
     }
   };
 
-  if (isPending) return <LoadingSpinner2 />;
+  if (isPending) return <Loading />;
   if (isError) return <NotFoundError />;
 
   return (
