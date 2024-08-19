@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import InputErrorIcon from '../../icons/InputError.svg';
 import InputEyeIcon from '../../icons/InputEye.svg';
@@ -68,9 +67,9 @@ const Input = ({
 
   const renderIcon = () => {
     if (status === 'error') {
-      return <Image src={InputErrorIcon} alt="Error Icon" />;
+      return <InputErrorIcon />;
     } else if (status === 'success') {
-      return <Image src={InputSuccessIcon} alt="Success Icon" />;
+      return <InputSuccessIcon />;
     } else {
       switch (state) {
         case 'focus':
