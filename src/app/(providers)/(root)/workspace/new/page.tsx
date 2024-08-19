@@ -60,7 +60,7 @@ const NewWorkSpacePage = () => {
       return route.replace('/');
     }
 
-    if (!orgName) return openSnackBar({ message: '조직 이름을 입력해주세요!' });
+    if (!orgName) return openSnackBar({ message: '조직 이름을 입력해주세요' });
 
     if (cookieUserId) {
       const workspaceId = await createWorkspaceMutate({ orgName, combinedNumber });
