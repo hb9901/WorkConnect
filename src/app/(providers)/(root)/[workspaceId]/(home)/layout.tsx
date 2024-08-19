@@ -16,7 +16,7 @@ const HomeLayout = ({ children, params }: StrictPropsWithChildren<HomeLayoutProp
     <>
       <PCWrapper isHome>
         <SelectHeader workspaceId={workspaceId} isFull />
-        <PageMain className="lg:pl-[87px] lg:!w-full">{children}</PageMain>
+        <PageMain className="lg:pl-[87px] lg:!w-full lg:!h-[calc(100dvh-84px)]">{children}</PageMain>
         <BottomBar />
       </PCWrapper>
     </>

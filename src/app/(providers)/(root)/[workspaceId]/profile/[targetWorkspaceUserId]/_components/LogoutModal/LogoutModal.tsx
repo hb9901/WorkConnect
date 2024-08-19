@@ -2,6 +2,7 @@
 import Button from '@/components/Button';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
+
 import useUserStore from '@/store/userStore';
 import { deleteAllCookies } from '@/utils/cookie/clientUtils';
 import { supabase } from '@/utils/supabase/supabaseClient';
@@ -40,14 +41,17 @@ const LogoutModal = ({ isOpen, handleLogoutClick }: LogoutModalProps) => {
           <Typography variant="Title18px" color="grey700Black" className="mb-[12px]">
             정말 로그아웃 하시겠어요?
           </Typography>
+          <Typography variant="Subtitle14px" color="grey400" className="mb-[13px]">
+            언제든지 다시 로그인하실 수 있어요.
+          </Typography>
         </div>
         {/*버튼*/}
         <div className="flex flex-row px-[16px] gap-[8px] mt-[10px] mb-[20px] lg:mb-0 lg:items-center justify-center">
           <Button theme="grey" isFullWidth onClick={handleLogoutClick} className="lg:!w-[138px]">
-            취소
+            다음에
           </Button>
-          <Button theme="primary" isFullWidth onClick={logout} className="lg:!w-[138px]">
-            로그아웃하기
+          <Button theme="primary" isFullWidth onClick={logout} className="lg:!w-[138px] !bg-error">
+            로그아웃
           </Button>
         </div>
       </div>
