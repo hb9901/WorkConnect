@@ -21,10 +21,13 @@ export const PageLayout = ({ children }: StrictPropsWithChildren) => {
   );
 };
 
-export const PageAside = ({ children }: StrictPropsWithChildren) => {
+export const PageAside = ({ children, className }: StrictPropsWithChildren & { className?: string }) => {
   return (
     <aside
-      className={`hidden lg:block bg-[#F4F4F6] w-[300px] h-[100dvh] lg:pt-[84px] overflow-hidden lg:overflow-y-scroll lg:flex-shrink-0 lg:scroll-container lg:sticky lg:top-0`}
+      className={clsx(
+        `hidden lg:block bg-[#F4F4F6] w-[300px] h-[100dvh] lg:pt-[84px] overflow-hidden lg:overflow-y-scroll lg:flex-shrink-0 lg:scroll-container lg:sticky lg:top-0`,
+        className
+      )}
     >
       {children}
     </aside>
@@ -51,10 +54,12 @@ export const PCWrapper = ({ isHome = false, children }: StrictPropsWithChildren<
 export const PCHeader = ({
   isFull = false,
   isTodoList = false,
+  isChannels = false,
   className
 }: {
   isFull?: boolean;
   isTodoList?: boolean;
+  isChannels?: boolean;
   className?: string;
 }) => {
   const workspaceId = useWorkspaceId();
@@ -64,6 +69,7 @@ export const PCHeader = ({
       workspaceId={workspaceId}
       isFull={isFull}
       isTodoList={isTodoList}
+      isChannels={isChannels}
       className={clsx('hidden !fixed top-0 left-0 z-30 lg:block', className)}
     />
   );
