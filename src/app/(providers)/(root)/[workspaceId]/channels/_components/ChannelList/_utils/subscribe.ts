@@ -1,5 +1,5 @@
 import { REALTIME_CHANNEL_NAME } from '@/constants/realtime';
-import createRealtimeSubscription from '@/utils/createRealtimeSubscription';
+import createRealtimeChannel from '@/utils/createRealtimeChannel';
 
 type SubscribeToChannelsProps = {
   handleChatInserts: (payload: any) => void;
@@ -11,10 +11,9 @@ type SubscribeToChannelsProps = {
 export const handleSubscribeToChannels = ({
   handleChatInserts,
   channelIds,
-  handleChannelUserUpdates,
-  workspaceUserId
+  handleChannelUserUpdates
 }: SubscribeToChannelsProps) => {
-  return createRealtimeSubscription({
+  return createRealtimeChannel({
     channelName: REALTIME_CHANNEL_NAME.CHANNEL_LIST,
     eventHandlers: [
       {
@@ -28,7 +27,7 @@ export const handleSubscribeToChannels = ({
         event: '*',
         schema: 'public',
         table: 'channel_user',
-        filter: `workspace_user_id=eq.${workspaceUserId}`,
+        filter: `channel_id=in.(${channelIds})`,
         handler: handleChannelUserUpdates
       }
     ]

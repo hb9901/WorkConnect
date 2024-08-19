@@ -1,20 +1,20 @@
 import { REALTIME_CHANNEL_NAME } from '@/constants/realtime';
-import createRealtimeSubscription from '@/utils/createRealtimeSubscription';
+import createRealtimeChannel from '@/utils/createRealtimeChannel';
 
 type SubscribeToChatProps = {
   handleMessagesUpdates: (payload: any) => void;
-  handleUserUpdates: () => void;
+  handleUserInfoUpdates: () => void;
   id: number;
   userIds: string;
 };
 
 export const handleSubscribeToChat = ({
   handleMessagesUpdates,
-  handleUserUpdates,
+  handleUserInfoUpdates,
   id,
   userIds
 }: SubscribeToChatProps) => {
-  return createRealtimeSubscription({
+  return createRealtimeChannel({
     channelName: REALTIME_CHANNEL_NAME.CHAT,
     eventHandlers: [
       {
@@ -29,14 +29,14 @@ export const handleSubscribeToChat = ({
         schema: 'public',
         table: 'workspace_user',
         filter: `id=in.(${userIds})`,
-        handler: handleUserUpdates
+        handler: handleUserInfoUpdates
       }
     ]
   });
 };
 
 export const handleSubscribeToNotice = ({ handler, id }: { handler: (payload: any) => void; id: number }) => {
-  return createRealtimeSubscription({
+  return createRealtimeChannel({
     channelName: REALTIME_CHANNEL_NAME.CHAT_FOR_NOTICE,
     eventHandlers: [
       {

@@ -1,5 +1,6 @@
 import api from '@/api';
 import useUserStore from '@/store/userStore';
+import { TWorkSpaceListType } from '@/types/workspace';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
@@ -9,7 +10,7 @@ const useWorkspaceList = (workspaceId: number, userId: string | null) => {
     data: workspaceInfo,
     isPending,
     isError
-  } = useQuery({
+  } = useQuery<TWorkSpaceListType | undefined | null>({
     queryKey: [`workspaceList${workspaceId}${userId}`],
     queryFn: () => {
       if (!userId) return;
@@ -19,7 +20,7 @@ const useWorkspaceList = (workspaceId: number, userId: string | null) => {
   });
 
   useEffect(() => {
-    if (workspaceInfo) {
+    if (workspaceInfo && workspaceInfo.userData.length > 0) {
       const workspaceUserId = workspaceInfo.userData[0].id;
       const workspaceList = workspaceInfo.workspaceListData;
       setWorkspaceData(workspaceUserId, workspaceList);

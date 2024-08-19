@@ -1,3 +1,4 @@
+import ResponsiveTypography from '@/components/ResponsiveTypography';
 import Typography from '@/components/Typography';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import HandsIcon from '@/icons/Hands.svg';
@@ -24,17 +25,14 @@ const inviteCardWithMember = ({ handleCardClose }: InviteCardWithOutMemberProps)
           <Typography variant="Title18px" color="grey700Black" className="lg:hidden">
             <div>동료들과 함께</div>
             <div>{selectedWorkspace.name}을 시작하세요 !</div>
-            <Typography variant="Body14px" color="grey500" className="lg:hidden">
-              <div>함께 일하는 동료들을 초대해보세요.</div>
-            </Typography>
           </Typography>
           {/*pc 글씨*/}
           <Typography variant="Title36px" color="grey700Black" className="hidden lg:flex lg:flex-row">
             동료들과 함께 {selectedWorkspace.name}을 시작하세요 !
           </Typography>
-          <Typography variant="Body26px" color="grey500" className="hidden lg:flex lg:flex-row">
-            <div>함께 일하는 동료들을 초대해보세요.</div>
-          </Typography>
+          <ResponsiveTypography mobileVariant="Body16px" pcVariant="Body26px" color="grey500">
+            함께 일하는 동료들을 초대해보세요.
+          </ResponsiveTypography>
         </div>
         <div>
           <button onClick={handleCardClose}>

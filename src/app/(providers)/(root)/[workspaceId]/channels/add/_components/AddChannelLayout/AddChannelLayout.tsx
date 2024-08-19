@@ -10,10 +10,9 @@ import ChannelListTopBar from '../../../_components/ChannelListTopBar';
 
 type AddChannelLayoutProps = {
   title: string;
-  onSubmit: () => Promise<void>;
 };
 
-const AddChannelLayout = ({ title, children, onSubmit }: StrictPropsWithChildren<AddChannelLayoutProps>) => {
+const AddChannelLayout = ({ title, children }: StrictPropsWithChildren<AddChannelLayoutProps>) => {
   const router = useRouter();
 
   return (
@@ -24,12 +23,12 @@ const AddChannelLayout = ({ title, children, onSubmit }: StrictPropsWithChildren
           <ChannelList />
         </div>
       </PageAside>
-      <PageMain>
+      <PageMain className="flex flex-col">
         <TopBar
           title={title}
           Icon1={<XIcon onClick={() => router.back()} className="lg:hidden" />}
           Icon4={
-            <button onClick={onSubmit}>
+            <button>
               <Check1Icon />
             </button>
           }

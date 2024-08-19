@@ -1,7 +1,7 @@
 'use client';
 
 import Typography from '@/components/Typography';
-import ChevronLeftIcon from '@/icons/ChevronLeft.svg';
+import ChevronLeftIcon from '@/icons/ChevronLeftIcon.svg';
 import ChevronRightIcon from '@/icons/ChevronRight.svg';
 import useDateStore from '@/store/dateStore';
 import dayjs, { Dayjs } from 'dayjs';
@@ -15,7 +15,7 @@ const DateButtons = ({ showWeeklyButton = true }: DateButtonsProps) => {
   const { selectedDate, isWeekly, changeIsWeekly, handleClickNext, handleClickPrevious, handleClickDate } =
     useDateStore(
       useShallow((state) => ({
-        selectedDate: state.selectedDate,
+        selectedDate: dayjs(state.selectedDate),
         isWeekly: state.isWeekly,
         changeIsWeekly: state.changeIsWeekly,
         handleClickNext: state.handleClickNext,
@@ -42,14 +42,13 @@ const DateButtons = ({ showWeeklyButton = true }: DateButtonsProps) => {
             onClick={handleClickPrevious}
             className="flex items-center justify-center w-[20px] h-[20px] rounded-full border-[1px] border-[#737B91]"
           >
-            <div>
-              <ChevronLeftIcon className="w-[10px] h-[10px] stroke-[#737B91]" />
-            </div>
+            <ChevronLeftIcon className="w-![10px] h-![10px] stroke-[#737B91]" />
           </button>
-          <button onClick={handleClickNext}>
-            <div className="flex items-center justify-center w-[20px] h-[20px] rounded-full border-[1px] border-[#737B91]">
-              <ChevronRightIcon className="w-[10px] h-[10px]" />
-            </div>
+          <button
+            onClick={handleClickNext}
+            className="flex items-center justify-center w-[20px] h-[20px] rounded-full border-[1px] border-[#737B91]"
+          >
+            <ChevronRightIcon className="w-![10px] h-![10px] stroke-[#737B91]" />
           </button>
         </div>
       </div>

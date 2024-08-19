@@ -91,10 +91,10 @@ type GetChannelNameRequestProps = {
   wuid: WorkspaceUserType['id'];
 };
 
-export const getChannelName = async ({ id, wuid }: GetChannelNameRequestProps) => {
+export const getChannelInfo = async ({ id, wuid }: GetChannelNameRequestProps) => {
   const supabase = createClient();
 
-  const response = await supabase.rpc('get_channel_name', {
+  const response = await supabase.rpc('get_channel_info', {
     cid: id,
     wuid: wuid
   });

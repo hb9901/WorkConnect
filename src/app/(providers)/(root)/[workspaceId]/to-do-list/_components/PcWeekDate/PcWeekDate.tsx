@@ -19,7 +19,15 @@ const PcDate = ({ weekName, date, isSelected }: PcDateProps) => {
       >
         <Typography
           variant="Title18px"
-          color={isSelected ? 'primary200Main' : 'grey700Black'}
+          color={
+            isSelected
+              ? 'primary200Main'
+              : weekName === '토'
+                ? 'information'
+                : weekName === '일'
+                  ? 'error'
+                  : 'grey700Black'
+          }
           className="lg:flex lg:gap-[24px]"
         >
           <span>{date.date()}</span>

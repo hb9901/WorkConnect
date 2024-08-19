@@ -27,7 +27,7 @@ const SignUpPage = () => {
       handleToggleBottomSheet();
     },
     onError: () => {
-      openSnackBar({ message: '에러가 발생했어요.' });
+      openSnackBar({ message: '에러가 발생했어요' });
     }
   });
 
@@ -66,21 +66,21 @@ const SignUpPage = () => {
 
   return (
     <main className="flex h-dvh">
-      <div className="w-full hidden lg:flex justify-center items-center bg-[#FAFAFF] gap-[18px]">
+      <div className="hidden lg:w-[42%] lg:flex lg:justify-center lg:items-center lg:bg-[#FAFAFF] lg:gap-[18px]">
         <WorkConnectLogo /> <WorkConnectWebTextLogo />
       </div>
-      <div className="flex flex-col mx-4 w-full lg:mx-[151px]">
-        <TopBar title="" style={{ padding: '0px' }} />
-        <form onSubmit={handleSignUp}>
-          <div className="flex-grow">
+      <div className="flex flex-col mx-4 w-full lg:w-[58%] lg:justify-center lg:items-center">
+        <TopBar title="" className="lg:hidden" style={{ padding: '0px' }} />
+        <form onSubmit={handleSignUp} className="lg:w-[550px]">
+          <div className="flex-grow break-keep">
             <Typography
               variant="Title20px"
               color="grey700Black"
-              className="pt-[42px] mb-[18px] flex items-center lg:text-[36px]"
+              className="mt-[42px] mb-[18px] flex items-center lg:mt-0 lg:text-[36px]"
             >
-              회원 가입
+              회원가입
             </Typography>
-            <Typography variant="Subtitle18px" color="grey500" className="hidden lg:block mb-[42px]">
+            <Typography variant="Subtitle18px" color="grey500" className="hidden lg:block mb-[42px] ">
               Work Connect를 활용하여 업무의 효율을 높이세요
             </Typography>
             <div className="flex flex-col gap-[24px]">
