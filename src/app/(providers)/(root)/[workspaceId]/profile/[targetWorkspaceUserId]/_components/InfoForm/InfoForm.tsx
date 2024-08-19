@@ -8,7 +8,7 @@ interface InfoFormProps {
 
 const InfoForm = ({ title, content, children }: StrictPropsWithChildren<InfoFormProps>) => {
   return (
-    <div className="flex flex-row gap-[20px]">
+    <div className="flex flex-row items-center gap-[20px]">
       <div className="flex items-center justify-center w-[38px] h-[38px] rounded-full bg-[#FAFAFA]">{children}</div>
       <div className="flex flex-col gap-[6px]">
         <Typography variant="Subtitle14px" color="grey400">
