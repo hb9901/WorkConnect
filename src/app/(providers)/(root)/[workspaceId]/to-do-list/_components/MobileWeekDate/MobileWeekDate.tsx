@@ -11,10 +11,13 @@ interface MobileDateProps {
 const MobileDate = ({ weekName, date, isSelected }: MobileDateProps) => {
   return (
     <div className="flex flex-col gap-[16px] items-center lg:hidden" key={date.date()}>
-      <Typography variant="Title14px" color="grey600">
+      <Typography
+        variant="Title14px"
+        color={weekName === '일' ? 'error' : weekName === '토' ? 'information' : 'grey600'}
+      >
         {weekName}
       </Typography>
-      <DateButton date={date} isSelected={isSelected} />
+      <DateButton date={date} isSameMonth isSelected={isSelected} />
     </div>
   );
 };

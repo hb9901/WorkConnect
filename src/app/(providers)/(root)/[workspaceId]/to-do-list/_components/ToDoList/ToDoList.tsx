@@ -1,42 +1,35 @@
 'use client';
 
-import Typography from '@/components/Typography';
-import CheckCircleIcon from '@/icons/CheckCircle.svg';
-import LoaderIcon from '@/icons/Loader.svg';
-import MinusCircleIcon from '@/icons/MinusCircle.svg';
-import useDateStore from '@/store/dateStore';
 import { Tables } from '@/types/supabase';
+import { useDroppable } from '@dnd-kit/core';
 import { cva, VariantProps } from 'class-variance-authority';
 import Todo from '../Todo/Todo';
-import { isDateSelected } from './function';
+import TodoListTitle from '../TodoListTitle';
 
 type ToDoListProps = {
   todoList: Tables<'todo'>[] | undefined;
 } & VariantProps<typeof todoListClass>;
 
 const ToDoList = ({ todoList, title }: ToDoListProps) => {
-  const selectedDate = useDateStore((state) => state.selectedDate);
-  const selectedTodoList =
-    todoList && todoList.filter((todo) => isDateSelected(todo.start_date, todo.end_date, selectedDate));
-  if (!selectedTodoList) return;
-  return (
-    <div className={todoListClass({ title })}>
-      <div className="mb-[12px] lg:flex lg:flex-row lg:items-center lg:gap-[12px]">
-        {title === '진행 전' ? (
-          <MinusCircleIcon className="hidden lg:flex w-[20px] h-[20px] stroke-[#737B91]" />
-        ) : title === '진행 중' ? (
-          <LoaderIcon className="hidden lg:flex w-[20px] h-[20px] stroke-[#737B91]" />
-        ) : title === '완료' ? (
-          <CheckCircleIcon className="hidden lg:flex w-[20px] h-[20px] stroke-[#737B91]" />
-        ) : (
-          <></>
-        )}
-        <Typography variant="Subtitle16px" color="grey700Black">
-          {title}
-        </Typography>
+  if (!todoList || !title)
+    return (
+      <div className={todoListClass({ title })}>
+        <TodoListTitle title={title} />
       </div>
-      <div className="flex flex-col gap-[8px]">
-        {selectedTodoList.map((todo) => (
+    );
+
+  const { setNodeRef } = useDroppable({
+    id: 'todo' + title,
+    data: {
+      status: title
+    }
+  });
+
+  return (
+    <div className={todoListClass({ title })} ref={setNodeRef}>
+      <TodoListTitle title={title} />
+      <div className="flex flex-col gap-[8px] mt-[12px] lg:mt-[18px]">
+        {todoList.map((todo) => (
           <Todo
             key={todo.id}
             id={todo.id}
@@ -45,6 +38,7 @@ const ToDoList = ({ todoList, title }: ToDoListProps) => {
             endDate={todo.end_date}
             place={todo.place}
             priority={todo.priority}
+            status={todo.status}
           />
         ))}
       </div>

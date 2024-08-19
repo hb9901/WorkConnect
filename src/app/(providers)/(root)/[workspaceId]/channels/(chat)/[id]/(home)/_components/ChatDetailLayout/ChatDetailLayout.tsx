@@ -4,7 +4,7 @@ import { BottomBar, PageAside, PageLayout, PageMain } from '@/components/Layout/
 import { StrictPropsWithChildren } from '@/types/common';
 import Sidebar from '../Sidebar';
 import { useState } from 'react';
-import { useFetchChannelName } from '../../_hooks/useFetchChannelName';
+import { useFetchChannelInfos } from '../../_hooks/useFetchChannelName';
 import { TopBar } from '@/components/Layout/TopBar';
 import ChannelList from '../../../../../_components/ChannelList';
 import ChannelListTopBar from '../../../../../_components/ChannelListTopBar';
@@ -14,7 +14,7 @@ import { XIcon } from '@/icons';
 
 const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
-  const channelName = useFetchChannelName();
+  const { name: channelName, channel_thumbnail: channelThumbnail } = useFetchChannelInfos();
 
   const handleOpenSidebar = () => {
     setIsOpenSidebar((prev) => !prev);
@@ -31,7 +31,7 @@ const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
         </PageAside>
         <PageMain className="h-dvh">
           <TopBar
-            title={<TopBarTitle channelName={channelName} />}
+            title={<TopBarTitle channelName={channelName} channelThumbnail={channelThumbnail} />}
             Icon4={isOpenSidebar ? <XIcon onClick={handleOpenSidebar} /> : <MenuButton onClick={handleOpenSidebar} />}
           />
           {children}
@@ -43,10 +43,10 @@ const ChatDetailLayout = ({ children }: StrictPropsWithChildren) => {
   );
 };
 
-const TopBarTitle = ({ channelName }: { channelName: string }) => {
+const TopBarTitle = ({ channelName, channelThumbnail }: { channelName: string; channelThumbnail: string }) => {
   return (
     <div className="flex items-center gap-3 justify-center lg:justify-start">
-      <Avatar size="40px" className="hidden lg:flex" />
+      <Avatar size="40px" className="hidden lg:flex" src={channelThumbnail} />
       {channelName}
     </div>
   );

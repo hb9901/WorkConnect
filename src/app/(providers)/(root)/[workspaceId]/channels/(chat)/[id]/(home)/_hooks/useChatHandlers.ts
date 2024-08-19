@@ -1,8 +1,9 @@
 import { GetChatMessageType } from '@/types/chat';
-import { RealtimeSubscribeProps } from '@/utils/createRealtimeSubscription';
+import { RealtimeSubscribeProps } from '@/utils/createRealtimeChannel';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useState } from 'react';
 import { QUERY_KEYS } from '../../../_constants/constants';
+import { useMutationUpdateChannelActiveAt } from '../../../_hook/useChatMutation';
 
 type RealtimePayloadMessagesType = GetChatMessageType & {
   channel_id: string;
@@ -23,14 +24,17 @@ type HandleChatUpdatesProps = {
 export const useChatHandlers = () => {
   const queryClient = useQueryClient();
   const [payloadMessages, setPayloadMessages] = useState<RealtimePayloadMessagesType[]>([]);
+  const { mutateAsync: updateChannelActiveAt } = useMutationUpdateChannelActiveAt();
 
   const handleMessagesUpdates = useCallback(({ channelId }: HandleChatUpdatesProps) => {
-    return (payload: RealtimeChatPayloadType) => {
+    return async (payload: RealtimeChatPayloadType) => {
       const { eventType, new: newPayload } = payload;
 
       switch (eventType) {
         case 'INSERT':
           setPayloadMessages((prev) => [...prev, newPayload]);
+          await updateChannelActiveAt(channelId);
+          await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USERS_IN_CHANNEL(Number(channelId)) });
           break;
         case 'DELETE':
           queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CHAT_MESSAGES(Number(channelId)) });
@@ -53,11 +57,16 @@ export const useChatHandlers = () => {
     };
   }, []);
 
-  const handleUserUpdates = useCallback(({ channelId }: HandleChatUpdatesProps) => {
+  const handleUserInfoUpdates = useCallback(({ channelId }: HandleChatUpdatesProps) => {
     return () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USERS_IN_CHANNEL(Number(channelId)) });
     };
   }, []);
 
-  return { handleNoticeUpdates, handleMessagesUpdates, payloadMessages, handleUserUpdates };
+  return {
+    handleNoticeUpdates,
+    handleMessagesUpdates,
+    payloadMessages,
+    handleUserInfoUpdates
+  };
 };

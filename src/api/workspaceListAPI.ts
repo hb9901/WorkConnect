@@ -1,11 +1,5 @@
-import { Tables } from '@/types/supabase';
-import { TWorkspaceInfo } from '@/types/workspace';
+import { TWorkSpaceListType } from '@/types/workspace';
 import { AxiosInstance } from 'axios';
-
-type TWorkSpaceListType = {
-  userData: Tables<'workspace_user'>[];
-  workspaceListData: TWorkspaceInfo[];
-};
 
 class WorkspaceListAPI {
   private axios: AxiosInstance;

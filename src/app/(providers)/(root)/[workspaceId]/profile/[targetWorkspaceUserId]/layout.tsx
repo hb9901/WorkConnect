@@ -1,5 +1,4 @@
-import { PageMain, PCHeader, PCWrapper } from '@/components/Layout/PageLayout';
-import { BottomBar } from '@/components/PageLayout';
+import { BottomBar, PageMain, PCHeader, PCWrapper } from '@/components/Layout/PageLayout';
 import { StrictPropsWithChildren } from '@/types/common';
 
 interface ProfileParallelLayoutProps {
