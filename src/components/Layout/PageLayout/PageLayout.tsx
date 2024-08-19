@@ -48,13 +48,22 @@ export const PCWrapper = ({ isHome = false, children }: StrictPropsWithChildren<
   return <div className={`${isHome ? '' : 'lg:pl-[85px] lg:flex'}`}>{children}</div>;
 };
 
-export const PCHeader = ({ isFull = false, className }: { isFull?: boolean; className?: string }) => {
+export const PCHeader = ({
+  isFull = false,
+  isTodoList = false,
+  className
+}: {
+  isFull?: boolean;
+  isTodoList?: boolean;
+  className?: string;
+}) => {
   const workspaceId = useWorkspaceId();
 
   return (
     <SelectHeader
       workspaceId={workspaceId}
       isFull={isFull}
+      isTodoList={isTodoList}
       className={clsx('hidden !fixed top-0 left-0 z-30 lg:block', className)}
     />
   );

@@ -1,5 +1,7 @@
 'use client';
 
+import LoadingSpinner2 from '@/components/LoadingSpinner2';
+import NotFoundError from '@/components/NotFoundError';
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import useUserStore from '@/store/userStore';
@@ -14,8 +16,10 @@ const Profile = () => {
   const workspaceId = useWorkspaceId();
   const targetWorkspaceUserId = params.targetWorkspaceUserId as string;
   const workspaceUserId = useUserStore((state) => state.workspaceUserId);
-  const { workspaceUser, isPending } = useWorkspaceUser(targetWorkspaceUserId);
+  const { workspaceUser, isPending, isError } = useWorkspaceUser(targetWorkspaceUserId);
 
+  if (isPending) return <LoadingSpinner2 />;
+  if (isError) return <NotFoundError />;
   if (!workspaceUser) return;
 
   const profileImg = workspaceUser.profile_image;
@@ -25,8 +29,6 @@ const Profile = () => {
   const email = workspaceUser.email;
   const phoneNum = workspaceUser.phone;
   const isMyPage = targetWorkspaceUserId === workspaceUserId;
-
-  if (isPending) return null;
 
   return (
     <>

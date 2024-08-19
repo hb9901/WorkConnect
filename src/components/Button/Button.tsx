@@ -11,7 +11,6 @@ interface ButtonProps {
   isDisabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   isFullWidth?: boolean;
-  isSmall?: boolean;
   type?: 'button' | 'submit' | 'reset';
   isLoading?: boolean;
 }
@@ -32,7 +31,6 @@ const Button = ({
   children,
   isDisabled = false,
   isFullWidth = false,
-  isSmall = false,
   type = 'button',
   isLoading = false,
   ...props
@@ -45,11 +43,10 @@ const Button = ({
     <button
       className={clsx(
         'rounded-md',
-        'px-[22px] box-sizing-border flex items-center justify-center gap-[12px]',
+        'px-[22px] box-sizing-border flex items-center justify-center gap-[12px] h-[56px]',
         styles[theme],
         isDisabled && disabledStyle,
         isFullWidth ? 'w-full' : '',
-        isSmall ? 'h-[36px]' : 'h-[56px]',
         className
       )}
       type={type}

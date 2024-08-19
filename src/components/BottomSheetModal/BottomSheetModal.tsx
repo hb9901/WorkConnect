@@ -2,7 +2,6 @@ import useBottomsheetModalBackDropStore from '@/store/bottomsheetModalBackDropSt
 import { StrictPropsWithChildren } from '@/types/common';
 export interface BottomSheetModalProps {
   isUp?: boolean;
-  onClose: () => void;
 }
 
 const BottomSheetModal = ({ isUp = false, children }: StrictPropsWithChildren<BottomSheetModalProps>) => {

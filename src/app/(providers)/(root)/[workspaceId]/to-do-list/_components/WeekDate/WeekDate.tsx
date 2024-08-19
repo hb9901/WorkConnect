@@ -1,12 +1,13 @@
 'use client';
 import useDateStore from '@/store/dateStore';
+import dayjs from 'dayjs';
 import MobileWeekDate from '../MobileWeekDate';
 import PcWeekDate from '../PcWeekDate';
 import { getWeekDates } from './function';
 
 const WeekDate = () => {
   const weekNames = ['일', '월', '화', '수', '목', '금', '토'];
-  const selectedDate = useDateStore((state) => state.selectedDate);
+  const selectedDate = dayjs(useDateStore((state) => state.selectedDate));
   const weekDates = getWeekDates(selectedDate);
 
   return (

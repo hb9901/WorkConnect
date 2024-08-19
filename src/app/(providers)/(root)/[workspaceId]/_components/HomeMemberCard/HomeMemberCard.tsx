@@ -1,22 +1,17 @@
 'use client';
 import ResponsiveTypography from '@/components/ResponsiveTypography';
-import useWorkspaceId from '@/hooks/useWorkspaceId';
-import useWorkspaceUser from '@/hooks/useWorkspaceUser';
 import AvatarIcon from '@/icons/Avatar.svg';
-import useUserStore from '@/store/userStore';
+import { Tables } from '@/types/supabase';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const HomeMemberCard = () => {
-  const workspaceId = useWorkspaceId();
-  const workspaceUserId = useUserStore((state) => state.workspaceUserId);
+interface HomeMemberCardProps {
+  workspaceId: number;
+  workspaceUserId: string | null;
+  workspaceUser: Tables<'workspace_user'>;
+}
 
-  const { workspaceUser, isPending, isError } = useWorkspaceUser(workspaceUserId);
-
-  if (!workspaceUser || isError) return;
-
-  if (isPending) return;
-
+const HomeMemberCard = ({ workspaceUser, workspaceId, workspaceUserId }: HomeMemberCardProps) => {
   const profileImg = workspaceUser.profile_image;
   const name = workspaceUser.name;
   const state = workspaceUser.state;
@@ -43,10 +38,10 @@ const HomeMemberCard = () => {
       </div>
       <div className="flex flex-col gap-[4px] w-full lg:flex-row lg:justify-between">
         <ResponsiveTypography mobileVariant="Title18px" pcVariant="Title20px" color="grey700Black">
-          {workspaceUser.name}
+          {name}
         </ResponsiveTypography>
         <ResponsiveTypography mobileVariant="Title14px" pcVariant="Title16px" color="grey700Black">
-          {workspaceUser.state}
+          {state}
         </ResponsiveTypography>
       </div>
     </Link>
