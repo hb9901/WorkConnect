@@ -11,13 +11,42 @@ export default {
   tags: ['autodocs'],
   argTypes: {
     LabelColor: {
-      control: {
-        type: 'select',
-        options: ['primary200Main', 'grey400', 'grey700Black', 'error']
-      }
+      control: 'select',
+      description: 'Label의 색상을 지정합니다.',
+      options: ['primary200Main', 'grey400', 'grey700Black', 'error']
+    },
+    labelClassName: {
+      control: 'text',
+      description: 'Label의 className을 지정합니다.'
+    },
+    className: {
+      control: 'text',
+      description: 'Input의 className을 지정합니다.'
+    },
+    id: {
+      control: 'text',
+      description: 'Input의 id를 지정합니다.'
+    },
+    label: {
+      control: 'text',
+      description: 'label의 text를 지정합니다.'
+    },
+    type: {
+      control: 'select',
+      description: 'input의 type을 지정합니다.',
+      options: ['text', 'password', 'email', 'number']
+    },
+    value: {
+      control: 'text',
+      description: 'input의 value를 지정합니다.'
     },
     onClick: {
-      action: 'clicked'
+      action: 'clicked',
+      description: '버튼 클릭 이벤트를 지정합니다.'
+    },
+    onChange: {
+      action: 'changed',
+      description: 'input의 변경 이벤트를 지정합니다.'
     }
   }
 };
@@ -25,7 +54,7 @@ export default {
 export const Template: StoryFn<BottomTextFieldProps> = (args) => {
   const [value, setValue] = useState(args.value || '');
 
-  return <BottomLineTextField {...args} value={value} onChange={(e) => setValue(e.target.value)} />;
+  return <BottomLineTextField {...args} label={args.label} value={value} onChange={(e) => setValue(e.target.value)} />;
 };
 
 export const Default = Template.bind({});
@@ -35,26 +64,10 @@ Default.args = {
   type: 'text'
 };
 
-export const Focused = Template.bind({});
-Focused.args = {
-  label: '포커스된 텍스트 필드',
-  LabelColor: 'primary200Main',
-  type: 'text',
-  value: '포커스 상태'
-};
-
 export const Typing = Template.bind({});
 Typing.args = {
   label: '입력 중인 텍스트 필드',
   LabelColor: 'grey400',
   type: 'text',
   value: '입력 중...'
-};
-
-export const WithDeleteButton = Template.bind({});
-WithDeleteButton.args = {
-  label: '삭제 버튼이 있는 텍스트 필드',
-  LabelColor: 'error',
-  type: 'text',
-  value: '삭제할 내용'
 };
