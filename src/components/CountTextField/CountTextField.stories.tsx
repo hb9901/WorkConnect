@@ -31,7 +31,7 @@ export default {
     },
     value: {
       control: 'text',
-      description: 'input의 value를 지정합니다.'
+      description: '텍스트 필드의 기본값을 지정합니다.'
     }
   }
 };
