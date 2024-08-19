@@ -89,6 +89,7 @@ width="600">
 |   페이지    |                                                   Pc 화면                                                    |                                                   Mobile 화면                                                    |
 | :---------: | :----------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
 | 메인 페이지 | <img src="./public/images/readme/workconnectMainPC.png" width="300" height="300" style="object-fit:contain"> | <img src="./public/images/readme/workconnectMainMobile.png" width="300" height="300" style="object-fit:contain"> |
+| 일정 페이지 |      <img src="./public/images/readme/todoPC.png" width="300" height="300" style="object-fit:contain">       |      <img src="./public/images/readme/todoMobile.png" width="300" height="300" style="object-fit:contain">       |
 
 ## 📁 프로젝트 구조
 
