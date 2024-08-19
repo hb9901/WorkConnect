@@ -1,3 +1,4 @@
+import { SnackBarContextProvider } from '@/providers/SnackBarContext';
 import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
 import EditTextField, { EditTextFieldProps } from './EditTextField';
@@ -26,7 +27,11 @@ const Template: StoryFn<EditTextFieldProps> = (args) => {
     setValue(newValue);
   };
 
-  return <EditTextField {...args} value={value} onChange={handleChange} />;
+  return (
+    <SnackBarContextProvider>
+      <EditTextField {...args} value={value} onChange={handleChange} />
+    </SnackBarContextProvider>
+  );
 };
 
 export const Default = Template.bind({});
