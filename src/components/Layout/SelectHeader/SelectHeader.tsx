@@ -1,5 +1,9 @@
 'use client';
 
+import {
+  MessageChatButton,
+  VideoChatButton
+} from '@/app/(providers)/(root)/[workspaceId]/channels/_components/TopBarButtons';
 import ToDoAddButton from '@/app/(providers)/(root)/[workspaceId]/to-do-list/_components/ToDoAddButton';
 import TopSelect from '@/components/Layout/TopSelect';
 import NotFoundError from '@/components/NotFoundError';
@@ -18,14 +22,17 @@ interface SelectHeaderProps {
   isMainPage?: boolean;
   isFull?: boolean;
   isHidden?: boolean;
+  isChannels?: boolean;
   className?: string;
 }
 
+// TODO: is 조건문 전체 제거 후 컴포넌트 재구성
 const SelectHeader = ({
   workspaceId,
   isTodoList = false,
   isFull = false,
   isHidden = false,
+  isChannels = false,
   className
 }: SelectHeaderProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -86,6 +93,11 @@ const SelectHeader = ({
       {isTodoList && (
         <div className="lg:hidden">
           <ToDoAddButton />
+        </div>
+      )}
+      {isChannels && (
+        <div className="lg:hidden flex gap-[12px]">
+          <VideoChatButton /> <MessageChatButton />
         </div>
       )}
     </header>

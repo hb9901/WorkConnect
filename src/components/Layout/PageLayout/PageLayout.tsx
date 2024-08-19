@@ -51,10 +51,12 @@ export const PCWrapper = ({ isHome = false, children }: StrictPropsWithChildren<
 export const PCHeader = ({
   isFull = false,
   isTodoList = false,
+  isChannels = false,
   className
 }: {
   isFull?: boolean;
   isTodoList?: boolean;
+  isChannels?: boolean;
   className?: string;
 }) => {
   const workspaceId = useWorkspaceId();
@@ -64,6 +66,7 @@ export const PCHeader = ({
       workspaceId={workspaceId}
       isFull={isFull}
       isTodoList={isTodoList}
+      isChannels={isChannels}
       className={clsx('hidden !fixed top-0 left-0 z-30 lg:block', className)}
     />
   );

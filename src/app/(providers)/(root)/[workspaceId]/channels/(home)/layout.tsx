@@ -1,18 +1,14 @@
 'use client';
 
-import { BottomBar, PageAside, PageLayout, PageMain } from '@/components/Layout/PageLayout';
-import { TopBar } from '@/components/Layout/TopBar';
+import { BottomBar, PageAside, PageLayout, PageMain, PCHeader } from '@/components/Layout/PageLayout';
 import { StrictPropsWithChildren } from '@/types/common';
-import { MessageChatButton, VideoChatButton } from '../_components/TopBarButtons';
 
 const ChannelHomeLayout = ({ children }: StrictPropsWithChildren) => {
   return (
     <PageLayout>
+      <PCHeader className="!flex !w-full !relative lg:!w-auto lg:!fixed" isChannels />
       <PageAside> </PageAside>
-      <PageMain>
-        <TopBar title="대화" Icon3={<VideoChatButton />} Icon4={<MessageChatButton />} />
-        {children}
-      </PageMain>
+      <PageMain>{children}</PageMain>
       <BottomBar />
     </PageLayout>
   );
