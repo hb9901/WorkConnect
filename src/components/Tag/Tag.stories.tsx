@@ -13,7 +13,7 @@ export default {
         type: 'select',
         options: ['high', 'medium', 'low']
       },
-      description: 'Tag 테마',
+      description: 'Tag 테마를 지정합니다.',
       defaultValue: 'high'
     },
     children: {
