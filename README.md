@@ -341,3 +341,9 @@ npm run gen
 ```
 
 </details>
+
+### 🔗참고 사이트
+
+- `Notion`: [노션 방문하기](https://www.notion.so/teamsparta/0c5056fc528f4b91bc0ba88172daaf78)
+
+- `Figma`: [Figma 방문하기](https://www.figma.com/design/9MzUgYxpy4IBlB6BeFQ2Gw/B03%EC%A1%B0?node-id=2088-100&m=dev)
