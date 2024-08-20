@@ -1,6 +1,8 @@
-<h1 style="color:#7173FA">WorkConnect</h1>
+<h1>WorkConnect</h1>
 
-<img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fe8590d08-670b-4726-861b-fc600b72c783%2FFrame_1707485583.png?table=block&id=71915d4f-b9c4-4077-b4f4-a7a6d1e7cc59&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=1420&userId=&cache=v2"/>
+<img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fe8590d08-670b-4726-861b-fc600b72c783%2FFrame_1707485583.png?table=block&id=71915d4f-b9c4-4077-b4f4-a7a6d1e7cc59&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=1420&userId=&cache=v2"
+width="100%"
+/>
 
 <h2>📝 프로젝트 소개</h2>
 
@@ -27,6 +29,61 @@
 | <div>메인 페이지</div> <div>프로필 페이지</div><div>일정 페이지</div><div>레이아웃</div> |                             <div>화상 채팅</div>                              |                  <div>공통 컴포넌트</div><div>스토리북</div>                  |       <div>회원 가입</div> <div>로그인</div><div>워크스페이스 생성</div>       |        <div>실시간 채팅</div><div>채널 목록</div><div>파일 관리</div>         |
 
 <br/>
+
+## 📖 주요 기능
+
+<img src="./public/images/readme/simpleLogin.png"/>
+<img src="./public/images/readme/chat.png"/>
+<img src="./public/images/readme/profile.png"/>
+<img src="./public/images/readme/todo.png"/>
+
+## 📌 서비스 아키텍처
+
+<img src="./public/images/readme/WebAppReferenceArchitecture.png" />
+
+## 📌 ERD
+
+<img src="./public/images/readme/workconnectSchema.png" />
+
+## 🛠️ Stacks
+
+#### ✔️ Packages Manager
+
+<img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/>
+
+#### ✔️ Language & Framework
+
+<img src="https://img.shields.io/badge/REACT-%2361DAFB?style=for-the-badge&logo=REACT&logoColor=black"/><img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/><img src="https://img.shields.io/badge/nextjs-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
+
+#### ✔️ State management
+
+<img src="https://img.shields.io/badge/tanstackquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"/><img src="https://img.shields.io/badge/zustand-dda0dd?style=for-the-badge"/>
+
+#### ✔️ Design System & Style
+
+<img src="https://img.shields.io/badge/tailwindcss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white"/>
+
+#### ✔️ Database
+
+<img src="https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=Supabase&logoColor=white"/><img src="https://img.shields.io/badge/SupabaseRealtime-004088?style=for-the-badge"/>
+
+#### ✔️ Solution
+
+<img src="https://img.shields.io/badge/livekit-000000?style=for-the-badge&logo=react&logoColor=white"/>
+
+#### ✔️ UI Component
+
+<img src="https://img.shields.io/badge/storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white"/>
+
+#### ✔️ Deployment
+
+<img src="https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white"/>
+
+#### ✔️ Communication
+
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"/><img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"/><img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"/><img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
+
+<br />
 
 ## 🚀 시작 가이드
 
@@ -81,61 +138,6 @@ npm run gen
   - http://localhost:6006
 
 <br/>
-
-## 🛠️ Stacks
-
-#### ✔️ Packages Manager
-
-<img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/>
-
-#### ✔️ Language & Framework
-
-<img src="https://img.shields.io/badge/REACT-%2361DAFB?style=for-the-badge&logo=REACT&logoColor=black"/><img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/><img src="https://img.shields.io/badge/nextjs-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
-
-#### ✔️ State management
-
-<img src="https://img.shields.io/badge/tanstackquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"/><img src="https://img.shields.io/badge/zustand-dda0dd?style=for-the-badge"/>
-
-#### ✔️ Design System & Style
-
-<img src="https://img.shields.io/badge/tailwindcss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white"/>
-
-#### ✔️ Database
-
-<img src="https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=Supabase&logoColor=white"/><img src="https://img.shields.io/badge/SupabaseRealtime-004088?style=for-the-badge"/>
-
-#### ✔️ Solution
-
-<img src="https://img.shields.io/badge/livekit-000000?style=for-the-badge&logo=react&logoColor=white"/>
-
-#### ✔️ UI Component
-
-<img src="https://img.shields.io/badge/storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white"/>
-
-#### ✔️ Deployment
-
-<img src="https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white"/>
-
-#### ✔️ Communication
-
-<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"/><img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"/><img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"/><img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
-
-<br />
-
-## 📌 서비스 아키텍처
-
-<img src="./public/images/readme/WebAppReferenceArchitecture.png" />
-
-## 📌 ERD
-
-<img src="./public/images/readme/workconnectSchema.png" />
-
-## 📖 주요 기능
-
-<img src="./public/images/readme/simpleLogin.png"/>
-<img src="./public/images/readme/chat.png"/>
-<img src="./public/images/readme/profile.png"/>
-<img src="./public/images/readme/todo.png"/>
 
 ## 📁 프로젝트 구조
 
@@ -284,18 +286,6 @@ npm run gen
  ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂_constants
  ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂_hooks
  ┃ ┃ ┃ ┃ ┃ ┗ 📂_components
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂HomeMain
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂HomeMemberCard
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂InviteCardWithMembers
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂InviteCardWithoutMembers
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂InviteCodeButton
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂MemberCard
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂MemberExistComponent
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂MemberImg
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂MemberList
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂MemberName
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂MemberNotExistComponent
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂MemberState
  ┃ ┃ ┃ ┃ ┣ 📂_components
  ┃ ┃ ┃ ┃ ┃ ┗ 📂Splash
  ┃ ┃ ┃ ┃ ┣ 📂_hook
@@ -342,35 +332,6 @@ npm run gen
  ┃ ┃ ┗ 📜not-found.tsx
  ┃ ┣ 📂assets
  ┃ ┣ 📂components
- ┃ ┃ ┣ 📂Layout
- ┃ ┃ ┃ ┣ 📂PageLayout
- ┃ ┃ ┃ ┣ 📂SelectHeader
- ┃ ┃ ┃ ┣ 📂TopBar
- ┃ ┃ ┃ ┗ 📂TopSelect
- ┃ ┃ ┣ 📂Loading
- ┃ ┃ ┣ 📂LoadingSpinner
- ┃ ┃ ┣ 📂LoadingSpinner2
- ┃ ┃ ┣ 📂MemberCard
- ┃ ┃ ┣ 📂Modal
- ┃ ┃ ┣ 📂NavigationBar
- ┃ ┃ ┣ 📂NotFound
- ┃ ┃ ┣ 📂NotFoundError
- ┃ ┃ ┣ 📂PageLayout
- ┃ ┃ ┣ 📂ResponsiveTypography
- ┃ ┃ ┣ 📂SelectBox
- ┃ ┃ ┣ 📂SelectHeader
- ┃ ┃ ┣ 📂SnackBar
- ┃ ┃ ┣ 📂Tabs
- ┃ ┃ ┣ 📂Tag
- ┃ ┃ ┣ 📂TextField
- ┃ ┃ ┣ 📂TextFieldButton
- ┃ ┃ ┣ 📂TodoCard
- ┃ ┃ ┣ 📂TodoEmpty
- ┃ ┃ ┣ 📂Toggle
- ┃ ┃ ┣ 📂TopBar
- ┃ ┃ ┣ 📂TopSelect
- ┃ ┃ ┣ 📂Typography
- ┃ ┃ ┗ 📂VideoChatAvatar
  ┃ ┣ 📂constants
  ┃ ┣ 📂icons
  ┃ ┣ 📂providers
@@ -394,5 +355,3 @@ npm run gen
 - `Notion`: [팀 노션 방문하기](https://www.notion.so/teamsparta/0c5056fc528f4b91bc0ba88172daaf78)
 
 - `Notion`: [브로셔 확인하기](https://teamsparta.notion.site/B03-75f42a34908f4966984c0686b5e5443e)
-
-- `Figma`: [Figma 방문하기](https://www.figma.com/design/9MzUgYxpy4IBlB6BeFQ2Gw/B03%EC%A1%B0?node-id=2088-100&m=dev)
