@@ -8,9 +8,9 @@ interface TagProps {
 }
 
 const styles = {
-  high: 'bg-primary50 text-primary300',
-  medium: 'bg-secondary100Main text-secondary700',
-  low: 'bg-grey50 text-grey400'
+  High: 'bg-primary50 text-primary300',
+  Medium: 'bg-secondary100Main text-secondary700',
+  Low: 'bg-grey50 text-grey400'
 };
 
 const Tag = ({ theme, children, ...props }: TagProps) => {

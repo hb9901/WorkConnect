@@ -58,7 +58,14 @@ const ProfileEditPage = () => {
   const handleProfileImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
-    if (!file) return;
+    if (!file) {
+      openSnackBar({ message: '파일이 존재하지 않습니다' });
+      return;
+    }
+    if (file.size > 3000000) {
+      openSnackBar({ message: '이미지는 3MB를 넘길 수 없어요' });
+      return;
+    }
     setImage(file);
     const reader = new FileReader();
     reader.readAsDataURL(file);

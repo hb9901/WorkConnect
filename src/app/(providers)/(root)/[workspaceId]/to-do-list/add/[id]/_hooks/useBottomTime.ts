@@ -7,7 +7,7 @@ const useBottomTime = (initStartTime: Dayjs, initEndTime: Dayjs) => {
   const [endTime, setEndTime] = useState<Dayjs>(initEndTime);
   const [isStartTime, setIsStartTime] = useState<boolean>(true);
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
-  const setOpen = useBottomsheetModalBackDropStore((state) => state.setOpen);
+  const handleOpen = useBottomsheetModalBackDropStore((state) => state.handleOpen);
 
   const handleSetStartTime = (startTime: Dayjs) => {
     setStartTime(startTime);
@@ -18,14 +18,14 @@ const useBottomTime = (initStartTime: Dayjs, initEndTime: Dayjs) => {
   };
 
   const handleTimeClick = (isStart: boolean) => {
-    setOpen();
+    handleOpen();
     setIsStartTime(isStart);
     isStart ? setStartTime(dayjs(startTime)) : setEndTime(dayjs(endTime));
     setIsCalendarOpen(false);
   };
 
   const handleCalendarClick = () => {
-    setOpen();
+    handleOpen();
     setIsCalendarOpen(true);
   };
 

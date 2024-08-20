@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { ReactNode, useState } from 'react';
 import ChevronDownIcon from '../../icons/ChevronDownIcon.svg';
 import ChevronUpIcon from '../../icons/ChevronUpIcon.svg';
@@ -36,11 +35,7 @@ export const SelectBox = ({ label, options, onChange, ...props }: SelectBoxProps
         onClick={handleToggle}
       >
         {selectedValue || label}
-        {isOpen ? (
-          <Image src={ChevronUpIcon} alt="Up" className="cursor-pointer" />
-        ) : (
-          <Image src={ChevronDownIcon} alt="Down" className="cursor-pointer" />
-        )}
+        {isOpen ? <ChevronUpIcon className="cursor-pointer" /> : <ChevronDownIcon className="cursor-pointer" />}
       </div>
       {isOpen && (
         <ul className="absolute z-10 w-full mt-1 bg-grey50 border border-gray-300 rounded-md shadow-lg">

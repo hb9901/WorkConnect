@@ -24,11 +24,11 @@ const inviteCardWithMember = ({ handleCardClose }: InviteCardWithOutMemberProps)
           {/*moblile 글씨*/}
           <Typography variant="Title18px" color="grey700Black" className="lg:hidden">
             <div>동료들과 함께</div>
-            <div>{selectedWorkspace.name}을 시작하세요 !</div>
+            <div>워크스페이스를 시작하세요 !</div>
           </Typography>
           {/*pc 글씨*/}
           <Typography variant="Title36px" color="grey700Black" className="hidden lg:flex lg:flex-row">
-            동료들과 함께 {selectedWorkspace.name}을 시작하세요 !
+            동료들과 함께 워크스페이스를 시작하세요 !
           </Typography>
           <ResponsiveTypography mobileVariant="Body16px" pcVariant="Body26px" color="grey500">
             함께 일하는 동료들을 초대해보세요.

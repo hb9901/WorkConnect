@@ -19,11 +19,11 @@ export default {
     },
     htmlFor: {
       control: 'text',
-      description: 'label의 htmlFor를 지정합니다'
+      description: 'label의 htmlFor를 지정합니다.'
     },
     className: {
       control: 'text',
-      description: '기타 css 속성을 지정합니다'
+      description: 'label의 추가적인 CSS 클래스를 지정합니다.'
     }
   }
 };

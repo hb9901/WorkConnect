@@ -12,6 +12,36 @@ const config: StorybookConfig = {
     name: '@storybook/nextjs',
     options: {}
   },
-  staticDirs: ['../public']
+  docs: {
+    autodocs: 'tag'
+  },
+  previewBody: (body) => `
+    ${body}
+    <script src="https://kit.fontawesome.com/32d07c7523.js" crossOrigin="anonymous"></script>
+  `,
+  webpackFinal: async (config) => {
+    if (!config.module || !config.module.rules) {
+      return config;
+    }
+
+    config.module.rules = [
+      ...config.module.rules.map((rule) => {
+        if (!rule || rule === '...') {
+          return rule;
+        }
+
+        if (rule.test && /svg/.test(String(rule.test))) {
+          return { ...rule, exclude: /\.svg$/i };
+        }
+        return rule;
+      }),
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack']
+      }
+    ];
+
+    return config;
+  }
 };
 export default config;

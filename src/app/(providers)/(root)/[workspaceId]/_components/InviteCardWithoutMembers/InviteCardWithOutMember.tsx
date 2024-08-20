@@ -16,8 +16,10 @@ const InviteCardWithOutMember = () => {
       <HandsIcon className="w-[90px] h-[93px] lg:w-[281px] lg:h-[291px]" />
       <div className="flex flex-col gap-[8px] items-center lg:gap-[16px]">
         <ResponsiveTypography mobileVariant="Title18px" pcVariant="Title36px" color="grey700Black">
-          <div>동료들과 함께</div>
-          <div>{selectedWorkspace.name}을 시작하세요 !</div>
+          동료들과 함께
+        </ResponsiveTypography>{' '}
+        <ResponsiveTypography mobileVariant="Title18px" pcVariant="Title36px" color="grey700Black">
+          워크스페이스를 시작하세요 !
         </ResponsiveTypography>
         <ResponsiveTypography mobileVariant="Body14px" pcVariant="Body26px" color="grey500">
           함께 일하는 동료들을 초대해보세요

@@ -3,14 +3,12 @@ import { ChangeEvent, useId, useState } from 'react';
 import Label from '../Label';
 import Typography from '../Typography';
 export interface BottomLineTextFieldCountProps {
-  className?: string;
   id?: string;
   label?: string;
   labelClassName?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
-  LabelColor?: 'primary200Main' | 'grey400' | 'grey700Black' | 'error' | undefined;
-  buttonTitle?: string;
+  labelColor?: 'primary200Main' | 'grey400' | 'grey700Black' | 'error' | undefined;
   defaultValue?: string;
   onClick?: () => void;
   placeholder?: string;
@@ -20,9 +18,8 @@ const BottomLineTextFieldCount = ({
   id,
   label,
   labelClassName,
-  className,
   onChange,
-  LabelColor = 'grey700Black',
+  labelColor = 'grey700Black',
   type,
   defaultValue,
   placeholder,
@@ -46,7 +43,7 @@ const BottomLineTextFieldCount = ({
   return (
     <div className="relative flex flex-col gap-[8px] w-full" {...props}>
       {label && (
-        <Label htmlFor={customId} color={LabelColor} className={clsx(labelClassName, className)}>
+        <Label htmlFor={customId} color={labelColor} className={clsx(labelClassName)}>
           {label}
         </Label>
       )}
