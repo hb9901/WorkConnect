@@ -14,7 +14,7 @@ const IsOpenInput = ({ isOpen, handleIsOpenClick }: InputProps) => {
       </Typography>
       <div className="flex flex-row w-full justify-between items-center">
         <Typography variant="Subtitle16px" color="grey700Black">
-          공개
+          공개여부
         </Typography>
         <Toggle isChecked={isOpen} onChange={handleIsOpenClick} />
       </div>
