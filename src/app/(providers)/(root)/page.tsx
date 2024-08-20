@@ -126,7 +126,7 @@ const LandingPage = () => {
                 ))}
               </Swiper>
             </div>
-            <div className="mb-4 w-[375px] lg:hidden">
+            <div className="mb-4 w-full px-4 lg:hidden">
               <Button type="button" theme="primary" onClick={handleClose} isFullWidth>
                 <Typography variant="Title18px" color="white">
                   로그인 하러가기
@@ -181,6 +181,7 @@ const LandingPage = () => {
                   </Typography>
                 </Button>
                 <button
+                  type="button"
                   onClick={signInWithKakao}
                   className="flex justify-center items-center w-full h-[56px] text-lg font-medium bg-[#FEE502] rounded-lg text-[#3B1E1D] px-[22px] py-[12px] shadow-[0px_1px_5px_0px_rgba(0,0,0,0.12)]"
                 >

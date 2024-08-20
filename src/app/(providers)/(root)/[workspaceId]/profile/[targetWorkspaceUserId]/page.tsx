@@ -41,8 +41,8 @@ const Profile = () => {
   return (
     <>
       <Header title={isMyPage ? '내 프로필' : name} type={isMyPage ? 'myPage' : 'profile'} />
-      <main>
-        <div className="m-auto mx-5 h-full">
+      <main className="pb-[42px] px-[18px]">
+        <div className="h-full">
           <MainInfo profileImg={profileImg} name={name} />
           <EditOrMessageButton
             isMyPage={isMyPage}
@@ -53,7 +53,7 @@ const Profile = () => {
           <ContactInfo isMyPage={isMyPage} isOpen={isOpen} state={state} email={email} phoneNum={phoneNum} />
         </div>
         {isMyPage && (
-          <div className="flex flex-row justify-center w-full py-[20px]">
+          <div className="flex flex-row justify-start w-full pt-[42px]">
             <LogoutButton handleLogoutClick={handleLogoutClick} />
           </div>
         )}

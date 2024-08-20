@@ -18,6 +18,14 @@ export default {
     onClose: {
       description: '바텀시트가 닫힐 때 호출되는 함수입니다.',
       action: 'onClose'
+    },
+    className: {
+      control: 'text',
+      description: '바텀시트의 추가적인 CSS 클래스를 지정합니다.'
+    },
+    children: {
+      control: 'text',
+      description: '바텀시트에 표시할 내용을 지정합니다.'
     }
   }
 };

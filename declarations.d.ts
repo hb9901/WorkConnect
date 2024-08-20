@@ -1,8 +1,3 @@
-// declare module '*.lottie' {
-//   const content: any;
-//   export default content;
-// }
-
 declare module '*.lottie' {
   interface LottieAnimation {
     v: string; // 버전

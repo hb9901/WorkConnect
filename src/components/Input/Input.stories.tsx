@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
 import Input, { InputProps } from './Input';
 
@@ -12,20 +12,20 @@ export default {
   argTypes: {
     placeholder: {
       control: 'text',
-      description: 'placeholder 텍스트를 지정합니다.'
+      description: 'input의 placeholder 텍스트를 지정합니다.'
     },
     id: {
       control: 'text',
-      description: 'id를 지정합니다.'
+      description: 'input의 id를 지정합니다.'
     },
     type: {
       control: 'select',
-      description: 'type을 지정합니다.',
+      description: 'input의 type을 지정합니다.',
       options: ['text', 'password']
     },
     value: {
       control: 'text',
-      description: 'value를 지정합니다.'
+      description: 'input의 value를 지정합니다.'
     },
     status: {
       control: 'select',
@@ -35,9 +35,25 @@ export default {
     togglePasswordVisibility: {
       control: 'boolean',
       description: '비밀번호 가시성 boolean 값입니다.'
+    },
+    className: {
+      control: 'text',
+      description: 'input의 추가적인 CSS 클래스를 지정합니다.'
+    },
+    onChange: {
+      action: 'changed',
+      description: 'input의 변경 이벤트를 지정합니다.'
+    },
+    onFocus: {
+      action: 'focused',
+      description: 'Input 필드가 포커스 되었을 때의 이벤트를 처리합니다.'
+    },
+    onBlur: {
+      action: 'blurred',
+      description: 'Input 필드의 포커스가 해제되었을 때의 이벤트를 처리합니다.'
     }
   }
-} as Meta;
+};
 
 const Template: StoryFn<InputProps> = (args) => {
   const [value, setValue] = useState('');

@@ -9,7 +9,6 @@ export interface TextFieldProps {
   value: string;
   isError?: boolean;
   isSuccess?: boolean;
-  children: string;
   id?: string;
   label: string;
   labelClassName?: string;
@@ -23,7 +22,6 @@ const TextField = ({
   label,
   labelClassName,
   LabelColor = 'primary200Main',
-  children,
   value,
   isError,
   isSuccess,
