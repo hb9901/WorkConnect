@@ -19,7 +19,7 @@ interface RenderTrackProps {
   size?: number;
 }
 
-const RenderTrack: React.FC<RenderTrackProps> = React.memo(({ trackRef, isMobile, size = 281 }) => {
+const RenderTrack = React.memo(({ trackRef, isMobile, size = 281 }: RenderTrackProps) => {
   const isTrack = isTrackReference(trackRef);
   const { focusedTrack, setFocusedTrack } = useFocosedTrack();
 
@@ -69,7 +69,11 @@ const RenderTrack: React.FC<RenderTrackProps> = React.memo(({ trackRef, isMobile
           <>
             <ScreenShareIcon className="size-4" />
             {isMobile ? null : <ParticipantName />}
-            {isMobile ? null : <Typography color="grey800">{'님의 화면'}</Typography>}
+            {isMobile ? null : (
+              <Typography color="grey900" variant="Body14px">
+                {'님의 화면'}
+              </Typography>
+            )}
             <UserDefinedConnectionQualityIndicator />
           </>
         )}
