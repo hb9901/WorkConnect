@@ -43,8 +43,6 @@ const ChannelList = ({ className }: ChannelListPageProps) => {
     };
   }, [channelIds]);
 
-  if (isEmpty(channels)) return null;
-
   return (
     <ul className={clsx('relative z-[1]', className)}>
       {channels.map((item) => {
