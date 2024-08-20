@@ -34,11 +34,11 @@ const Todo = ({ id, title, startDate, endDate, place, priority, status }: TodoPr
       style={style}
       {...listeners}
       {...attributes}
-      className="rounded-[8px] bg-[#FAFAFA] px-[16px] py-[12px] shadow-sm shadow-slate-200 
+      className="flex flex-row justify-between rounded-[8px] bg-[#FAFAFA] px-[16px] py-[12px] shadow-sm shadow-slate-200 
       hover:brightness-90 active:brightness-75 lg:py-[24px] lg:shadow-md "
     >
       <div className="flex flex-col items-start text-start gap-[6px]">
-        <Typography variant="Title16px" color="grey700Black" className="w-full line-clamp-2">
+        <Typography variant="Title16px" color="grey700Black" className="w-full line-clamp-1">
           {title}
         </Typography>
         <Typography variant="Subtitle14px" color="grey400" className="w-full line-clamp-2">
