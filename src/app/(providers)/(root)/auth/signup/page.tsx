@@ -76,7 +76,7 @@ const SignUpPage = () => {
             <Typography
               variant="Title20px"
               color="grey700Black"
-              className="mt-[42px] mb-[18px] flex items-center lg:mt-0 lg:text-[36px]"
+              className="mt-[22px] mb-[18px] flex items-center lg:mt-0 lg:text-[36px]"
             >
               회원가입
             </Typography>

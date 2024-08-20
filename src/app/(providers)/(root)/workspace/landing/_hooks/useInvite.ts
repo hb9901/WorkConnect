@@ -6,12 +6,12 @@ export const useGetWorkspaceIdWithInviteCode = ({ ...options }) => {
     mutationFn: async (inviteCode: string) => {
       const { data, error } = await supabase
         .from('workspace')
-        .select('id')
+        .select('id, notice_channel_id')
         .eq('invite_code', Number(inviteCode))
         .single();
 
       if (error) throw error;
-      return data.id;
+      return data;
     },
     ...options
   });

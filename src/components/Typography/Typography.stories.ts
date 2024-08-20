@@ -12,6 +12,10 @@ export default {
       control: 'text',
       description: '텍스트를 지정합니다.'
     },
+    className: {
+      control: 'text',
+      description: '추가적인 CSS 클래스를 지정할 수 있습니다.'
+    },
     color: {
       control: 'select',
       description: '텍스트의 색상을 지정합니다.',

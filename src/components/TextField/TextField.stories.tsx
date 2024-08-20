@@ -20,11 +20,6 @@ export default {
       description: 'TextField의 값입니다.',
       defaultValue: ''
     },
-    message: {
-      control: 'text',
-      description: 'Helper Text를 지정합니다.',
-      defaultValue: ''
-    },
     isError: {
       control: 'boolean',
       description: '에러 상태 여부를 지정합니다.',
@@ -50,6 +45,26 @@ export default {
       options: ['primary200Main', 'grey700Black', 'error'],
       description: '레이블의 색상을 지정합니다.',
       defaultValue: 'grey700Black'
+    },
+    type: {
+      control: 'select',
+      options: ['text', 'password'],
+      description: 'input의 type을 지정합니다.',
+      defaultValue: 'text'
+    },
+    status: {
+      control: 'select',
+      options: ['default', 'success'],
+      description: 'TextField의 상태를 지정합니다.',
+      defaultValue: 'default'
+    },
+    onChange: {
+      action: 'changed',
+      description: '입력값 변경 이벤트를 처리합니다.'
+    },
+    labelClassName: {
+      control: 'text',
+      description: 'Label의 className을 지정합니다.'
     }
   },
   args: {

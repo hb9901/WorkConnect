@@ -14,6 +14,11 @@ export default {
       control: 'boolean',
       defaultValue: false
     },
+    message: {
+      description: '스낵바에 표시될 메시지입니다.',
+      control: 'text',
+      defaultValue: '스낵바 메ㅅ지입니다.'
+    },
     onClose: {
       description: '스낵바가 닫힐 때 호출되는 함수입니다.',
       action: 'onClose'

@@ -1,12 +1,11 @@
 //TODO 수정 필요
 import clsx from 'clsx';
-import { ReactNode, useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import InputXCircleIcon from '../../icons/InputXCircle.svg';
 import PencilIcon from '../../icons/Pencil.svg';
 import Label from '../Label';
 
 export interface BottomTextFieldProps {
-  children?: ReactNode;
   className?: string;
   id?: string;
   label?: string;
@@ -15,7 +14,6 @@ export interface BottomTextFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   LabelColor: 'primary200Main' | 'grey400' | 'grey700Black' | 'error' | undefined;
-  buttonTitle?: string;
   onClick?: () => void;
 }
 
@@ -26,7 +24,6 @@ const BottomLineTextField = ({
   className,
   onChange,
   LabelColor = 'grey700Black',
-  children,
   value,
   type,
   ...props
@@ -85,7 +82,7 @@ const BottomLineTextField = ({
   return (
     <div className="relative flex flex-col gap-2 w-full" {...props}>
       {label && (
-        <Label htmlFor={customId} color={LabelColor} className={clsx(labelClassName, className)}>
+        <Label htmlFor={customId} color={LabelColor} className={clsx(labelClassName)}>
           {label}
         </Label>
       )}

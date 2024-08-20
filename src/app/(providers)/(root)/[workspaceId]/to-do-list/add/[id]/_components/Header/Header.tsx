@@ -36,7 +36,7 @@ const Header = () => {
           color="grey700Black"
           className="text-center text-ellipsis whitespace-nowrap overflow-hidden"
         >
-          일정 상세
+          {isExist ? '일정 상세' : '일정 추가'}
         </Typography>
         {isExist ? (
           <div className="flex flex-row gap-[12px]">

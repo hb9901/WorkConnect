@@ -1,3 +1,4 @@
+import { TagTheme } from '@/types/todotag';
 import clsx from 'clsx';
 import Tag from '../Tag';
 import Typography from '../Typography';
@@ -5,7 +6,7 @@ import Typography from '../Typography';
 export interface TodoCardProps {
   title?: string;
   subtitle?: string;
-  tag?: 'high' | 'medium' | 'low';
+  tag?: TagTheme;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   className?: string;
 }

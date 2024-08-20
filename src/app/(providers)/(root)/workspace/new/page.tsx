@@ -159,7 +159,6 @@ const NewWorkSpacePage = () => {
       .eq('id', workspaceId)
       .select()
       .single();
-    console.log('workspaceData', workspaceData);
 
     //? 3. [공지 채채팅방에 유저 입장 시키기] : insert channel_user -> channel id: channel id
     const { data: channelUserData, error: channelUserError } = await supabase
@@ -169,10 +168,6 @@ const NewWorkSpacePage = () => {
         workspace_user_id: workspaceUserId
       })
       .select();
-    console.log('channelUserData', channelUserData);
-
-    //! 4. 기존 워크스페이스 입장
-    //? 1. [공지 채팅방에 유저 입장 시키기] : inset channel_user -> channel id: channel id
 
     handleSetGlobalUser({
       userId: user.id,

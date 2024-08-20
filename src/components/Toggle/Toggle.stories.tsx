@@ -17,6 +17,10 @@ export default {
     onChange: {
       description: '토글의 상태가 변경될 때 호출되는 함수입니다.',
       action: 'changed'
+    },
+    className: {
+      description: '추가적인 CSS 클래스를 지정합니다.',
+      control: 'text'
     }
   }
 };
