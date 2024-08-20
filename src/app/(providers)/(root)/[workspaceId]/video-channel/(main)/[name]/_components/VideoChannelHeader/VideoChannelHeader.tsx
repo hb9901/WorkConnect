@@ -15,7 +15,7 @@ const VideoChannelHeader = () => {
   const { isMobile } = useDeviceType();
   const handleDisconnect = useCallback(() => {
     setIsSettingOk(false);
-    router.push(`/${workspaceId}/channels`);
+    router.push(`/${workspaceId}`);
   }, [workspaceId]);
 
   return (
