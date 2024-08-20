@@ -117,7 +117,7 @@ const InviteCodePage = () => {
       handleSetGlobalUser({ userId: user.id, workspaceId: workspaceId, workspaceUserId });
 
       setInviteCode('');
-      return route.replace(`/${inviteWorkspaceId}`);
+      return route.replace(`/${workspaceId}`);
     }
 
     //* 첫 회원가입 시
