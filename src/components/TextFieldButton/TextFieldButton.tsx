@@ -1,10 +1,7 @@
 import Edit2Icon from '@/icons/Edit2.svg';
-import { ReactNode } from 'react';
 import Typography from '../Typography';
 
 export interface TextFieldButtonProps {
-  children?: ReactNode;
-  className?: string;
   label?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -15,11 +12,9 @@ export interface TextFieldButtonProps {
 
 const TextFieldButton = ({
   label,
-  className,
   onChange,
   onClick,
   LabelColor = 'grey700Black',
-  children,
   value,
   type,
   ...props

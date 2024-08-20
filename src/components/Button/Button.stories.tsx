@@ -13,7 +13,7 @@ export default {
         type: 'select',
         options: ['primary', 'grey', 'text', 'underlineText']
       },
-      description: '버튼 테마',
+      description: '버튼 테마를 지정합니다.',
       defaultValue: 'primary200'
     },
     children: {
@@ -23,16 +23,16 @@ export default {
     },
     onClick: {
       action: 'clicked',
-      description: '버튼 클릭 이벤트'
+      description: '버튼 클릭 이벤트를 지정합니다.'
     },
     isDisabled: {
       control: 'boolean',
-      description: '버튼 비활성화 여부',
+      description: '버튼 비활성화 여부를 지정합니다.',
       defaultValue: true
     },
-    isSmall: {
+    isFullWidth: {
       control: 'boolean',
-      description: '버튼의 Height 사이즈',
+      description: '버튼의 width 사이즈를 지정합니다.',
       default: false
     },
     type: {
@@ -40,6 +40,14 @@ export default {
       options: ['button', 'submit', 'reset'],
       description: '버튼의 type을 지정합니다.',
       defaultValue: 'button'
+    },
+    className: {
+      control: 'text',
+      description: '버튼의 추가적인 CSS 클래스를 지정합니다.'
+    },
+    isLoading: {
+      control: 'boolean',
+      description: '버튼의 로딩 상태를 지정합니다.'
     }
   }
 };
@@ -89,23 +97,5 @@ export const UnderlineText = {
     children: 'Button',
     theme: 'underlineText',
     isDisabled: false
-  }
-};
-
-export const SmallPrimary = {
-  args: {
-    children: 'Button',
-    theme: 'primary',
-    isDisabled: false,
-    isSmall: true
-  }
-};
-
-export const SmallGrey = {
-  args: {
-    children: 'Button',
-    theme: 'grey',
-    isDisabled: false,
-    isSmall: true
   }
 };
