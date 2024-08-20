@@ -11,8 +11,8 @@ const ProfileParallelLayout = ({ children, home }: StrictPropsWithChildren<Profi
       <PCWrapper isHome>
         <PCHeader isFull />
         <PageMain className="lg:pl-[87px] lg:!w-full">
-          <div className="flex lg:flex-row ">
-            <div className="hidden lg:grid lg:w-full lg:max-h-[calc(100dvh-84px)] lg:overflow-y-scroll lg:sticky lg:mt-[84px] lg:scroll-container">
+          <div className="flex lg:flex-row lg:h-full">
+            <div className="hidden lg:grid lg:w-full lg:max-h-[calc(100dvh-84px)] lg:overflow-y-scroll lg:sticky lg:mt-[84px] lg:scroll-container lg:h-full">
               {home}
             </div>
             <div className="w-full lg:min-w-[375px] lg:max-w-[375px]" />
