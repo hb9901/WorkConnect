@@ -1,3 +1,5 @@
+'use client';
+
 import useWorkspaceId from '@/hooks/useWorkspaceId';
 import { MenuIcon, MessagePlusIcon, Video48Icon } from '@/icons';
 import Link from 'next/link';
