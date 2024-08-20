@@ -14,7 +14,6 @@ import {
   createLocalAudioTrack,
   createLocalTracks,
   createLocalVideoTrack,
-  facingModeFromLocalTrack,
   Mutex,
   Track,
   VideoPresets
@@ -264,15 +263,6 @@ const CustomPrejoin = ({
     () => tracks?.filter((track) => track.kind === Track.Kind.Video)[0] as LocalVideoTrack,
     [tracks]
   );
-
-  const facingMode = React.useMemo(() => {
-    if (videoTrack) {
-      const { facingMode } = facingModeFromLocalTrack(videoTrack);
-      return facingMode;
-    } else {
-      return 'undefined';
-    }
-  }, [videoTrack]);
 
   React.useEffect(() => {
     if (videoEl.current && videoTrack) {
