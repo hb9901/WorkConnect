@@ -1,8 +1,7 @@
 <h1>WorkConnect</h1>
 
-<img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fe8590d08-670b-4726-861b-fc600b72c783%2FFrame_1707485583.png?table=block&id=71915d4f-b9c4-4077-b4f4-a7a6d1e7cc59&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=1420&userId=&cache=v2"
-width="100%"
-/>
+![워크커넥트큰이미지](https://github.com/user-attachments/assets/5b0f9915-986c-4abd-8a63-038d868c9d44)
+
 
 <h2>📝 프로젝트 소개</h2>
 
@@ -32,18 +31,20 @@ width="100%"
 
 ## 📖 주요 기능
 
-<img src="./public/images/readme/simpleLogin.png"/>
-<img src="./public/images/readme/chat.png"/>
-<img src="./public/images/readme/profile.png"/>
-<img src="./public/images/readme/todo.png"/>
+![simpleLogin](https://github.com/user-attachments/assets/2e125d9d-e9db-4974-9a89-135c1d175efb)
+![chat](https://github.com/user-attachments/assets/5775dc88-b626-4497-86e9-0f943e99a23d)
+![todo](https://github.com/user-attachments/assets/0992f9b1-e0e5-4835-ac2b-4349d305e87f)
+![profile](https://github.com/user-attachments/assets/374aaadd-f113-425d-86be-e810504b7b24)
 
 ## 📌 서비스 아키텍처
 
-<img src="./public/images/readme/WebAppReferenceArchitecture.png" />
+![WebAppReferenceArchitecture](https://github.com/user-attachments/assets/06e4afee-dd1f-4bbf-8640-2402455bf8fa)
+
 
 ## 📌 ERD
 
-<img src="./public/images/readme/workconnectSchema.png" />
+![workconnect schema](https://github.com/user-attachments/assets/96c12cb2-9d2f-4498-a7df-0cd2b697fd32)
+
 
 ## 🛠️ Stacks
 
