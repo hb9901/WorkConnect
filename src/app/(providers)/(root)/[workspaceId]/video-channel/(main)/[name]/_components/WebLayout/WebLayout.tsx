@@ -25,14 +25,14 @@ const WebLayout = ({ tracks }: VideoConferenceProps) => {
         setFocusedTrack(localTracks);
       }
     }
-  }, []);
+  }, [tracks]);
 
   useEffect(() => {
     const speaker = speakers[0];
-    if (isTrackReference(speaker)) {
+    if (isTrackReference(speaker) && !focusedTrack) {
       setFocusedTrack(speaker);
     }
-  }, []);
+  }, [speakers]);
 
   useEffect(() => {
     if (screenShareTrackRef) {
