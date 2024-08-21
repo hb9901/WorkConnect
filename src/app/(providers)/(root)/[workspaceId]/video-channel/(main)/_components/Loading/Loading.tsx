@@ -1,6 +1,6 @@
 import LoadingSpinner from '@/components/LoadingSpinner';
 
-const Loading = () => {
+const VideoChannelLoading = () => {
   return (
     <div className="w-[100vw] h-[100vh] flex justify-center items-center">
       <LoadingSpinner />
@@ -8,4 +8,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default VideoChannelLoading;
