@@ -1,5 +1,4 @@
 import {
-  FocusLayout,
   FocusLayoutContainer,
   isTrackReference,
   useLocalParticipant,
@@ -8,7 +7,6 @@ import {
 } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import React, { useEffect } from 'react';
-import useDeviceType from '../../../../_hooks/useDeviceType';
 import useFocosedTrack from '../../_store/useFocusTrack';
 import { VideoConferenceProps } from '../../_types/VideoConforenceProps';
 import FocusedVideoTrack from '../FocusedVideoTrack';
@@ -16,26 +14,25 @@ import ParticipantListLayout from '../RemoteParticipant/RemoteParticipant';
 
 const WebLayout = ({ tracks }: VideoConferenceProps) => {
   const { focusedTrack, setFocusedTrack } = useFocosedTrack();
-  const { isMobile } = useDeviceType();
   const { localParticipant } = useLocalParticipant();
-  const speaker = useSpeakingParticipants();
+  const speakers = useSpeakingParticipants();
   const screenShareTrackRef = useTracks([Track.Source.ScreenShare])[0];
-  const localTracks = tracks.filter((track) => track.participant.sid === localParticipant.sid)[0];
 
   useEffect(() => {
     if (!focusedTrack) {
-      if (isTrackReference(localTracks)) {
+      const localTracks = tracks.filter((track) => track.participant.sid === localParticipant.sid)[0];
+      if (localTracks) {
         setFocusedTrack(localTracks);
       }
     }
   }, []);
 
   useEffect(() => {
-    const isTrack = isTrackReference(focusedTrack);
-    if (isTrackReference(speaker[0]) && !isTrack) {
-      setFocusedTrack(speaker[0]);
+    const speaker = speakers[0];
+    if (isTrackReference(speaker)) {
+      setFocusedTrack(speaker);
     }
-  }, [speaker]);
+  }, []);
 
   useEffect(() => {
     if (screenShareTrackRef) {
@@ -52,9 +49,9 @@ const WebLayout = ({ tracks }: VideoConferenceProps) => {
           className="absolute pl-[4rem] top-[1rem] bottom-0
         "
         >
-          <FocusLayout trackRef={focusedTrack} className="h-[88%] w-full flex items-center justify-center">
-            <FocusedVideoTrack focusedTrackRef={focusedTrack} />
-          </FocusLayout>
+          <div className="h-[88%] w-full flex items-center justify-center">
+            <FocusedVideoTrack />
+          </div>
         </div>
       )}
       <div id="participantLayoutWrapper" className="absolute top-[1rem] right-0 flex flex-shrink-0 h-full w-[300px] ">

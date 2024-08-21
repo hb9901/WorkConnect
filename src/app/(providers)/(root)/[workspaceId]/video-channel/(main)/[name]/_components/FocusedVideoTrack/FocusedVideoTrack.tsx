@@ -1,14 +1,12 @@
 import { isTrackReference } from '@livekit/components-core';
-import { TrackReferenceOrPlaceholder, VideoTrack } from '@livekit/components-react';
+import { VideoTrack } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import React from 'react';
-type FocusedVideoTrackProps = {
-  focusedTrackRef: TrackReferenceOrPlaceholder;
-};
+import useFocosedTrack from '../../_store/useFocusTrack';
 
-const FocusedVideoTrack = ({ focusedTrackRef }: FocusedVideoTrackProps) => {
+const FocusedVideoTrack = () => {
   // const autoManageSubscription = useFeatureContext()?.autoSubscription;
-
+  const { focusedTrack: focusedTrackRef } = useFocosedTrack();
   return (
     <div className={`relative bg-grey700Black/[0.3] rounded-[5px] 'h-[88%]' `}>
       {isTrackReference(focusedTrackRef) &&
