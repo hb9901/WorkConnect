@@ -91,7 +91,7 @@ export const deleteChatMessage = async (id: number) => {
   const supabase = createClient();
 
   const response = await supabase.from('chat').delete().eq('id', id);
-
+  Sentry.captureMessage(`@@ Delete response id: ${id}`);
   Sentry.captureMessage(`@@ Delete response: ${JSON.stringify(response)}`);
 
   return response;
