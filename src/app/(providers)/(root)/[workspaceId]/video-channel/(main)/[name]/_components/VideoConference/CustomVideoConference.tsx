@@ -17,6 +17,7 @@ const CustomVideoConference = () => {
     { onlySubscribed: true }
   );
   const { isMobile } = useDeviceType();
+
   // const { hasFocusedTrack } = useFocosedTrack();
 
   return <VideoLayout>{isMobile ? <MobileLayout tracks={tracks} /> : <WebLayout tracks={tracks} />}</VideoLayout>;

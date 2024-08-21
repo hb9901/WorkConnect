@@ -45,7 +45,9 @@ const RenderTrack = React.memo(({ trackRef, isMobile, size = 281 }: RenderTrackP
       className={`relative aspect-square ${dimensionClass} bg-grey700Black rounded-[14px] overflow-hidden my-1 shadow-md flex-shrink-0`}
       style={{ width: isMobile ? 150 : size, height: isMobile ? 150 : size }}
     >
-      {isTrack && (Track.Source.Camera === trackRef.source || Track.Source.ScreenShare === trackRef.source) ? (
+      {isTrack &&
+      !trackRef.publication.isMuted &&
+      (Track.Source.Camera === trackRef.source || Track.Source.ScreenShare === trackRef.source) ? (
         <VideoTrack trackRef={trackRef} onTrackClick={handleClickFocus} />
       ) : (
         <div className="w-full h-full flex items-center justify-center ">
