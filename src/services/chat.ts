@@ -1,6 +1,7 @@
 import { CHAT_TYPE } from '@/constants/chat';
 import type { ChatType, GetChatMessagesProps, GetLatestNoticeProps } from '@/types/chat';
 import { createClient } from '@/utils/supabase/supabaseServer';
+import * as Sentry from '@sentry/node';
 
 export const getChatMessages = async ({ channel_id }: GetChatMessagesProps) => {
   const supabase = createClient();
@@ -90,6 +91,8 @@ export const deleteChatMessage = async (id: number) => {
   const supabase = createClient();
 
   const response = await supabase.from('chat').delete().eq('id', id);
+
+  Sentry.captureMessage(`@@ Delete response: ${JSON.stringify(response)}`);
 
   return response;
 };
