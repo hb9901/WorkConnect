@@ -1,7 +1,6 @@
 import NotFound from '@/components/NotFound';
 import '@livekit/components-styles';
 import { Suspense } from 'react';
-import Loading from '../_components/Loading';
 import VideoRoom from './_components/VideoRoom';
 type Params = {
   params: {
@@ -15,7 +14,7 @@ const VideoCallRoom = ({ params }: Params) => {
     return <NotFound />;
   }
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense>
       <VideoRoom name={params.name} />
     </Suspense>
   );
