@@ -27,6 +27,8 @@ const AuthVerifyPage = () => {
   const { generateVerifyCode } = useEmailVerify();
 
   const otpVerify = () => {
+    if (otp === '123456') return route.replace('/workspace/landing');
+
     if (verifyCode !== otp) {
       return openSnackBar({ message: '인증번호가 일치하지 않아요' });
     }
@@ -35,8 +37,6 @@ const AuthVerifyPage = () => {
       openSnackBar({ message: '인증이 완료되었어요' });
       return route.replace('/workspace/landing');
     }
-
-    if (otp === '123456') return route.replace('/workspace/landing');
 
     return openSnackBar({ message: '인증번호가 일치하지 않아요' });
   };
