@@ -3,7 +3,7 @@
 import type { StrictPropsWithChildren } from '@/types/common';
 import { createContext, useContext, useState, useCallback } from 'react';
 
-const TOP_BAR_HEIGHT = 52;
+const TOP_BAR_HEIGHT = 84;
 
 export type OpenContextMenuProps = { targetElement: DOMRect } & Omit<ContextMenuStateType, 'isOpen' | 'position'>;
 
@@ -51,7 +51,7 @@ export const ContextMenuProvider = ({ children }: StrictPropsWithChildren) => {
   const openContextMenu = useCallback(({ targetElement, ...props }: OpenContextMenuProps) => {
     const adjustedBottom = targetElement.bottom - TOP_BAR_HEIGHT;
     const adjustedTop = targetElement.top - TOP_BAR_HEIGHT;
-    const isAtTop = window.innerHeight - adjustedBottom >= 150;
+    const isAtTop = window.innerHeight - adjustedBottom >= 250;
 
     const position = isAtTop ? adjustedBottom + 10 : adjustedTop - 10;
 
