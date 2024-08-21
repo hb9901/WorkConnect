@@ -1,11 +1,11 @@
 export const validatePassword = (password: string) => {
-  const lengthRegex = /^.{1,8}$/;
+  const lengthRegex = /^.{8,}$/;
   const letterRegex = /[A-Za-z]/;
   const numberRegex = /[0-9]/;
   const specialCharRegex = /[!@#$%^&*()_+~`|}{[\]:;?/<>,.]/;
 
   if (!lengthRegex.test(password)) {
-    return '비밀번호는 1자 이상 8자 이내여야 합니다.';
+    return '비밀번호는 8자 이상이어야 합니다.';
   }
 
   if (!letterRegex.test(password) && !numberRegex.test(password)) {

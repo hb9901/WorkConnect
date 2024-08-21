@@ -134,7 +134,7 @@ const SignUpPage = () => {
                   placeholder="비밀번호 입력"
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <p className="text-[14px] text-[#ACB1BE] pl-[6px] mt-2">영문자 및 숫자 조합으로 8자 이내 입력</p>
+                <p className="text-[14px] text-[#ACB1BE] pl-[6px] mt-2">영문자 및 숫자 조합으로 8자 이상 입력</p>
               </div>
               <div className="flex flex-col pb-[32px]">
                 <label className="text-[14px] text-[#2F323C] pl-[6px] mb-2" htmlFor="passwordCheck">
@@ -147,7 +147,7 @@ const SignUpPage = () => {
                   placeholder="비밀번호 재입력"
                   onChange={(e) => setPasswordCheck(e.target.value)}
                 />
-                <p className="text-[14px] text-[#ACB1BE]  pl-[6px] mt-2">영문자 및 숫자 조합으로 8자 이내 입력</p>
+                <p className="text-[14px] text-[#ACB1BE]  pl-[6px] mt-2">영문자 및 숫자 조합으로 8자 이상 입력</p>
               </div>
             </div>
           </div>
