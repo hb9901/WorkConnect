@@ -31,7 +31,8 @@ const WebLayout = ({ tracks }: VideoConferenceProps) => {
   }, []);
 
   useEffect(() => {
-    if (isTrackReference(speaker[0]) && !screenShareTrackRef) {
+    const isTrack = isTrackReference(focusedTrack);
+    if (isTrackReference(speaker[0]) && !isTrack) {
       setFocusedTrack(speaker[0]);
     }
   }, [speaker]);
@@ -41,13 +42,6 @@ const WebLayout = ({ tracks }: VideoConferenceProps) => {
       setFocusedTrack(screenShareTrackRef);
     }
   }, [screenShareTrackRef]);
-
-  useEffect(() => {
-    if (!localTracks) return;
-    if (isTrackReference(localTracks)) {
-      setFocusedTrack(localTracks);
-    }
-  }, [localTracks, isMobile]);
 
   return (
     <FocusLayoutContainer className={`relative flex items-end justify-end h-full  overflow-y-hidden`}>
