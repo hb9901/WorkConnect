@@ -6,7 +6,7 @@ export { default as XIcon } from '@/icons/X.svg';
 export { default as CheckIcon } from '@/icons/Check.svg';
 export { default as UnCheckIcon } from '@/icons/UnCheck.svg';
 export { default as CheckFillIcon } from '@/icons/CheckFill.svg';
-export { default as MenuIcon } from '@/icons/menu.svg';
+export { default as MenuIcon } from '@/icons/Menu.svg';
 export { default as AirPlayIcon } from '@/icons/AirPlayIcon.svg';
 export { default as CheckCircleIcon } from '@/icons/CheckCircle.svg';
 export { default as PinIcon } from '@/icons/Pin.svg';
