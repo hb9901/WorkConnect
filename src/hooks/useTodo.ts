@@ -37,7 +37,21 @@ const useTodoList = (workspaceUserId: string | null) => {
     mutationFn: ({ todo, id }: { todo: Partial<Tables<'todo'>>; id: string }) => {
       return api.todo.putTodo(todo, id);
     },
-    onSuccess: () => {
+    onMutate: async (newTodo) => {
+      await queryClient.cancelQueries({ queryKey: [`todo${workspaceUserId}`] });
+
+      const previousTodos = queryClient.getQueryData([`todo${workspaceUserId}`]);
+
+      queryClient.setQueryData([`todo${workspaceUserId}`], (old: Tables<'todo'>[]) => [...old, newTodo]);
+
+      return { previousTodos };
+    },
+
+    onError: (err, newTodo, context) => {
+      if (context) queryClient.setQueryData([`todo${workspaceUserId}`], context.previousTodos);
+    },
+
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [`todo${workspaceUserId}`] });
     }
   });

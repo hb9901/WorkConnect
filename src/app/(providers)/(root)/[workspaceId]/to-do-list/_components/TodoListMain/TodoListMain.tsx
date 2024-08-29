@@ -1,10 +1,11 @@
 'use client';
-import Loading from '@/components/Loading';
 import TodoEmpty from '@/components/TodoEmpty';
 import useTodoList from '@/hooks/useTodo';
 import useDateStore from '@/store/dateStore';
 import useUserStore from '@/store/userStore';
+import { Tables } from '@/types/supabase';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
+import { useQueryClient } from '@tanstack/react-query';
 import { cva } from 'class-variance-authority';
 import dayjs from 'dayjs';
 import { usePathname, useRouter } from 'next/navigation';
@@ -16,7 +17,9 @@ import TodoListTitle from '../TodoListTitle';
 const ToDoListMain = () => {
   const urlPath = usePathname();
   const workspaceUserId = useUserStore((state) => state.workspaceUserId);
-  const { todoList, isPending, isError, updateTodo } = useTodoList(workspaceUserId);
+  const queryClient = useQueryClient();
+  const todoList = queryClient.getQueryData<Tables<'todo'>[]>([`todo${workspaceUserId}`]);
+  const { updateTodo } = useTodoList(workspaceUserId);
   const selectedDate = dayjs(useDateStore((state) => state.selectedDate));
   const router = useRouter();
 
@@ -37,9 +40,7 @@ const ToDoListMain = () => {
     }
   };
 
-  if (isPending) return <Loading />;
-
-  if (!todoList || isError) return;
+  if (!todoList) return;
 
   const selectedTodoList = todoList.filter((todo) => isDateSelected(todo.start_date, todo.end_date, selectedDate));
   if (selectedTodoList.length === 0)
