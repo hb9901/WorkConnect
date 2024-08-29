@@ -42,7 +42,13 @@ const useTodoList = (workspaceUserId: string | null) => {
 
       const previousTodos = queryClient.getQueryData([`todo${workspaceUserId}`]);
 
-      queryClient.setQueryData([`todo${workspaceUserId}`], (old: Tables<'todo'>[]) => [...old, newTodo]);
+      queryClient.setQueryData([`todo${workspaceUserId}`], (old: Tables<'todo'>[]) => {
+        const updatedTodos = old.map((todo) =>
+          todo.id === newTodo.id ? { ...todo, status: newTodo.todo.status } : todo
+        );
+
+        return updatedTodos;
+      });
 
       return { previousTodos };
     },
